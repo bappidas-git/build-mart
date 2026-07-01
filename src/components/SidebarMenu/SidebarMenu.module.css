@@ -101,8 +101,11 @@
   flex-shrink: 0;
 }
 
-.brandIcon svg {
-  font-size: 20px;
+.brandLogoImg {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
 }
 
 .brandName {
@@ -380,23 +383,6 @@
   transform: rotate(90deg);
 }
 
-/* Badge (e.g. HOT) */
-.badge {
-  font-size: 0.58rem;
-  font-weight: 800;
-  padding: 3px 7px;
-  border-radius: 6px;
-  letter-spacing: 0.5px;
-  line-height: 1;
-  flex-shrink: 0;
-  background: rgba(239, 68, 68, 0.14);
-  color: #ef4444;
-}
-
-.panel[data-theme="dark"] .badge {
-  color: #f87171;
-}
-
 /* Destructive (logout) */
 .rowDanger .rowLabel {
   color: #ef4444;
@@ -515,6 +501,12 @@
 
 .catParentIcon svg {
   font-size: 18px;
+}
+
+/* Gold accent for the Special Products category glyph (used sparingly). */
+.catParentIconGold {
+  background: rgba(250, 156, 76, 0.14);
+  color: var(--sf-color-accent);
 }
 
 .catParentLabel {
