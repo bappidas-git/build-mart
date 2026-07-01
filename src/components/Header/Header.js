@@ -1,23 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../hooks/useCart";
 import { useAuth } from "../../hooks/useAuth";
 import { useWishlist } from "../../context/WishlistContext";
 import { useDealsConfig } from "../../context/DealsConfigContext";
 import apiService from "../../services/api";
-import {
-  categoryParam,
-  getMainMenuCategories,
-  orderCategoriesHierarchically,
-} from "../../utils/categories";
-import {
-  LOGO_URL,
-  LOGO_ICON_URL,
-  SUPPORT_PHONE,
-  FREE_SHIPPING_THRESHOLD,
-} from "../../utils/constants";
-import { formatCurrency } from "../../utils/helpers";
+import { categoryParam, getMainMenuCategories } from "../../utils/categories";
+import { LOGO_URL, LOGO_ICON_URL, SUPPORT_PHONE } from "../../utils/constants";
 import CartDrawer from "../CartDrawer/CartDrawer";
 import SidebarMenu from "../SidebarMenu/SidebarMenu";
 import AuthModal from "../AuthModal/AuthModal";
@@ -31,16 +21,13 @@ import {
   Typography,
   useMediaQuery,
   Divider,
-  ClickAwayListener,
 } from "@mui/material";
 import {
-  ShoppingCart,
   Menu as MenuIcon,
   AccountCircle,
   FavoriteBorder,
   Search as SearchIcon,
   Phone as PhoneIcon,
-  LocalShipping as ShippingIcon,
   KeyboardArrowDown,
   Person,
   ListAlt,
@@ -48,16 +35,27 @@ import {
   Logout as LogoutIcon,
   Login as LoginIcon,
   PersonAdd,
-  LocalOffer,
+  LocalOfferOutlined,
+  RequestQuoteOutlined,
   Brightness4,
   Brightness7,
 } from "@mui/icons-material";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import styles from "./Header.module.css";
+
+// Gold count badges (brand accent, used sparingly). Applied to the enquiry-list
+// and wishlist counters via MUI's Badge slot.
+const badgeSx = {
+  "& .MuiBadge-badge": {
+    backgroundColor: "var(--sf-color-secondary)",
+    color: "#ffffff",
+    fontWeight: 700,
+    fontSize: "0.65rem",
+  },
+};
 
 const Header = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const { isDarkMode, toggleTheme } = useTheme();
   const {
     user,
@@ -68,29 +66,32 @@ const Header = () => {
     openAuthModal,
     closeAuthModal,
   } = useAuth();
+  // getCartItemCount is the enquiry-list item count (localStorage key "cart");
+  // isCartOpen/setIsCartOpen drive the enquiry-list drawer (CartDrawer). Only the
+  // header's icon/label/semantics change to "Enquiry List" — the data is untouched.
   const { getCartItemCount, isCartOpen, setIsCartOpen } = useCart();
   const { getWishlistCount } = useWishlist();
-  // The "Today's Deals" entry is hidden when the admin turns the deals page off.
+  // The "Special Products" entry is hidden when the admin turns that page off.
   const { enabled: dealsEnabled } = useDealsConfig();
   const isMobile = useMediaQuery("(max-width:768px)");
   const isTablet = useMediaQuery("(max-width:1024px)");
 
   // Live badge counts (context exposes getters, not raw values)
-  const cartCount = getCartItemCount();
+  const enquiryCount = getCartItemCount();
   const wishlistCount = getWishlistCount();
 
   const [categories, setCategories] = useState([]);
   const [userMenuAnchor, setUserMenuAnchor] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchModalOpen, setSearchModalOpen] = useState(false);
-  const [allCategoriesOpen, setAllCategoriesOpen] = useState(false);
-  const allCategoriesRef = useRef(null);
+  const [scrolled, setScrolled] = useState(false);
 
   // Fetch categories on mount. Also refetch when the tab regains focus so any
   // change the admin makes (toggling a category into the main menu, reordering
   // it, activating/deactivating it) shows up on the storefront without a hard
   // reload — the menu is fully API-driven from the same categories source the
-  // admin edits.
+  // admin edits, and flows through extractData() so it works on JSON Server and
+  // Laravel alike.
   useEffect(() => {
     let active = true;
     const fetchCategories = async () => {
@@ -110,10 +111,13 @@ const Header = () => {
     };
   }, []);
 
-  // Close all-categories dropdown on route change
+  // Elevate the header with a soft shadow once the page is scrolled a little.
   useEffect(() => {
-    setAllCategoriesOpen(false);
-  }, [location.pathname]);
+    const onScroll = () => setScrolled(window.scrollY > 4);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const handleUserMenuOpen = (e) => {
     if (isAuthenticated) {
@@ -136,84 +140,68 @@ const Header = () => {
     navigate("/");
   };
 
-  const handleCartClick = () => setIsCartOpen(true);
+  const handleEnquiryClick = () => setIsCartOpen(true);
   const handleSearchClick = () => setSearchModalOpen(true);
-  const handleMobileMenuClick = () => setSidebarOpen(true);
+  // The hamburger is the primary category entry on every breakpoint — it opens
+  // the slide-in category drawer (SidebarMenu).
+  const handleMenuButtonClick = () => setSidebarOpen(true);
 
-  const handleCategoryClick = (category) => {
-    setAllCategoriesOpen(false);
-    navigate(`/products?category=${categoryParam(category)}`);
-  };
-
-  // Top main menu = the admin-curated set (categories flagged "Show in main
-  // menu", ordered by their menu order). No hardcoded list and no arbitrary
-  // slice — the admin decides which categories appear and in what order. The
-  // nav bar scrolls horizontally when there are more than fit (see CSS).
+  // Top nav = the admin-curated set (categories flagged "Show in main menu",
+  // ordered by their menu order). No hardcoded list — the admin decides which
+  // categories appear and in what order. The bar scrolls horizontally when there
+  // are more than fit (see CSS). The full catalogue lives in the hamburger drawer.
   const menuCategories = isMobile ? [] : getMainMenuCategories(categories);
 
-  // The "All Categories" dropdown lists the full active catalogue, ordered
-  // hierarchically (parents followed by their children) for legibility.
-  const { ordered: dropdownCategories, depthOf } = orderCategoriesHierarchically(categories);
+  const telHref = `tel:${SUPPORT_PHONE.replace(/\s+/g, "")}`;
 
   return (
     <>
-      <header className={`${styles.header} ${isDarkMode ? styles.dark : styles.light}`}>
+      <header className={`${styles.header} ${scrolled ? styles.scrolled : ""}`}>
         {/* ===== TOP BAR (desktop only; tablet/mobile hide it) ===== */}
         {!isTablet && (
-          <motion.div
-            className={styles.topBar}
-            initial={{ y: -30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
+          <div className={styles.topBar}>
             <div className={styles.topBarInner}>
               <div className={styles.topBarLeft}>
-                <ShippingIcon className={styles.topBarIcon} />
-                <span>Free delivery on orders over {formatCurrency(FREE_SHIPPING_THRESHOLD)}</span>
+                Deals in all kinds of building materials for interior &amp; exterior use.
               </div>
               <div className={styles.topBarRight}>
-                <a href={`tel:${SUPPORT_PHONE}`} className={styles.topBarLink}>
+                <a href={telHref} className={styles.topBarLink}>
                   <PhoneIcon className={styles.topBarIcon} />
                   <span>{SUPPORT_PHONE}</span>
                 </a>
                 <span className={styles.topBarDivider}>|</span>
-                <Link to="/support" className={styles.topBarLink}>Help Center</Link>
+                <Link to="/support" className={styles.topBarLink}>Help</Link>
                 <span className={styles.topBarDivider}>|</span>
-                <Link to="/orders" className={styles.topBarLink}>Track Order</Link>
+                <Link to="/orders" className={styles.topBarLink}>My Enquiries</Link>
                 <span className={styles.topBarDivider}>|</span>
                 <IconButton
                   size="small"
                   onClick={toggleTheme}
                   className={styles.themeToggleBtn}
+                  aria-label="Toggle theme"
                 >
                   {isDarkMode ? <Brightness7 fontSize="small" /> : <Brightness4 fontSize="small" />}
                 </IconButton>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
 
         {/* ===== MAIN HEADER ROW ===== */}
         <div className={styles.mainHeader}>
           <div className={styles.mainHeaderInner}>
-            {/* Hamburger (mobile) */}
-            {isMobile && (
-              <IconButton
-                onClick={handleMobileMenuClick}
-                className={styles.hamburger}
-                aria-label="Open menu"
-              >
-                <MenuIcon />
-              </IconButton>
-            )}
+            {/* Hamburger — opens the category drawer on ALL breakpoints */}
+            <IconButton
+              onClick={handleMenuButtonClick}
+              className={styles.hamburger}
+              aria-label="Open menu"
+            >
+              <MenuIcon />
+            </IconButton>
 
             {/* Logo — full wordmark on desktop/tablet, compact icon on mobile.
                 The main logo is designed to read on both light and dark headers. */}
-            <Link
-              to="/"
-              className={styles.logoLink}
-              aria-label="North East Build Mart"
-            >
+            <Link to="/" className={styles.logoLink} aria-label="North East Build Mart">
               <motion.div
                 className={styles.logo}
                 whileHover={{ scale: 1.03 }}
@@ -239,93 +227,84 @@ const Header = () => {
               </motion.div>
             </Link>
 
-            {/* Search Bar (desktop/tablet) */}
+            {/* Search entry (desktop/tablet) — opens SearchModal */}
             {!isMobile && (
-              <div className={styles.searchBar} onClick={handleSearchClick}>
-                <div className={styles.searchCategoryLabel}>
-                  All
-                  <KeyboardArrowDown fontSize="small" />
-                </div>
-                <div className={styles.searchInput}>
-                  <span className={styles.searchPlaceholder}>
-                    Search for products, brands and more...
-                  </span>
-                </div>
-                <button className={styles.searchButton} aria-label="Search">
-                  <SearchIcon />
-                </button>
-              </div>
+              <button
+                type="button"
+                className={styles.searchBar}
+                onClick={handleSearchClick}
+                aria-label="Search"
+              >
+                <SearchIcon className={styles.searchIcon} />
+                <span className={styles.searchPlaceholder}>
+                  Search building materials, brands, categories…
+                </span>
+              </button>
             )}
 
             {/* Right actions */}
             <div className={styles.actions}>
               {/* Search icon (mobile) */}
               {isMobile && (
-                <motion.div whileTap={{ scale: 0.9 }}>
-                  <IconButton
-                    onClick={handleSearchClick}
-                    className={styles.actionIcon}
-                    aria-label="Search"
-                  >
-                    <SearchIcon />
-                  </IconButton>
-                </motion.div>
+                <IconButton
+                  onClick={handleSearchClick}
+                  className={styles.actionIcon}
+                  aria-label="Search"
+                >
+                  <SearchIcon />
+                </IconButton>
               )}
 
               {/* Theme toggle (tablet only — keeps it reachable now the top bar is hidden) */}
               {isTablet && !isMobile && (
+                <IconButton
+                  onClick={toggleTheme}
+                  className={styles.actionIcon}
+                  aria-label="Toggle theme"
+                >
+                  {isDarkMode ? <Brightness7 /> : <Brightness4 />}
+                </IconButton>
+              )}
+
+              {/* Account (desktop + tablet; on mobile it lives in the bottom nav) */}
+              {!isMobile && (
                 <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
                   className={styles.actionItem}
                 >
                   <IconButton
-                    onClick={toggleTheme}
+                    onClick={handleUserMenuOpen}
                     className={styles.actionIcon}
-                    aria-label="Toggle theme"
+                    aria-label="Account"
                   >
-                    {isDarkMode ? <Brightness7 /> : <Brightness4 />}
+                    {isAuthenticated && user ? (
+                      <Avatar className={styles.avatar} sx={{ width: 32, height: 32 }}>
+                        {(user.firstName || user.name || "U").charAt(0).toUpperCase()}
+                      </Avatar>
+                    ) : (
+                      <AccountCircle />
+                    )}
                   </IconButton>
+                  {!isTablet && (
+                    <div className={styles.actionLabel} onClick={handleUserMenuOpen}>
+                      <span className={styles.actionLabelSmall}>
+                        {isAuthenticated ? `Hello, ${user?.firstName || "User"}` : "Hello, Sign in"}
+                      </span>
+                      <span className={styles.actionLabelMain}>
+                        Account
+                        <KeyboardArrowDown fontSize="inherit" />
+                      </span>
+                    </div>
+                  )}
                 </motion.div>
               )}
 
-              {/* User account */}
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={styles.actionItem}
-              >
-                <IconButton
-                  onClick={handleUserMenuOpen}
-                  className={styles.actionIcon}
-                  aria-label="Account"
-                >
-                  {isAuthenticated && user ? (
-                    <Avatar className={styles.avatar} sx={{ width: 32, height: 32 }}>
-                      {(user.firstName || user.name || "U").charAt(0).toUpperCase()}
-                    </Avatar>
-                  ) : (
-                    <AccountCircle />
-                  )}
-                </IconButton>
-                {!isMobile && (
-                  <div className={styles.actionLabel} onClick={handleUserMenuOpen}>
-                    <span className={styles.actionLabelSmall}>
-                      {isAuthenticated ? `Hello, ${user?.firstName || "User"}` : "Hello, Sign in"}
-                    </span>
-                    <span className={styles.actionLabelMain}>
-                      Account
-                      <KeyboardArrowDown fontSize="inherit" />
-                    </span>
-                  </div>
-                )}
-              </motion.div>
-
-              {/* Wishlist */}
+              {/* Wishlist (desktop + tablet) */}
               {!isMobile && (
                 <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.96 }}
                   className={styles.actionItem}
                 >
                   <IconButton
@@ -333,19 +312,12 @@ const Header = () => {
                     className={styles.actionIcon}
                     aria-label="Wishlist"
                   >
-                    <Badge
-                      badgeContent={wishlistCount}
-                      color="error"
-                      max={99}
-                    >
+                    <Badge badgeContent={wishlistCount} max={99} sx={badgeSx}>
                       <FavoriteBorder />
                     </Badge>
                   </IconButton>
                   {!isTablet && (
-                    <div
-                      className={styles.actionLabel}
-                      onClick={() => navigate("/wishlist")}
-                    >
+                    <div className={styles.actionLabel} onClick={() => navigate("/wishlist")}>
                       <span className={styles.actionLabelSmall}>Your</span>
                       <span className={styles.actionLabelMain}>Wishlist</span>
                     </div>
@@ -353,29 +325,25 @@ const Header = () => {
                 </motion.div>
               )}
 
-              {/* Cart */}
+              {/* Enquiry List (replaces Cart) — opens the enquiry-list drawer */}
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
                 className={styles.actionItem}
               >
                 <IconButton
-                  onClick={handleCartClick}
+                  onClick={handleEnquiryClick}
                   className={styles.actionIcon}
-                  aria-label="Cart"
+                  aria-label="Enquiry List"
                 >
-                  <Badge
-                    badgeContent={cartCount}
-                    color="error"
-                    max={99}
-                  >
-                    <ShoppingCart />
+                  <Badge badgeContent={enquiryCount} max={99} sx={badgeSx}>
+                    <RequestQuoteOutlined />
                   </Badge>
                 </IconButton>
-                {!isMobile && (
-                  <div className={styles.actionLabel} onClick={handleCartClick}>
+                {!isTablet && (
+                  <div className={styles.actionLabel} onClick={handleEnquiryClick}>
                     <span className={styles.actionLabelSmall}>Your</span>
-                    <span className={styles.actionLabelMain}>Cart</span>
+                    <span className={styles.actionLabelMain}>Enquiry List</span>
                   </div>
                 )}
               </motion.div>
@@ -383,59 +351,22 @@ const Header = () => {
           </div>
         </div>
 
-        {/* ===== NAVIGATION BAR ===== */}
+        {/* ===== NAVIGATION BAR (desktop/tablet) ===== */}
         {!isMobile && (
-          <motion.nav
-            className={styles.navBar}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.3 }}
-          >
+          <nav className={styles.navBar}>
             <div className={styles.navBarInner}>
-              {/* All Categories Dropdown */}
-              <div className={styles.allCategoriesWrapper} ref={allCategoriesRef}>
-                <button
-                  className={styles.allCategoriesBtn}
-                  onClick={() => setAllCategoriesOpen((prev) => !prev)}
-                  aria-expanded={allCategoriesOpen}
-                >
-                  <MenuIcon fontSize="small" />
-                  <span>All Categories</span>
-                  <KeyboardArrowDown
-                    fontSize="small"
-                    className={`${styles.chevron} ${allCategoriesOpen ? styles.chevronOpen : ""}`}
-                  />
-                </button>
-                <AnimatePresence>
-                  {allCategoriesOpen && (
-                    <ClickAwayListener onClickAway={() => setAllCategoriesOpen(false)}>
-                      <motion.div
-                        className={styles.allCategoriesDropdown}
-                        initial={{ opacity: 0, y: -8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -8 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {dropdownCategories.map((cat) => (
-                          <button
-                            key={cat.id}
-                            className={styles.categoryDropdownItem}
-                            style={depthOf(cat.id) ? { paddingLeft: 20 + depthOf(cat.id) * 16 } : undefined}
-                            onClick={() => handleCategoryClick(cat)}
-                          >
-                            {cat.name}
-                          </button>
-                        ))}
-                        {categories.length === 0 && (
-                          <div className={styles.categoryDropdownEmpty}>
-                            No categories available
-                          </div>
-                        )}
-                      </motion.div>
-                    </ClickAwayListener>
-                  )}
-                </AnimatePresence>
-              </div>
+              {/* All Categories — opens the same slide-in drawer as the hamburger */}
+              <button
+                type="button"
+                className={styles.allCategoriesBtn}
+                onClick={handleMenuButtonClick}
+                aria-label="All categories"
+              >
+                <MenuIcon fontSize="small" />
+                <span>All Categories</span>
+              </button>
+
+              <span className={styles.navDivider} aria-hidden="true" />
 
               {/* Category links (admin-curated main menu) */}
               <div className={styles.navLinks}>
@@ -450,19 +381,19 @@ const Header = () => {
                 ))}
               </div>
 
-              {/* Deals link — hidden when the admin disables the deals page */}
+              {/* Special Products — hidden when the admin disables that page */}
               {dealsEnabled && (
-                <Link to="/special-offers" className={styles.dealsLink}>
-                  <LocalOffer fontSize="small" />
-                  <span>Today's Deals</span>
+                <Link to="/special-offers" className={styles.specialLink}>
+                  <LocalOfferOutlined fontSize="small" />
+                  <span>Special Products</span>
                 </Link>
               )}
             </div>
-          </motion.nav>
+          </nav>
         )}
       </header>
 
-      {/* Spacer to push content below fixed header.
+      {/* Spacer to push content below the fixed header.
           Desktop = topBar(36)+main(64)+nav(40); tablet = main(64)+nav(40); mobile = main(56). */}
       <div
         className={styles.headerSpacer}
@@ -475,10 +406,7 @@ const Header = () => {
         open={Boolean(userMenuAnchor)}
         onClose={handleUserMenuClose}
         className={styles.userMenu}
-        PaperProps={{
-          className: `${styles.userMenuPaper} ${isDarkMode ? styles.dark : ""}`,
-          elevation: 8,
-        }}
+        PaperProps={{ className: styles.userMenuPaper, elevation: 8 }}
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
       >
@@ -502,9 +430,9 @@ const Header = () => {
               <Person fontSize="small" className={styles.menuItemIcon} />
               My Profile
             </MenuItem>,
-            <MenuItem key="orders" onClick={() => handleMenuNavigate("/orders")} className={styles.menuItem}>
+            <MenuItem key="enquiries" onClick={() => handleMenuNavigate("/orders")} className={styles.menuItem}>
               <ListAlt fontSize="small" className={styles.menuItemIcon} />
-              My Orders
+              My Enquiries
             </MenuItem>,
             <MenuItem key="wishlist" onClick={() => handleMenuNavigate("/wishlist")} className={styles.menuItem}>
               <Favorite fontSize="small" className={styles.menuItemIcon} />

@@ -1,35 +1,46 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useWishlist } from "../../context/WishlistContext";
 import { useTheme } from "../../context/ThemeContext";
+import { useCart } from "../../hooks/useCart";
+import { useAuth } from "../../hooks/useAuth";
 import {
   HomeOutlined,
   GridViewOutlined,
   Search as SearchIcon,
-  FavoriteBorder,
+  RequestQuoteOutlined,
   PersonOutline,
 } from "@mui/icons-material";
 import SearchModal from "../SearchModal/SearchModal";
+import SidebarMenu from "../SidebarMenu/SidebarMenu";
 import styles from "./BottomNav.module.css";
 
+// Enquiry-first mobile tab bar. Parity with the header:
+//   • Categories  → opens the slide-in category drawer (SidebarMenu)
+//   • Enquiry List → opens the enquiry-list drawer (CartDrawer, via shared
+//     CartContext) with a live item count — never "Cart".
+// No purchase/cart wording anywhere.
 const NAV_ITEMS = [
-  { key: "home", label: "Home", Icon: HomeOutlined, path: "/" },
-  { key: "categories", label: "Categories", Icon: GridViewOutlined, path: "/products" },
-  { key: "search", label: "Search", Icon: SearchIcon, path: null },
-  { key: "wishlist", label: "Wishlist", Icon: FavoriteBorder, path: "/wishlist" },
-  { key: "account", label: "Account", Icon: PersonOutline, path: "/profile" },
+  { key: "home", label: "Home", Icon: HomeOutlined },
+  { key: "categories", label: "Categories", Icon: GridViewOutlined },
+  { key: "search", label: "Search", Icon: SearchIcon },
+  { key: "enquiry", label: "Enquiry List", Icon: RequestQuoteOutlined },
+  { key: "account", label: "Account", Icon: PersonOutline },
 ];
 
 const BottomNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { isDarkMode } = useTheme();
-  const { getWishlistCount } = useWishlist();
+  // Shared enquiry-list state — setIsCartOpen(true) opens the CartDrawer mounted
+  // in the Header; getCartItemCount() is the enquiry-list item count.
+  const { getCartItemCount, setIsCartOpen } = useCart();
+  const { openAuthModal } = useAuth();
   const [searchOpen, setSearchOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [visible, setVisible] = useState(true);
   const lastScrollY = useRef(0);
 
-  const wishlistCount = getWishlistCount();
+  const enquiryCount = getCartItemCount();
 
   // Hide on scroll down, show on scroll up
   useEffect(() => {
@@ -51,7 +62,6 @@ const BottomNav = () => {
     const path = location.pathname;
     if (path === "/") return "home";
     if (path === "/products" || path.startsWith("/products/") || path === "/categories") return "categories";
-    if (path === "/wishlist") return "wishlist";
     if (path === "/profile" || path === "/account") return "account";
     return "";
   };
@@ -59,12 +69,25 @@ const BottomNav = () => {
   const activeKey = getActiveKey();
 
   const handleNavClick = (item) => {
-    if (item.key === "search") {
-      setSearchOpen(true);
-      return;
-    }
-    if (item.path) {
-      navigate(item.path);
+    switch (item.key) {
+      case "home":
+        navigate("/");
+        break;
+      case "categories":
+        // Parity with the header hamburger — open the category drawer.
+        setSidebarOpen(true);
+        break;
+      case "search":
+        setSearchOpen(true);
+        break;
+      case "enquiry":
+        setIsCartOpen(true);
+        break;
+      case "account":
+        navigate("/profile");
+        break;
+      default:
+        break;
     }
   };
 
@@ -81,6 +104,7 @@ const BottomNav = () => {
           {NAV_ITEMS.map((item) => {
             const isActive = activeKey === item.key;
             const Icon = item.Icon;
+            const showBadge = item.key === "enquiry" && enquiryCount > 0;
             return (
               <button
                 key={item.key}
@@ -91,9 +115,9 @@ const BottomNav = () => {
               >
                 <span className={styles.iconWrap}>
                   <Icon className={styles.icon} />
-                  {item.key === "wishlist" && wishlistCount > 0 && (
+                  {showBadge && (
                     <span className={styles.badge}>
-                      {wishlistCount > 99 ? "99+" : wishlistCount}
+                      {enquiryCount > 99 ? "99+" : enquiryCount}
                     </span>
                   )}
                 </span>
@@ -105,6 +129,11 @@ const BottomNav = () => {
       </nav>
 
       <SearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <SidebarMenu
+        open={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+        onOpenAuth={() => openAuthModal("login")}
+      />
     </>
   );
 };
