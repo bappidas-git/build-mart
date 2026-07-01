@@ -1,4 +1,20 @@
-/* Global Styles */
+/* =============================================================================
+ * GLOBAL STOREFRONT SHELL  —  structural foundation (Prompt-07)
+ * -----------------------------------------------------------------------------
+ * Owns the app-shell layout (.App → Header / main / Footer), the single
+ * canonical content container, base Inter typography and the storefront
+ * surface. All visual scale — spacing, radius, shadow, type and colour — comes
+ * from the --sf-* design tokens in src/theme/storefront-tokens.css; never
+ * hardcode a brand hex here so the palette prompt stays the single source.
+ *
+ * The admin panel keeps its OWN palette: the admin body-class background rules,
+ * the admin scrollbar styling and the SweetAlert2 theming blocks below are
+ * load-bearing and intentionally preserved untouched.
+ *
+ * BREAKPOINTS (mirror TOKENS.breakpoints in src/theme/tokens.js):
+ *   xs 480 · sm 768 · md 1024 · lg 1280 · xl 1440
+ * ========================================================================== */
+
 * {
   margin: 0;
   padding: 0;
@@ -6,41 +22,33 @@
 }
 
 :root {
-  /* NEBM brand palette (Blue + Gold) */
-  --primary-gradient: linear-gradient(135deg, #1885d8 0%, #1069b0 100%);
-  --secondary-gradient: linear-gradient(135deg, #1885d8 0%, #fa9c4c 100%);
-  --dark-bg: #0b1a2e;
-  --light-bg: #f4f7fb;
-  --glass-bg: rgba(255, 255, 255, 0.1);
-  --glass-border: rgba(255, 255, 255, 0.2);
-  --neon-purple: #1885d8;
-  --neon-pink: #fa9c4c;
-  --neon-blue: #3b82f6;
+  /* Neutral text tokens still consumed by Products.module.css. Kept here until
+     the Products redesign (Prompt-12) migrates it onto --sf-color-text*. */
   --text-primary: #1a202c;
   --text-secondary: #4a5568;
 }
 
+/* ---- Base typography — Inter type scale from storefront-tokens.css --------- */
 body {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: var(--sf-font-family, "Inter", -apple-system, BlinkMacSystemFont,
+      "Segoe UI", "Roboto", sans-serif);
+  font-size: var(--sf-text-base, 1rem); /* comfortable 16px base */
+  line-height: var(--sf-leading-normal, 1.5);
+  color: var(--sf-color-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  transition: background-color 0.3s ease;
+  transition: background-color var(--sf-transition, 0.3s ease);
 }
 
+/* ---- App shell: full-height flex column, Header → main → Footer ------------ */
 .App {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
-  background-color: #f4f7fb;
-  transition: background-color 0.3s ease;
-}
-
-body.dark .App {
-  background-color: #0b1a2e;
+  background-color: var(--sf-color-bg);
+  transition: background-color var(--sf-transition, 0.3s ease);
 }
 
 .main-content {
@@ -51,40 +59,28 @@ body.dark .App {
      padding-bottom keeps content clear of the fixed mobile BottomNav. */
   padding-bottom: 80px;
   min-height: calc(100vh - 70px);
-  background-color: #f4f7fb;
-  transition: background-color 0.3s ease;
+  background-color: var(--sf-color-bg);
+  transition: background-color var(--sf-transition, 0.3s ease);
 }
 
-body.dark .main-content {
-  background-color: #0b1a2e;
+/* ---- Storefront scrollbars (brand-tinted) --------------------------------- */
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-/* Light Theme Explicit Styles */
-body.light .App {
-  background-color: #f4f7fb;
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
 }
 
-body.light .main-content {
-  background-color: #f4f7fb;
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #1885d8 0%, #1069b0 100%);
+  border-radius: 4px;
 }
 
-body.light .glass-effect {
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(24, 133, 216, 0.2);
-}
-
-body.light .neon-glow {
-  box-shadow: 0 0 20px rgba(24, 133, 216, 0.3), 0 0 40px rgba(24, 133, 216, 0.2),
-    0 0 60px rgba(24, 133, 216, 0.1);
-}
-
-body.light .card-hover:hover {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-body.light .loading-spinner {
-  border: 3px solid rgba(24, 133, 216, 0.2);
-  border-top-color: #1885d8;
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #1069b0 0%, #1885d8 100%);
 }
 
 /* Light theme scrollbar */
@@ -112,6 +108,7 @@ body.dark *::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, #1885d8 0%, #4ea3e3 100%);
 }
 
+/* ---- Admin overrides (load-bearing — keep) -------------------------------- */
 /* Pin the page background to the admin palette while an admin screen is
    mounted. ThemeContext writes the storefront color inline on <body>, so the
    slate shows a navy strip wherever it peeks through (overscroll, drawer
@@ -155,103 +152,34 @@ body.admin-area.dark *::-webkit-scrollbar-thumb:hover {
   background: #475569;
 }
 
-/* Glassmorphism effect */
-.glass-effect {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-}
-
-/* Neon glow effect */
-.neon-glow {
-  box-shadow: 0 0 20px rgba(78, 163, 227, 0.5), 0 0 40px rgba(78, 163, 227, 0.3),
-    0 0 60px rgba(78, 163, 227, 0.1);
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #1885d8 0%, #1069b0 100%);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #1069b0 0%, #1885d8 100%);
-}
-
-/* Animations */
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-@keyframes pulse-glow {
-  0%,
-  100% {
-    opacity: 1;
-    box-shadow: 0 0 20px rgba(78, 163, 227, 0.5);
-  }
-  50% {
-    opacity: 0.8;
-    box-shadow: 0 0 40px rgba(78, 163, 227, 0.8);
-  }
-}
-
-@keyframes gradient-shift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.floating {
-  animation: float 6s ease-in-out infinite;
-}
-
-.pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.gradient-animation {
-  background-size: 200% 200%;
-  animation: gradient-shift 3s ease infinite;
-}
-
-/* Responsive utilities */
+/* ---- Canonical content container ------------------------------------------ */
+/* One shared container caps content width and centres it, with responsive
+   gutters (16 mobile → 20 tablet → 24 desktop) built from the --sf-space scale.
+   Keeps the .container class name so existing consumers don't break; width
+   steps down from the old 1440 to the 1280 token (TOKENS.containerMax). */
 .container {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 20px;
+  width: 100%;
+  max-width: var(--sf-container-max, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--sf-space-4); /* 16px — mobile base */
 }
 
-/* Mobile styles */
+@media (min-width: 768px) {
+  .container {
+    padding-inline: var(--sf-space-5); /* 20px — tablet (sm) */
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-inline: var(--sf-space-6); /* 24px — desktop (md+) */
+  }
+}
+
+/* ---- Responsive show/hide helpers + mobile shell spacing ------------------- */
 @media (max-width: 768px) {
   .main-content {
     padding-bottom: 70px;
-  }
-
-  .container {
-    padding: 0 16px;
   }
 
   .desktop-only {
@@ -263,77 +191,6 @@ body.admin-area.dark *::-webkit-scrollbar-thumb:hover {
   .mobile-only {
     display: none !important;
   }
-}
-
-/* Tablet styles */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .container {
-    padding: 0 24px;
-  }
-}
-
-/* Loading animation */
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(24, 133, 216, 0.2);
-  border-top-color: var(--neon-purple);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Page transitions */
-.page-transition-enter {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.page-transition-enter-active {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 300ms, transform 300ms;
-}
-
-.page-transition-exit {
-  opacity: 1;
-}
-
-.page-transition-exit-active {
-  opacity: 0;
-  transition: opacity 300ms;
-}
-
-/* Button hover effects */
-.hover-scale {
-  transition: transform 0.3s ease;
-}
-
-.hover-scale:hover {
-  transform: scale(1.05);
-}
-
-/* Text gradient */
-.gradient-text {
-  background: var(--primary-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Card hover effect */
-.card-hover {
-  transition: all 0.3s ease;
-}
-
-.card-hover:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 /* =====================================================================
