@@ -6,15 +6,15 @@
 }
 
 :root {
-  /* Futuristic color palette */
-  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  --dark-bg: #0a0e27;
-  --light-bg: #f5f7fa;
+  /* NEBM brand palette (Blue + Gold) */
+  --primary-gradient: linear-gradient(135deg, #1885d8 0%, #1069b0 100%);
+  --secondary-gradient: linear-gradient(135deg, #1885d8 0%, #fa9c4c 100%);
+  --dark-bg: #0b1a2e;
+  --light-bg: #f4f7fb;
   --glass-bg: rgba(255, 255, 255, 0.1);
   --glass-border: rgba(255, 255, 255, 0.2);
-  --neon-purple: #a855f7;
-  --neon-pink: #ec4899;
+  --neon-purple: #1885d8;
+  --neon-pink: #fa9c4c;
   --neon-blue: #3b82f6;
   --text-primary: #1a202c;
   --text-secondary: #4a5568;
@@ -35,12 +35,12 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  background-color: #f5f7fa;
+  background-color: #f4f7fb;
   transition: background-color 0.3s ease;
 }
 
 body.dark .App {
-  background-color: #0a0e27;
+  background-color: #0b1a2e;
 }
 
 .main-content {
@@ -51,31 +51,31 @@ body.dark .App {
      padding-bottom keeps content clear of the fixed mobile BottomNav. */
   padding-bottom: 80px;
   min-height: calc(100vh - 70px);
-  background-color: #f5f7fa;
+  background-color: #f4f7fb;
   transition: background-color 0.3s ease;
 }
 
 body.dark .main-content {
-  background-color: #0a0e27;
+  background-color: #0b1a2e;
 }
 
 /* Light Theme Explicit Styles */
 body.light .App {
-  background-color: #f5f7fa;
+  background-color: #f4f7fb;
 }
 
 body.light .main-content {
-  background-color: #f5f7fa;
+  background-color: #f4f7fb;
 }
 
 body.light .glass-effect {
   background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(102, 126, 234, 0.2);
+  border: 1px solid rgba(24, 133, 216, 0.2);
 }
 
 body.light .neon-glow {
-  box-shadow: 0 0 20px rgba(102, 126, 234, 0.3), 0 0 40px rgba(102, 126, 234, 0.2),
-    0 0 60px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 20px rgba(24, 133, 216, 0.3), 0 0 40px rgba(24, 133, 216, 0.2),
+    0 0 60px rgba(24, 133, 216, 0.1);
 }
 
 body.light .card-hover:hover {
@@ -83,17 +83,17 @@ body.light .card-hover:hover {
 }
 
 body.light .loading-spinner {
-  border: 3px solid rgba(102, 126, 234, 0.2);
-  border-top-color: #667eea;
+  border: 3px solid rgba(24, 133, 216, 0.2);
+  border-top-color: #1885d8;
 }
 
 /* Light theme scrollbar */
 body.light::-webkit-scrollbar-track {
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(24, 133, 216, 0.1);
 }
 
 body.light::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1885d8 0%, #1069b0 100%);
 }
 
 /* Dark theme scrollbar — dark-palette gradient instead of the light one */
@@ -104,12 +104,12 @@ body.dark *::-webkit-scrollbar-track {
 
 body.dark::-webkit-scrollbar-thumb,
 body.dark *::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  background: linear-gradient(135deg, #4ea3e3 0%, #1885d8 100%);
 }
 
 body.dark::-webkit-scrollbar-thumb:hover,
 body.dark *::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+  background: linear-gradient(135deg, #1885d8 0%, #4ea3e3 100%);
 }
 
 /* Pin the page background to the admin palette while an admin screen is
@@ -166,8 +166,8 @@ body.admin-area.dark *::-webkit-scrollbar-thumb:hover {
 
 /* Neon glow effect */
 .neon-glow {
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.3),
-    0 0 60px rgba(168, 85, 247, 0.1);
+  box-shadow: 0 0 20px rgba(78, 163, 227, 0.5), 0 0 40px rgba(78, 163, 227, 0.3),
+    0 0 60px rgba(78, 163, 227, 0.1);
 }
 
 /* Custom scrollbar */
@@ -181,12 +181,12 @@ body.admin-area.dark *::-webkit-scrollbar-thumb:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1885d8 0%, #1069b0 100%);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  background: linear-gradient(135deg, #1069b0 0%, #1885d8 100%);
 }
 
 /* Animations */
@@ -204,11 +204,11 @@ body.admin-area.dark *::-webkit-scrollbar-thumb:hover {
   0%,
   100% {
     opacity: 1;
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    box-shadow: 0 0 20px rgba(78, 163, 227, 0.5);
   }
   50% {
     opacity: 0.8;
-    box-shadow: 0 0 40px rgba(168, 85, 247, 0.8);
+    box-shadow: 0 0 40px rgba(78, 163, 227, 0.8);
   }
 }
 
@@ -276,7 +276,7 @@ body.admin-area.dark *::-webkit-scrollbar-thumb:hover {
 .loading-spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid rgba(168, 85, 247, 0.2);
+  border: 3px solid rgba(24, 133, 216, 0.2);
   border-top-color: var(--neon-purple);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -352,12 +352,12 @@ body.light .swal2-popup {
   --swal2-background: #ffffff;
   --swal2-color: #1a202c;
   --swal2-border-radius: 16px;
-  --swal2-confirm-button-background-color: #667eea;
+  --swal2-confirm-button-background-color: #1885d8;
   --swal2-cancel-button-background-color: #64748b;
   --swal2-confirm-button-border-radius: 10px;
   --swal2-cancel-button-border-radius: 10px;
-  --swal2-action-button-focus-box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.4);
-  --swal2-timer-progress-bar-background: rgba(102, 126, 234, 0.5);
+  --swal2-action-button-focus-box-shadow: 0 0 0 3px rgba(24, 133, 216, 0.4);
+  --swal2-timer-progress-bar-background: rgba(24, 133, 216, 0.5);
 }
 
 /* secondary text tone for the message body (title inherits popup color) */
@@ -366,18 +366,18 @@ body.light .swal2-html-container {
 }
 
 body.dark .swal2-popup {
-  --swal2-background: #1a1f3a;
+  --swal2-background: #122238;
   --swal2-color: #f5f7fa;
-  --swal2-border: 1px solid rgba(168, 85, 247, 0.25);
+  --swal2-border: 1px solid rgba(78, 163, 227, 0.25);
   --swal2-border-radius: 16px;
-  --swal2-confirm-button-background-color: #a855f7;
+  --swal2-confirm-button-background-color: #4ea3e3;
   --swal2-cancel-button-background-color: #475569;
   --swal2-confirm-button-border-radius: 10px;
   --swal2-cancel-button-border-radius: 10px;
   --swal2-close-button-color: #a0aec0;
-  --swal2-action-button-focus-box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.45);
+  --swal2-action-button-focus-box-shadow: 0 0 0 3px rgba(78, 163, 227, 0.45);
   --swal2-timer-progress-bar-background: rgba(255, 255, 255, 0.3);
-  --swal2-toast-border: 1px solid rgba(168, 85, 247, 0.25);
+  --swal2-toast-border: 1px solid rgba(78, 163, 227, 0.25);
   --swal2-toast-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 

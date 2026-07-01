@@ -1,7 +1,7 @@
 .container { max-width: 800px; margin: 0 auto; padding: 24px 16px 80px; min-height: calc(100vh - 200px); }
 .dark { color: #e2e8f0; }
 .breadcrumb { display: flex; gap: 8px; align-items: center; margin-bottom: 24px; font-size: 0.875rem; color: #64748b; }
-.breadcrumb a { color: #667eea; text-decoration: none; }
+.breadcrumb a { color: var(--sf-color-primary); text-decoration: none; }
 /* Touch-target sizing: grow the breadcrumb hit area without moving the row */
 @media (max-width: 768px) {
   .breadcrumb a { display: inline-block; padding: 10px 2px; margin: -10px 0; }
@@ -30,4 +30,4 @@
 }
 .contact { text-align: center; padding: 24px; color: #64748b; }
 .dark .contact { color: #94a3b8; }
-.contact a { color: #667eea; text-decoration: none; }
+.contact a { color: var(--sf-color-primary); text-decoration: none; }

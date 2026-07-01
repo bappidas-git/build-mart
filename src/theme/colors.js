@@ -14,21 +14,21 @@
 // LIGHT MODE PALETTE
 // ---------------------
 export const LIGHT = {
-  // Primary brand color — used for buttons, links, active states
+  // Primary brand color — NEBM Blue; used for buttons, links, active states
   primary: {
-    main:  "#667eea",
-    light: "#8b9af3",
-    dark:  "#4c5ed0",
+    main:  "#1885d8",
+    light: "#4ea3e3",
+    dark:  "#1069b0",
   },
-  // Secondary accent color — used for badges, chips, secondary buttons
+  // Secondary accent color — NEBM Gold/Orange; badges, hover accents, CTAs (sparingly)
   secondary: {
-    main:  "#f093fb",
-    light: "#f4b3fc",
-    dark:  "#d673e0",
+    main:  "#fa9c4c",
+    light: "#fcb576",
+    dark:  "#e07f2b",
   },
   // Page and component backgrounds
   background: {
-    default: "#f5f7fa",
+    default: "#f4f7fb",
     paper:   "#ffffff",
   },
   // Text colors
@@ -38,41 +38,43 @@ export const LIGHT = {
   },
   // Gradient used for contained buttons, hero section, etc.
   gradient: {
-    primary:        "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    primaryReverse: "linear-gradient(135deg, #764ba2 0%, #667eea 100%)",
+    primary:        "linear-gradient(135deg, #1885d8 0%, #1069b0 100%)",
+    primaryReverse: "linear-gradient(135deg, #1069b0 0%, #1885d8 100%)",
     // Hero background gradient
-    hero: "linear-gradient(135deg, #667eea 0%, #764ba2 50%, #6B8DD6 100%)",
+    hero: "linear-gradient(135deg, #1885d8 0%, #1069b0 55%, #4ea3e3 100%)",
   },
   // Body background applied on initial HTML load (before React mounts)
-  bodyBackground: "linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%)",
+  bodyBackground: "linear-gradient(135deg, #f4f7fb 0%, #ffffff 100%)",
 };
 
 // ---------------------
 // DARK MODE PALETTE
 // ---------------------
 export const DARK = {
+  // Lifted blue so the brand reads clearly on dark surfaces
   primary: {
-    main:  "#a855f7",
-    light: "#c084fc",
-    dark:  "#9333ea",
+    main:  "#4ea3e3",
+    light: "#7bbced",
+    dark:  "#1885d8",
   },
   secondary: {
-    main:  "#ec4899",
-    light: "#f472b6",
-    dark:  "#db2777",
+    main:  "#fa9c4c",
+    light: "#fcb576",
+    dark:  "#e07f2b",
   },
+  // Deep navy "blue brand dark" (not purple)
   background: {
-    default: "#0a0e27",
-    paper:   "#1a1f3a",
+    default: "#0b1a2e",
+    paper:   "#122238",
   },
   text: {
     primary:   "#f5f7fa",
     secondary: "#a0aec0",
   },
   gradient: {
-    primary:        "linear-gradient(135deg, #a855f7 0%, #ec4899 100%)",
-    primaryReverse: "linear-gradient(135deg, #ec4899 0%, #a855f7 100%)",
-    hero: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%)",
+    primary:        "linear-gradient(135deg, #4ea3e3 0%, #1885d8 100%)",
+    primaryReverse: "linear-gradient(135deg, #1885d8 0%, #4ea3e3 100%)",
+    hero: "linear-gradient(135deg, #0b1a2e 0%, #122238 55%, #1069b0 100%)",
   },
-  bodyBackground: "linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%)",
+  bodyBackground: "linear-gradient(135deg, #0b1a2e 0%, #122238 100%)",
 };

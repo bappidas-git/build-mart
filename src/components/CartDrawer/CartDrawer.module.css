@@ -70,11 +70,11 @@
 }
 
 .dark .headerIcon {
-  color: #a78bfa;
+  color: var(--sf-color-primary);
 }
 
 .light .headerIcon {
-  color: #6366f1;
+  color: var(--sf-color-primary);
 }
 
 .title {
@@ -106,13 +106,13 @@
 }
 
 .dark .itemCount {
-  background: rgba(167, 139, 250, 0.2);
-  color: #a78bfa;
+  background: rgba(78, 163, 227, 0.2);
+  color: var(--sf-color-primary);
 }
 
 .light .itemCount {
-  background: rgba(99, 102, 241, 0.1);
-  color: #6366f1;
+  background: rgba(24, 133, 216, 0.1);
+  color: var(--sf-color-primary);
 }
 
 .closeButton {
@@ -157,7 +157,7 @@
 }
 
 .dark .shippingBanner {
-  background: rgba(167, 139, 250, 0.06);
+  background: rgba(78, 163, 227, 0.06);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -183,11 +183,11 @@
 }
 
 .dark .shippingText strong {
-  color: #a78bfa;
+  color: var(--sf-color-primary);
 }
 
 .light .shippingText strong {
-  color: #6366f1;
+  color: var(--sf-color-primary);
 }
 
 .checkIcon {
@@ -213,12 +213,12 @@
 .progressBarFill {
   height: 100%;
   border-radius: 3px;
-  background: linear-gradient(90deg, #667eea, #764ba2);
+  background: linear-gradient(90deg, var(--sf-color-primary), var(--sf-color-primary-dark));
   transition: width 0.4s ease;
 }
 
 .dark .progressBarFill {
-  background: linear-gradient(90deg, #a855f7, #ec4899);
+  background: linear-gradient(90deg, var(--sf-color-primary), var(--sf-color-accent));
 }
 
 /* ========================================
@@ -286,11 +286,11 @@
 }
 
 .dark .emptyIcon {
-  color: rgba(167, 139, 250, 0.25);
+  color: rgba(78, 163, 227, 0.25);
 }
 
 .light .emptyIcon {
-  color: rgba(99, 102, 241, 0.2);
+  color: rgba(24, 133, 216, 0.2);
 }
 
 .emptyTitle {
@@ -333,21 +333,21 @@
 }
 
 .dark .continueShoppingBtn {
-  background: rgba(167, 139, 250, 0.15);
-  color: #a78bfa;
+  background: rgba(78, 163, 227, 0.15);
+  color: var(--sf-color-primary);
 }
 
 .dark .continueShoppingBtn:hover {
-  background: rgba(167, 139, 250, 0.25);
+  background: rgba(78, 163, 227, 0.25);
 }
 
 .light .continueShoppingBtn {
-  background: #eef2ff;
-  color: #6366f1;
+  background: var(--sf-color-primary-soft);
+  color: var(--sf-color-primary);
 }
 
 .light .continueShoppingBtn:hover {
-  background: #e0e7ff;
+  background: var(--sf-color-primary-soft);
 }
 
 /* ========================================
@@ -442,7 +442,7 @@
 }
 
 .dark .itemName:hover {
-  color: #a78bfa;
+  color: var(--sf-color-primary);
 }
 
 .light .itemName {
@@ -450,7 +450,7 @@
 }
 
 .light .itemName:hover {
-  color: #6366f1;
+  color: var(--sf-color-primary);
 }
 
 .itemVariant {
@@ -479,11 +479,11 @@
 }
 
 .dark .itemPrice {
-  color: #a78bfa;
+  color: var(--sf-color-primary);
 }
 
 .light .itemPrice {
-  color: #6366f1;
+  color: var(--sf-color-primary);
 }
 
 .itemComparePrice {
@@ -540,8 +540,8 @@
 }
 
 .dark .quantityBtn:hover:not(:disabled) {
-  background: rgba(167, 139, 250, 0.2);
-  color: #a78bfa;
+  background: rgba(78, 163, 227, 0.2);
+  color: var(--sf-color-primary);
 }
 
 .light .quantityBtn {
@@ -550,8 +550,8 @@
 }
 
 .light .quantityBtn:hover:not(:disabled) {
-  background: #eef2ff;
-  color: #6366f1;
+  background: var(--sf-color-primary-soft);
+  color: var(--sf-color-primary);
 }
 
 .quantityBtn:disabled {
@@ -739,24 +739,24 @@
   font-weight: 600;
   cursor: pointer;
   color: #ffffff;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  box-shadow: 0 4px 14px rgba(102, 126, 234, 0.3);
+  background: var(--sf-gradient-primary);
+  box-shadow: 0 4px 14px rgba(24, 133, 216, 0.3);
   transition: all 0.2s ease;
   text-align: center;
 }
 
 .dark .checkoutBtn {
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-  box-shadow: 0 4px 14px rgba(168, 85, 247, 0.35);
+  background: var(--sf-gradient-primary);
+  box-shadow: 0 4px 14px rgba(78, 163, 227, 0.35);
 }
 
 .checkoutBtn:hover {
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.45);
+  box-shadow: 0 6px 20px rgba(24, 133, 216, 0.45);
   transform: translateY(-1px);
 }
 
 .dark .checkoutBtn:hover {
-  box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+  box-shadow: 0 6px 20px rgba(78, 163, 227, 0.5);
 }
 
 .checkoutBtn:active {

@@ -65,7 +65,7 @@ export const ThemeContextProvider = ({ children }) => {
       background: LIGHT.background,
       text: LIGHT.text,
       action: {
-        hover: `rgba(102, 126, 234, 0.08)`,
+        hover: `rgba(24, 133, 216, 0.08)`,
       },
     },
     typography: {
@@ -119,7 +119,7 @@ export const ThemeContextProvider = ({ children }) => {
             transition: "all 0.3s ease",
             "&:hover": {
               transform: "translateY(-2px)",
-              boxShadow: "0 8px 20px rgba(102, 126, 234, 0.3)",
+              boxShadow: "0 8px 20px rgba(24, 133, 216, 0.3)",
             },
           },
           contained: {
@@ -196,7 +196,7 @@ export const ThemeContextProvider = ({ children }) => {
       background: DARK.background,
       text: DARK.text,
       action: {
-        hover: "rgba(168, 85, 247, 0.15)",
+        hover: "rgba(78, 163, 227, 0.15)",
       },
     },
     typography: {
@@ -250,7 +250,7 @@ export const ThemeContextProvider = ({ children }) => {
             transition: "all 0.3s ease",
             "&:hover": {
               transform: "translateY(-2px)",
-              boxShadow: "0 8px 20px rgba(168, 85, 247, 0.4)",
+              boxShadow: "0 8px 20px rgba(78, 163, 227, 0.4)",
             },
           },
           contained: {
@@ -266,15 +266,15 @@ export const ThemeContextProvider = ({ children }) => {
         styleOverrides: {
           root: {
             borderRadius: "16px",
-            background: "rgba(26, 31, 58, 0.8)",
+            background: "rgba(18, 34, 56, 0.8)",
             backdropFilter: "blur(10px)",
-            border: `1px solid rgba(168, 85, 247, 0.2)`,
+            border: `1px solid rgba(78, 163, 227, 0.2)`,
             boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)",
             transition: "all 0.3s ease",
             "&:hover": {
               transform: "translateY(-4px)",
-              boxShadow: "0 12px 30px rgba(168, 85, 247, 0.3)",
-              borderColor: "rgba(168, 85, 247, 0.4)",
+              boxShadow: "0 12px 30px rgba(78, 163, 227, 0.3)",
+              borderColor: "rgba(78, 163, 227, 0.4)",
             },
           },
         },
@@ -298,7 +298,7 @@ export const ThemeContextProvider = ({ children }) => {
       MuiDrawer: {
         styleOverrides: {
           paper: {
-            backgroundColor: "rgba(26, 31, 58, 0.95)",
+            backgroundColor: "rgba(18, 34, 56, 0.95)",
             backdropFilter: "blur(20px)",
           },
         },

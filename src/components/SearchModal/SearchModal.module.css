@@ -88,8 +88,8 @@
 }
 
 .overlay[data-theme="dark"] .searchBar:focus-within {
-  border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  border-color: var(--sf-color-primary);
+  box-shadow: 0 0 0 3px rgba(24, 133, 216, 0.15);
 }
 
 .overlay[data-theme="light"] .searchBar {
@@ -98,8 +98,8 @@
 }
 
 .overlay[data-theme="light"] .searchBar:focus-within {
-  border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  border-color: var(--sf-color-primary);
+  box-shadow: 0 0 0 3px rgba(24, 133, 216, 0.1);
 }
 
 .searchIcon {
@@ -277,26 +277,26 @@
 }
 
 .overlay[data-theme="dark"] .categoryChipActive {
-  background: #6366f1;
-  border-color: #6366f1;
+  background: var(--sf-color-primary);
+  border-color: var(--sf-color-primary);
   color: #ffffff;
 }
 
 .overlay[data-theme="dark"] .categoryChipActive:hover {
-  background: #5558e6;
-  border-color: #5558e6;
+  background: var(--sf-color-primary-dark);
+  border-color: var(--sf-color-primary-dark);
   color: #ffffff;
 }
 
 .overlay[data-theme="light"] .categoryChipActive {
-  background: #6366f1;
-  border-color: #6366f1;
+  background: var(--sf-color-primary);
+  border-color: var(--sf-color-primary);
   color: #ffffff;
 }
 
 .overlay[data-theme="light"] .categoryChipActive:hover {
-  background: #5558e6;
-  border-color: #5558e6;
+  background: var(--sf-color-primary-dark);
+  border-color: var(--sf-color-primary-dark);
   color: #ffffff;
 }
 
@@ -327,12 +327,12 @@
 
 .overlay[data-theme="dark"] .spinner {
   border-color: rgba(255, 255, 255, 0.1);
-  border-top-color: #6366f1;
+  border-top-color: var(--sf-color-primary);
 }
 
 .overlay[data-theme="light"] .spinner {
   border-color: #e5e7eb;
-  border-top-color: #6366f1;
+  border-top-color: var(--sf-color-primary);
 }
 
 .overlay[data-theme="dark"] .loadingState span {
@@ -394,21 +394,21 @@
 }
 
 .overlay[data-theme="dark"] .viewAllBtn {
-  color: #818cf8;
+  color: var(--sf-color-primary-light);
 }
 
 .overlay[data-theme="dark"] .viewAllBtn:hover {
-  background: rgba(99, 102, 241, 0.12);
-  color: #a5b4fc;
+  background: rgba(24, 133, 216, 0.12);
+  color: var(--sf-color-primary-light);
 }
 
 .overlay[data-theme="light"] .viewAllBtn {
-  color: #6366f1;
+  color: var(--sf-color-primary);
 }
 
 .overlay[data-theme="light"] .viewAllBtn:hover {
-  background: rgba(99, 102, 241, 0.08);
-  color: #4f46e5;
+  background: rgba(24, 133, 216, 0.08);
+  color: var(--sf-color-primary);
 }
 
 /* ===== Empty State ===== */
@@ -492,8 +492,8 @@
 
 .overlay[data-theme="dark"] .productCard:hover {
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(99, 102, 241, 0.3);
-  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);
+  border-color: rgba(24, 133, 216, 0.3);
+  box-shadow: 0 4px 20px rgba(24, 133, 216, 0.1);
 }
 
 .overlay[data-theme="light"] .productCard {
@@ -502,8 +502,8 @@
 }
 
 .overlay[data-theme="light"] .productCard:hover {
-  border-color: #c7d2fe;
-  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.08);
+  border-color: var(--sf-color-primary-light);
+  box-shadow: 0 4px 20px rgba(24, 133, 216, 0.08);
 }
 
 .productImageWrap {
@@ -720,9 +720,9 @@
 }
 
 .overlay[data-theme="dark"] .searchChip:hover {
-  background: rgba(99, 102, 241, 0.15);
-  border-color: rgba(99, 102, 241, 0.4);
-  color: #c7d2fe;
+  background: rgba(24, 133, 216, 0.15);
+  border-color: rgba(24, 133, 216, 0.4);
+  color: var(--sf-color-primary-light);
   transform: translateY(-1px);
 }
 
@@ -733,9 +733,9 @@
 }
 
 .overlay[data-theme="light"] .searchChip:hover {
-  background: #eef2ff;
-  border-color: #c7d2fe;
-  color: #4338ca;
+  background: var(--sf-color-primary-soft);
+  border-color: var(--sf-color-primary-light);
+  color: var(--sf-color-primary-dark);
   transform: translateY(-1px);
 }
 

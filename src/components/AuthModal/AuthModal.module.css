@@ -10,13 +10,13 @@
   --auth-text: #1a1d26;
   --auth-text-secondary: #6b7280;
   --auth-text-muted: #9ca3af;
-  --auth-accent: #4f46e5;
-  --auth-accent-hover: #4338ca;
-  --auth-accent-light: rgba(79, 70, 229, 0.08);
+  --auth-accent: var(--sf-color-primary);
+  --auth-accent-hover: var(--sf-color-primary-dark);
+  --auth-accent-light: rgba(24, 133, 216, 0.08);
   --auth-input-bg: #f3f4f6;
   --auth-input-bg-focus: #ffffff;
   --auth-input-border: #d1d5db;
-  --auth-input-border-focus: #4f46e5;
+  --auth-input-border-focus: var(--sf-color-primary);
   --auth-error: #dc2626;
   --auth-error-bg: rgba(220, 38, 38, 0.06);
   --auth-success: #16a34a;
@@ -31,9 +31,9 @@
   --auth-strength-good: #3b82f6;
   --auth-strength-strong: #16a34a;
   --auth-check-bg: #e5e7eb;
-  --auth-check-active: #4f46e5;
+  --auth-check-active: var(--sf-color-primary);
   --auth-tab-bg: #f3f4f6;
-  --auth-tab-indicator: #4f46e5;
+  --auth-tab-indicator: var(--sf-color-primary);
 }
 
 .dark {
@@ -44,13 +44,13 @@
   --auth-text: #f1f2f6;
   --auth-text-secondary: #9ca3b4;
   --auth-text-muted: #6b7289;
-  --auth-accent: #818cf8;
-  --auth-accent-hover: #a5b4fc;
-  --auth-accent-light: rgba(129, 140, 248, 0.1);
+  --auth-accent: var(--sf-color-primary-light);
+  --auth-accent-hover: var(--sf-color-primary-light);
+  --auth-accent-light: rgba(78, 163, 227, 0.1);
   --auth-input-bg: rgba(255, 255, 255, 0.04);
   --auth-input-bg-focus: rgba(255, 255, 255, 0.07);
   --auth-input-border: rgba(255, 255, 255, 0.1);
-  --auth-input-border-focus: #818cf8;
+  --auth-input-border-focus: var(--sf-color-primary-light);
   --auth-error: #f87171;
   --auth-error-bg: rgba(248, 113, 113, 0.08);
   --auth-success: #4ade80;
@@ -65,9 +65,9 @@
   --auth-strength-good: #60a5fa;
   --auth-strength-strong: #4ade80;
   --auth-check-bg: rgba(255, 255, 255, 0.1);
-  --auth-check-active: #818cf8;
+  --auth-check-active: var(--sf-color-primary-light);
   --auth-tab-bg: rgba(255, 255, 255, 0.05);
-  --auth-tab-indicator: #818cf8;
+  --auth-tab-indicator: var(--sf-color-primary-light);
 }
 
 /* ================================================================== */
@@ -555,7 +555,7 @@
 .submitBtn:hover:not(:disabled) {
   background: var(--auth-accent-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 4px 14px rgba(24, 133, 216, 0.35);
 }
 
 .submitBtn:active:not(:disabled) {

@@ -7,7 +7,7 @@
 }
 
 .dark {
-  background: #0a0e27;
+  background: #0b1a2e;
   color: #e2e8f0;
 }
 
@@ -34,7 +34,7 @@
 .pageTitle {
   font-size: 1.75rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--sf-gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -42,7 +42,7 @@
 }
 
 .dark .pageTitle {
-  background: linear-gradient(135deg, #a78bfa 0%, #f472b6 100%);
+  background: var(--sf-gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -52,14 +52,14 @@
   font-size: 0.875rem;
   color: #718096;
   font-weight: 500;
-  background: rgba(102, 126, 234, 0.1);
+  background: rgba(24, 133, 216, 0.1);
   padding: 0.2rem 0.65rem;
   border-radius: 20px;
 }
 
 .dark .orderCount {
-  color: #a78bfa;
-  background: rgba(167, 139, 250, 0.15);
+  color: var(--sf-color-primary);
+  background: rgba(78, 163, 227, 0.15);
 }
 
 .btnRefresh {
@@ -77,20 +77,20 @@
 }
 
 .btnRefresh:hover {
-  border-color: #667eea;
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.05);
+  border-color: var(--sf-color-primary);
+  color: var(--sf-color-primary);
+  background: rgba(24, 133, 216, 0.05);
 }
 
 .dark .btnRefresh {
-  background: rgba(26, 31, 58, 0.8);
-  border-color: rgba(167, 139, 250, 0.2);
-  color: #a78bfa;
+  background: rgba(18, 34, 56, 0.8);
+  border-color: rgba(78, 163, 227, 0.2);
+  color: var(--sf-color-primary);
 }
 
 .dark .btnRefresh:hover {
-  border-color: #a78bfa;
-  background: rgba(167, 139, 250, 0.1);
+  border-color: var(--sf-color-primary);
+  background: rgba(78, 163, 227, 0.1);
 }
 
 .btnRefresh:disabled {
@@ -121,8 +121,8 @@
 }
 
 .dark .filterBar {
-  background: rgba(26, 31, 58, 0.8);
-  border-color: rgba(167, 139, 250, 0.12);
+  background: rgba(18, 34, 56, 0.8);
+  border-color: rgba(78, 163, 227, 0.12);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
 
@@ -160,19 +160,19 @@
 }
 
 .searchInput:focus {
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.12);
+  border-color: var(--sf-color-primary);
+  box-shadow: 0 0 0 3px rgba(24, 133, 216, 0.12);
 }
 
 .dark .searchInput {
-  background: rgba(10, 14, 39, 0.6);
-  border-color: rgba(167, 139, 250, 0.2);
+  background: rgba(11, 26, 46, 0.6);
+  border-color: rgba(78, 163, 227, 0.2);
   color: #e2e8f0;
 }
 
 .dark .searchInput:focus {
-  border-color: #a78bfa;
-  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.15);
+  border-color: var(--sf-color-primary);
+  box-shadow: 0 0 0 3px rgba(78, 163, 227, 0.15);
 }
 
 .clearSearch {
@@ -192,8 +192,8 @@
 }
 
 .dark .clearSearch {
-  background: rgba(167, 139, 250, 0.2);
-  color: #a78bfa;
+  background: rgba(78, 163, 227, 0.2);
+  color: var(--sf-color-primary);
 }
 
 .filterTabs {
@@ -216,22 +216,22 @@
 }
 
 .filterTab:hover {
-  border-color: #667eea;
-  color: #667eea;
+  border-color: var(--sf-color-primary);
+  color: var(--sf-color-primary);
 }
 
 .dark .filterTab {
-  border-color: rgba(167, 139, 250, 0.2);
+  border-color: rgba(78, 163, 227, 0.2);
   color: #a0aec0;
 }
 
 .dark .filterTab:hover {
-  border-color: #a78bfa;
-  color: #a78bfa;
+  border-color: var(--sf-color-primary);
+  color: var(--sf-color-primary);
 }
 
 .filterTabActive {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--sf-gradient-primary);
   border-color: transparent;
   color: #ffffff;
 }
@@ -242,7 +242,7 @@
 }
 
 .dark .filterTabActive {
-  background: linear-gradient(135deg, #a78bfa 0%, #f472b6 100%);
+  background: var(--sf-gradient-primary);
   border-color: transparent;
   color: #ffffff;
 }
@@ -271,14 +271,14 @@
   width: 40px;
   height: 40px;
   border: 3px solid #e2e8f0;
-  border-top-color: #667eea;
+  border-top-color: var(--sf-color-primary);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 
 .dark .spinner {
-  border-color: rgba(167, 139, 250, 0.2);
-  border-top-color: #a78bfa;
+  border-color: rgba(78, 163, 227, 0.2);
+  border-top-color: var(--sf-color-primary);
 }
 
 /* ===== Empty State ===== */
@@ -292,8 +292,8 @@
 }
 
 .dark .emptyState {
-  background: rgba(26, 31, 58, 0.8);
-  border-color: rgba(167, 139, 250, 0.12);
+  background: rgba(18, 34, 56, 0.8);
+  border-color: rgba(78, 163, 227, 0.12);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
 
@@ -354,18 +354,18 @@
 }
 
 .dark .loginPrompt {
-  background: rgba(26, 31, 58, 0.9);
-  border-color: rgba(167, 139, 250, 0.15);
+  background: rgba(18, 34, 56, 0.9);
+  border-color: rgba(78, 163, 227, 0.15);
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.4);
 }
 
 .loginIcon {
-  color: #667eea;
+  color: var(--sf-color-primary);
   margin-bottom: 1.5rem;
 }
 
 .dark .loginIcon {
-  color: #a78bfa;
+  color: var(--sf-color-primary);
 }
 
 .loginTitle {
@@ -400,7 +400,7 @@
 
 .linkSecondary {
   display: inline-block;
-  color: #667eea;
+  color: var(--sf-color-primary);
   font-size: 0.9rem;
   text-decoration: none;
   font-weight: 500;
@@ -411,7 +411,7 @@
 }
 
 .dark .linkSecondary {
-  color: #a78bfa;
+  color: var(--sf-color-primary);
 }
 
 /* ===== Buttons ===== */
@@ -420,7 +420,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--sf-gradient-primary);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -432,15 +432,15 @@
 
 .btnPrimary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 16px rgba(24, 133, 216, 0.4);
 }
 
 .dark .btnPrimary {
-  background: linear-gradient(135deg, #a78bfa 0%, #f472b6 100%);
+  background: var(--sf-gradient-primary);
 }
 
 .dark .btnPrimary:hover {
-  box-shadow: 0 4px 16px rgba(167, 139, 250, 0.4);
+  box-shadow: 0 4px 16px rgba(78, 163, 227, 0.4);
 }
 
 .btnSecondary {
@@ -449,8 +449,8 @@
   gap: 0.5rem;
   padding: 0.6rem 1.5rem;
   background: transparent;
-  color: #667eea;
-  border: 1px solid #667eea;
+  color: var(--sf-color-primary);
+  border: 1px solid var(--sf-color-primary);
   border-radius: 8px;
   font-size: 0.875rem;
   font-weight: 600;
@@ -459,16 +459,16 @@
 }
 
 .btnSecondary:hover {
-  background: rgba(102, 126, 234, 0.08);
+  background: rgba(24, 133, 216, 0.08);
 }
 
 .dark .btnSecondary {
-  color: #a78bfa;
-  border-color: #a78bfa;
+  color: var(--sf-color-primary);
+  border-color: var(--sf-color-primary);
 }
 
 .dark .btnSecondary:hover {
-  background: rgba(167, 139, 250, 0.1);
+  background: rgba(78, 163, 227, 0.1);
 }
 
 .btnOutline {
@@ -487,9 +487,9 @@
 }
 
 .btnOutline:hover {
-  border-color: #667eea;
-  color: #667eea;
-  background: rgba(102, 126, 234, 0.05);
+  border-color: var(--sf-color-primary);
+  color: var(--sf-color-primary);
+  background: rgba(24, 133, 216, 0.05);
 }
 
 .btnOutline:disabled {
@@ -509,13 +509,13 @@
 
 .dark .btnOutline {
   color: #a0aec0;
-  border-color: rgba(167, 139, 250, 0.2);
+  border-color: rgba(78, 163, 227, 0.2);
 }
 
 .dark .btnOutline:hover {
-  border-color: #a78bfa;
-  color: #a78bfa;
-  background: rgba(167, 139, 250, 0.08);
+  border-color: var(--sf-color-primary);
+  color: var(--sf-color-primary);
+  background: rgba(78, 163, 227, 0.08);
 }
 
 .btnOutlineWarning {
@@ -572,24 +572,24 @@
   height: 28px;
   border: none;
   border-radius: 6px;
-  background: rgba(102, 126, 234, 0.08);
-  color: #667eea;
+  background: rgba(24, 133, 216, 0.08);
+  color: var(--sf-color-primary);
   cursor: pointer;
   padding: 0;
   transition: all 0.2s;
 }
 
 .btnCopy:hover {
-  background: rgba(102, 126, 234, 0.16);
+  background: rgba(24, 133, 216, 0.16);
 }
 
 .dark .btnCopy {
-  background: rgba(167, 139, 250, 0.12);
-  color: #a78bfa;
+  background: rgba(78, 163, 227, 0.12);
+  color: var(--sf-color-primary);
 }
 
 .dark .btnCopy:hover {
-  background: rgba(167, 139, 250, 0.22);
+  background: rgba(78, 163, 227, 0.22);
 }
 
 /* ===== Order Cards ===== */
@@ -613,14 +613,14 @@
 }
 
 .dark .orderCard {
-  background: rgba(26, 31, 58, 0.8);
-  border-color: rgba(167, 139, 250, 0.12);
+  background: rgba(18, 34, 56, 0.8);
+  border-color: rgba(78, 163, 227, 0.12);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
 }
 
 .dark .orderCard:hover {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-  border-color: rgba(167, 139, 250, 0.2);
+  border-color: rgba(78, 163, 227, 0.2);
 }
 
 /* Card Header */
@@ -740,7 +740,7 @@
 }
 
 .dark .thumbnail {
-  border-color: rgba(167, 139, 250, 0.15);
+  border-color: rgba(78, 163, 227, 0.15);
 }
 
 .thumbnail img {
@@ -764,8 +764,8 @@
 }
 
 .dark .thumbnailMore {
-  background: rgba(167, 139, 250, 0.1);
-  color: #a78bfa;
+  background: rgba(78, 163, 227, 0.1);
+  color: var(--sf-color-primary);
 }
 
 .orderTotal {
@@ -787,11 +787,11 @@
 .totalValue {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #667eea;
+  color: var(--sf-color-primary);
 }
 
 .dark .totalValue {
-  color: #a78bfa;
+  color: var(--sf-color-primary);
 }
 
 /* Card Actions */
@@ -810,7 +810,7 @@
 }
 
 .dark .trackingSection {
-  border-top-color: rgba(167, 139, 250, 0.1);
+  border-top-color: rgba(78, 163, 227, 0.1);
 }
 
 .trackingInner {
@@ -819,7 +819,7 @@
 }
 
 .dark .trackingInner {
-  background: rgba(10, 14, 39, 0.4);
+  background: rgba(11, 26, 46, 0.4);
 }
 
 .trackingRow {
@@ -857,27 +857,27 @@
   gap: 0.4rem;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #6366f1;
+  color: var(--sf-color-primary);
   text-decoration: none;
   padding: 0.3rem 0.65rem;
-  border: 1px solid rgba(99, 102, 241, 0.35);
+  border: 1px solid rgba(24, 133, 216, 0.35);
   border-radius: 8px;
   transition: background 0.18s ease, border-color 0.18s ease;
 }
 
 .trackingLink:hover {
-  background: rgba(99, 102, 241, 0.08);
-  border-color: #6366f1;
+  background: rgba(24, 133, 216, 0.08);
+  border-color: var(--sf-color-primary);
 }
 
 .dark .trackingLink {
-  color: #a5b4fc;
-  border-color: rgba(165, 180, 252, 0.35);
+  color: var(--sf-color-primary-light);
+  border-color: rgba(78, 163, 227, 0.35);
 }
 
 .dark .trackingLink:hover {
-  background: rgba(165, 180, 252, 0.12);
-  border-color: #a5b4fc;
+  background: rgba(78, 163, 227, 0.12);
+  border-color: var(--sf-color-primary-light);
 }
 
 /* Expanded Details */
@@ -887,7 +887,7 @@
 }
 
 .dark .expandedSection {
-  border-top-color: rgba(167, 139, 250, 0.1);
+  border-top-color: rgba(78, 163, 227, 0.1);
 }
 
 .expandedInner {
@@ -904,7 +904,7 @@
 }
 
 .dark .detailBlock {
-  background: rgba(10, 14, 39, 0.4);
+  background: rgba(11, 26, 46, 0.4);
 }
 
 .detailBlock:first-child {
@@ -916,12 +916,12 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #667eea;
+  color: var(--sf-color-primary);
   margin: 0 0 0.75rem;
 }
 
 .dark .detailBlockTitle {
-  color: #a78bfa;
+  color: var(--sf-color-primary);
 }
 
 .detailContent p {
@@ -961,8 +961,8 @@
 }
 
 .dark .detailItem {
-  background: rgba(26, 31, 58, 0.5);
-  border-color: rgba(167, 139, 250, 0.08);
+  background: rgba(18, 34, 56, 0.5);
+  border-color: rgba(78, 163, 227, 0.08);
 }
 
 .detailItemImg {
@@ -1018,12 +1018,12 @@
 .detailItemPrice {
   font-weight: 700;
   font-size: 0.925rem;
-  color: #667eea;
+  color: var(--sf-color-primary);
   flex-shrink: 0;
 }
 
 .dark .detailItemPrice {
-  color: #a78bfa;
+  color: var(--sf-color-primary);
 }
 
 /* Summary Table */
@@ -1055,7 +1055,7 @@
 }
 
 .dark .summaryRowTotal {
-  border-top-color: rgba(167, 139, 250, 0.15);
+  border-top-color: rgba(78, 163, 227, 0.15);
   color: #f7fafc;
 }
 
@@ -1085,8 +1085,8 @@
 }
 
 .pageBtn:hover:not(:disabled) {
-  border-color: #667eea;
-  color: #667eea;
+  border-color: var(--sf-color-primary);
+  color: var(--sf-color-primary);
 }
 
 .pageBtn:disabled {
@@ -1095,14 +1095,14 @@
 }
 
 .dark .pageBtn {
-  background: rgba(26, 31, 58, 0.8);
-  border-color: rgba(167, 139, 250, 0.2);
+  background: rgba(18, 34, 56, 0.8);
+  border-color: rgba(78, 163, 227, 0.2);
   color: #a0aec0;
 }
 
 .dark .pageBtn:hover:not(:disabled) {
-  border-color: #a78bfa;
-  color: #a78bfa;
+  border-color: var(--sf-color-primary);
+  color: var(--sf-color-primary);
 }
 
 .pageNumbers {
@@ -1127,23 +1127,23 @@
 }
 
 .pageNumber:hover {
-  border-color: #667eea;
-  color: #667eea;
+  border-color: var(--sf-color-primary);
+  color: var(--sf-color-primary);
 }
 
 .dark .pageNumber {
-  background: rgba(26, 31, 58, 0.8);
-  border-color: rgba(167, 139, 250, 0.2);
+  background: rgba(18, 34, 56, 0.8);
+  border-color: rgba(78, 163, 227, 0.2);
   color: #a0aec0;
 }
 
 .dark .pageNumber:hover {
-  border-color: #a78bfa;
-  color: #a78bfa;
+  border-color: var(--sf-color-primary);
+  color: var(--sf-color-primary);
 }
 
 .pageNumberActive {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--sf-gradient-primary);
   border-color: transparent;
   color: #ffffff;
 }
@@ -1154,7 +1154,7 @@
 }
 
 .dark .pageNumberActive {
-  background: linear-gradient(135deg, #a78bfa 0%, #f472b6 100%);
+  background: var(--sf-gradient-primary);
   border-color: transparent;
   color: #ffffff;
 }
@@ -1223,7 +1223,7 @@
   }
 
   .dark .orderTotal {
-    border-top-color: rgba(167, 139, 250, 0.1);
+    border-top-color: rgba(78, 163, 227, 0.1);
   }
 
   .pagination {
@@ -1254,14 +1254,14 @@
 .btnReview {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 6px 12px;
-  border: 1px solid #c7d2fe; border-radius: 8px;
-  background: #eef2ff; color: #4f46e5;
+  border: 1px solid var(--sf-color-primary-light); border-radius: 8px;
+  background: var(--sf-color-primary-soft); color: var(--sf-color-primary);
   font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: inherit;
   transition: background 0.15s, border-color 0.15s;
 }
-.btnReview:hover { background: #e0e7ff; border-color: #a5b4fc; }
-.dark .btnReview { background: rgba(99, 102, 241, 0.16); border-color: #4338ca; color: #c7d2fe; }
-.dark .btnReview:hover { background: rgba(99, 102, 241, 0.26); }
+.btnReview:hover { background: var(--sf-color-primary-soft); border-color: var(--sf-color-primary-light); }
+.dark .btnReview { background: rgba(24, 133, 216, 0.16); border-color: var(--sf-color-primary-dark); color: var(--sf-color-primary-light); }
+.dark .btnReview:hover { background: rgba(24, 133, 216, 0.26); }
 .btnReview svg { color: #f59e0b; }
 
 .reviewStatusChip {
