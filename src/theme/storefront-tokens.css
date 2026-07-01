@@ -25,19 +25,19 @@
  * ========================================================================== */
 
 :root {
-  /* ---- Brand ------------------------------------------------------------- */
-  --sf-color-primary: #667eea;
-  --sf-color-primary-dark: #4c5ed0;
-  --sf-color-primary-light: #8b9af3;
+  /* ---- Brand (NEBM Blue + Gold) ----------------------------------------- */
+  --sf-color-primary: #1885d8;
+  --sf-color-primary-dark: #1069b0;
+  --sf-color-primary-light: #4ea3e3;
   --sf-color-primary-contrast: #ffffff;
-  --sf-color-primary-soft: rgba(102, 126, 234, 0.10); /* tinted fills/hovers */
-  --sf-color-secondary: #f093fb;
-  --sf-color-accent: #ec4899;
-  --sf-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --sf-gradient-primary-hover: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  --sf-color-primary-soft: rgba(24, 133, 216, 0.10); /* tinted fills/hovers */
+  --sf-color-secondary: #fa9c4c;
+  --sf-color-accent: #fa9c4c;
+  --sf-gradient-primary: linear-gradient(135deg, #1885d8 0%, #1069b0 100%);
+  --sf-gradient-primary-hover: linear-gradient(135deg, #1069b0 0%, #1885d8 100%);
 
   /* ---- Surfaces & text -------------------------------------------------- */
-  --sf-color-bg: #f5f7fa;
+  --sf-color-bg: #f4f7fb;
   --sf-color-surface: #ffffff;
   --sf-color-surface-2: #f3f4f6;       /* subtle panels, thumbnails, tracks */
   --sf-color-surface-hover: #f9fafb;
@@ -64,7 +64,7 @@
   --sf-color-compare: #9ca3af;         /* struck-through original price */
   --sf-color-discount: #15803d;        /* "% off" + savings */
   --sf-color-discount-bg: #dcfce7;
-  --sf-color-badge-bg: #eef2ff;        /* neutral chip background */
+  --sf-color-badge-bg: rgba(24, 133, 216, 0.08); /* brand-tinted chip background */
 
   /* ---- Radius ----------------------------------------------------------- */
   --sf-radius-sm: 6px;
@@ -90,7 +90,7 @@
   --sf-shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.08);
   --sf-shadow-md: 0 6px 20px rgba(15, 23, 42, 0.10);
   --sf-shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.14);
-  --sf-shadow-focus: 0 0 0 3px rgba(102, 126, 234, 0.45);
+  --sf-shadow-focus: 0 0 0 3px rgba(24, 133, 216, 0.45);
 
   /* ---- Typography ------------------------------------------------------- */
   --sf-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -130,20 +130,20 @@
  * DARK MODE  —  overrides only the colour tokens; structural tokens persist.
  * ======================================================================== */
 body.dark {
-  --sf-color-primary: #a855f7;
-  --sf-color-primary-dark: #9333ea;
-  --sf-color-primary-light: #c084fc;
+  --sf-color-primary: #4ea3e3;
+  --sf-color-primary-dark: #1885d8;
+  --sf-color-primary-light: #7bbced;
   --sf-color-primary-contrast: #ffffff;
-  --sf-color-primary-soft: rgba(168, 85, 247, 0.16);
-  --sf-color-secondary: #ec4899;
-  --sf-color-accent: #f472b6;
-  --sf-gradient-primary: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-  --sf-gradient-primary-hover: linear-gradient(135deg, #ec4899 0%, #a855f7 100%);
+  --sf-color-primary-soft: rgba(78, 163, 227, 0.16);
+  --sf-color-secondary: #fa9c4c;
+  --sf-color-accent: #fa9c4c;
+  --sf-gradient-primary: linear-gradient(135deg, #4ea3e3 0%, #1885d8 100%);
+  --sf-gradient-primary-hover: linear-gradient(135deg, #1885d8 0%, #4ea3e3 100%);
 
-  --sf-color-bg: #0a0e27;
-  --sf-color-surface: #1a1f3a;
-  --sf-color-surface-2: #2d3350;
-  --sf-color-surface-hover: #242a47;
+  --sf-color-bg: #0b1a2e;
+  --sf-color-surface: #122238;
+  --sf-color-surface-2: #1b2c44;
+  --sf-color-surface-hover: #17273c;
   --sf-color-text: #f5f7fa;
   --sf-color-text-secondary: #cbd5e1;
   --sf-color-text-muted: #94a3b8;
@@ -165,13 +165,13 @@ body.dark {
   --sf-color-compare: #94a3b8;
   --sf-color-discount: #4ade80;
   --sf-color-discount-bg: rgba(34, 197, 94, 0.16);
-  --sf-color-badge-bg: rgba(168, 85, 247, 0.16);
+  --sf-color-badge-bg: rgba(78, 163, 227, 0.16);
 
   --sf-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
   --sf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.45);
   --sf-shadow-md: 0 6px 20px rgba(0, 0, 0, 0.5);
   --sf-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
-  --sf-shadow-focus: 0 0 0 3px rgba(168, 85, 247, 0.5);
+  --sf-shadow-focus: 0 0 0 3px rgba(78, 163, 227, 0.5);
 }
 
 /* Respect users who prefer reduced motion — shared, applies storefront-wide. */

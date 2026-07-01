@@ -84,13 +84,13 @@
 }
 
 .light .navItem.active {
-  color: #6366f1;
-  background: rgba(99, 102, 241, 0.08);
+  color: var(--sf-color-primary);
+  background: rgba(24, 133, 216, 0.08);
 }
 
 .dark .navItem.active {
-  color: #818cf8;
-  background: rgba(99, 102, 241, 0.12);
+  color: var(--sf-color-primary-light);
+  background: rgba(24, 133, 216, 0.12);
 }
 
 /* ===== Icon Wrap ===== */
@@ -167,11 +167,11 @@
 }
 
 .light .navItem:focus-visible {
-  outline-color: #6366f1;
+  outline-color: var(--sf-color-primary);
 }
 
 .dark .navItem:focus-visible {
-  outline-color: #818cf8;
+  outline-color: var(--sf-color-primary-light);
 }
 
 /* ===== Small phones ===== */

@@ -47,26 +47,26 @@ class ErrorBoundary extends React.Component {
     const dark = isDarkTheme();
     const palette = dark
       ? {
-          bg: "#0a0e27",
-          card: "#1a1f3a",
-          border: "rgba(168, 85, 247, 0.25)",
+          bg: "#0b1a2e",
+          card: "#122238",
+          border: "rgba(78, 163, 227, 0.25)",
           heading: "#f5f7fa",
           text: "#a0aec0",
           detailsBg: "#0f1430",
           detailsText: "#f4a9a9",
-          primaryGradient: "linear-gradient(135deg, #a855f7 0%, #ec4899 100%)",
+          primaryGradient: "var(--sf-gradient-primary)",
           ghostBorder: "rgba(255,255,255,0.22)",
           ghostText: "#e2e8f0",
         }
       : {
           bg: "#f5f7fa",
           card: "#ffffff",
-          border: "rgba(102, 126, 234, 0.2)",
+          border: "rgba(24, 133, 216, 0.2)",
           heading: "#1a202c",
           text: "#4a5568",
           detailsBg: "#f7f8fb",
           detailsText: "#b4232b",
-          primaryGradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+          primaryGradient: "var(--sf-gradient-primary)",
           ghostBorder: "rgba(26,32,44,0.18)",
           ghostText: "#1a202c",
         };
@@ -106,7 +106,7 @@ class ErrorBoundary extends React.Component {
             textAlign: "center",
             boxShadow: dark
               ? "0 20px 60px rgba(0,0,0,0.45)"
-              : "0 20px 60px rgba(102,126,234,0.15)",
+              : "0 20px 60px rgba(24,133,216,0.15)",
           }}
         >
           <div style={{ fontSize: "52px", lineHeight: 1, marginBottom: "16px" }}>

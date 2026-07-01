@@ -44,11 +44,11 @@
   --sm-text-muted: #56607a;
   --sm-text-faint: #9aa3b6;
   --sm-border: #ecf0f6;
-  --sm-accent: #667eea;
-  --sm-accent-soft: rgba(102, 126, 234, 0.1);
+  --sm-accent: var(--sf-color-primary);
+  --sm-accent-soft: rgba(24, 133, 216, 0.1);
   --sm-chip-bg: #f0f2f8;
   --sm-chip-fg: #56607a;
-  --sm-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --sm-hero: var(--sf-gradient-primary);
   --sm-shadow: 0 14px 48px rgba(16, 24, 40, 0.2);
 }
 
@@ -60,11 +60,11 @@
   --sm-text-muted: #9aa6bf;
   --sm-text-faint: #6b7490;
   --sm-border: rgba(255, 255, 255, 0.08);
-  --sm-accent: #b794f4;
-  --sm-accent-soft: rgba(168, 85, 247, 0.18);
+  --sm-accent: var(--sf-color-primary);
+  --sm-accent-soft: rgba(78, 163, 227, 0.18);
   --sm-chip-bg: rgba(255, 255, 255, 0.07);
   --sm-chip-fg: #c0c8da;
-  --sm-hero: linear-gradient(135deg, #4c1d95 0%, #7c3aed 100%);
+  --sm-hero: linear-gradient(135deg, var(--sf-color-primary-dark) 0%, var(--sf-color-primary) 100%);
   --sm-shadow: 0 14px 48px rgba(0, 0, 0, 0.55);
 }
 
@@ -249,7 +249,7 @@
   border-radius: 12px;
   border: none;
   background: #ffffff;
-  color: #6d28d9;
+  color: var(--sf-color-primary);
   font-size: 0.88rem;
   font-weight: 700;
   cursor: pointer;
@@ -442,8 +442,8 @@
 }
 
 .tonePink {
-  background: rgba(236, 72, 153, 0.13);
-  color: #ec4899;
+  background: rgba(250, 156, 76, 0.13);
+  color: var(--sf-color-accent);
 }
 
 .panel[data-theme="dark"] .toneIndigo {
@@ -459,7 +459,7 @@
   color: #fbbf24;
 }
 .panel[data-theme="dark"] .tonePink {
-  color: #f472b6;
+  color: var(--sf-color-accent);
 }
 
 /* -------------------- Category accordion -------------------- */
@@ -665,7 +665,7 @@
 }
 
 .panel[data-theme="dark"] .toggleSwitch {
-  background: #7c3aed;
+  background: var(--sf-color-primary);
 }
 
 .toggleKnob {

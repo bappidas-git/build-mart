@@ -1,7 +1,7 @@
 .container { max-width: 1200px; margin: 0 auto; padding: 24px 16px 80px; min-height: calc(100vh - 200px); }
 .dark { color: #e2e8f0; }
 .breadcrumb { display: flex; gap: 8px; align-items: center; margin-bottom: 24px; font-size: 0.875rem; color: #64748b; }
-.breadcrumb a { color: #667eea; text-decoration: none; }
+.breadcrumb a { color: var(--sf-color-primary); text-decoration: none; }
 /* Touch-target sizing: grow the breadcrumb hit area without moving the row */
 @media (max-width: 768px) {
   .breadcrumb a { display: inline-block; padding: 10px 2px; margin: -10px 0; }
@@ -12,10 +12,10 @@
 .stepIndicator { display: flex; justify-content: center; align-items: center; margin-bottom: 32px; gap: 0; }
 .step { display: flex; align-items: center; gap: 8px; }
 .stepCircle { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #d1d5db; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 600; color: #94a3b8; transition: all 0.3s; flex-shrink: 0; }
-.activeStep .stepCircle { border-color: #667eea; background: #667eea; color: #fff; }
+.activeStep .stepCircle { border-color: var(--sf-color-primary); background: var(--sf-color-primary); color: #fff; }
 .completedStep .stepCircle { border-color: #10b981; background: #10b981; color: #fff; }
 .stepLabel { font-size: 0.85rem; font-weight: 500; color: #94a3b8; white-space: nowrap; }
-.activeStep .stepLabel { color: #667eea; }
+.activeStep .stepLabel { color: var(--sf-color-primary); }
 .completedStep .stepLabel { color: #10b981; }
 .stepLine { width: 40px; height: 2px; background: #d1d5db; margin: 0 8px; }
 .completedStep .stepLine { background: #10b981; }
@@ -39,7 +39,7 @@
 .cartItemInfo { flex: 1; min-width: 0; }
 .cartItemInfo h4 { font-size: 0.9rem; font-weight: 600; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .variant { font-size: 0.8rem; color: #94a3b8; }
-.itemPrice { font-size: 0.85rem; font-weight: 500; color: #667eea; }
+.itemPrice { font-size: 0.85rem; font-weight: 500; color: var(--sf-color-primary); }
 .quantityControls { display: flex; align-items: center; gap: 0; border: 1px solid #d1d5db; border-radius: 6px; overflow: hidden; }
 .dark .quantityControls { border-color: #475569; }
 .quantityControls button { width: 28px; height: 28px; border: none; background: #f1f5f9; cursor: pointer; font-size: 1rem; font-weight: 600; color: inherit; }
@@ -65,7 +65,7 @@
    the Apply button is pushed past the 320px viewport edge. */
 .couponForm input { flex: 1; min-width: 0; padding: 8px 12px; border-radius: 8px; border: 1px solid #d1d5db; font-size: 0.9rem; background: #fff; font-family: inherit; }
 .dark .couponForm input { background: #1e293b; border-color: #475569; color: #e2e8f0; }
-.couponForm button { padding: 8px 20px; border-radius: 8px; border: none; background: #667eea; color: #fff; font-weight: 600; cursor: pointer; font-family: inherit; }
+.couponForm button { padding: 8px 20px; border-radius: 8px; border: none; background: var(--sf-color-primary); color: #fff; font-weight: 600; cursor: pointer; font-family: inherit; }
 .couponApplied { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; border-radius: 8px; background: #ecfdf5; color: #059669; }
 .dark .couponApplied { background: #064e3b; color: #6ee7b7; }
 .couponApplied button { background: none; border: none; color: #ef4444; cursor: pointer; font-weight: 500; font-family: inherit; }
@@ -84,13 +84,13 @@
 .savedAddresses h3 { font-size: 1rem; font-weight: 600; margin-bottom: 12px; }
 .addressCard { display: flex; gap: 12px; padding: 14px; border-radius: 10px; border: 2px solid #e2e8f0; cursor: pointer; margin-bottom: 8px; transition: border-color 0.2s; }
 .dark .addressCard { border-color: #334155; }
-.selectedAddress { border-color: #667eea; background: #eef2ff; }
-.dark .selectedAddress { border-color: #a855f7; background: rgba(168,85,247,0.1); }
+.selectedAddress { border-color: var(--sf-color-primary); background: var(--sf-color-primary-soft); }
+.dark .selectedAddress { border-color: var(--sf-color-primary); background: rgba(78,163,227,0.1); }
 .addressCard input { flex-shrink: 0; margin-top: 4px; }
 .addressCard strong { display: block; margin-bottom: 4px; font-size: 0.9rem; }
 .addressCard p { font-size: 0.85rem; color: #64748b; margin: 0; }
 .dark .addressCard p { color: #94a3b8; }
-.newAddressBtn { background: none; border: 2px dashed #d1d5db; border-radius: 10px; padding: 12px; width: 100%; cursor: pointer; color: #667eea; font-weight: 600; font-family: inherit; font-size: 0.9rem; }
+.newAddressBtn { background: none; border: 2px dashed #d1d5db; border-radius: 10px; padding: 12px; width: 100%; cursor: pointer; color: var(--sf-color-primary); font-weight: 600; font-family: inherit; font-size: 0.9rem; }
 
 .addressForm { margin-bottom: 20px; }
 .formRow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -100,7 +100,7 @@
 .dark .formGroup label { color: #94a3b8; }
 .formGroup input, .formGroup select { padding: 10px 12px; border-radius: 8px; border: 1px solid #d1d5db; font-size: 0.9rem; background: #fff; font-family: inherit; }
 .dark .formGroup input, .dark .formGroup select { background: #0f172a; border-color: #475569; color: #e2e8f0; }
-.formGroup input:focus, .formGroup select:focus { outline: none; border-color: #667eea; }
+.formGroup input:focus, .formGroup select:focus { outline: none; border-color: var(--sf-color-primary); }
 .inputError { border-color: #ef4444 !important; }
 .fieldError { color: #ef4444; font-size: 0.75rem; }
 .readOnly { background: #f1f5f9 !important; color: #64748b !important; cursor: not-allowed; }
@@ -110,8 +110,8 @@
 .shippingMethods { display: flex; flex-direction: column; gap: 8px; }
 .shippingOption { display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 10px; border: 2px solid #e2e8f0; cursor: pointer; transition: border-color 0.2s; }
 .dark .shippingOption { border-color: #334155; }
-.selectedShipping { border-color: #667eea; background: #eef2ff; }
-.dark .selectedShipping { border-color: #a855f7; background: rgba(168,85,247,0.1); }
+.selectedShipping { border-color: var(--sf-color-primary); background: var(--sf-color-primary-soft); }
+.dark .selectedShipping { border-color: var(--sf-color-primary); background: rgba(78,163,227,0.1); }
 .shippingOption input { flex-shrink: 0; }
 .shippingOption strong { display: block; font-size: 0.9rem; }
 .shippingOption p { font-size: 0.8rem; color: #64748b; margin: 2px 0 0; }
@@ -124,8 +124,8 @@
 .paymentMethods { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
 .paymentOption { display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 10px; border: 2px solid #e2e8f0; cursor: pointer; transition: border-color 0.2s; }
 .dark .paymentOption { border-color: #334155; }
-.selectedPayment { border-color: #667eea; background: #eef2ff; }
-.dark .selectedPayment { border-color: #a855f7; background: rgba(168,85,247,0.1); }
+.selectedPayment { border-color: var(--sf-color-primary); background: var(--sf-color-primary-soft); }
+.dark .selectedPayment { border-color: var(--sf-color-primary); background: rgba(78,163,227,0.1); }
 .paymentOption input { flex-shrink: 0; }
 .paymentIcon { font-size: 1.3rem; }
 .paymentOption strong { display: block; font-size: 0.9rem; }
@@ -155,7 +155,7 @@
 .dark .reviewBlock p { color: #94a3b8; }
 .reviewBlockHeader { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .reviewBlockHeader h3 { font-size: 0.95rem; font-weight: 600; margin: 0; }
-.reviewBlockHeader button { background: none; border: none; color: #667eea; font-weight: 600; font-size: 0.85rem; cursor: pointer; font-family: inherit; padding: 0; }
+.reviewBlockHeader button { background: none; border: none; color: var(--sf-color-primary); font-weight: 600; font-size: 0.85rem; cursor: pointer; font-family: inherit; padding: 0; }
 .reviewName { font-weight: 600; color: inherit !important; }
 .reviewShippingCost { font-weight: 700; color: #10b981 !important; }
 
@@ -164,8 +164,8 @@
 .backBtn { padding: 12px 24px; border-radius: 10px; border: 2px solid #d1d5db; background: transparent; font-weight: 600; cursor: pointer; font-size: 0.95rem; color: inherit; font-family: inherit; }
 .dark .backBtn { border-color: #475569; }
 .backBtn:disabled { opacity: 0.5; cursor: not-allowed; }
-.primaryBtn { flex: 1; padding: 12px 24px; border-radius: 10px; border: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s; font-family: inherit; text-decoration: none; display: inline-block; text-align: center; }
-.primaryBtn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3); }
+.primaryBtn { flex: 1; padding: 12px 24px; border-radius: 10px; border: none; background: var(--sf-gradient-primary); color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s; font-family: inherit; text-decoration: none; display: inline-block; text-align: center; }
+.primaryBtn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(24, 133, 216, 0.3); }
 .primaryBtn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
 /* Sidebar.
@@ -197,26 +197,26 @@
 .dark .emptyState p { color: #94a3b8; }
 
 /* ── Store Credit (Payment step) ─────────────────────────────────────────── */
-.storeCreditSection { padding: 16px; border-radius: 10px; background: #f5f3ff; border: 1px solid #ddd6fe; margin-bottom: 20px; }
-.dark .storeCreditSection { background: #2e1065; border-color: #5b21b6; }
+.storeCreditSection { padding: 16px; border-radius: 10px; background: var(--sf-color-primary-soft); border: 1px solid var(--sf-color-primary-light); margin-bottom: 20px; }
+.dark .storeCreditSection { background: var(--sf-color-primary-soft); border-color: var(--sf-color-primary-dark); }
 .storeCreditHeader { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .storeCreditInfo { display: flex; align-items: center; gap: 10px; }
 .storeCreditWalletIcon { font-size: 1.5rem; }
 .storeCreditSection h3 { font-size: 0.95rem; font-weight: 600; margin: 0; }
-.storeCreditBalance { font-size: 0.85rem; color: #6d28d9; margin: 2px 0 0; }
-.dark .storeCreditBalance { color: #c4b5fd; }
-.storeCreditToggle { display: inline-flex; align-items: center; gap: 8px; font-size: 0.875rem; font-weight: 600; color: #6d28d9; cursor: pointer; }
-.dark .storeCreditToggle { color: #c4b5fd; }
-.storeCreditToggle input { width: 16px; height: 16px; accent-color: #7c3aed; cursor: pointer; }
-.storeCreditApply { margin-top: 14px; padding-top: 14px; border-top: 1px dashed #c4b5fd; }
-.dark .storeCreditApply { border-top-color: #6d28d9; }
+.storeCreditBalance { font-size: 0.85rem; color: var(--sf-color-primary-dark); margin: 2px 0 0; }
+.dark .storeCreditBalance { color: var(--sf-color-primary-light); }
+.storeCreditToggle { display: inline-flex; align-items: center; gap: 8px; font-size: 0.875rem; font-weight: 600; color: var(--sf-color-primary-dark); cursor: pointer; }
+.dark .storeCreditToggle { color: var(--sf-color-primary-light); }
+.storeCreditToggle input { width: 16px; height: 16px; accent-color: var(--sf-color-primary); cursor: pointer; }
+.storeCreditApply { margin-top: 14px; padding-top: 14px; border-top: 1px dashed var(--sf-color-primary-light); }
+.dark .storeCreditApply { border-top-color: var(--sf-color-primary-dark); }
 .storeCreditAmountRow { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
 .storeCreditAmountRow label { font-size: 0.85rem; font-weight: 500; }
 .storeCreditInputWrap { display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid #d1d5db; border-radius: 8px; padding: 4px 4px 4px 10px; }
 .dark .storeCreditInputWrap { background: #1e293b; border-color: #475569; }
 .storeCreditCurrency { color: #6b7280; font-weight: 600; }
 .storeCreditInputWrap input { width: 110px; border: none; outline: none; font-size: 0.9rem; background: transparent; font-family: inherit; color: inherit; }
-.storeCreditInputWrap button { padding: 6px 12px; border: none; border-radius: 6px; background: #7c3aed; color: #fff; font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: inherit; }
+.storeCreditInputWrap button { padding: 6px 12px; border: none; border-radius: 6px; background: var(--sf-color-primary); color: #fff; font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: inherit; }
 .storeCreditSummaryRow { display: flex; justify-content: space-between; font-size: 0.875rem; padding: 4px 0; }
 .storeCreditApplied { font-weight: 600; color: #059669; }
 .dark .storeCreditApplied { color: #6ee7b7; }

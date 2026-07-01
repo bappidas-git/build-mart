@@ -126,7 +126,7 @@ const RatingStars = ({ value = 0, count }) => {
 // ---------------------------------------------------------------------------
 const HeartIcon = ({ filled }) =>
   filled ? (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="#ec4899" stroke="#ec4899" strokeWidth="2">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="#fa9c4c" stroke="#fa9c4c" strokeWidth="2">
       <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" />
     </svg>
   ) : (

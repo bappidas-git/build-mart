@@ -13,7 +13,7 @@ const defaultBanners = [
     subtitle: "Up to 70% Off on Electronics",
     cta: "Shop Now",
     link: "/products?category=electronics",
-    gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    gradient: "linear-gradient(135deg, #1885d8 0%, #1069b0 100%)",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const defaultBanners = [
     subtitle: "Discover Latest Fashion Trends",
     cta: "Explore",
     link: "/products?category=clothing",
-    gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+    gradient: "linear-gradient(135deg, #fa9c4c 0%, #fa9c4c 100%)",
   },
   {
     id: 3,
@@ -44,8 +44,8 @@ const categoryIconMap = {
 };
 
 const categoryColorMap = {
-  electronics: "#667eea",
-  clothing: "#764ba2",
+  electronics: "#1885d8",
+  clothing: "#1069b0",
   "home-garden": "#4caf50",
   "sports-fitness": "#ff9800",
   books: "#e91e63",
@@ -141,7 +141,7 @@ const HeroSection = () => {
   );
 
   const getCategoryColor = (slug) => {
-    return categoryColorMap[slug] || "#667eea";
+    return categoryColorMap[slug] || "#1885d8";
   };
 
   return (
