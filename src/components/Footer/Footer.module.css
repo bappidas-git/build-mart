@@ -204,6 +204,16 @@
   letter-spacing: -0.01em;
 }
 
+/* Brand logo image on the dark footer. Fixed height + width:auto keeps the
+   aspect ratio; the explicit <img> width/height attributes reserve space so
+   loading the remote logo causes no layout shift. */
+.brandLogo {
+  height: 48px;
+  width: auto;
+  display: block;
+  margin: 0 0 16px;
+}
+
 .aboutText {
   font-size: 0.9rem;
   line-height: 1.7;

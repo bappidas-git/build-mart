@@ -1,7 +1,15 @@
 // App Info (override via .env)
-export const APP_NAME = process.env.REACT_APP_NAME || "My Store";
+export const APP_NAME = process.env.REACT_APP_NAME || "North East Build Mart";
 export const APP_TAGLINE = "Quality products, great prices";
 export const APP_DESCRIPTION = "Shop with confidence – fast delivery, secure payments, easy returns";
+
+// Brand assets — single source of truth so Header/Footer/Admin import one value.
+// Main logo works on both light and dark backgrounds; the icon is a square mark
+// used for the favicon, loader splash, mobile header and other small-icon spots.
+export const LOGO_URL =
+  "https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889446/logo_fnscna.png";
+export const LOGO_ICON_URL =
+  "https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889689/icon_bvsukn.png";
 
 // Routes
 export const ROUTES = {

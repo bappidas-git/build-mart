@@ -153,27 +153,21 @@
   border-color: #ffffff;
 }
 
-.logoIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, #febd69, #f3a847);
-  border-radius: 6px;
+/* Full wordmark (desktop/tablet). A fixed height with width:auto preserves the
+   aspect ratio, while the explicit width/height attributes on the <img> reserve
+   space so loading the remote logo causes no layout shift. The main logo reads
+   on both the light and dark header backgrounds. */
+.logoImg {
+  height: 40px;
+  width: auto;
+  display: block;
 }
 
-.logoCartIcon {
-  font-size: 20px !important;
-  color: #131921;
-}
-
-.logoText {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: #ffffff;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
+/* Compact square mark used on mobile. */
+.logoIconImg {
+  height: 30px;
+  width: auto;
+  display: block;
 }
 
 /* ---- Search Bar ---- */
@@ -631,18 +625,8 @@
     gap: 8px;
   }
 
-  .logoIcon {
-    width: 28px;
+  .logoIconImg {
     height: 28px;
-    border-radius: 5px;
-  }
-
-  .logoCartIcon {
-    font-size: 16px !important;
-  }
-
-  .logoText {
-    font-size: 1.1rem;
   }
 
   .logo {

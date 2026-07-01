@@ -5,6 +5,7 @@ import { useDealsConfig } from "../../context/DealsConfigContext";
 import apiService from "../../services/api";
 import {
   APP_NAME,
+  LOGO_URL,
   SUPPORT_EMAIL,
   SUPPORT_PHONE,
   SUPPORT_ADDRESS,
@@ -175,7 +176,15 @@ const Footer = () => {
           <div className={styles.footerGrid}>
             {/* Column 1: About */}
             <div className={styles.footerCol}>
-              <h4 className={styles.brandName}>{APP_NAME}</h4>
+              {/* Main logo — designed to read on the dark footer background. */}
+              <img
+                src={LOGO_URL}
+                alt="North East Build Mart"
+                aria-label="North East Build Mart"
+                className={styles.brandLogo}
+                width={77}
+                height={48}
+              />
               <p className={styles.aboutText}>
                 Your one-stop destination for quality products at unbeatable
                 prices. We are committed to delivering the best online shopping

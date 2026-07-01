@@ -1,28 +1,28 @@
 {
-  "short_name": "My Store",
-  "name": "My Store - Online Shopping",
+  "short_name": "NE Build Mart",
+  "name": "North East Build Mart",
   "icons": [
     {
-      "src": "favicon.svg",
-      "type": "image/svg+xml",
-      "sizes": "any",
+      "src": "https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889689/icon_bvsukn.png",
+      "type": "image/png",
+      "sizes": "512x512",
       "purpose": "any"
     },
     {
       "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
       "sizes": "512x512",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#667eea",
-  "background_color": "#f5f7fa"
+  "theme_color": "#1885d8",
+  "background_color": "#ffffff"
 }

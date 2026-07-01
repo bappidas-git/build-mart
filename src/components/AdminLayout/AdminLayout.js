@@ -36,7 +36,8 @@ import useAdminBodyClass from "../../hooks/useAdminBodyClass";
 import apiService from "../../services/api";
 import Swal from "sweetalert2";
 
-const LOGO = "https://placehold.co/160x40/4f46e5/ffffff?text=LOGO";
+const LOGO =
+  "https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889446/logo_fnscna.png";
 
 const drawerWidth = 260;
 
@@ -334,7 +335,9 @@ const AdminLayout = () => {
       >
         <img
           src={LOGO}
-          alt={process.env.REACT_APP_NAME || "Admin Panel"}
+          alt="North East Build Mart"
+          width={51}
+          height={32}
           style={{ height: 32, width: "auto" }}
         />
       </Box>
