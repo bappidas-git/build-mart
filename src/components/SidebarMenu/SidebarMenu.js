@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { Icon as Iconify } from "@iconify/react";
 import {
-  TrendingUp,
-  LocalFireDepartment,
-  AutoAwesome,
-  EmojiEvents,
-  CardGiftcard,
   GridViewRounded,
-  ShoppingBagOutlined,
+  CategoryOutlined,
+  AutoAwesome,
+  LocalOfferOutlined,
+  RequestQuoteOutlined,
   FavoriteBorder,
   PersonOutline,
   Logout as LogoutIcon,
@@ -17,73 +16,56 @@ import {
   LightModeOutlined,
   ChevronRight,
   Close as CloseIcon,
-  ShoppingCartRounded,
-  // Category glyphs
-  DevicesOther,
-  LaptopMac,
-  HeadphonesOutlined,
-  Smartphone,
-  CheckroomOutlined,
-  HomeOutlined,
-  FitnessCenter,
-  MenuBook,
-  SpaOutlined,
-  RestaurantOutlined,
-  Woman,
-  WatchOutlined,
-  ToysOutlined,
-  LocalGroceryStoreOutlined,
-  ChairOutlined,
-  CategoryOutlined,
 } from "@mui/icons-material";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../hooks/useAuth";
 import { useDealsConfig } from "../../context/DealsConfigContext";
 import apiService from "../../services/api";
 import { categoryParam } from "../../utils/categories";
-import { APP_NAME } from "../../utils/constants";
+import { APP_NAME, LOGO_ICON_URL } from "../../utils/constants";
 import styles from "./SidebarMenu.module.css";
 
-// Categories are admin-managed, so we map a name to a representative glyph by
-// keyword and fall back to a generic icon — it never breaks on an unseen name.
-// Order matters: more specific rules come first (e.g. "women" before "men").
+// Each NEBM top-level category maps to a fitting Iconify (Material Design Icons)
+// glyph by keyword, with a neutral fallback so an admin-added / unseen name never
+// breaks the menu. Order matters: specific rules come before generic ones (e.g.
+// the "polycarbonate"/"frp" sheet rules win before the generic "sheet" rule).
 const CATEGORY_ICON_RULES = [
-  [/laptop|computer|\bpc\b/i, LaptopMac],
-  [/audio|headphone|speaker|earbud|sound/i, HeadphonesOutlined],
-  [/phone|mobile|tablet/i, Smartphone],
-  [/electronic|gadget|device|camera|gaming|tech/i, DevicesOther],
-  [/book|stationer|magazine/i, MenuBook],
-  [/sport|fitness|gym|outdoor|cycle/i, FitnessCenter],
-  [/kitchen|dining|cookware|appliance/i, RestaurantOutlined],
-  [/home|garden|furnitur|decor|living/i, HomeOutlined],
-  [/chair|sofa|table|bed/i, ChairOutlined],
-  [/beauty|cosmetic|grooming|skincare|fragrance|personal care/i, SpaOutlined],
-  [/saree|kurta|ethnic|women|woman|lehenga/i, Woman],
-  [/cloth|fashion|apparel|wear|shirt|dress|footwear|shoe|\bmen/i, CheckroomOutlined],
-  [/watch|jewel|accessor/i, WatchOutlined],
-  [/toy|kids|baby|child/i, ToysOutlined],
-  [/grocery|food|fresh|snack/i, LocalGroceryStoreOutlined],
+  [/louver/i, "mdi:view-day-outline"],
+  [/polycarbonate/i, "mdi:window-shutter"],
+  [/frp|fibre|fiber|corrugat/i, "mdi:sine-wave"],
+  [/waterproof/i, "mdi:water-off-outline"],
+  [/tile/i, "mdi:view-grid-outline"],
+  [/door/i, "mdi:door"],
+  [/hardware|tool|fastener|hinge|handle|\block/i, "mdi:tools"],
+  [/plumb|pipe|water\s*tank/i, "mdi:pipe"],
+  [/bath|shower|faucet|tap|sanitary|basin|wash/i, "mdi:shower-head"],
+  [/cement|concrete/i, "mdi:sack"],
+  [/steel|\brod|rebar|\btmt/i, "mdi:view-week-outline"],
+  [/special/i, "mdi:star-four-points-outline"],
+  [/sheet|panel/i, "mdi:layers-outline"],
 ];
+
+const FALLBACK_CATEGORY_ICON = "mdi:shape-outline";
 
 const getCategoryIcon = (name = "") => {
   const rule = CATEGORY_ICON_RULES.find(([re]) => re.test(name));
-  return rule ? rule[1] : CategoryOutlined;
+  return rule ? rule[1] : FALLBACK_CATEGORY_ICON;
 };
 
-// Curated quick links shown above the category tree.
+// Enquiry-correct discovery shortcuts shown above the category tree — no
+// cart/deal-timer/coupon language. "Special Products" drops out when the admin
+// disables the Special Offers page.
 const QUICK_LINKS = [
-  { label: "Trending Now", icon: TrendingUp, tone: "toneIndigo", to: "/products?filter=trending" },
-  { label: "Today's Deals", icon: LocalFireDepartment, tone: "toneRed", to: "/special-offers", badge: "HOT" },
-  { label: "New Arrivals", icon: AutoAwesome, tone: "toneViolet", to: "/products?sort=newest" },
-  { label: "Best Sellers", icon: EmojiEvents, tone: "toneAmber", to: "/products?filter=best-sellers" },
-  { label: "Special Offers", icon: CardGiftcard, tone: "tonePink", to: "/special-offers" },
+  { label: "Featured", icon: AutoAwesome, tone: "toneViolet", to: "/products?sort=featured" },
+  { label: "Special Products", icon: LocalOfferOutlined, tone: "tonePink", to: "/special-offers" },
+  { label: "All Products", icon: GridViewRounded, tone: "toneIndigo", to: "/products" },
 ];
 
 const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
   const navigate = useNavigate();
   const { isDarkMode, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
-  // Drop the deals quick links when the admin disables the Special Offers page.
+  // Drop the Special Products quick link when the admin disables the page.
   const { enabled: dealsEnabled } = useDealsConfig();
   const quickLinks = useMemo(
     () => (dealsEnabled ? QUICK_LINKS : QUICK_LINKS.filter((l) => l.to !== "/special-offers")),
@@ -265,11 +247,7 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
           <Icon />
         </span>
         <span className={styles.rowLabel}>{item.label}</span>
-        {item.badge ? (
-          <span className={styles.badge}>{item.badge}</span>
-        ) : (
-          <ChevronRight className={styles.rowArrow} />
-        )}
+        <ChevronRight className={styles.rowArrow} />
       </motion.button>
     );
   };
@@ -307,7 +285,11 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
               <div className={styles.heroTop}>
                 <div className={styles.brand}>
                   <span className={styles.brandIcon}>
-                    <ShoppingCartRounded />
+                    <img
+                      src={LOGO_ICON_URL}
+                      alt={APP_NAME}
+                      className={styles.brandLogoImg}
+                    />
                   </span>
                   <span className={styles.brandName}>{APP_NAME}</span>
                 </div>
@@ -351,7 +333,7 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
                   <div className={styles.guestText}>
                     <span className={styles.guestHi}>Welcome</span>
                     <span className={styles.guestSub}>
-                      Sign in for orders, offers &amp; more
+                      Sign in to manage your enquiries &amp; wishlist
                     </span>
                   </div>
                   <button className={styles.signInBtn} onClick={handleSignIn}>
@@ -379,7 +361,7 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
 
               {/* Shop by Category */}
               <div className={styles.section}>
-                <div className={styles.sectionLabel}>Shop</div>
+                <div className={styles.sectionLabel}>Shop by Category</div>
                 <motion.button
                   className={styles.row}
                   onClick={() => setCategoriesExpanded((prev) => !prev)}
@@ -387,9 +369,9 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
                   {...nextRow()}
                 >
                   <span className={`${styles.rowIcon} ${styles.toneBrand}`}>
-                    <GridViewRounded />
+                    <CategoryOutlined />
                   </span>
-                  <span className={styles.rowLabel}>Shop by Category</span>
+                  <span className={styles.rowLabel}>Browse all categories</span>
                   <ChevronRight
                     className={`${styles.rowChevron} ${
                       categoriesExpanded ? styles.rowChevronOpen : ""
@@ -416,7 +398,8 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
                             const kids = getChildren(cat.id);
                             const hasKids = kids.length > 0;
                             const isOpen = expandedCat === String(cat.id);
-                            const Icon = getCategoryIcon(cat.name);
+                            const catIcon = getCategoryIcon(cat.name);
+                            const isSpecial = /special/i.test(cat.name || "");
                             return (
                               <div className={styles.catGroup} key={cat.id || cat.slug}>
                                 <button
@@ -430,8 +413,12 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
                                   }
                                   aria-expanded={hasKids ? isOpen : undefined}
                                 >
-                                  <span className={styles.catParentIcon}>
-                                    <Icon />
+                                  <span
+                                    className={`${styles.catParentIcon} ${
+                                      isSpecial ? styles.catParentIconGold : ""
+                                    }`}
+                                  >
+                                    <Iconify icon={catIcon} />
                                   </span>
                                   <span className={styles.catParentLabel}>
                                     {cat.name || cat.title}
@@ -501,9 +488,9 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
                   {...nextRow()}
                 >
                   <span className={`${styles.rowIcon} ${styles.toneNeutral}`}>
-                    <ShoppingBagOutlined />
+                    <RequestQuoteOutlined />
                   </span>
-                  <span className={styles.rowLabel}>My Orders</span>
+                  <span className={styles.rowLabel}>My Enquiries</span>
                   <ChevronRight className={styles.rowArrow} />
                 </motion.button>
 
