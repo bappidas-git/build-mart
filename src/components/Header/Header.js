@@ -11,7 +11,12 @@ import {
   getMainMenuCategories,
   orderCategoriesHierarchically,
 } from "../../utils/categories";
-import { APP_NAME, SUPPORT_PHONE, FREE_SHIPPING_THRESHOLD } from "../../utils/constants";
+import {
+  LOGO_URL,
+  LOGO_ICON_URL,
+  SUPPORT_PHONE,
+  FREE_SHIPPING_THRESHOLD,
+} from "../../utils/constants";
 import { formatCurrency } from "../../utils/helpers";
 import CartDrawer from "../CartDrawer/CartDrawer";
 import SidebarMenu from "../SidebarMenu/SidebarMenu";
@@ -202,17 +207,35 @@ const Header = () => {
               </IconButton>
             )}
 
-            {/* Logo */}
-            <Link to="/" className={styles.logoLink}>
+            {/* Logo — full wordmark on desktop/tablet, compact icon on mobile.
+                The main logo is designed to read on both light and dark headers. */}
+            <Link
+              to="/"
+              className={styles.logoLink}
+              aria-label="North East Build Mart"
+            >
               <motion.div
                 className={styles.logo}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
               >
-                <span className={styles.logoIcon}>
-                  <ShoppingCart className={styles.logoCartIcon} />
-                </span>
-                <span className={styles.logoText}>{APP_NAME}</span>
+                {isMobile ? (
+                  <img
+                    src={LOGO_ICON_URL}
+                    alt="North East Build Mart"
+                    className={styles.logoIconImg}
+                    width={30}
+                    height={30}
+                  />
+                ) : (
+                  <img
+                    src={LOGO_URL}
+                    alt="North East Build Mart"
+                    className={styles.logoImg}
+                    width={64}
+                    height={40}
+                  />
+                )}
               </motion.div>
             </Link>
 

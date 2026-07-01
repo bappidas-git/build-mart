@@ -18,7 +18,8 @@ import { useTheme } from "../../context/ThemeContext";
 import buildAdminTheme from "../../theme/adminTheme";
 import useAdminBodyClass from "../../hooks/useAdminBodyClass";
 
-const LOGO = "https://placehold.co/210x70/4f46e5/ffffff?text=LOGO";
+const LOGO =
+  "https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889446/logo_fnscna.png";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const AdminLogin = () => {
@@ -135,7 +136,9 @@ const AdminLogin = () => {
             >
               <img
                 src={LOGO}
-                alt={process.env.REACT_APP_NAME || "Admin"}
+                alt="North East Build Mart"
+                width={90}
+                height={56}
                 style={{ height: 56, width: "auto" }}
               />
             </Box>
