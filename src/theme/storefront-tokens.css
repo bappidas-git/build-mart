@@ -116,8 +116,9 @@
   --sf-transition-slow: 0.4s ease;
 
   /* ---- Layout & a11y ---------------------------------------------------- */
-  --sf-container-max: 1280px;
+  --sf-container-max: 1280px;          /* canonical content width (App.css .container) */
   --sf-tap-target: 44px;               /* min touch target (WCAG 2.5.5) */
+  --sf-section-y: var(--sf-space-16);  /* 64px — vertical rhythm between page sections */
 
   /* ---- z-index scale ---------------------------------------------------- */
   --sf-z-sticky: 40;
@@ -172,6 +173,13 @@ body.dark {
   --sf-shadow-md: 0 6px 20px rgba(0, 0, 0, 0.5);
   --sf-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.55);
   --sf-shadow-focus: 0 0 0 3px rgba(78, 163, 227, 0.5);
+}
+
+/* Tighten the section rhythm on small screens (sm and below). */
+@media (max-width: 768px) {
+  :root {
+    --sf-section-y: var(--sf-space-10); /* 40px on mobile */
+  }
 }
 
 /* Respect users who prefer reduced motion — shared, applies storefront-wide. */
