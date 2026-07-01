@@ -718,196 +718,62 @@
   "products": [
     {
       "id": 1,
-      "name": "ProBook Ultra Laptop 15\"",
-      "slug": "probook-ultra-laptop-15",
-      "sku": "LAP-PBU-15-001",
-      "shortDescription": "Powerful 15-inch laptop with Intel Core i7 processor and 16GB RAM",
-      "description": "The ProBook Ultra Laptop 15\" is engineered for professionals who demand performance. Equipped with the latest Intel Core i7 processor, 16GB DDR5 RAM, and a 512GB NVMe SSD, this laptop handles everything from intensive multitasking to creative workloads with ease. The stunning 15.6-inch FHD IPS display delivers vivid colors and sharp details for an immersive visual experience.",
+      "name": "WPC Louver Panel 3D Charcoal",
+      "slug": "wpc-louver-panel-3d-charcoal",
+      "sku": "NEBM-1-001",
+      "shortDescription": "Weatherproof 3D WPC louver panel for feature walls and facades.",
+      "description": "Weatherproof 3D WPC louver panel for feature walls and facades. Weatherproof, termite-proof and low-maintenance — ideal for interior and exterior wall cladding. Bulk quantity pricing available — enquire for project rates.",
       "categoryId": 1,
-      "brand": "ProBook",
+      "brand": "Greenpanel",
       "images": [
-        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=ProBook+Laptop",
-        "https://placehold.co/600x400/16213e/FFFFFF?text=ProBook+Side",
-        "https://placehold.co/600x400/0f3460/FFFFFF?text=ProBook+Open"
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=WPC+Louver+Panel+3D+Charcoal",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=WPC+Louver+Panel+3D+Charcoal+Detail"
       ],
-      "price": 74999,
-      "comparePrice": 89999,
-      "costPrice": 55000,
-      "stock": 45,
+      "price": 340,
+      "comparePrice": 420,
+      "costPrice": 245,
+      "stock": 53,
       "lowStockThreshold": 10,
-      "weight": 1.8,
-      "dimensions": {
-        "length": 35.7,
-        "width": 23.5,
-        "height": 1.9
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "8GB RAM / 256GB SSD",
-          "price": 64999,
-          "stock": 20,
-          "sku": "LAP-PBU-15-8-256",
-          "attributes": {
-            "Configuration": "8GB · 256GB SSD"
-          }
-        },
-        {
-          "id": "v2",
-          "name": "16GB RAM / 512GB SSD",
-          "price": 74999,
-          "stock": 15,
-          "sku": "LAP-PBU-15-16-512",
-          "attributes": {
-            "Configuration": "16GB · 512GB SSD"
-          }
-        },
-        {
-          "id": "v3",
-          "name": "32GB RAM / 1TB SSD",
-          "price": 94999,
-          "stock": 10,
-          "sku": "LAP-PBU-15-32-1TB",
-          "attributes": {
-            "Configuration": "32GB · 1TB SSD"
-          }
-        }
-      ],
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
       "tags": [
-        "laptop",
-        "intel",
-        "i7",
-        "ultrabook",
-        "work",
-        "productivity"
+        "wpc",
+        "louver",
+        "panel",
+        "charcoal",
+        "wpc-louvers",
+        "greenpanel"
       ],
-      "featured": true,
+      "featured": false,
       "trending": true,
       "hot": false,
       "isActive": true,
-      "rating": 4.6,
-      "totalReviews": 128,
-      "metaTitle": "ProBook Ultra Laptop 15\" - Intel Core i7 | Best Price",
-      "metaDescription": "Buy ProBook Ultra Laptop 15\" with Intel Core i7, 16GB RAM, 512GB SSD. Free shipping available.",
-      "createdAt": "2025-01-10T00:00:00.000Z",
+      "rating": 4.2,
+      "totalReviews": 13,
+      "metaTitle": "WPC Louver Panel 3D Charcoal — Greenpanel | North East Build Mart",
+      "metaDescription": "Weatherproof 3D WPC louver panel for feature walls and facades. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-02T00:00:00.000Z",
       "updatedAt": "2026-07-02T00:00:00.000Z",
-      "frequentlyBoughtTogetherIds": [
-        4,
-        6
-      ],
+      "frequentlyBoughtTogetherIds": [],
       "relatedProductIds": [
-        13,
-        3,
-        16,
-        4,
-        6
-      ],
-      "priceType": "exact",
-      "unitType": "piece",
-      "minQty": 1,
-      "priceTiers": [],
-      "showExactPrice": true,
-      "showTieredPricing": false,
-      "cardPriceMode": "exact",
-      "special": true
-    },
-    {
-      "id": 2,
-      "name": "SoundWave Pro Wireless Earbuds",
-      "slug": "soundwave-pro-wireless-earbuds",
-      "sku": "AUD-SWP-TWS-001",
-      "shortDescription": "Premium true wireless earbuds with active noise cancellation",
-      "description": "Experience audio like never before with SoundWave Pro Wireless Earbuds. Featuring advanced Active Noise Cancellation (ANC) technology, 30-hour total battery life, and premium sound quality. The ergonomic design ensures a secure, comfortable fit for all-day wear. IPX5 water resistance makes them perfect for workouts and outdoor activities.",
-      "categoryId": 2,
-      "brand": "SoundWave",
-      "images": [
-        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=SoundWave+Earbuds",
-        "https://placehold.co/600x400/16213e/FFFFFF?text=SoundWave+Case"
-      ],
-      "price": 8999,
-      "comparePrice": 12999,
-      "costPrice": 5500,
-      "stock": 120,
-      "lowStockThreshold": 20,
-      "weight": 0.065,
-      "dimensions": {
-        "length": 6.5,
-        "width": 4.2,
-        "height": 2.8
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "Midnight Black",
-          "price": 8999,
-          "stock": 50,
-          "sku": "AUD-SWP-TWS-BLK",
-          "attributes": {
-            "Color": "Midnight Black"
-          },
-          "swatchHex": "#1a1a2e"
-        },
-        {
-          "id": "v2",
-          "name": "Pearl White",
-          "price": 8999,
-          "stock": 40,
-          "sku": "AUD-SWP-TWS-WHT",
-          "attributes": {
-            "Color": "Pearl White"
-          },
-          "swatchHex": "#f3f1ea"
-        },
-        {
-          "id": "v3",
-          "name": "Navy Blue",
-          "price": 8999,
-          "stock": 30,
-          "sku": "AUD-SWP-TWS-NVY",
-          "attributes": {
-            "Color": "Navy Blue"
-          },
-          "swatchHex": "#1e3a5f"
-        }
-      ],
-      "tags": [
-        "earbuds",
-        "wireless",
-        "anc",
-        "bluetooth",
-        "audio",
-        "tws"
-      ],
-      "featured": true,
-      "trending": true,
-      "hot": true,
-      "isActive": true,
-      "rating": 4.8,
-      "totalReviews": 342,
-      "metaTitle": "SoundWave Pro Wireless Earbuds - ANC | True Wireless",
-      "metaDescription": "Shop SoundWave Pro Wireless Earbuds with Active Noise Cancellation, 30hr battery, IPX5 rating.",
-      "createdAt": "2025-01-15T00:00:00.000Z",
-      "updatedAt": "2026-07-02T00:00:00.000Z",
-      "relatedProductIds": [
-        10,
-        4,
-        3
+        2
       ],
       "priceType": "tiered",
-      "unitType": "sheet",
+      "unitType": "piece",
       "minQty": 1,
       "priceTiers": [
         {
           "minQty": 1,
-          "price": 8999
+          "price": 340
         },
         {
-          "minQty": 10,
-          "price": 8549
+          "minQty": 5,
+          "price": 320
         },
         {
-          "minQty": 50,
-          "price": 8099
+          "minQty": 20,
+          "price": 299
         }
       ],
       "showExactPrice": false,
@@ -916,280 +782,247 @@
       "special": true
     },
     {
-      "id": 3,
-      "name": "FitPulse Smartwatch Series 5",
-      "slug": "fitpulse-smartwatch-series-5",
-      "sku": "ELC-FPS-SW5-001",
-      "shortDescription": "Advanced health tracking smartwatch with GPS and AMOLED display",
-      "description": "The FitPulse Smartwatch Series 5 is your ultimate health and fitness companion. Track your heart rate, SpO2, sleep quality, and stress levels with clinical-grade accuracy. Built-in GPS for precise route tracking, 7-day battery life, and 100+ workout modes. The always-on AMOLED display looks stunning in any lighting condition.",
-      "categoryId": 3,
-      "brand": "FitPulse",
+      "id": 2,
+      "name": "WPC Fluted Wall Panel Teak Finish",
+      "slug": "wpc-fluted-wall-panel-teak-finish",
+      "sku": "NEBM-1-002",
+      "shortDescription": "Fluted WPC wall panel in a warm teak finish for interior cladding.",
+      "description": "Fluted WPC wall panel in a warm teak finish for interior cladding. Weatherproof, termite-proof and low-maintenance — ideal for interior and exterior wall cladding. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 1,
+      "brand": "CenturyPly",
       "images": [
-        "https://placehold.co/600x400/0f3460/FFFFFF?text=FitPulse+Watch",
-        "https://placehold.co/600x400/533483/FFFFFF?text=FitPulse+Side"
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=WPC+Fluted+Wall+Panel+Teak+Finish",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=WPC+Fluted+Wall+Panel+Teak+Finish+Detail"
       ],
-      "price": 14999,
-      "comparePrice": 19999,
-      "costPrice": 9000,
-      "stock": 75,
-      "lowStockThreshold": 15,
-      "weight": 0.045,
-      "dimensions": {
-        "length": 4.5,
-        "width": 3.8,
-        "height": 1
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "Black / Rubber Band",
-          "price": 14999,
-          "stock": 30,
-          "sku": "ELC-FPS-SW5-BLK-R"
-        },
-        {
-          "id": "v2",
-          "name": "Silver / Metal Band",
-          "price": 16999,
-          "stock": 25,
-          "sku": "ELC-FPS-SW5-SLV-M"
-        },
-        {
-          "id": "v3",
-          "name": "Gold / Leather Band",
-          "price": 18999,
-          "stock": 20,
-          "sku": "ELC-FPS-SW5-GLD-L"
-        }
-      ],
+      "price": 520,
+      "comparePrice": 650,
+      "costPrice": 374,
+      "stock": 66,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
       "tags": [
-        "smartwatch",
-        "fitness",
-        "gps",
-        "health",
-        "amoled",
-        "wearable"
-      ],
-      "featured": true,
-      "trending": false,
-      "hot": true,
-      "isActive": true,
-      "rating": 4.5,
-      "totalReviews": 215,
-      "metaTitle": "FitPulse Smartwatch Series 5 - Health & Fitness Tracker",
-      "metaDescription": "Buy FitPulse Smartwatch Series 5 with GPS, heart rate monitor, SpO2 tracking and 7-day battery.",
-      "createdAt": "2025-01-20T00:00:00.000Z",
-      "updatedAt": "2026-07-02T00:00:00.000Z",
-      "priceType": "exact",
-      "unitType": "sheet",
-      "minQty": 1,
-      "priceTiers": [],
-      "showExactPrice": true,
-      "showTieredPricing": false,
-      "cardPriceMode": "exact",
-      "special": true
-    },
-    {
-      "id": 4,
-      "name": "MechKey RGB Gaming Keyboard",
-      "slug": "mechkey-rgb-gaming-keyboard",
-      "sku": "ELC-MKB-RGB-001",
-      "shortDescription": "Mechanical gaming keyboard with per-key RGB backlight and tactile switches",
-      "description": "Dominate your game with the MechKey RGB Gaming Keyboard. Features genuine mechanical switches rated for 100 million keystrokes, full per-key RGB customization with 16 million colors, and a durable aircraft-grade aluminum frame. Anti-ghosting with N-key rollover ensures every keystroke is registered, even in the most intense gaming sessions.",
-      "categoryId": 4,
-      "brand": "MechKey",
-      "images": [
-        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=MechKey+Keyboard",
-        "https://placehold.co/600x400/16213e/FFFFFF?text=MechKey+RGB"
-      ],
-      "price": 6499,
-      "comparePrice": 8999,
-      "costPrice": 3800,
-      "stock": 60,
-      "lowStockThreshold": 12,
-      "weight": 1.2,
-      "dimensions": {
-        "length": 44,
-        "width": 13.5,
-        "height": 3.8
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "Blue Switches (Clicky)",
-          "price": 6499,
-          "stock": 25,
-          "sku": "ELC-MKB-RGB-BLU"
-        },
-        {
-          "id": "v2",
-          "name": "Red Switches (Linear)",
-          "price": 6499,
-          "stock": 20,
-          "sku": "ELC-MKB-RGB-RED"
-        },
-        {
-          "id": "v3",
-          "name": "Brown Switches (Tactile)",
-          "price": 6499,
-          "stock": 15,
-          "sku": "ELC-MKB-RGB-BRN"
-        }
-      ],
-      "tags": [
-        "keyboard",
-        "mechanical",
-        "gaming",
-        "rgb",
-        "tactile"
-      ],
-      "featured": false,
-      "trending": true,
-      "hot": true,
-      "isActive": true,
-      "rating": 4.7,
-      "totalReviews": 189,
-      "metaTitle": "MechKey RGB Gaming Keyboard - Mechanical Switches",
-      "metaDescription": "Buy MechKey RGB Mechanical Gaming Keyboard with per-key RGB, aluminum frame, N-key rollover.",
-      "createdAt": "2025-02-01T00:00:00.000Z",
-      "updatedAt": "2026-07-02T00:00:00.000Z",
-      "frequentlyBoughtTogetherIds": [
-        1,
-        6
-      ],
-      "relatedProductIds": [
-        3,
-        16,
-        13
-      ],
-      "priceType": "onEnquiry",
-      "unitType": "bag",
-      "minQty": 1,
-      "priceTiers": [],
-      "showExactPrice": false,
-      "showTieredPricing": false,
-      "cardPriceMode": "onEnquiry",
-      "special": true
-    },
-    {
-      "id": 5,
-      "name": "Urban Classic Cotton T-Shirt",
-      "slug": "urban-classic-cotton-t-shirt",
-      "sku": "CLT-UCT-CRW-001",
-      "shortDescription": "Premium 100% organic cotton crew neck t-shirt",
-      "description": "Made from 100% GOTS-certified organic cotton, the Urban Classic T-Shirt is the foundation of any wardrobe. The relaxed, slightly oversized fit offers comfort without compromising style. Pre-shrunk fabric ensures it maintains its shape wash after wash. Available in a range of versatile colors.",
-      "categoryId": 13,
-      "brand": "Urban Threads",
-      "images": [
-        "https://placehold.co/600x400/764ba2/FFFFFF?text=Urban+T-Shirt",
-        "https://placehold.co/600x400/533483/FFFFFF?text=Urban+Back"
-      ],
-      "price": 899,
-      "comparePrice": 1299,
-      "costPrice": 400,
-      "stock": 250,
-      "lowStockThreshold": 30,
-      "weight": 0.18,
-      "dimensions": {
-        "length": 30,
-        "width": 25,
-        "height": 0.5
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "S / White",
-          "price": 899,
-          "stock": 50,
-          "sku": "CLT-UCT-CRW-S-WHT",
-          "attributes": {
-            "Size": "S",
-            "Color": "White"
-          },
-          "swatchHex": "#ffffff"
-        },
-        {
-          "id": "v2",
-          "name": "M / White",
-          "price": 899,
-          "stock": 60,
-          "sku": "CLT-UCT-CRW-M-WHT",
-          "attributes": {
-            "Size": "M",
-            "Color": "White"
-          },
-          "swatchHex": "#ffffff"
-        },
-        {
-          "id": "v3",
-          "name": "L / White",
-          "price": 899,
-          "stock": 55,
-          "sku": "CLT-UCT-CRW-L-WHT",
-          "attributes": {
-            "Size": "L",
-            "Color": "White"
-          },
-          "swatchHex": "#ffffff"
-        },
-        {
-          "id": "v4",
-          "name": "XL / White",
-          "price": 899,
-          "stock": 40,
-          "sku": "CLT-UCT-CRW-XL-WHT",
-          "attributes": {
-            "Size": "XL",
-            "Color": "White"
-          },
-          "swatchHex": "#ffffff"
-        },
-        {
-          "id": "v5",
-          "name": "S / Black",
-          "price": 899,
-          "stock": 45,
-          "sku": "CLT-UCT-CRW-S-BLK",
-          "attributes": {
-            "Size": "S",
-            "Color": "Black"
-          },
-          "swatchHex": "#1a1a1a"
-        }
-      ],
-      "tags": [
-        "tshirt",
-        "cotton",
-        "organic",
-        "casual",
-        "unisex",
-        "basics"
+        "wpc",
+        "fluted",
+        "wall",
+        "panel",
+        "teak",
+        "wpc-louvers",
+        "centuryply"
       ],
       "featured": false,
       "trending": false,
       "hot": false,
       "isActive": true,
       "rating": 4.3,
-      "totalReviews": 567,
-      "metaTitle": "Urban Classic Cotton T-Shirt - Organic | Sustainable Fashion",
-      "metaDescription": "Shop Urban Classic 100% organic cotton t-shirts. Comfortable, sustainable and stylish.",
-      "createdAt": "2025-02-10T00:00:00.000Z",
+      "totalReviews": 20,
+      "metaTitle": "WPC Fluted Wall Panel Teak Finish — CenturyPly | North East Build Mart",
+      "metaDescription": "Fluted WPC wall panel in a warm teak finish for interior cladding. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-03T00:00:00.000Z",
       "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        1
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 3,
+      "name": "Multiwall Polycarbonate Sheet 6mm",
+      "slug": "multiwall-polycarbonate-sheet-6mm",
+      "sku": "NEBM-2-003",
+      "shortDescription": "Twin-wall 6mm polycarbonate sheet for roofing, canopies and skylights.",
+      "description": "Twin-wall 6mm polycarbonate sheet for roofing, canopies and skylights. UV-stabilised and impact-resistant with excellent light transmission for roofing and skylights. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 2,
+      "brand": "Tuflite",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Multiwall+Polycarbonate+Sheet+6mm",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Multiwall+Polycarbonate+Sheet+6mm+Detail"
+      ],
+      "price": 1450,
+      "comparePrice": 1750,
+      "costPrice": 1044,
+      "stock": 79,
+      "lowStockThreshold": 10,
+      "weight": 6,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "multiwall",
+        "polycarbonate",
+        "sheet",
+        "6mm",
+        "polycarbonate-sheets",
+        "tuflite"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.4,
+      "totalReviews": 27,
+      "metaTitle": "Multiwall Polycarbonate Sheet 6mm — Tuflite | North East Build Mart",
+      "metaDescription": "Twin-wall 6mm polycarbonate sheet for roofing, canopies and skylights. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-04T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        4
+      ],
       "priceType": "tiered",
-      "unitType": "box",
+      "unitType": "sheet",
       "minQty": 1,
       "priceTiers": [
         {
           "minQty": 1,
-          "price": 899
+          "price": 1450
         },
         {
-          "minQty": 10,
-          "price": 854
+          "minQty": 5,
+          "price": 1363
         },
         {
-          "minQty": 50,
-          "price": 809
+          "minQty": 20,
+          "price": 1276
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": true
+    },
+    {
+      "id": 4,
+      "name": "Solid Polycarbonate Sheet 3mm Clear",
+      "slug": "solid-polycarbonate-sheet-3mm-clear",
+      "sku": "NEBM-2-004",
+      "shortDescription": "Clear 3mm solid polycarbonate sheet with high impact strength.",
+      "description": "Clear 3mm solid polycarbonate sheet with high impact strength. UV-stabilised and impact-resistant with excellent light transmission for roofing and skylights. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 2,
+      "brand": "Lexan",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Solid+Polycarbonate+Sheet+3mm+Clear",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Solid+Polycarbonate+Sheet+3mm+Clear+Detail"
+      ],
+      "price": 2100,
+      "comparePrice": null,
+      "costPrice": 1512,
+      "stock": 92,
+      "lowStockThreshold": 10,
+      "weight": 6,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "solid",
+        "polycarbonate",
+        "sheet",
+        "3mm",
+        "clear",
+        "polycarbonate-sheets",
+        "lexan"
+      ],
+      "featured": false,
+      "trending": true,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.5,
+      "totalReviews": 34,
+      "metaTitle": "Solid Polycarbonate Sheet 3mm Clear — Lexan | North East Build Mart",
+      "metaDescription": "Clear 3mm solid polycarbonate sheet with high impact strength. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-05T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        3
+      ],
+      "priceType": "tiered",
+      "unitType": "sheet",
+      "minQty": 1,
+      "priceTiers": [
+        {
+          "minQty": 1,
+          "price": 2100
+        },
+        {
+          "minQty": 5,
+          "price": 1974
+        },
+        {
+          "minQty": 20,
+          "price": 1848
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 5,
+      "name": "FRP Corrugated Roofing Sheet",
+      "slug": "frp-corrugated-roofing-sheet",
+      "sku": "NEBM-3-005",
+      "shortDescription": "Corrugated FRP roofing sheet — lightweight and rust-free.",
+      "description": "Corrugated FRP roofing sheet — lightweight and rust-free. Lightweight, corrosion-resistant fibre-reinforced panels for durable roofing and cladding. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 3,
+      "brand": "Fibro",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=FRP+Corrugated+Roofing+Sheet",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=FRP+Corrugated+Roofing+Sheet+Detail"
+      ],
+      "price": 480,
+      "comparePrice": 560,
+      "costPrice": 346,
+      "stock": 105,
+      "lowStockThreshold": 10,
+      "weight": 6,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "frp",
+        "corrugated",
+        "roofing",
+        "sheet",
+        "frp-sheets",
+        "fibro"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.6,
+      "totalReviews": 41,
+      "metaTitle": "FRP Corrugated Roofing Sheet — Fibro | North East Build Mart",
+      "metaDescription": "Corrugated FRP roofing sheet — lightweight and rust-free. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-06T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        6
+      ],
+      "priceType": "tiered",
+      "unitType": "sheet",
+      "minQty": 5,
+      "priceTiers": [
+        {
+          "minQty": 5,
+          "price": 480
+        },
+        {
+          "minQty": 25,
+          "price": 451
+        },
+        {
+          "minQty": 100,
+          "price": 422
         }
       ],
       "showExactPrice": false,
@@ -1199,62 +1032,343 @@
     },
     {
       "id": 6,
-      "name": "ZenPro USB-C 7-in-1 Hub",
-      "slug": "zenpro-usb-c-7-in-1-hub",
-      "sku": "ELC-ZPH-7C1-001",
-      "shortDescription": "Compact 7-in-1 USB-C hub with 4K HDMI, 100W PD charging and SD card reader",
-      "description": "The ZenPro USB-C 7-in-1 Hub transforms your single USB-C port into a productivity powerhouse. Connects up to 7 devices simultaneously: 4K@60Hz HDMI, 100W Power Delivery pass-through, 2x USB-A 3.0, USB-C data, SD and microSD card readers. The slim, pocket-friendly design makes it perfect for on-the-go professionals.",
-      "categoryId": 14,
-      "brand": "ZenPro",
+      "name": "FRP Plain Sheet 2mm",
+      "slug": "frp-plain-sheet-2mm",
+      "sku": "NEBM-3-006",
+      "shortDescription": "Smooth 2mm FRP plain sheet for lining and cladding.",
+      "description": "Smooth 2mm FRP plain sheet for lining and cladding. Lightweight, corrosion-resistant fibre-reinforced panels for durable roofing and cladding. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 3,
+      "brand": "Fibro",
       "images": [
-        "https://placehold.co/600x400/2196f3/FFFFFF?text=ZenPro+Hub",
-        "https://placehold.co/600x400/1976d2/FFFFFF?text=ZenPro+Ports"
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=FRP+Plain+Sheet+2mm",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=FRP+Plain+Sheet+2mm+Detail"
       ],
-      "price": 3499,
-      "comparePrice": 4999,
-      "costPrice": 1800,
-      "stock": 90,
-      "lowStockThreshold": 15,
-      "weight": 0.095,
-      "dimensions": {
-        "length": 11.5,
-        "width": 3.5,
-        "height": 1.4
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "Space Gray",
-          "price": 3499,
-          "stock": 50,
-          "sku": "ELC-ZPH-7C1-GRY"
-        },
-        {
-          "id": "v2",
-          "name": "Silver",
-          "price": 3499,
-          "stock": 40,
-          "sku": "ELC-ZPH-7C1-SLV"
-        }
-      ],
+      "price": 390,
+      "comparePrice": null,
+      "costPrice": 281,
+      "stock": 118,
+      "lowStockThreshold": 10,
+      "weight": 6,
+      "dimensions": {},
+      "variants": [],
       "tags": [
-        "usb-c",
-        "hub",
-        "docking",
-        "4k",
-        "hdmi",
-        "productivity"
+        "frp",
+        "plain",
+        "sheet",
+        "2mm",
+        "frp-sheets",
+        "fibro"
       ],
       "featured": false,
-      "trending": true,
+      "trending": false,
       "hot": false,
       "isActive": true,
-      "rating": 4.5,
-      "totalReviews": 98,
-      "metaTitle": "ZenPro USB-C 7-in-1 Hub - 4K HDMI, 100W PD | Best Dock",
-      "metaDescription": "Buy ZenPro 7-in-1 USB-C Hub with 4K HDMI, 100W Power Delivery, USB 3.0 and SD card readers.",
-      "createdAt": "2025-02-20T00:00:00.000Z",
+      "rating": 4.7,
+      "totalReviews": 48,
+      "metaTitle": "FRP Plain Sheet 2mm — Fibro | North East Build Mart",
+      "metaDescription": "Smooth 2mm FRP plain sheet for lining and cladding. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-07T00:00:00.000Z",
       "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        5
+      ],
+      "priceType": "exact",
+      "unitType": "sheet",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 7,
+      "name": "Dr. Fixit Pidicrete URP Waterproof Coating",
+      "slug": "dr-fixit-pidicrete-urp-waterproof-coating",
+      "sku": "NEBM-4-007",
+      "shortDescription": "Polymer-modified waterproof coating for terraces and wet areas.",
+      "description": "Polymer-modified waterproof coating for terraces and wet areas. High-performance waterproofing that protects concrete and masonry from leakage and dampness. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 4,
+      "brand": "Dr. Fixit",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Dr.+Fixit+Pidicrete+URP+Waterproof+Coating",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Dr.+Fixit+Pidicrete+URP+Waterproof+Coating+Detail"
+      ],
+      "price": 950,
+      "comparePrice": 1100,
+      "costPrice": 684,
+      "stock": 131,
+      "lowStockThreshold": 10,
+      "weight": 1,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "fixit",
+        "pidicrete",
+        "urp",
+        "waterproof",
+        "coating",
+        "waterproofing-products",
+        "dr. fixit"
+      ],
+      "featured": true,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.8,
+      "totalReviews": 55,
+      "metaTitle": "Dr. Fixit Pidicrete URP Waterproof Coating — Dr. Fixit | North East Build Mart",
+      "metaDescription": "Polymer-modified waterproof coating for terraces and wet areas. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-08T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        8
+      ],
+      "priceType": "exact",
+      "unitType": "kg",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": true
+    },
+    {
+      "id": 8,
+      "name": "Fosroc Brushbond Elastomeric Coating 20kg",
+      "slug": "fosroc-brushbond-elastomeric-coating-20kg",
+      "sku": "NEBM-4-008",
+      "shortDescription": "Elastomeric acrylic waterproof membrane, 20kg pack.",
+      "description": "Elastomeric acrylic waterproof membrane, 20kg pack. High-performance waterproofing that protects concrete and masonry from leakage and dampness. Price on enquiry — contact North East Build Mart for a quotation.",
+      "categoryId": 4,
+      "brand": "Fosroc",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Fosroc+Brushbond+Elastomeric+Coating+20kg",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Fosroc+Brushbond+Elastomeric+Coating+20kg+Detail"
+      ],
+      "price": 4200,
+      "comparePrice": null,
+      "costPrice": 3024,
+      "stock": 28,
+      "lowStockThreshold": 10,
+      "weight": 50,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "fosroc",
+        "brushbond",
+        "elastomeric",
+        "coating",
+        "20kg",
+        "waterproofing-products"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.1,
+      "totalReviews": 62,
+      "metaTitle": "Fosroc Brushbond Elastomeric Coating 20kg — Fosroc | North East Build Mart",
+      "metaDescription": "Elastomeric acrylic waterproof membrane, 20kg pack. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-09T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        7
+      ],
+      "priceType": "onEnquiry",
+      "unitType": "bag",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": false,
+      "showTieredPricing": false,
+      "cardPriceMode": "onEnquiry",
+      "special": false
+    },
+    {
+      "id": 9,
+      "name": "Glazed Vitrified Floor Tile 600x600",
+      "slug": "glazed-vitrified-floor-tile-600x600",
+      "sku": "NEBM-13-009",
+      "shortDescription": "Premium glazed vitrified floor tile, 600x600mm, box of 4.",
+      "description": "Premium glazed vitrified floor tile, 600x600mm, box of 4. Low water absorption, scratch-resistant and easy to clean, suited to residential and commercial use. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 13,
+      "brand": "Kajaria",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Glazed+Vitrified+Floor+Tile+600x600",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Glazed+Vitrified+Floor+Tile+600x600+Detail"
+      ],
+      "price": 720,
+      "comparePrice": 850,
+      "costPrice": 518,
+      "stock": 157,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "glazed",
+        "vitrified",
+        "floor",
+        "tile",
+        "600x600",
+        "floor-tiles",
+        "kajaria"
+      ],
+      "featured": true,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.2,
+      "totalReviews": 69,
+      "metaTitle": "Glazed Vitrified Floor Tile 600x600 — Kajaria | North East Build Mart",
+      "metaDescription": "Premium glazed vitrified floor tile, 600x600mm, box of 4. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-10T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        10,
+        11,
+        12
+      ],
+      "priceType": "tiered",
+      "unitType": "box",
+      "minQty": 1,
+      "priceTiers": [
+        {
+          "minQty": 1,
+          "price": 720
+        },
+        {
+          "minQty": 5,
+          "price": 677
+        },
+        {
+          "minQty": 20,
+          "price": 634
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 10,
+      "name": "Wooden Finish Floor Tile 200x1200",
+      "slug": "wooden-finish-floor-tile-200x1200",
+      "sku": "NEBM-13-010",
+      "shortDescription": "Plank-format wood-look floor tile, 200x1200mm.",
+      "description": "Plank-format wood-look floor tile, 200x1200mm. Low water absorption, scratch-resistant and easy to clean, suited to residential and commercial use. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 13,
+      "brand": "Somany",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Wooden+Finish+Floor+Tile+200x1200",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Wooden+Finish+Floor+Tile+200x1200+Detail"
+      ],
+      "price": 890,
+      "comparePrice": 990,
+      "costPrice": 641,
+      "stock": 170,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "wooden",
+        "finish",
+        "floor",
+        "tile",
+        "200x1200",
+        "floor-tiles",
+        "somany"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.3,
+      "totalReviews": 76,
+      "metaTitle": "Wooden Finish Floor Tile 200x1200 — Somany | North East Build Mart",
+      "metaDescription": "Plank-format wood-look floor tile, 200x1200mm. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-11T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        9,
+        11,
+        12
+      ],
+      "priceType": "tiered",
+      "unitType": "box",
+      "minQty": 1,
+      "priceTiers": [
+        {
+          "minQty": 1,
+          "price": 890
+        },
+        {
+          "minQty": 5,
+          "price": 837
+        },
+        {
+          "minQty": 20,
+          "price": 783
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 11,
+      "name": "Ceramic Wall Tile Matte 300x600",
+      "slug": "ceramic-wall-tile-matte-300x600",
+      "sku": "NEBM-14-011",
+      "shortDescription": "Matte-finish ceramic wall tile, 300x600mm.",
+      "description": "Matte-finish ceramic wall tile, 300x600mm. Low water absorption, scratch-resistant and easy to clean, suited to residential and commercial use. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 14,
+      "brand": "Nitco",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Ceramic+Wall+Tile+Matte+300x600",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Ceramic+Wall+Tile+Matte+300x600+Detail"
+      ],
+      "price": 540,
+      "comparePrice": 620,
+      "costPrice": 389,
+      "stock": 183,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "ceramic",
+        "wall",
+        "tile",
+        "matte",
+        "300x600",
+        "wall-tiles",
+        "nitco"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.4,
+      "totalReviews": 83,
+      "metaTitle": "Ceramic Wall Tile Matte 300x600 — Nitco | North East Build Mart",
+      "metaDescription": "Matte-finish ceramic wall tile, 300x600mm. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-12T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        12,
+        9,
+        10
+      ],
       "priceType": "exact",
       "unitType": "box",
       "minQty": 1,
@@ -1265,274 +1379,133 @@
       "special": false
     },
     {
-      "id": 7,
-      "name": "Banarasi Silk Saree",
-      "slug": "banarasi-silk-saree",
-      "sku": "SAR-BNR-SLK-001",
-      "shortDescription": "Handwoven Banarasi silk saree with rich zari work",
-      "description": "This exquisite Banarasi silk saree is handwoven by master artisans of Varanasi. Featuring intricate gold zari work with traditional motifs, it comes with an unstitched blouse piece. The rich texture and luxurious feel make it perfect for weddings, festivals, and special occasions.",
-      "categoryId": 18,
-      "brand": "WeaveKraft",
+      "id": 12,
+      "name": "Glossy Wall Tile 250x375",
+      "slug": "glossy-wall-tile-250x375",
+      "sku": "NEBM-14-012",
+      "shortDescription": "Bright glossy ceramic wall tile, 250x375mm.",
+      "description": "Bright glossy ceramic wall tile, 250x375mm. Low water absorption, scratch-resistant and easy to clean, suited to residential and commercial use. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 14,
+      "brand": "Kajaria",
       "images": [
-        "https://placehold.co/600x400/c2185b/FFFFFF?text=Banarasi+Saree",
-        "https://placehold.co/600x400/d81b60/FFFFFF?text=Saree+Detail",
-        "https://placehold.co/600x400/e91e63/FFFFFF?text=Saree+Pallu"
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Glossy+Wall+Tile+250x375",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Glossy+Wall+Tile+250x375+Detail"
       ],
-      "price": 5999,
-      "comparePrice": 8999,
-      "costPrice": 3500,
-      "stock": 30,
-      "lowStockThreshold": 5,
-      "weight": 0.6,
-      "dimensions": {
-        "length": 30,
-        "width": 25,
-        "height": 5
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "Maroon & Gold",
-          "price": 5999,
-          "stock": 10,
-          "sku": "SAR-BNR-SLK-MRN"
-        },
-        {
-          "id": "v2",
-          "name": "Royal Blue & Gold",
-          "price": 5999,
-          "stock": 10,
-          "sku": "SAR-BNR-SLK-BLU"
-        },
-        {
-          "id": "v3",
-          "name": "Green & Gold",
-          "price": 6499,
-          "stock": 10,
-          "sku": "SAR-BNR-SLK-GRN"
-        }
-      ],
+      "price": 460,
+      "comparePrice": null,
+      "costPrice": 331,
+      "stock": 196,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
+      "variants": [],
       "tags": [
-        "saree",
-        "silk",
-        "banarasi",
-        "wedding",
-        "ethnic",
-        "traditional"
+        "glossy",
+        "wall",
+        "tile",
+        "250x375",
+        "wall-tiles",
+        "kajaria"
       ],
-      "featured": true,
-      "trending": true,
-      "hot": false,
-      "isActive": true,
-      "rating": 4.8,
-      "totalReviews": 215,
-      "metaTitle": "Banarasi Silk Saree - Handwoven Zari Work | Best Price",
-      "metaDescription": "Buy authentic Banarasi silk saree with intricate zari work. Perfect for weddings and festivals.",
-      "createdAt": "2025-01-15T00:00:00.000Z",
-      "updatedAt": "2026-07-02T00:00:00.000Z",
-      "priceType": "exact",
-      "unitType": "piece",
-      "minQty": 1,
-      "priceTiers": [],
-      "showExactPrice": true,
-      "showTieredPricing": false,
-      "cardPriceMode": "exact",
-      "special": true
-    },
-    {
-      "id": 8,
-      "name": "Designer Anarkali Kurta Set",
-      "slug": "designer-anarkali-kurta-set",
-      "sku": "KRT-ANK-DSG-001",
-      "shortDescription": "Embroidered Anarkali kurta with dupatta and palazzo",
-      "description": "Stunning designer Anarkali kurta set featuring delicate chikankari embroidery on premium georgette fabric. Comes with matching palazzo pants and a net dupatta with lace border. Flattering flared silhouette suitable for festivities and celebrations.",
-      "categoryId": 23,
-      "brand": "EthnicVogue",
-      "images": [
-        "https://placehold.co/600x400/ad1457/FFFFFF?text=Anarkali+Kurta",
-        "https://placehold.co/600x400/c2185b/FFFFFF?text=Kurta+Back",
-        "https://placehold.co/600x400/d81b60/FFFFFF?text=Kurta+Detail"
-      ],
-      "price": 3499,
-      "comparePrice": 4999,
-      "costPrice": 2000,
-      "stock": 50,
-      "lowStockThreshold": 8,
-      "weight": 0.5,
-      "dimensions": {
-        "length": 28,
-        "width": 22,
-        "height": 4
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "S",
-          "price": 3499,
-          "stock": 12,
-          "sku": "KRT-ANK-DSG-S"
-        },
-        {
-          "id": "v2",
-          "name": "M",
-          "price": 3499,
-          "stock": 15,
-          "sku": "KRT-ANK-DSG-M"
-        },
-        {
-          "id": "v3",
-          "name": "L",
-          "price": 3499,
-          "stock": 13,
-          "sku": "KRT-ANK-DSG-L"
-        },
-        {
-          "id": "v4",
-          "name": "XL",
-          "price": 3499,
-          "stock": 10,
-          "sku": "KRT-ANK-DSG-XL"
-        }
-      ],
-      "tags": [
-        "kurta",
-        "anarkali",
-        "ethnic",
-        "embroidery",
-        "festive",
-        "women"
-      ],
-      "featured": true,
+      "featured": false,
       "trending": false,
-      "hot": true,
+      "hot": false,
       "isActive": true,
       "rating": 4.5,
-      "totalReviews": 143,
-      "metaTitle": "Designer Anarkali Kurta Set - Chikankari Embroidery",
-      "metaDescription": "Buy designer Anarkali kurta set with chikankari embroidery. Includes palazzo and dupatta.",
-      "createdAt": "2025-01-20T00:00:00.000Z",
+      "totalReviews": 90,
+      "metaTitle": "Glossy Wall Tile 250x375 — Kajaria | North East Build Mart",
+      "metaDescription": "Bright glossy ceramic wall tile, 250x375mm. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-13T00:00:00.000Z",
       "updatedAt": "2026-07-02T00:00:00.000Z",
-      "priceType": "exact",
-      "unitType": "piece",
-      "minQty": 1,
-      "priceTiers": [],
-      "showExactPrice": true,
-      "showTieredPricing": false,
-      "cardPriceMode": "exact",
-      "special": true
-    },
-    {
-      "id": 9,
-      "name": "AirStride Running Shoes",
-      "slug": "airstride-running-shoes",
-      "sku": "FTW-ASR-RUN-001",
-      "shortDescription": "Lightweight running shoes with responsive cushioning",
-      "description": "AirStride running shoes are engineered for performance. Featuring a breathable knit upper, responsive foam midsole, and durable rubber outsole with multi-directional grip. Perfect for daily runs, gym workouts, and casual wear. Ultra-lightweight at just 250g per shoe.",
-      "categoryId": 28,
-      "brand": "AirStride",
-      "images": [
-        "https://placehold.co/600x400/607d8b/FFFFFF?text=Running+Shoes",
-        "https://placehold.co/600x400/546e7a/FFFFFF?text=Shoes+Side",
-        "https://placehold.co/600x400/455a64/FFFFFF?text=Shoes+Sole"
-      ],
-      "price": 3999,
-      "comparePrice": 5999,
-      "costPrice": 2200,
-      "stock": 80,
-      "lowStockThreshold": 15,
-      "weight": 0.5,
-      "dimensions": {
-        "length": 32,
-        "width": 12,
-        "height": 12
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "UK 7 - Black",
-          "price": 3999,
-          "stock": 20,
-          "sku": "FTW-ASR-7-BLK",
-          "attributes": {
-            "Size": "UK 7",
-            "Color": "Black"
-          },
-          "swatchHex": "#1a1a1a"
-        },
-        {
-          "id": "v2",
-          "name": "UK 8 - Black",
-          "price": 3999,
-          "stock": 20,
-          "sku": "FTW-ASR-8-BLK",
-          "attributes": {
-            "Size": "UK 8",
-            "Color": "Black"
-          },
-          "swatchHex": "#1a1a1a"
-        },
-        {
-          "id": "v3",
-          "name": "UK 9 - Blue",
-          "price": 3999,
-          "stock": 20,
-          "sku": "FTW-ASR-9-BLU",
-          "attributes": {
-            "Size": "UK 9",
-            "Color": "Blue"
-          },
-          "swatchHex": "#1e3a5f"
-        },
-        {
-          "id": "v4",
-          "name": "UK 10 - Blue",
-          "price": 3999,
-          "stock": 20,
-          "sku": "FTW-ASR-10-BLU",
-          "attributes": {
-            "Size": "UK 10",
-            "Color": "Blue"
-          },
-          "swatchHex": "#1e3a5f"
-        }
-      ],
-      "tags": [
-        "shoes",
-        "running",
-        "sports",
-        "fitness",
-        "lightweight",
-        "sneakers"
-      ],
-      "featured": true,
-      "trending": true,
-      "hot": false,
-      "isActive": true,
-      "rating": 4.4,
-      "totalReviews": 312,
-      "metaTitle": "AirStride Running Shoes - Lightweight & Responsive",
-      "metaDescription": "Buy AirStride running shoes with responsive cushioning. Breathable, lightweight, and durable.",
-      "createdAt": "2025-02-01T00:00:00.000Z",
-      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
       "relatedProductIds": [
-        12,
-        19
+        11,
+        9,
+        10
       ],
       "priceType": "tiered",
-      "unitType": "piece",
+      "unitType": "box",
       "minQty": 1,
       "priceTiers": [
         {
           "minQty": 1,
-          "price": 3999
+          "price": 460
         },
         {
-          "minQty": 10,
-          "price": 3799
+          "minQty": 5,
+          "price": 432
         },
         {
-          "minQty": 50,
-          "price": 3599
+          "minQty": 20,
+          "price": 405
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 13,
+      "name": "Double Charge Vitrified Tile 800x800",
+      "slug": "double-charge-vitrified-tile-800x800",
+      "sku": "NEBM-15-013",
+      "shortDescription": "Double-charge vitrified tile for high-traffic floors, 800x800mm.",
+      "description": "Double-charge vitrified tile for high-traffic floors, 800x800mm. Low water absorption, scratch-resistant and easy to clean, suited to residential and commercial use. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 15,
+      "brand": "Somany",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Double+Charge+Vitrified+Tile+800x800",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Double+Charge+Vitrified+Tile+800x800+Detail"
+      ],
+      "price": 1180,
+      "comparePrice": 1350,
+      "costPrice": 850,
+      "stock": 209,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "double",
+        "charge",
+        "vitrified",
+        "tile",
+        "800x800",
+        "vitrified-tiles",
+        "somany"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.6,
+      "totalReviews": 97,
+      "metaTitle": "Double Charge Vitrified Tile 800x800 — Somany | North East Build Mart",
+      "metaDescription": "Double-charge vitrified tile for high-traffic floors, 800x800mm. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-14T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        14,
+        9,
+        10
+      ],
+      "priceType": "tiered",
+      "unitType": "box",
+      "minQty": 1,
+      "priceTiers": [
+        {
+          "minQty": 1,
+          "price": 1180
+        },
+        {
+          "minQty": 5,
+          "price": 1109
+        },
+        {
+          "minQty": 20,
+          "price": 1038
         }
       ],
       "showExactPrice": false,
@@ -1541,138 +1514,350 @@
       "special": true
     },
     {
-      "id": 10,
-      "name": "BassBox Bluetooth Speaker",
-      "slug": "bassbox-bluetooth-speaker",
-      "sku": "AUD-BBX-SPK-001",
-      "shortDescription": "Portable waterproof Bluetooth speaker with deep bass",
-      "description": "BassBox delivers room-filling sound in a compact, portable design. IPX7 waterproof rating means it can handle rain, pool splashes, and showers. 24-hour battery life, built-in microphone for calls, and TWS pairing to connect two speakers for stereo sound.",
-      "categoryId": 33,
-      "brand": "BassBox",
+      "id": 14,
+      "name": "Full Body Vitrified Tile 600x1200",
+      "slug": "full-body-vitrified-tile-600x1200",
+      "sku": "NEBM-15-014",
+      "shortDescription": "Full-body vitrified tile with through-body colour, 600x1200mm.",
+      "description": "Full-body vitrified tile with through-body colour, 600x1200mm. Low water absorption, scratch-resistant and easy to clean, suited to residential and commercial use. Price on enquiry — contact North East Build Mart for a quotation.",
+      "categoryId": 15,
+      "brand": "Kajaria",
       "images": [
-        "https://placehold.co/600x400/9c27b0/FFFFFF?text=Bluetooth+Speaker",
-        "https://placehold.co/600x400/7b1fa2/FFFFFF?text=Speaker+Side"
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Full+Body+Vitrified+Tile+600x1200",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Full+Body+Vitrified+Tile+600x1200+Detail"
       ],
-      "price": 2999,
-      "comparePrice": 4499,
-      "costPrice": 1500,
-      "stock": 100,
-      "lowStockThreshold": 20,
-      "weight": 0.45,
-      "dimensions": {
-        "length": 18,
-        "width": 7,
-        "height": 7
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "Midnight Black",
-          "price": 2999,
-          "stock": 40,
-          "sku": "AUD-BBX-SPK-BLK"
-        },
-        {
-          "id": "v2",
-          "name": "Ocean Blue",
-          "price": 2999,
-          "stock": 30,
-          "sku": "AUD-BBX-SPK-BLU"
-        },
-        {
-          "id": "v3",
-          "name": "Olive Green",
-          "price": 2999,
-          "stock": 30,
-          "sku": "AUD-BBX-SPK-GRN"
-        }
-      ],
+      "price": 1650,
+      "comparePrice": null,
+      "costPrice": 1188,
+      "stock": 34,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
+      "variants": [],
       "tags": [
-        "speaker",
-        "bluetooth",
-        "portable",
-        "waterproof",
-        "bass",
-        "wireless"
+        "full",
+        "body",
+        "vitrified",
+        "tile",
+        "600x1200",
+        "vitrified-tiles",
+        "kajaria"
       ],
       "featured": false,
-      "trending": true,
-      "hot": true,
+      "trending": false,
+      "hot": false,
       "isActive": true,
-      "rating": 4.3,
-      "totalReviews": 189,
-      "metaTitle": "BassBox Bluetooth Speaker - IPX7 Waterproof, 24hr Battery",
-      "metaDescription": "Buy BassBox portable Bluetooth speaker with deep bass and IPX7 waterproof rating.",
-      "createdAt": "2025-01-25T00:00:00.000Z",
+      "rating": 4.7,
+      "totalReviews": 104,
+      "metaTitle": "Full Body Vitrified Tile 600x1200 — Kajaria | North East Build Mart",
+      "metaDescription": "Full-body vitrified tile with through-body colour, 600x1200mm. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-15T00:00:00.000Z",
       "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        13,
+        9,
+        10
+      ],
+      "priceType": "onEnquiry",
+      "unitType": "box",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": false,
+      "showTieredPricing": false,
+      "cardPriceMode": "onEnquiry",
+      "special": false
+    },
+    {
+      "id": 15,
+      "name": "Anti-Skid Bathroom Floor Tile 300x300",
+      "slug": "anti-skid-bathroom-floor-tile-300x300",
+      "sku": "NEBM-16-015",
+      "shortDescription": "Anti-skid ceramic bathroom floor tile, 300x300mm.",
+      "description": "Anti-skid ceramic bathroom floor tile, 300x300mm. Low water absorption, scratch-resistant and easy to clean, suited to residential and commercial use. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 16,
+      "brand": "Nitco",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Anti-Skid+Bathroom+Floor+Tile+300x300",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Anti-Skid+Bathroom+Floor+Tile+300x300+Detail"
+      ],
+      "price": 420,
+      "comparePrice": 490,
+      "costPrice": 302,
+      "stock": 235,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "anti",
+        "skid",
+        "bathroom",
+        "floor",
+        "tile",
+        "bathroom-kitchen-tiles",
+        "nitco"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.8,
+      "totalReviews": 111,
+      "metaTitle": "Anti-Skid Bathroom Floor Tile 300x300 — Nitco | North East Build Mart",
+      "metaDescription": "Anti-skid ceramic bathroom floor tile, 300x300mm. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-16T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        16,
+        9,
+        10
+      ],
       "priceType": "exact",
-      "unitType": "piece",
+      "unitType": "box",
       "minQty": 1,
       "priceTiers": [],
       "showExactPrice": true,
       "showTieredPricing": false,
       "cardPriceMode": "exact",
-      "special": true
+      "special": false
     },
     {
-      "id": 11,
-      "name": "Ceramic Dinner Set - 24 Piece",
-      "slug": "ceramic-dinner-set-24-piece",
-      "sku": "KIT-CDS-24P-001",
-      "shortDescription": "Premium bone china dinner set with elegant floral design",
-      "description": "Elevate your dining experience with this 24-piece premium bone china dinner set. Includes 6 dinner plates, 6 quarter plates, 6 bowls, 2 serving bowls, 2 serving plates, and 2 spoons. Microwave and dishwasher safe with chip-resistant design and lead-free glaze.",
-      "categoryId": 34,
-      "brand": "CeraHome",
+      "id": 16,
+      "name": "Kitchen Backsplash Tile 250x400",
+      "slug": "kitchen-backsplash-tile-250x400",
+      "sku": "NEBM-16-016",
+      "shortDescription": "Easy-clean kitchen backsplash wall tile, 250x400mm.",
+      "description": "Easy-clean kitchen backsplash wall tile, 250x400mm. Low water absorption, scratch-resistant and easy to clean, suited to residential and commercial use. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 16,
+      "brand": "Orient Bell",
       "images": [
-        "https://placehold.co/600x400/795548/FFFFFF?text=Dinner+Set",
-        "https://placehold.co/600x400/6d4c41/FFFFFF?text=Plate+Detail",
-        "https://placehold.co/600x400/5d4037/FFFFFF?text=Full+Set"
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Kitchen+Backsplash+Tile+250x400",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Kitchen+Backsplash+Tile+250x400+Detail"
       ],
-      "price": 4999,
-      "comparePrice": 7499,
-      "costPrice": 2800,
-      "stock": 25,
-      "lowStockThreshold": 5,
-      "weight": 8.5,
-      "dimensions": {
-        "length": 45,
-        "width": 40,
-        "height": 25
-      },
-      "variants": [
+      "price": 380,
+      "comparePrice": null,
+      "costPrice": 274,
+      "stock": 248,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "kitchen",
+        "backsplash",
+        "tile",
+        "250x400",
+        "bathroom-kitchen-tiles",
+        "orient bell"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.1,
+      "totalReviews": 118,
+      "metaTitle": "Kitchen Backsplash Tile 250x400 — Orient Bell | North East Build Mart",
+      "metaDescription": "Easy-clean kitchen backsplash wall tile, 250x400mm. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-17T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        15,
+        9,
+        10
+      ],
+      "priceType": "tiered",
+      "unitType": "box",
+      "minQty": 1,
+      "priceTiers": [
         {
-          "id": "v1",
-          "name": "Royal Floral",
-          "price": 4999,
-          "stock": 10,
-          "sku": "KIT-CDS-24P-FLR"
+          "minQty": 1,
+          "price": 380
         },
         {
-          "id": "v2",
-          "name": "Classic White",
-          "price": 4499,
-          "stock": 15,
-          "sku": "KIT-CDS-24P-WHT"
+          "minQty": 5,
+          "price": 357
+        },
+        {
+          "minQty": 20,
+          "price": 334
         }
       ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 17,
+      "name": "Rustic Outdoor Paver Tile 300x300",
+      "slug": "rustic-outdoor-paver-tile-300x300",
+      "sku": "NEBM-17-017",
+      "shortDescription": "Rustic anti-skid paver tile for patios and pathways.",
+      "description": "Rustic anti-skid paver tile for patios and pathways. Low water absorption, scratch-resistant and easy to clean, suited to residential and commercial use. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 17,
+      "brand": "Nitco",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Rustic+Outdoor+Paver+Tile+300x300",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Rustic+Outdoor+Paver+Tile+300x300+Detail"
+      ],
+      "price": 560,
+      "comparePrice": 640,
+      "costPrice": 403,
+      "stock": 261,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
+      "variants": [],
       "tags": [
-        "dinner set",
-        "bone china",
-        "kitchen",
-        "dining",
-        "crockery",
-        "housewarming"
+        "rustic",
+        "outdoor",
+        "paver",
+        "tile",
+        "300x300",
+        "outdoor-tiles",
+        "nitco"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.2,
+      "totalReviews": 125,
+      "metaTitle": "Rustic Outdoor Paver Tile 300x300 — Nitco | North East Build Mart",
+      "metaDescription": "Rustic anti-skid paver tile for patios and pathways. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-18T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        18,
+        9,
+        10
+      ],
+      "priceType": "tiered",
+      "unitType": "box",
+      "minQty": 1,
+      "priceTiers": [
+        {
+          "minQty": 1,
+          "price": 560
+        },
+        {
+          "minQty": 5,
+          "price": 526
+        },
+        {
+          "minQty": 20,
+          "price": 493
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 18,
+      "name": "Anti-Skid Parking Tile 400x400",
+      "slug": "anti-skid-parking-tile-400x400",
+      "sku": "NEBM-17-018",
+      "shortDescription": "Heavy-duty anti-skid parking tile, 400x400mm.",
+      "description": "Heavy-duty anti-skid parking tile, 400x400mm. Low water absorption, scratch-resistant and easy to clean, suited to residential and commercial use. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 17,
+      "brand": "Somany",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Anti-Skid+Parking+Tile+400x400",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Anti-Skid+Parking+Tile+400x400+Detail"
+      ],
+      "price": 610,
+      "comparePrice": null,
+      "costPrice": 439,
+      "stock": 274,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "anti",
+        "skid",
+        "parking",
+        "tile",
+        "400x400",
+        "outdoor-tiles",
+        "somany"
+      ],
+      "featured": false,
+      "trending": true,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.3,
+      "totalReviews": 132,
+      "metaTitle": "Anti-Skid Parking Tile 400x400 — Somany | North East Build Mart",
+      "metaDescription": "Heavy-duty anti-skid parking tile, 400x400mm. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-19T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        17,
+        9,
+        10
+      ],
+      "priceType": "exact",
+      "unitType": "box",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 19,
+      "name": "Galvanised Steel Security Door",
+      "slug": "galvanised-steel-security-door",
+      "sku": "NEBM-18-019",
+      "shortDescription": "Galvanised steel security door with multi-point lock.",
+      "description": "Galvanised steel security door with multi-point lock. Sturdy, dimensionally stable and finished for long service life in Indian conditions. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 18,
+      "brand": "Godrej",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Galvanised+Steel+Security+Door",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Galvanised+Steel+Security+Door+Detail"
+      ],
+      "price": 12500,
+      "comparePrice": 14500,
+      "costPrice": 9000,
+      "stock": 287,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "galvanised",
+        "steel",
+        "security",
+        "door",
+        "steel-doors",
+        "godrej"
       ],
       "featured": true,
       "trending": false,
       "hot": false,
       "isActive": true,
-      "rating": 4.6,
-      "totalReviews": 87,
-      "metaTitle": "24-Piece Ceramic Dinner Set - Premium Bone China",
-      "metaDescription": "Buy premium 24-piece bone china dinner set. Microwave safe, dishwasher safe, elegant design.",
-      "createdAt": "2025-02-10T00:00:00.000Z",
+      "rating": 4.4,
+      "totalReviews": 139,
+      "metaTitle": "Galvanised Steel Security Door — Godrej | North East Build Mart",
+      "metaDescription": "Galvanised steel security door with multi-point lock. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-20T00:00:00.000Z",
       "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        20,
+        21,
+        22
+      ],
       "priceType": "exact",
       "unitType": "piece",
       "minQty": 1,
@@ -1683,137 +1868,337 @@
       "special": false
     },
     {
-      "id": 12,
-      "name": "ProFlex Yoga Mat",
-      "slug": "proflex-yoga-mat",
-      "sku": "SPT-PFX-YGA-001",
-      "shortDescription": "Extra thick non-slip yoga mat with alignment lines",
-      "description": "ProFlex yoga mat is designed for all levels of practice. 6mm thick TPE material provides excellent cushioning for joints while maintaining stability. Laser-etched alignment lines help perfect your form. Comes with a carrying strap. Eco-friendly, non-toxic, and free from PVC, latex, and heavy metals.",
-      "categoryId": 38,
-      "brand": "ProFlex",
+      "id": 20,
+      "name": "Powder-Coated Steel Flush Door",
+      "slug": "powder-coated-steel-flush-door",
+      "sku": "NEBM-18-020",
+      "shortDescription": "Powder-coated steel flush door, made to size.",
+      "description": "Powder-coated steel flush door, made to size. Sturdy, dimensionally stable and finished for long service life in Indian conditions. Price on enquiry — contact North East Build Mart for a quotation.",
+      "categoryId": 18,
+      "brand": "Tata Pravesh",
       "images": [
-        "https://placehold.co/600x400/ff9800/FFFFFF?text=Yoga+Mat",
-        "https://placehold.co/600x400/f57c00/FFFFFF?text=Mat+Rolled"
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Powder-Coated+Steel+Flush+Door",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Powder-Coated+Steel+Flush+Door+Detail"
       ],
-      "price": 1499,
-      "comparePrice": 2499,
-      "costPrice": 700,
-      "stock": 60,
+      "price": 18500,
+      "comparePrice": null,
+      "costPrice": 13320,
+      "stock": 40,
       "lowStockThreshold": 10,
-      "weight": 1.2,
-      "dimensions": {
-        "length": 183,
-        "width": 61,
-        "height": 0.6
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "Purple",
-          "price": 1499,
-          "stock": 20,
-          "sku": "SPT-PFX-YGA-PRP"
-        },
-        {
-          "id": "v2",
-          "name": "Teal",
-          "price": 1499,
-          "stock": 20,
-          "sku": "SPT-PFX-YGA-TEL"
-        },
-        {
-          "id": "v3",
-          "name": "Grey",
-          "price": 1499,
-          "stock": 20,
-          "sku": "SPT-PFX-YGA-GRY"
-        }
-      ],
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
       "tags": [
-        "yoga",
-        "mat",
-        "fitness",
-        "exercise",
-        "non-slip",
-        "eco-friendly"
+        "powder",
+        "coated",
+        "steel",
+        "flush",
+        "door",
+        "steel-doors",
+        "tata pravesh"
       ],
       "featured": false,
-      "trending": true,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.5,
+      "totalReviews": 6,
+      "metaTitle": "Powder-Coated Steel Flush Door — Tata Pravesh | North East Build Mart",
+      "metaDescription": "Powder-coated steel flush door, made to size. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-21T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        19,
+        21,
+        22
+      ],
+      "priceType": "onEnquiry",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": false,
+      "showTieredPricing": false,
+      "cardPriceMode": "onEnquiry",
+      "special": false
+    },
+    {
+      "id": 21,
+      "name": "PVC Bathroom Door Ivory",
+      "slug": "pvc-bathroom-door-ivory",
+      "sku": "NEBM-19-021",
+      "shortDescription": "100% waterproof PVC bathroom door in ivory.",
+      "description": "100% waterproof PVC bathroom door in ivory. Sturdy, dimensionally stable and finished for long service life in Indian conditions. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 19,
+      "brand": "Sintex",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=PVC+Bathroom+Door+Ivory",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=PVC+Bathroom+Door+Ivory+Detail"
+      ],
+      "price": 2400,
+      "comparePrice": 2800,
+      "costPrice": 1728,
+      "stock": 313,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "pvc",
+        "bathroom",
+        "door",
+        "ivory",
+        "pvc-doors",
+        "sintex"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.6,
+      "totalReviews": 13,
+      "metaTitle": "PVC Bathroom Door Ivory — Sintex | North East Build Mart",
+      "metaDescription": "100% waterproof PVC bathroom door in ivory. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-22T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        22,
+        19,
+        20
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 22,
+      "name": "PVC Panel Door Wood Finish",
+      "slug": "pvc-panel-door-wood-finish",
+      "sku": "NEBM-19-022",
+      "shortDescription": "PVC panel door with a wood-grain finish.",
+      "description": "PVC panel door with a wood-grain finish. Sturdy, dimensionally stable and finished for long service life in Indian conditions. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 19,
+      "brand": "Rajshri",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=PVC+Panel+Door+Wood+Finish",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=PVC+Panel+Door+Wood+Finish+Detail"
+      ],
+      "price": 3100,
+      "comparePrice": null,
+      "costPrice": 2232,
+      "stock": 326,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "pvc",
+        "panel",
+        "door",
+        "wood",
+        "finish",
+        "pvc-doors",
+        "rajshri"
+      ],
+      "featured": false,
+      "trending": false,
       "hot": false,
       "isActive": true,
       "rating": 4.7,
-      "totalReviews": 256,
-      "metaTitle": "ProFlex Yoga Mat - 6mm Thick, Non-Slip with Alignment Lines",
-      "metaDescription": "Buy ProFlex eco-friendly yoga mat with alignment lines. Extra thick, non-slip, with carrying strap.",
-      "createdAt": "2025-02-15T00:00:00.000Z",
+      "totalReviews": 20,
+      "metaTitle": "PVC Panel Door Wood Finish — Rajshri | North East Build Mart",
+      "metaDescription": "PVC panel door with a wood-grain finish. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-23T00:00:00.000Z",
       "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        21,
+        19,
+        20
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 23,
+      "name": "WPC Solid Core Door with Frame Set",
+      "slug": "wpc-solid-core-door-with-frame-set",
+      "sku": "NEBM-20-023",
+      "shortDescription": "Termite-proof WPC solid-core door with matching frame.",
+      "description": "Termite-proof WPC solid-core door with matching frame. Sturdy, dimensionally stable and finished for long service life in Indian conditions. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 20,
+      "brand": "Greenpanel",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=WPC+Solid+Core+Door+with+Frame+Set",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=WPC+Solid+Core+Door+with+Frame+Set+Detail"
+      ],
+      "price": 5600,
+      "comparePrice": 6400,
+      "costPrice": 4032,
+      "stock": 339,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "wpc",
+        "solid",
+        "core",
+        "door",
+        "frame",
+        "wpc-doors",
+        "greenpanel"
+      ],
+      "featured": true,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.8,
+      "totalReviews": 27,
+      "metaTitle": "WPC Solid Core Door with Frame Set — Greenpanel | North East Build Mart",
+      "metaDescription": "Termite-proof WPC solid-core door with matching frame. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-24T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        24,
+        19,
+        20
+      ],
       "priceType": "tiered",
-      "unitType": "bag",
+      "unitType": "piece",
       "minQty": 1,
       "priceTiers": [
         {
           "minQty": 1,
-          "price": 1499
+          "price": 5600
         },
         {
-          "minQty": 10,
-          "price": 1424
+          "minQty": 5,
+          "price": 5264
         },
         {
-          "minQty": 50,
-          "price": 1349
+          "minQty": 20,
+          "price": 4928
         }
       ],
       "showExactPrice": false,
       "showTieredPricing": true,
       "cardPriceMode": "from",
-      "special": true
+      "special": false
     },
     {
-      "id": 13,
-      "name": "VisionX 55\" Smart LED TV",
-      "slug": "visionx-55-smart-led-tv",
-      "sku": "ELC-VXN-55-001",
-      "shortDescription": "55-inch 4K Ultra HD Smart LED TV with Dolby Vision",
-      "description": "VisionX 55\" Smart LED TV delivers breathtaking picture quality with 4K Ultra HD resolution and Dolby Vision HDR. Built-in smart OS gives you access to all major streaming apps. Features 20W stereo speakers with Dolby Atmos, 3 HDMI ports, and screen mirroring. Ultra-slim bezel design.",
-      "categoryId": 41,
-      "brand": "VisionX",
+      "id": 24,
+      "name": "WPC Flush Door Pre-Laminated",
+      "slug": "wpc-flush-door-pre-laminated",
+      "sku": "NEBM-20-024",
+      "shortDescription": "Pre-laminated WPC flush door, ready to fix.",
+      "description": "Pre-laminated WPC flush door, ready to fix. Sturdy, dimensionally stable and finished for long service life in Indian conditions. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 20,
+      "brand": "CenturyPly",
       "images": [
-        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Smart+TV+55",
-        "https://placehold.co/600x400/16213e/FFFFFF?text=TV+Side+View",
-        "https://placehold.co/600x400/0f3460/FFFFFF?text=TV+Remote"
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=WPC+Flush+Door+Pre-Laminated",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=WPC+Flush+Door+Pre-Laminated+Detail"
       ],
-      "price": 34999,
-      "comparePrice": 49999,
-      "costPrice": 24000,
-      "stock": 15,
-      "lowStockThreshold": 3,
-      "weight": 12.5,
-      "dimensions": {
-        "length": 124,
-        "width": 72,
-        "height": 8
-      },
+      "price": 4300,
+      "comparePrice": null,
+      "costPrice": 3096,
+      "stock": 352,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
       "variants": [],
       "tags": [
-        "tv",
-        "smart tv",
-        "4k",
-        "led",
-        "dolby",
-        "entertainment",
-        "electronics"
+        "wpc",
+        "flush",
+        "door",
+        "pre",
+        "laminated",
+        "wpc-doors",
+        "centuryply"
       ],
-      "featured": true,
-      "trending": true,
-      "hot": true,
+      "featured": false,
+      "trending": false,
+      "hot": false,
       "isActive": true,
-      "rating": 4.5,
-      "totalReviews": 174,
-      "metaTitle": "VisionX 55\" 4K Smart LED TV - Dolby Vision & Atmos",
-      "metaDescription": "Buy VisionX 55\" 4K Smart LED TV with Dolby Vision HDR and Dolby Atmos sound.",
-      "createdAt": "2025-01-05T00:00:00.000Z",
+      "rating": 4.1,
+      "totalReviews": 34,
+      "metaTitle": "WPC Flush Door Pre-Laminated — CenturyPly | North East Build Mart",
+      "metaDescription": "Pre-laminated WPC flush door, ready to fix. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-25T00:00:00.000Z",
       "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        23,
+        19,
+        20
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 25,
+      "name": "Designer Membrane Main Door",
+      "slug": "designer-membrane-main-door",
+      "sku": "NEBM-21-025",
+      "shortDescription": "Custom membrane-finish designer main door.",
+      "description": "Custom membrane-finish designer main door. Sturdy, dimensionally stable and finished for long service life in Indian conditions. Price on enquiry — contact North East Build Mart for a quotation.",
+      "categoryId": 21,
+      "brand": "Ganpati",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Designer+Membrane+Main+Door",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Designer+Membrane+Main+Door+Detail"
+      ],
+      "price": 22000,
+      "comparePrice": null,
+      "costPrice": 15840,
+      "stock": 35,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "designer",
+        "membrane",
+        "main",
+        "door",
+        "designer-doors",
+        "ganpati"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.2,
+      "totalReviews": 41,
+      "metaTitle": "Designer Membrane Main Door — Ganpati | North East Build Mart",
+      "metaDescription": "Custom membrane-finish designer main door. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-26T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        26,
+        19,
+        20
+      ],
       "priceType": "onEnquiry",
       "unitType": "piece",
       "minQty": 1,
@@ -1824,70 +2209,336 @@
       "special": true
     },
     {
-      "id": 14,
-      "name": "Cotton Bedsheet Set - King Size",
-      "slug": "cotton-bedsheet-set-king-size",
-      "sku": "HOM-CBS-KNG-001",
-      "shortDescription": "300 TC pure cotton bedsheet with 2 pillow covers",
-      "description": "Luxuriously soft 300 thread count pure cotton bedsheet set in king size. Includes one bedsheet (108x108 inches) and 2 pillow covers (18x28 inches). Reactive printed with vibrant colors that won't fade. Pre-shrunk fabric ensures long-lasting fit. Machine washable.",
-      "categoryId": 15,
-      "brand": "SleepNest",
+      "id": 26,
+      "name": "CNC-Carved WPC Pooja Door",
+      "slug": "cnc-carved-wpc-pooja-door",
+      "sku": "NEBM-21-026",
+      "shortDescription": "Intricately CNC-carved WPC pooja room door.",
+      "description": "Intricately CNC-carved WPC pooja room door. Sturdy, dimensionally stable and finished for long service life in Indian conditions. Price on enquiry — contact North East Build Mart for a quotation.",
+      "categoryId": 21,
+      "brand": "Greenpanel",
       "images": [
-        "https://placehold.co/600x400/4caf50/FFFFFF?text=Bedsheet+Set",
-        "https://placehold.co/600x400/388e3c/FFFFFF?text=Bedsheet+Pattern"
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=CNC-Carved+WPC+Pooja+Door",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=CNC-Carved+WPC+Pooja+Door+Detail"
       ],
-      "price": 1299,
-      "comparePrice": 1999,
-      "costPrice": 650,
-      "stock": 70,
-      "lowStockThreshold": 15,
-      "weight": 1,
-      "dimensions": {
-        "length": 35,
-        "width": 30,
-        "height": 8
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "Floral Blue",
-          "price": 1299,
-          "stock": 25,
-          "sku": "HOM-CBS-KNG-FBL"
-        },
-        {
-          "id": "v2",
-          "name": "Geometric Grey",
-          "price": 1299,
-          "stock": 25,
-          "sku": "HOM-CBS-KNG-GGR"
-        },
-        {
-          "id": "v3",
-          "name": "Paisley Maroon",
-          "price": 1399,
-          "stock": 20,
-          "sku": "HOM-CBS-KNG-PMR"
-        }
-      ],
+      "price": 15500,
+      "comparePrice": null,
+      "costPrice": 11160,
+      "stock": 46,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
       "tags": [
-        "bedsheet",
-        "cotton",
-        "king size",
-        "bedroom",
-        "home",
-        "pillow cover"
+        "cnc",
+        "carved",
+        "wpc",
+        "pooja",
+        "door",
+        "designer-doors",
+        "greenpanel"
       ],
       "featured": false,
       "trending": false,
       "hot": false,
       "isActive": true,
       "rating": 4.3,
-      "totalReviews": 198,
-      "metaTitle": "King Size Cotton Bedsheet Set - 300 TC with Pillow Covers",
-      "metaDescription": "Buy premium 300 TC cotton bedsheet with 2 pillow covers. Reactive printed, pre-shrunk, machine washable.",
-      "createdAt": "2025-02-05T00:00:00.000Z",
+      "totalReviews": 48,
+      "metaTitle": "CNC-Carved WPC Pooja Door — Greenpanel | North East Build Mart",
+      "metaDescription": "Intricately CNC-carved WPC pooja room door. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-27T00:00:00.000Z",
       "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        25,
+        19,
+        20
+      ],
+      "priceType": "onEnquiry",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": false,
+      "showTieredPricing": false,
+      "cardPriceMode": "onEnquiry",
+      "special": false
+    },
+    {
+      "id": 27,
+      "name": "ABS Waterproof Bathroom Door",
+      "slug": "abs-waterproof-bathroom-door",
+      "sku": "NEBM-22-027",
+      "shortDescription": "Fully waterproof ABS bathroom door.",
+      "description": "Fully waterproof ABS bathroom door. Sturdy, dimensionally stable and finished for long service life in Indian conditions. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 22,
+      "brand": "Duroplast",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=ABS+Waterproof+Bathroom+Door",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=ABS+Waterproof+Bathroom+Door+Detail"
+      ],
+      "price": 3600,
+      "comparePrice": 4100,
+      "costPrice": 2592,
+      "stock": 391,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "abs",
+        "waterproof",
+        "bathroom",
+        "door",
+        "bathroom-doors",
+        "duroplast"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.4,
+      "totalReviews": 55,
+      "metaTitle": "ABS Waterproof Bathroom Door — Duroplast | North East Build Mart",
+      "metaDescription": "Fully waterproof ABS bathroom door. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-28T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        28,
+        19,
+        20
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 28,
+      "name": "Frosted Glass Aluminium Bathroom Door",
+      "slug": "frosted-glass-aluminium-bathroom-door",
+      "sku": "NEBM-22-028",
+      "shortDescription": "Aluminium-framed frosted-glass bathroom door.",
+      "description": "Aluminium-framed frosted-glass bathroom door. Sturdy, dimensionally stable and finished for long service life in Indian conditions. Price on enquiry — contact North East Build Mart for a quotation.",
+      "categoryId": 22,
+      "brand": "Fenesta",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Frosted+Glass+Aluminium+Bathroom+Door",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Frosted+Glass+Aluminium+Bathroom+Door+Detail"
+      ],
+      "price": 6800,
+      "comparePrice": null,
+      "costPrice": 4896,
+      "stock": 8,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "frosted",
+        "glass",
+        "aluminium",
+        "bathroom",
+        "door",
+        "bathroom-doors",
+        "fenesta"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.5,
+      "totalReviews": 62,
+      "metaTitle": "Frosted Glass Aluminium Bathroom Door — Fenesta | North East Build Mart",
+      "metaDescription": "Aluminium-framed frosted-glass bathroom door. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-29T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        27,
+        19,
+        20
+      ],
+      "priceType": "onEnquiry",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": false,
+      "showTieredPricing": false,
+      "cardPriceMode": "onEnquiry",
+      "special": false
+    },
+    {
+      "id": 29,
+      "name": "Mortise Door Lock Set Brass",
+      "slug": "mortise-door-lock-set-brass",
+      "sku": "NEBM-23-029",
+      "shortDescription": "Brass mortise lock set with lever handles.",
+      "description": "Brass mortise lock set with lever handles. Precision-engineered, corrosion-resistant hardware built for reliable everyday performance. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 23,
+      "brand": "Godrej",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Mortise+Door+Lock+Set+Brass",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Mortise+Door+Lock+Set+Brass+Detail"
+      ],
+      "price": 1450,
+      "comparePrice": 1750,
+      "costPrice": 1044,
+      "stock": 417,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "mortise",
+        "door",
+        "lock",
+        "set",
+        "brass",
+        "door-locks",
+        "godrej"
+      ],
+      "featured": true,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.6,
+      "totalReviews": 69,
+      "metaTitle": "Mortise Door Lock Set Brass — Godrej | North East Build Mart",
+      "metaDescription": "Brass mortise lock set with lever handles. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-30T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        30,
+        31,
+        32
+      ],
+      "priceType": "tiered",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [
+        {
+          "minQty": 1,
+          "price": 1450
+        },
+        {
+          "minQty": 5,
+          "price": 1363
+        },
+        {
+          "minQty": 20,
+          "price": 1276
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 30,
+      "name": "Digital Smart Door Lock",
+      "slug": "digital-smart-door-lock",
+      "sku": "NEBM-23-030",
+      "shortDescription": "Biometric + PIN smart lock for main doors.",
+      "description": "Biometric + PIN smart lock for main doors. Precision-engineered, corrosion-resistant hardware built for reliable everyday performance. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 23,
+      "brand": "Yale",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Digital+Smart+Door+Lock",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Digital+Smart+Door+Lock+Detail"
+      ],
+      "price": 12900,
+      "comparePrice": 15500,
+      "costPrice": 9288,
+      "stock": 430,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "digital",
+        "smart",
+        "door",
+        "lock",
+        "door-locks",
+        "yale"
+      ],
+      "featured": false,
+      "trending": true,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.7,
+      "totalReviews": 76,
+      "metaTitle": "Digital Smart Door Lock — Yale | North East Build Mart",
+      "metaDescription": "Biometric + PIN smart lock for main doors. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-01-31T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        29,
+        31,
+        32
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 31,
+      "name": "SS Cabinet Handle 8-inch (Pack of 6)",
+      "slug": "ss-cabinet-handle-8-inch-pack-of-6",
+      "sku": "NEBM-24-031",
+      "shortDescription": "Stainless-steel cabinet handles, pack of 6.",
+      "description": "Stainless-steel cabinet handles, pack of 6. Precision-engineered, corrosion-resistant hardware built for reliable everyday performance. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 24,
+      "brand": "Ozone",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=SS+Cabinet+Handle+8-inch+(Pack+of+6)",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=SS+Cabinet+Handle+8-inch+(Pack+of+6)+Detail"
+      ],
+      "price": 540,
+      "comparePrice": null,
+      "costPrice": 389,
+      "stock": 443,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "cabinet",
+        "handle",
+        "inch",
+        "pack",
+        "handles-hinges",
+        "ozone"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.8,
+      "totalReviews": 83,
+      "metaTitle": "SS Cabinet Handle 8-inch (Pack of 6) — Ozone | North East Build Mart",
+      "metaDescription": "Stainless-steel cabinet handles, pack of 6. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-01T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        32,
+        29,
+        30
+      ],
       "priceType": "exact",
       "unitType": "box",
       "minQty": 1,
@@ -1898,306 +2549,66 @@
       "special": false
     },
     {
-      "id": 15,
-      "name": "ProStrike Cricket Bat - English Willow",
-      "slug": "prostrike-cricket-bat-english-willow",
-      "sku": "SPT-PSK-CKT-001",
-      "shortDescription": "Grade A English willow cricket bat with premium grip",
-      "description": "ProStrike cricket bat crafted from Grade A English willow for superior stroke play. Features a thick edge profile for maximum power and a mid-to-low sweet spot ideal for front-foot play. Comes with premium octopus grip and padded toe guard. Full size (SH). Knocked-in and ready to play.",
+      "id": 32,
+      "name": "Soft-Close Concealed Hinge (Pack of 10)",
+      "slug": "soft-close-concealed-hinge-pack-of-10",
+      "sku": "NEBM-24-032",
+      "shortDescription": "Soft-close concealed cabinet hinges, pack of 10.",
+      "description": "Soft-close concealed cabinet hinges, pack of 10. Precision-engineered, corrosion-resistant hardware built for reliable everyday performance. Bulk quantity pricing available — enquire for project rates.",
       "categoryId": 24,
-      "brand": "ProStrike",
+      "brand": "Hettich",
       "images": [
-        "https://placehold.co/600x400/ff9800/FFFFFF?text=Cricket+Bat",
-        "https://placehold.co/600x400/f57c00/FFFFFF?text=Bat+Profile"
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Soft-Close+Concealed+Hinge+(Pack+of+10)",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Soft-Close+Concealed+Hinge+(Pack+of+10)+Detail"
       ],
-      "price": 6999,
-      "comparePrice": 9999,
-      "costPrice": 4200,
-      "stock": 20,
-      "lowStockThreshold": 5,
-      "weight": 1.2,
-      "dimensions": {
-        "length": 86,
-        "width": 11,
-        "height": 6
-      },
+      "price": 890,
+      "comparePrice": 1050,
+      "costPrice": 641,
+      "stock": 456,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
       "variants": [],
       "tags": [
-        "cricket",
-        "bat",
-        "english willow",
-        "sports",
-        "outdoor",
-        "game"
-      ],
-      "featured": false,
-      "trending": true,
-      "hot": false,
-      "isActive": true,
-      "rating": 4.6,
-      "totalReviews": 92,
-      "metaTitle": "ProStrike Cricket Bat - Grade A English Willow",
-      "metaDescription": "Buy ProStrike English willow cricket bat. Grade A, thick edge, ready to play.",
-      "createdAt": "2025-01-30T00:00:00.000Z",
-      "updatedAt": "2026-07-02T00:00:00.000Z",
-      "priceType": "exact",
-      "unitType": "piece",
-      "minQty": 1,
-      "priceTiers": [],
-      "showExactPrice": true,
-      "showTieredPricing": false,
-      "cardPriceMode": "exact",
-      "special": false
-    },
-    {
-      "id": 17,
-      "name": "Men's Premium Formal Shirt",
-      "slug": "mens-premium-formal-shirt",
-      "sku": "CLT-MFS-PRM-001",
-      "shortDescription": "Slim fit cotton formal shirt with wrinkle-free finish",
-      "description": "Elevate your professional wardrobe with this premium formal shirt. Made from 100% Egyptian cotton with a wrinkle-free finish that keeps you looking sharp all day. Features a semi-spread collar, single-button barrel cuffs, and a tailored slim fit. Available in classic solid colors.",
-      "categoryId": 29,
-      "brand": "UrbanEdge",
-      "images": [
-        "https://placehold.co/600x400/3f51b5/FFFFFF?text=Formal+Shirt",
-        "https://placehold.co/600x400/303f9f/FFFFFF?text=Shirt+Detail"
-      ],
-      "price": 1999,
-      "comparePrice": 2999,
-      "costPrice": 900,
-      "stock": 90,
-      "lowStockThreshold": 15,
-      "weight": 0.3,
-      "dimensions": {
-        "length": 30,
-        "width": 22,
-        "height": 3
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "S - White",
-          "price": 1999,
-          "stock": 20,
-          "sku": "CLT-MFS-S-WHT",
-          "attributes": {
-            "Size": "S",
-            "Color": "White"
-          },
-          "swatchHex": "#ffffff"
-        },
-        {
-          "id": "v2",
-          "name": "M - White",
-          "price": 1999,
-          "stock": 25,
-          "sku": "CLT-MFS-M-WHT",
-          "attributes": {
-            "Size": "M",
-            "Color": "White"
-          },
-          "swatchHex": "#ffffff"
-        },
-        {
-          "id": "v3",
-          "name": "L - Light Blue",
-          "price": 1999,
-          "stock": 25,
-          "sku": "CLT-MFS-L-BLU",
-          "attributes": {
-            "Size": "L",
-            "Color": "Light Blue"
-          },
-          "swatchHex": "#cfe2f3"
-        },
-        {
-          "id": "v4",
-          "name": "XL - Light Blue",
-          "price": 1999,
-          "stock": 20,
-          "sku": "CLT-MFS-XL-BLU",
-          "attributes": {
-            "Size": "XL",
-            "Color": "Light Blue"
-          },
-          "swatchHex": "#cfe2f3"
-        }
-      ],
-      "tags": [
-        "shirt",
-        "formal",
-        "cotton",
-        "slim fit",
-        "men",
-        "office",
-        "professional"
-      ],
-      "featured": true,
-      "trending": false,
-      "hot": false,
-      "isActive": true,
-      "rating": 4.4,
-      "totalReviews": 167,
-      "metaTitle": "Men's Premium Formal Shirt - Egyptian Cotton, Slim Fit",
-      "metaDescription": "Buy premium slim fit formal shirt. 100% Egyptian cotton, wrinkle-free finish.",
-      "createdAt": "2025-02-12T00:00:00.000Z",
-      "updatedAt": "2026-07-02T00:00:00.000Z",
-      "priceType": "exact",
-      "unitType": "piece",
-      "minQty": 1,
-      "priceTiers": [],
-      "showExactPrice": true,
-      "showTieredPricing": false,
-      "cardPriceMode": "exact",
-      "special": false
-    },
-    {
-      "id": 18,
-      "name": "Abstract Wall Art Canvas - Set of 3",
-      "slug": "abstract-wall-art-canvas-set-3",
-      "sku": "HOM-WAC-ABS-001",
-      "shortDescription": "Modern abstract art canvas prints for living room decor",
-      "description": "Transform your living space with this set of 3 abstract canvas prints. Gallery-quality giclée printing on premium cotton canvas, stretched over solid wood frames. Ready to hang with pre-installed hardware. Each panel: 16x24 inches. UV-resistant inks ensure vibrant colors for years.",
-      "categoryId": 35,
-      "brand": "ArtNova",
-      "images": [
-        "https://placehold.co/600x400/4caf50/FFFFFF?text=Wall+Art+Set",
-        "https://placehold.co/600x400/388e3c/FFFFFF?text=Art+Detail"
-      ],
-      "price": 2499,
-      "comparePrice": 3999,
-      "costPrice": 1200,
-      "stock": 35,
-      "lowStockThreshold": 5,
-      "weight": 3,
-      "dimensions": {
-        "length": 62,
-        "width": 42,
-        "height": 4
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "Blue & Gold",
-          "price": 2499,
-          "stock": 15,
-          "sku": "HOM-WAC-ABS-BGD"
-        },
-        {
-          "id": "v2",
-          "name": "Earthy Tones",
-          "price": 2499,
-          "stock": 20,
-          "sku": "HOM-WAC-ABS-ETH"
-        }
-      ],
-      "tags": [
-        "wall art",
-        "canvas",
-        "abstract",
-        "decor",
-        "living room",
-        "modern art"
+        "soft",
+        "close",
+        "concealed",
+        "hinge",
+        "pack",
+        "handles-hinges",
+        "hettich"
       ],
       "featured": false,
       "trending": false,
       "hot": false,
       "isActive": true,
-      "rating": 4.5,
-      "totalReviews": 73,
-      "metaTitle": "Abstract Wall Art Canvas Set of 3 - Modern Decor",
-      "metaDescription": "Buy set of 3 abstract canvas prints for living room. Gallery-quality, ready to hang.",
-      "createdAt": "2025-02-08T00:00:00.000Z",
+      "rating": 4.1,
+      "totalReviews": 90,
+      "metaTitle": "Soft-Close Concealed Hinge (Pack of 10) — Hettich | North East Build Mart",
+      "metaDescription": "Soft-close concealed cabinet hinges, pack of 10. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-02T00:00:00.000Z",
       "updatedAt": "2026-07-02T00:00:00.000Z",
-      "priceType": "exact",
-      "unitType": "piece",
-      "minQty": 1,
-      "priceTiers": [],
-      "showExactPrice": true,
-      "showTieredPricing": false,
-      "cardPriceMode": "exact",
-      "special": false
-    },
-    {
-      "id": 19,
-      "name": "HydroFlask Insulated Water Bottle",
-      "slug": "hydroflask-insulated-water-bottle",
-      "sku": "SPT-HFL-WTR-001",
-      "shortDescription": "1L stainless steel vacuum insulated bottle - keeps cold 24hrs",
-      "description": "HydroFlask double-wall vacuum insulated water bottle keeps drinks ice cold for 24 hours or hot for 12 hours. Made from 18/8 food-grade stainless steel with BPA-free lid. Wide mouth opening fits ice cubes easily. Powder-coated finish for a secure grip. Leak-proof and sweat-free design.",
-      "categoryId": 39,
-      "brand": "HydroFlask",
-      "images": [
-        "https://placehold.co/600x400/ff9800/FFFFFF?text=Water+Bottle",
-        "https://placehold.co/600x400/f57c00/FFFFFF?text=Bottle+Open"
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        31,
+        29,
+        30
       ],
-      "price": 1299,
-      "comparePrice": 1899,
-      "costPrice": 550,
-      "stock": 150,
-      "lowStockThreshold": 25,
-      "weight": 0.4,
-      "dimensions": {
-        "length": 28,
-        "width": 8,
-        "height": 8
-      },
-      "variants": [
-        {
-          "id": "v1",
-          "name": "Pacific Blue",
-          "price": 1299,
-          "stock": 50,
-          "sku": "SPT-HFL-WTR-BLU"
-        },
-        {
-          "id": "v2",
-          "name": "Charcoal Black",
-          "price": 1299,
-          "stock": 50,
-          "sku": "SPT-HFL-WTR-BLK"
-        },
-        {
-          "id": "v3",
-          "name": "Coral Pink",
-          "price": 1299,
-          "stock": 50,
-          "sku": "SPT-HFL-WTR-PNK"
-        }
-      ],
-      "tags": [
-        "water bottle",
-        "insulated",
-        "stainless steel",
-        "sports",
-        "gym",
-        "hydration"
-      ],
-      "featured": false,
-      "trending": true,
-      "hot": false,
-      "isActive": true,
-      "rating": 4.6,
-      "totalReviews": 328,
-      "metaTitle": "HydroFlask 1L Insulated Water Bottle - 24hr Cold",
-      "metaDescription": "Buy HydroFlask vacuum insulated water bottle. Keeps cold 24hrs, hot 12hrs. BPA-free.",
-      "createdAt": "2025-01-18T00:00:00.000Z",
-      "updatedAt": "2026-07-02T00:00:00.000Z",
       "priceType": "tiered",
-      "unitType": "bag",
+      "unitType": "box",
       "minQty": 1,
       "priceTiers": [
         {
           "minQty": 1,
-          "price": 1299
+          "price": 890
         },
         {
-          "minQty": 10,
-          "price": 1234
+          "minQty": 5,
+          "price": 837
         },
         {
-          "minQty": 50,
-          "price": 1169
+          "minQty": 20,
+          "price": 783
         }
       ],
       "showExactPrice": false,
@@ -2206,48 +2617,346 @@
       "special": false
     },
     {
-      "id": 20,
-      "name": "Creative Kids Building Blocks - 500 Pieces",
-      "slug": "creative-kids-building-blocks-500",
-      "sku": "TOY-CKB-500-001",
-      "shortDescription": "STEM learning building blocks set with storage box",
-      "description": "Spark creativity and learning with this 500-piece building blocks set. Compatible with all major brands. Includes bricks, wheels, doors, windows, trees, and minifigures. Comes in a sturdy storage box with sorting compartments. Made from non-toxic ABS plastic, safe for children 3+ years. Great for developing motor skills and imagination.",
-      "categoryId": 42,
-      "brand": "BrainBrix",
+      "id": 33,
+      "name": "Self-Drilling Screw Assorted Box (500 pcs)",
+      "slug": "self-drilling-screw-assorted-box-500-pcs",
+      "sku": "NEBM-25-033",
+      "shortDescription": "Assorted self-drilling screws, box of 500.",
+      "description": "Assorted self-drilling screws, box of 500. Precision-engineered, corrosion-resistant hardware built for reliable everyday performance. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 25,
+      "brand": "GKW",
       "images": [
-        "https://placehold.co/600x400/e91e63/FFFFFF?text=Building+Blocks",
-        "https://placehold.co/600x400/c2185b/FFFFFF?text=Blocks+Castle"
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Self-Drilling+Screw+Assorted+Box+(500+pcs)",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Self-Drilling+Screw+Assorted+Box+(500+pcs)+Detail"
       ],
-      "price": 1999,
-      "comparePrice": 2999,
-      "costPrice": 900,
-      "stock": 5,
-      "lowStockThreshold": 8,
-      "weight": 2.5,
-      "dimensions": {
-        "length": 40,
-        "width": 30,
-        "height": 15
-      },
+      "price": 640,
+      "comparePrice": null,
+      "costPrice": 461,
+      "stock": 469,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
       "variants": [],
       "tags": [
-        "building blocks",
-        "kids",
-        "toys",
-        "STEM",
-        "educational",
-        "creative"
+        "self",
+        "drilling",
+        "screw",
+        "assorted",
+        "box",
+        "fasteners",
+        "gkw"
       ],
-      "featured": true,
+      "featured": false,
       "trending": false,
-      "hot": true,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.2,
+      "totalReviews": 97,
+      "metaTitle": "Self-Drilling Screw Assorted Box (500 pcs) — GKW | North East Build Mart",
+      "metaDescription": "Assorted self-drilling screws, box of 500. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-03T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        34,
+        29,
+        30
+      ],
+      "priceType": "tiered",
+      "unitType": "box",
+      "minQty": 1,
+      "priceTiers": [
+        {
+          "minQty": 1,
+          "price": 640
+        },
+        {
+          "minQty": 5,
+          "price": 602
+        },
+        {
+          "minQty": 20,
+          "price": 563
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 34,
+      "name": "Wall Anchor Fastener Kit",
+      "slug": "wall-anchor-fastener-kit",
+      "sku": "NEBM-25-034",
+      "shortDescription": "Nylon wall-anchor fastener kit with screws.",
+      "description": "Nylon wall-anchor fastener kit with screws. Precision-engineered, corrosion-resistant hardware built for reliable everyday performance. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 25,
+      "brand": "Hilti",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Wall+Anchor+Fastener+Kit",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Wall+Anchor+Fastener+Kit+Detail"
+      ],
+      "price": 780,
+      "comparePrice": 920,
+      "costPrice": 562,
+      "stock": 482,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "wall",
+        "anchor",
+        "fastener",
+        "kit",
+        "fasteners",
+        "hilti"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.3,
+      "totalReviews": 104,
+      "metaTitle": "Wall Anchor Fastener Kit — Hilti | North East Build Mart",
+      "metaDescription": "Nylon wall-anchor fastener kit with screws. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-04T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        33,
+        29,
+        30
+      ],
+      "priceType": "exact",
+      "unitType": "box",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 35,
+      "name": "Telescopic Drawer Channel 18-inch",
+      "slug": "telescopic-drawer-channel-18-inch",
+      "sku": "NEBM-26-035",
+      "shortDescription": "Ball-bearing telescopic drawer channel, 18-inch.",
+      "description": "Ball-bearing telescopic drawer channel, 18-inch. Precision-engineered, corrosion-resistant hardware built for reliable everyday performance. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 26,
+      "brand": "Hettich",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Telescopic+Drawer+Channel+18-inch",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Telescopic+Drawer+Channel+18-inch+Detail"
+      ],
+      "price": 420,
+      "comparePrice": null,
+      "costPrice": 302,
+      "stock": 495,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "telescopic",
+        "drawer",
+        "channel",
+        "inch",
+        "cabinet-fittings",
+        "hettich"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.4,
+      "totalReviews": 111,
+      "metaTitle": "Telescopic Drawer Channel 18-inch — Hettich | North East Build Mart",
+      "metaDescription": "Ball-bearing telescopic drawer channel, 18-inch. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-05T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        36,
+        29,
+        30
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 2,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 36,
+      "name": "Modular Kitchen Pull-Out Basket SS",
+      "slug": "modular-kitchen-pull-out-basket-ss",
+      "sku": "NEBM-26-036",
+      "shortDescription": "Stainless-steel pull-out basket for modular kitchens.",
+      "description": "Stainless-steel pull-out basket for modular kitchens. Precision-engineered, corrosion-resistant hardware built for reliable everyday performance. Price on enquiry — contact North East Build Mart for a quotation.",
+      "categoryId": 26,
+      "brand": "Ebco",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Modular+Kitchen+Pull-Out+Basket+SS",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Modular+Kitchen+Pull-Out+Basket+SS+Detail"
+      ],
+      "price": 3400,
+      "comparePrice": null,
+      "costPrice": 2448,
+      "stock": 36,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "modular",
+        "kitchen",
+        "pull",
+        "out",
+        "basket",
+        "cabinet-fittings",
+        "ebco"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.5,
+      "totalReviews": 118,
+      "metaTitle": "Modular Kitchen Pull-Out Basket SS — Ebco | North East Build Mart",
+      "metaDescription": "Stainless-steel pull-out basket for modular kitchens. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-06T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        35,
+        29,
+        30
+      ],
+      "priceType": "onEnquiry",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": false,
+      "showTieredPricing": false,
+      "cardPriceMode": "onEnquiry",
+      "special": false
+    },
+    {
+      "id": 37,
+      "name": "GI Binding Wire 18 Gauge",
+      "slug": "gi-binding-wire-18-gauge",
+      "sku": "NEBM-27-037",
+      "shortDescription": "Galvanised iron binding wire, 18 gauge.",
+      "description": "Galvanised iron binding wire, 18 gauge. Precision-engineered, corrosion-resistant hardware built for reliable everyday performance. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 27,
+      "brand": "Tata Wiron",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=GI+Binding+Wire+18+Gauge",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=GI+Binding+Wire+18+Gauge+Detail"
+      ],
+      "price": 95,
+      "comparePrice": null,
+      "costPrice": 68,
+      "stock": 61,
+      "lowStockThreshold": 10,
+      "weight": 1,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "binding",
+        "wire",
+        "gauge",
+        "construction-hardware",
+        "tata wiron"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.6,
+      "totalReviews": 125,
+      "metaTitle": "GI Binding Wire 18 Gauge — Tata Wiron | North East Build Mart",
+      "metaDescription": "Galvanised iron binding wire, 18 gauge. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-07T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        38,
+        29,
+        30
+      ],
+      "priceType": "tiered",
+      "unitType": "kg",
+      "minQty": 10,
+      "priceTiers": [
+        {
+          "minQty": 10,
+          "price": 95
+        },
+        {
+          "minQty": 50,
+          "price": 89
+        },
+        {
+          "minQty": 200,
+          "price": 84
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 38,
+      "name": "Scaffolding Coupler Forged",
+      "slug": "scaffolding-coupler-forged",
+      "sku": "NEBM-27-038",
+      "shortDescription": "Forged right-angle scaffolding coupler.",
+      "description": "Forged right-angle scaffolding coupler. Precision-engineered, corrosion-resistant hardware built for reliable everyday performance. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 27,
+      "brand": "Bull",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Scaffolding+Coupler+Forged",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Scaffolding+Coupler+Forged+Detail"
+      ],
+      "price": 165,
+      "comparePrice": 195,
+      "costPrice": 119,
+      "stock": 74,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "scaffolding",
+        "coupler",
+        "forged",
+        "construction-hardware",
+        "bull"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
       "isActive": true,
       "rating": 4.7,
-      "totalReviews": 156,
-      "metaTitle": "500-Piece Building Blocks Set - STEM Learning for Kids",
-      "metaDescription": "Buy 500-piece building blocks set with storage box. Safe, non-toxic, compatible with major brands.",
-      "createdAt": "2025-02-22T00:00:00.000Z",
+      "totalReviews": 132,
+      "metaTitle": "Scaffolding Coupler Forged — Bull | North East Build Mart",
+      "metaDescription": "Forged right-angle scaffolding coupler. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-08T00:00:00.000Z",
       "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        37,
+        29,
+        30
+      ],
       "priceType": "exact",
       "unitType": "piece",
       "minQty": 1,
@@ -2255,6 +2964,1958 @@
       "showExactPrice": true,
       "showTieredPricing": false,
       "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 39,
+      "name": "UPVC Plumbing Pipe 1-inch (3m)",
+      "slug": "upvc-plumbing-pipe-1-inch-3m",
+      "sku": "NEBM-28-039",
+      "shortDescription": "UPVC pressure pipe, 1-inch x 3 metre.",
+      "description": "UPVC pressure pipe, 1-inch x 3 metre. Leak-proof, pressure-tested and ISI-grade for safe potable and drainage plumbing. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 28,
+      "brand": "Astral",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=UPVC+Plumbing+Pipe+1-inch+(3m)",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=UPVC+Plumbing+Pipe+1-inch+(3m)+Detail"
+      ],
+      "price": 320,
+      "comparePrice": null,
+      "costPrice": 230,
+      "stock": 87,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "upvc",
+        "plumbing",
+        "pipe",
+        "inch",
+        "pvc-pipes",
+        "astral"
+      ],
+      "featured": true,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.8,
+      "totalReviews": 139,
+      "metaTitle": "UPVC Plumbing Pipe 1-inch (3m) — Astral | North East Build Mart",
+      "metaDescription": "UPVC pressure pipe, 1-inch x 3 metre. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-09T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        40,
+        41,
+        42
+      ],
+      "priceType": "tiered",
+      "unitType": "piece",
+      "minQty": 5,
+      "priceTiers": [
+        {
+          "minQty": 5,
+          "price": 320
+        },
+        {
+          "minQty": 25,
+          "price": 301
+        },
+        {
+          "minQty": 100,
+          "price": 282
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 40,
+      "name": "Agricultural PVC Pipe 4-inch (6m)",
+      "slug": "agricultural-pvc-pipe-4-inch-6m",
+      "sku": "NEBM-28-040",
+      "shortDescription": "Agricultural PVC pipe, 4-inch x 6 metre.",
+      "description": "Agricultural PVC pipe, 4-inch x 6 metre. Leak-proof, pressure-tested and ISI-grade for safe potable and drainage plumbing. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 28,
+      "brand": "Supreme",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Agricultural+PVC+Pipe+4-inch+(6m)",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Agricultural+PVC+Pipe+4-inch+(6m)+Detail"
+      ],
+      "price": 640,
+      "comparePrice": 720,
+      "costPrice": 461,
+      "stock": 100,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "agricultural",
+        "pvc",
+        "pipe",
+        "inch",
+        "pvc-pipes",
+        "supreme"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.1,
+      "totalReviews": 6,
+      "metaTitle": "Agricultural PVC Pipe 4-inch (6m) — Supreme | North East Build Mart",
+      "metaDescription": "Agricultural PVC pipe, 4-inch x 6 metre. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-10T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        39,
+        41,
+        42
+      ],
+      "priceType": "tiered",
+      "unitType": "piece",
+      "minQty": 5,
+      "priceTiers": [
+        {
+          "minQty": 5,
+          "price": 640
+        },
+        {
+          "minQty": 25,
+          "price": 602
+        },
+        {
+          "minQty": 100,
+          "price": 563
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 41,
+      "name": "CPVC Hot Water Pipe 3/4-inch (3m)",
+      "slug": "cpvc-hot-water-pipe-3-4-inch-3m",
+      "sku": "NEBM-29-041",
+      "shortDescription": "CPVC hot & cold water pipe, 3/4-inch x 3 metre.",
+      "description": "CPVC hot & cold water pipe, 3/4-inch x 3 metre. Leak-proof, pressure-tested and ISI-grade for safe potable and drainage plumbing. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 29,
+      "brand": "Astral",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=CPVC+Hot+Water+Pipe+3%2F4-inch+(3m)",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=CPVC+Hot+Water+Pipe+3%2F4-inch+(3m)+Detail"
+      ],
+      "price": 280,
+      "comparePrice": null,
+      "costPrice": 202,
+      "stock": 113,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "cpvc",
+        "hot",
+        "water",
+        "pipe",
+        "inch",
+        "cpvc-pipes",
+        "astral"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.2,
+      "totalReviews": 13,
+      "metaTitle": "CPVC Hot Water Pipe 3/4-inch (3m) — Astral | North East Build Mart",
+      "metaDescription": "CPVC hot & cold water pipe, 3/4-inch x 3 metre. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-11T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        42,
+        39,
+        40
+      ],
+      "priceType": "tiered",
+      "unitType": "piece",
+      "minQty": 5,
+      "priceTiers": [
+        {
+          "minQty": 5,
+          "price": 280
+        },
+        {
+          "minQty": 25,
+          "price": 263
+        },
+        {
+          "minQty": 100,
+          "price": 246
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 42,
+      "name": "CPVC Pipe 1-inch SDR-11 (3m)",
+      "slug": "cpvc-pipe-1-inch-sdr-11-3m",
+      "sku": "NEBM-29-042",
+      "shortDescription": "CPVC SDR-11 pipe, 1-inch x 3 metre.",
+      "description": "CPVC SDR-11 pipe, 1-inch x 3 metre. Leak-proof, pressure-tested and ISI-grade for safe potable and drainage plumbing. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 29,
+      "brand": "Ashirvad",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=CPVC+Pipe+1-inch+SDR-11+(3m)",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=CPVC+Pipe+1-inch+SDR-11+(3m)+Detail"
+      ],
+      "price": 360,
+      "comparePrice": 410,
+      "costPrice": 259,
+      "stock": 126,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "cpvc",
+        "pipe",
+        "inch",
+        "sdr",
+        "cpvc-pipes",
+        "ashirvad"
+      ],
+      "featured": false,
+      "trending": true,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.3,
+      "totalReviews": 20,
+      "metaTitle": "CPVC Pipe 1-inch SDR-11 (3m) — Ashirvad | North East Build Mart",
+      "metaDescription": "CPVC SDR-11 pipe, 1-inch x 3 metre. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-12T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        41,
+        39,
+        40
+      ],
+      "priceType": "tiered",
+      "unitType": "piece",
+      "minQty": 5,
+      "priceTiers": [
+        {
+          "minQty": 5,
+          "price": 360
+        },
+        {
+          "minQty": 25,
+          "price": 338
+        },
+        {
+          "minQty": 100,
+          "price": 317
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 43,
+      "name": "SWR Drainage Pipe 110mm (3m)",
+      "slug": "swr-drainage-pipe-110mm-3m",
+      "sku": "NEBM-30-043",
+      "shortDescription": "SWR soil & waste drainage pipe, 110mm x 3m.",
+      "description": "SWR soil & waste drainage pipe, 110mm x 3m. Leak-proof, pressure-tested and ISI-grade for safe potable and drainage plumbing. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 30,
+      "brand": "Supreme",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=SWR+Drainage+Pipe+110mm+(3m)",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=SWR+Drainage+Pipe+110mm+(3m)+Detail"
+      ],
+      "price": 540,
+      "comparePrice": null,
+      "costPrice": 389,
+      "stock": 139,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "swr",
+        "drainage",
+        "pipe",
+        "110mm",
+        "swr-pipes",
+        "supreme"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.4,
+      "totalReviews": 27,
+      "metaTitle": "SWR Drainage Pipe 110mm (3m) — Supreme | North East Build Mart",
+      "metaDescription": "SWR soil & waste drainage pipe, 110mm x 3m. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-13T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        44,
+        39,
+        40
+      ],
+      "priceType": "tiered",
+      "unitType": "piece",
+      "minQty": 3,
+      "priceTiers": [
+        {
+          "minQty": 3,
+          "price": 540
+        },
+        {
+          "minQty": 15,
+          "price": 508
+        },
+        {
+          "minQty": 60,
+          "price": 475
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 44,
+      "name": "SWR Pipe 75mm Type-A (3m)",
+      "slug": "swr-pipe-75mm-type-a-3m",
+      "sku": "NEBM-30-044",
+      "shortDescription": "SWR Type-A pipe, 75mm x 3 metre.",
+      "description": "SWR Type-A pipe, 75mm x 3 metre. Leak-proof, pressure-tested and ISI-grade for safe potable and drainage plumbing. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 30,
+      "brand": "Prince",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=SWR+Pipe+75mm+Type-A+(3m)",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=SWR+Pipe+75mm+Type-A+(3m)+Detail"
+      ],
+      "price": 380,
+      "comparePrice": 430,
+      "costPrice": 274,
+      "stock": 152,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "swr",
+        "pipe",
+        "75mm",
+        "type",
+        "swr-pipes",
+        "prince"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.5,
+      "totalReviews": 34,
+      "metaTitle": "SWR Pipe 75mm Type-A (3m) — Prince | North East Build Mart",
+      "metaDescription": "SWR Type-A pipe, 75mm x 3 metre. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-14T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        43,
+        39,
+        40
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 45,
+      "name": "Triple-Layer Water Tank 1000L",
+      "slug": "triple-layer-water-tank-1000l",
+      "sku": "NEBM-31-045",
+      "shortDescription": "Triple-layer overhead water tank, 1000 litre.",
+      "description": "Triple-layer overhead water tank, 1000 litre. Leak-proof, pressure-tested and ISI-grade for safe potable and drainage plumbing. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 31,
+      "brand": "Sintex",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Triple-Layer+Water+Tank+1000L",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Triple-Layer+Water+Tank+1000L+Detail"
+      ],
+      "price": 6800,
+      "comparePrice": 7900,
+      "costPrice": 4896,
+      "stock": 165,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "triple",
+        "layer",
+        "water",
+        "tank",
+        "1000l",
+        "water-tanks",
+        "sintex"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.6,
+      "totalReviews": 41,
+      "metaTitle": "Triple-Layer Water Tank 1000L — Sintex | North East Build Mart",
+      "metaDescription": "Triple-layer overhead water tank, 1000 litre. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-15T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        46,
+        39,
+        40
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": true
+    },
+    {
+      "id": 46,
+      "name": "Loft Water Tank 500L",
+      "slug": "loft-water-tank-500l",
+      "sku": "NEBM-31-046",
+      "shortDescription": "Compact loft water tank, 500 litre.",
+      "description": "Compact loft water tank, 500 litre. Leak-proof, pressure-tested and ISI-grade for safe potable and drainage plumbing. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 31,
+      "brand": "Vectus",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Loft+Water+Tank+500L",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Loft+Water+Tank+500L+Detail"
+      ],
+      "price": 3900,
+      "comparePrice": null,
+      "costPrice": 2808,
+      "stock": 178,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "loft",
+        "water",
+        "tank",
+        "500l",
+        "water-tanks",
+        "vectus"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.7,
+      "totalReviews": 48,
+      "metaTitle": "Loft Water Tank 500L — Vectus | North East Build Mart",
+      "metaDescription": "Compact loft water tank, 500 litre. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-16T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        45,
+        39,
+        40
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 47,
+      "name": "CPVC Elbow 90° 3/4-inch (Pack of 10)",
+      "slug": "cpvc-elbow-90-3-4-inch-pack-of-10",
+      "sku": "NEBM-32-047",
+      "shortDescription": "CPVC 90° elbow fittings, pack of 10.",
+      "description": "CPVC 90° elbow fittings, pack of 10. Leak-proof, pressure-tested and ISI-grade for safe potable and drainage plumbing. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 32,
+      "brand": "Astral",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=CPVC+Elbow+90%C2%B0+3%2F4-inch+(Pack+of+10)",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=CPVC+Elbow+90%C2%B0+3%2F4-inch+(Pack+of+10)+Detail"
+      ],
+      "price": 240,
+      "comparePrice": null,
+      "costPrice": 173,
+      "stock": 191,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "cpvc",
+        "elbow",
+        "inch",
+        "pack",
+        "pipe-fittings-accessories",
+        "astral"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.8,
+      "totalReviews": 55,
+      "metaTitle": "CPVC Elbow 90° 3/4-inch (Pack of 10) — Astral | North East Build Mart",
+      "metaDescription": "CPVC 90° elbow fittings, pack of 10. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-17T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        48,
+        39,
+        40
+      ],
+      "priceType": "tiered",
+      "unitType": "box",
+      "minQty": 1,
+      "priceTiers": [
+        {
+          "minQty": 1,
+          "price": 240
+        },
+        {
+          "minQty": 5,
+          "price": 226
+        },
+        {
+          "minQty": 20,
+          "price": 211
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 48,
+      "name": "PVC Ball Valve 1-inch",
+      "slug": "pvc-ball-valve-1-inch",
+      "sku": "NEBM-32-048",
+      "shortDescription": "Threaded PVC ball valve, 1-inch.",
+      "description": "Threaded PVC ball valve, 1-inch. Leak-proof, pressure-tested and ISI-grade for safe potable and drainage plumbing. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 32,
+      "brand": "Prince",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=PVC+Ball+Valve+1-inch",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=PVC+Ball+Valve+1-inch+Detail"
+      ],
+      "price": 180,
+      "comparePrice": 220,
+      "costPrice": 130,
+      "stock": 204,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "pvc",
+        "ball",
+        "valve",
+        "inch",
+        "pipe-fittings-accessories",
+        "prince"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.1,
+      "totalReviews": 62,
+      "metaTitle": "PVC Ball Valve 1-inch — Prince | North East Build Mart",
+      "metaDescription": "Threaded PVC ball valve, 1-inch. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-18T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        47,
+        39,
+        40
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 49,
+      "name": "Overhead Rain Shower 8-inch SS",
+      "slug": "overhead-rain-shower-8-inch-ss",
+      "sku": "NEBM-33-049",
+      "shortDescription": "8-inch stainless-steel overhead rain shower.",
+      "description": "8-inch stainless-steel overhead rain shower. Premium chrome finish with smooth operation and long-lasting durability. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 33,
+      "brand": "Jaquar",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Overhead+Rain+Shower+8-inch+SS",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Overhead+Rain+Shower+8-inch+SS+Detail"
+      ],
+      "price": 2400,
+      "comparePrice": 2900,
+      "costPrice": 1728,
+      "stock": 217,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "overhead",
+        "rain",
+        "shower",
+        "inch",
+        "showers",
+        "jaquar"
+      ],
+      "featured": true,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.2,
+      "totalReviews": 69,
+      "metaTitle": "Overhead Rain Shower 8-inch SS — Jaquar | North East Build Mart",
+      "metaDescription": "8-inch stainless-steel overhead rain shower. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-19T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        50,
+        51,
+        52
+      ],
+      "priceType": "tiered",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [
+        {
+          "minQty": 1,
+          "price": 2400
+        },
+        {
+          "minQty": 5,
+          "price": 2256
+        },
+        {
+          "minQty": 20,
+          "price": 2112
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 50,
+      "name": "Hand Shower 3-Flow with Hose",
+      "slug": "hand-shower-3-flow-with-hose",
+      "sku": "NEBM-33-050",
+      "shortDescription": "3-flow hand shower with 1.5m flexible hose.",
+      "description": "3-flow hand shower with 1.5m flexible hose. Premium chrome finish with smooth operation and long-lasting durability. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 33,
+      "brand": "Hindware",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Hand+Shower+3-Flow+with+Hose",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Hand+Shower+3-Flow+with+Hose+Detail"
+      ],
+      "price": 890,
+      "comparePrice": null,
+      "costPrice": 641,
+      "stock": 230,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "hand",
+        "shower",
+        "flow",
+        "hose",
+        "showers",
+        "hindware"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.3,
+      "totalReviews": 76,
+      "metaTitle": "Hand Shower 3-Flow with Hose — Hindware | North East Build Mart",
+      "metaDescription": "3-flow hand shower with 1.5m flexible hose. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-20T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        49,
+        51,
+        52
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 51,
+      "name": "Single Lever Basin Mixer Chrome",
+      "slug": "single-lever-basin-mixer-chrome",
+      "sku": "NEBM-34-051",
+      "shortDescription": "Single-lever basin mixer with chrome finish.",
+      "description": "Single-lever basin mixer with chrome finish. Premium chrome finish with smooth operation and long-lasting durability. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 34,
+      "brand": "Jaquar",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Single+Lever+Basin+Mixer+Chrome",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Single+Lever+Basin+Mixer+Chrome+Detail"
+      ],
+      "price": 3200,
+      "comparePrice": 3800,
+      "costPrice": 2304,
+      "stock": 243,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "single",
+        "lever",
+        "basin",
+        "mixer",
+        "chrome",
+        "faucets-taps",
+        "jaquar"
+      ],
+      "featured": false,
+      "trending": true,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.4,
+      "totalReviews": 83,
+      "metaTitle": "Single Lever Basin Mixer Chrome — Jaquar | North East Build Mart",
+      "metaDescription": "Single-lever basin mixer with chrome finish. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-21T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        52,
+        49,
+        50
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": true
+    },
+    {
+      "id": 52,
+      "name": "Pillar Cock Tap Brass",
+      "slug": "pillar-cock-tap-brass",
+      "sku": "NEBM-34-052",
+      "shortDescription": "Brass pillar cock tap with chrome plating.",
+      "description": "Brass pillar cock tap with chrome plating. Premium chrome finish with smooth operation and long-lasting durability. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 34,
+      "brand": "Cera",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Pillar+Cock+Tap+Brass",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Pillar+Cock+Tap+Brass+Detail"
+      ],
+      "price": 780,
+      "comparePrice": null,
+      "costPrice": 562,
+      "stock": 256,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "pillar",
+        "cock",
+        "tap",
+        "brass",
+        "faucets-taps",
+        "cera"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.5,
+      "totalReviews": 90,
+      "metaTitle": "Pillar Cock Tap Brass — Cera | North East Build Mart",
+      "metaDescription": "Brass pillar cock tap with chrome plating. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-22T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        51,
+        49,
+        50
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 53,
+      "name": "Table-Top Wash Basin Ceramic",
+      "slug": "table-top-wash-basin-ceramic",
+      "sku": "NEBM-35-053",
+      "shortDescription": "Counter-top ceramic wash basin, glossy white.",
+      "description": "Counter-top ceramic wash basin, glossy white. Premium chrome finish with smooth operation and long-lasting durability. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 35,
+      "brand": "Hindware",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Table-Top+Wash+Basin+Ceramic",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Table-Top+Wash+Basin+Ceramic+Detail"
+      ],
+      "price": 2600,
+      "comparePrice": 3100,
+      "costPrice": 1872,
+      "stock": 269,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "table",
+        "top",
+        "wash",
+        "basin",
+        "ceramic",
+        "wash-basins",
+        "hindware"
+      ],
+      "featured": true,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.6,
+      "totalReviews": 97,
+      "metaTitle": "Table-Top Wash Basin Ceramic — Hindware | North East Build Mart",
+      "metaDescription": "Counter-top ceramic wash basin, glossy white. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-23T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        54,
+        49,
+        50
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 54,
+      "name": "Wall-Hung Wash Basin White",
+      "slug": "wall-hung-wash-basin-white",
+      "sku": "NEBM-35-054",
+      "shortDescription": "Space-saving wall-hung ceramic wash basin.",
+      "description": "Space-saving wall-hung ceramic wash basin. Premium chrome finish with smooth operation and long-lasting durability. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 35,
+      "brand": "Parryware",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Wall-Hung+Wash+Basin+White",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Wall-Hung+Wash+Basin+White+Detail"
+      ],
+      "price": 1900,
+      "comparePrice": null,
+      "costPrice": 1368,
+      "stock": 282,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "wall",
+        "hung",
+        "wash",
+        "basin",
+        "white",
+        "wash-basins",
+        "parryware"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.7,
+      "totalReviews": 104,
+      "metaTitle": "Wall-Hung Wash Basin White — Parryware | North East Build Mart",
+      "metaDescription": "Space-saving wall-hung ceramic wash basin. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-24T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        53,
+        49,
+        50
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 2,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 55,
+      "name": "One-Piece Water Closet (WC)",
+      "slug": "one-piece-water-closet-wc",
+      "sku": "NEBM-36-055",
+      "shortDescription": "One-piece siphonic water closet with soft-close seat.",
+      "description": "One-piece siphonic water closet with soft-close seat. Premium chrome finish with smooth operation and long-lasting durability. Price on enquiry — contact North East Build Mart for a quotation.",
+      "categoryId": 36,
+      "brand": "Cera",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=One-Piece+Water+Closet+(WC)",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=One-Piece+Water+Closet+(WC)+Detail"
+      ],
+      "price": 8900,
+      "comparePrice": null,
+      "costPrice": 6408,
+      "stock": 5,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "one",
+        "piece",
+        "water",
+        "closet",
+        "sanitary-ware",
+        "cera"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.8,
+      "totalReviews": 111,
+      "metaTitle": "One-Piece Water Closet (WC) — Cera | North East Build Mart",
+      "metaDescription": "One-piece siphonic water closet with soft-close seat. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-25T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        56,
+        49,
+        50
+      ],
+      "priceType": "onEnquiry",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": false,
+      "showTieredPricing": false,
+      "cardPriceMode": "onEnquiry",
+      "special": false
+    },
+    {
+      "id": 56,
+      "name": "Wall-Mounted Urinal Ceramic",
+      "slug": "wall-mounted-urinal-ceramic",
+      "sku": "NEBM-36-056",
+      "shortDescription": "Ceramic wall-mounted urinal with fittings.",
+      "description": "Ceramic wall-mounted urinal with fittings. Premium chrome finish with smooth operation and long-lasting durability. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 36,
+      "brand": "Hindware",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Wall-Mounted+Urinal+Ceramic",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Wall-Mounted+Urinal+Ceramic+Detail"
+      ],
+      "price": 3400,
+      "comparePrice": 3900,
+      "costPrice": 2448,
+      "stock": 308,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "wall",
+        "mounted",
+        "urinal",
+        "ceramic",
+        "sanitary-ware",
+        "hindware"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.1,
+      "totalReviews": 118,
+      "metaTitle": "Wall-Mounted Urinal Ceramic — Hindware | North East Build Mart",
+      "metaDescription": "Ceramic wall-mounted urinal with fittings. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-26T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        55,
+        49,
+        50
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 57,
+      "name": "SS Towel Rod 24-inch",
+      "slug": "ss-towel-rod-24-inch",
+      "sku": "NEBM-37-057",
+      "shortDescription": "24-inch stainless-steel towel rod.",
+      "description": "24-inch stainless-steel towel rod. Premium chrome finish with smooth operation and long-lasting durability. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 37,
+      "brand": "Jaquar",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=SS+Towel+Rod+24-inch",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=SS+Towel+Rod+24-inch+Detail"
+      ],
+      "price": 640,
+      "comparePrice": null,
+      "costPrice": 461,
+      "stock": 321,
+      "lowStockThreshold": 10,
+      "weight": 5,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "towel",
+        "rod",
+        "inch",
+        "bathroom-accessories",
+        "jaquar"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.2,
+      "totalReviews": 125,
+      "metaTitle": "SS Towel Rod 24-inch — Jaquar | North East Build Mart",
+      "metaDescription": "24-inch stainless-steel towel rod. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-27T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        58,
+        49,
+        50
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 58,
+      "name": "Bathroom Accessory Set (6-piece)",
+      "slug": "bathroom-accessory-set-6-piece",
+      "sku": "NEBM-37-058",
+      "shortDescription": "6-piece chrome bathroom accessory set.",
+      "description": "6-piece chrome bathroom accessory set. Premium chrome finish with smooth operation and long-lasting durability. In stock at North East Build Mart, Nagaon.",
+      "categoryId": 37,
+      "brand": "Cera",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Bathroom+Accessory+Set+(6-piece)",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Bathroom+Accessory+Set+(6-piece)+Detail"
+      ],
+      "price": 1850,
+      "comparePrice": 2200,
+      "costPrice": 1332,
+      "stock": 334,
+      "lowStockThreshold": 10,
+      "weight": 16,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "bathroom",
+        "accessory",
+        "set",
+        "piece",
+        "bathroom-accessories",
+        "cera"
+      ],
+      "featured": false,
+      "trending": true,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.3,
+      "totalReviews": 132,
+      "metaTitle": "Bathroom Accessory Set (6-piece) — Cera | North East Build Mart",
+      "metaDescription": "6-piece chrome bathroom accessory set. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-02-28T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        57,
+        49,
+        50
+      ],
+      "priceType": "exact",
+      "unitType": "box",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
+    },
+    {
+      "id": 59,
+      "name": "OPC 53 Grade Cement 50kg",
+      "slug": "opc-53-grade-cement-50kg",
+      "sku": "NEBM-38-059",
+      "shortDescription": "Ordinary Portland Cement 53 grade, 50kg bag.",
+      "description": "Ordinary Portland Cement 53 grade, 50kg bag. Consistent strength and setting, conforming to BIS standards for structural and plastering work. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 38,
+      "brand": "UltraTech",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=OPC+53+Grade+Cement+50kg",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=OPC+53+Grade+Cement+50kg+Detail"
+      ],
+      "price": 420,
+      "comparePrice": null,
+      "costPrice": 302,
+      "stock": 347,
+      "lowStockThreshold": 10,
+      "weight": 50,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "opc",
+        "grade",
+        "cement",
+        "50kg",
+        "opc-cement",
+        "ultratech"
+      ],
+      "featured": true,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.4,
+      "totalReviews": 139,
+      "metaTitle": "OPC 53 Grade Cement 50kg — UltraTech | North East Build Mart",
+      "metaDescription": "Ordinary Portland Cement 53 grade, 50kg bag. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-03-01T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        60,
+        61,
+        62
+      ],
+      "priceType": "tiered",
+      "unitType": "bag",
+      "minQty": 10,
+      "priceTiers": [
+        {
+          "minQty": 10,
+          "price": 420
+        },
+        {
+          "minQty": 50,
+          "price": 395
+        },
+        {
+          "minQty": 200,
+          "price": 370
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 60,
+      "name": "OPC 43 Grade Cement 50kg",
+      "slug": "opc-43-grade-cement-50kg",
+      "sku": "NEBM-38-060",
+      "shortDescription": "Ordinary Portland Cement 43 grade, 50kg bag.",
+      "description": "Ordinary Portland Cement 43 grade, 50kg bag. Consistent strength and setting, conforming to BIS standards for structural and plastering work. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 38,
+      "brand": "ACC",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=OPC+43+Grade+Cement+50kg",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=OPC+43+Grade+Cement+50kg+Detail"
+      ],
+      "price": 390,
+      "comparePrice": 420,
+      "costPrice": 281,
+      "stock": 360,
+      "lowStockThreshold": 10,
+      "weight": 50,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "opc",
+        "grade",
+        "cement",
+        "50kg",
+        "opc-cement",
+        "acc"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.5,
+      "totalReviews": 6,
+      "metaTitle": "OPC 43 Grade Cement 50kg — ACC | North East Build Mart",
+      "metaDescription": "Ordinary Portland Cement 43 grade, 50kg bag. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-03-02T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        59,
+        61,
+        62
+      ],
+      "priceType": "tiered",
+      "unitType": "bag",
+      "minQty": 10,
+      "priceTiers": [
+        {
+          "minQty": 10,
+          "price": 390
+        },
+        {
+          "minQty": 50,
+          "price": 367
+        },
+        {
+          "minQty": 200,
+          "price": 343
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 61,
+      "name": "PPC Cement 50kg",
+      "slug": "ppc-cement-50kg",
+      "sku": "NEBM-39-061",
+      "shortDescription": "Portland Pozzolana Cement, 50kg bag.",
+      "description": "Portland Pozzolana Cement, 50kg bag. Consistent strength and setting, conforming to BIS standards for structural and plastering work. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 39,
+      "brand": "Ambuja",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=PPC+Cement+50kg",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=PPC+Cement+50kg+Detail"
+      ],
+      "price": 380,
+      "comparePrice": null,
+      "costPrice": 274,
+      "stock": 373,
+      "lowStockThreshold": 10,
+      "weight": 50,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "ppc",
+        "cement",
+        "50kg",
+        "ppc-cement",
+        "ambuja"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.6,
+      "totalReviews": 13,
+      "metaTitle": "PPC Cement 50kg — Ambuja | North East Build Mart",
+      "metaDescription": "Portland Pozzolana Cement, 50kg bag. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-03-03T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        62,
+        59,
+        60
+      ],
+      "priceType": "tiered",
+      "unitType": "bag",
+      "minQty": 10,
+      "priceTiers": [
+        {
+          "minQty": 10,
+          "price": 380
+        },
+        {
+          "minQty": 50,
+          "price": 357
+        },
+        {
+          "minQty": 200,
+          "price": 334
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 62,
+      "name": "Portland Pozzolana Cement 50kg",
+      "slug": "portland-pozzolana-cement-50kg",
+      "sku": "NEBM-39-062",
+      "shortDescription": "Durable PPC blended cement, 50kg bag.",
+      "description": "Durable PPC blended cement, 50kg bag. Consistent strength and setting, conforming to BIS standards for structural and plastering work. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 39,
+      "brand": "Dalmia",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Portland+Pozzolana+Cement+50kg",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Portland+Pozzolana+Cement+50kg+Detail"
+      ],
+      "price": 370,
+      "comparePrice": 400,
+      "costPrice": 266,
+      "stock": 386,
+      "lowStockThreshold": 10,
+      "weight": 50,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "portland",
+        "pozzolana",
+        "cement",
+        "50kg",
+        "ppc-cement",
+        "dalmia"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.7,
+      "totalReviews": 20,
+      "metaTitle": "Portland Pozzolana Cement 50kg — Dalmia | North East Build Mart",
+      "metaDescription": "Durable PPC blended cement, 50kg bag. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-03-04T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        61,
+        59,
+        60
+      ],
+      "priceType": "tiered",
+      "unitType": "bag",
+      "minQty": 10,
+      "priceTiers": [
+        {
+          "minQty": 10,
+          "price": 370
+        },
+        {
+          "minQty": 50,
+          "price": 348
+        },
+        {
+          "minQty": 200,
+          "price": 326
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 63,
+      "name": "UltraTech Weather Plus Cement 50kg",
+      "slug": "ultratech-weather-plus-cement-50kg",
+      "sku": "NEBM-40-063",
+      "shortDescription": "Water-repellent premium cement, 50kg bag.",
+      "description": "Water-repellent premium cement, 50kg bag. Consistent strength and setting, conforming to BIS standards for structural and plastering work. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 40,
+      "brand": "UltraTech",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=UltraTech+Weather+Plus+Cement+50kg",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=UltraTech+Weather+Plus+Cement+50kg+Detail"
+      ],
+      "price": 470,
+      "comparePrice": 520,
+      "costPrice": 338,
+      "stock": 399,
+      "lowStockThreshold": 10,
+      "weight": 50,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "ultratech",
+        "weather",
+        "plus",
+        "cement",
+        "50kg",
+        "premium-construction-cement"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.8,
+      "totalReviews": 27,
+      "metaTitle": "UltraTech Weather Plus Cement 50kg — UltraTech | North East Build Mart",
+      "metaDescription": "Water-repellent premium cement, 50kg bag. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-03-05T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        64,
+        59,
+        60
+      ],
+      "priceType": "tiered",
+      "unitType": "bag",
+      "minQty": 10,
+      "priceTiers": [
+        {
+          "minQty": 10,
+          "price": 470
+        },
+        {
+          "minQty": 50,
+          "price": 442
+        },
+        {
+          "minQty": 200,
+          "price": 414
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": true
+    },
+    {
+      "id": 64,
+      "name": "Sulphate-Resistant Cement (SRC) 50kg",
+      "slug": "sulphate-resistant-cement-src-50kg",
+      "sku": "NEBM-40-064",
+      "shortDescription": "Sulphate-resistant cement for aggressive soils, 50kg.",
+      "description": "Sulphate-resistant cement for aggressive soils, 50kg. Consistent strength and setting, conforming to BIS standards for structural and plastering work. Price on enquiry — contact North East Build Mart for a quotation.",
+      "categoryId": 40,
+      "brand": "ACC",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Sulphate-Resistant+Cement+(SRC)+50kg",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Sulphate-Resistant+Cement+(SRC)+50kg+Detail"
+      ],
+      "price": 560,
+      "comparePrice": null,
+      "costPrice": 403,
+      "stock": 44,
+      "lowStockThreshold": 10,
+      "weight": 50,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "sulphate",
+        "resistant",
+        "cement",
+        "src",
+        "50kg",
+        "premium-construction-cement",
+        "acc"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.1,
+      "totalReviews": 34,
+      "metaTitle": "Sulphate-Resistant Cement (SRC) 50kg — ACC | North East Build Mart",
+      "metaDescription": "Sulphate-resistant cement for aggressive soils, 50kg. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-03-06T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        63,
+        59,
+        60
+      ],
+      "priceType": "onEnquiry",
+      "unitType": "bag",
+      "minQty": 10,
+      "priceTiers": [],
+      "showExactPrice": false,
+      "showTieredPricing": false,
+      "cardPriceMode": "onEnquiry",
+      "special": false
+    },
+    {
+      "id": 65,
+      "name": "TMT Bar Fe-500D 12mm",
+      "slug": "tmt-bar-fe-500d-12mm",
+      "sku": "NEBM-41-065",
+      "shortDescription": "Fe-500D TMT reinforcement bar, 12mm.",
+      "description": "Fe-500D TMT reinforcement bar, 12mm. High tensile strength with superior bendability and corrosion resistance for RCC construction. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 41,
+      "brand": "Tata Tiscon",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=TMT+Bar+Fe-500D+12mm",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=TMT+Bar+Fe-500D+12mm+Detail"
+      ],
+      "price": 62,
+      "comparePrice": null,
+      "costPrice": 45,
+      "stock": 425,
+      "lowStockThreshold": 10,
+      "weight": 1,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "tmt",
+        "bar",
+        "500d",
+        "12mm",
+        "tmt-bars",
+        "tata tiscon"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.2,
+      "totalReviews": 41,
+      "metaTitle": "TMT Bar Fe-500D 12mm — Tata Tiscon | North East Build Mart",
+      "metaDescription": "Fe-500D TMT reinforcement bar, 12mm. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-03-07T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        66,
+        67,
+        68
+      ],
+      "priceType": "tiered",
+      "unitType": "kg",
+      "minQty": 100,
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "price": 62
+        },
+        {
+          "minQty": 500,
+          "price": 58
+        },
+        {
+          "minQty": 2000,
+          "price": 55
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": true
+    },
+    {
+      "id": 66,
+      "name": "TMT Bar Fe-550 8mm",
+      "slug": "tmt-bar-fe-550-8mm",
+      "sku": "NEBM-41-066",
+      "shortDescription": "Fe-550 high-strength TMT bar, 8mm.",
+      "description": "Fe-550 high-strength TMT bar, 8mm. High tensile strength with superior bendability and corrosion resistance for RCC construction. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 41,
+      "brand": "JSW Neosteel",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=TMT+Bar+Fe-550+8mm",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=TMT+Bar+Fe-550+8mm+Detail"
+      ],
+      "price": 60,
+      "comparePrice": 66,
+      "costPrice": 43,
+      "stock": 438,
+      "lowStockThreshold": 10,
+      "weight": 1,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "tmt",
+        "bar",
+        "550",
+        "8mm",
+        "tmt-bars",
+        "jsw neosteel"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.3,
+      "totalReviews": 48,
+      "metaTitle": "TMT Bar Fe-550 8mm — JSW Neosteel | North East Build Mart",
+      "metaDescription": "Fe-550 high-strength TMT bar, 8mm. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-03-08T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        65,
+        67,
+        68
+      ],
+      "priceType": "tiered",
+      "unitType": "kg",
+      "minQty": 100,
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "price": 60
+        },
+        {
+          "minQty": 500,
+          "price": 56
+        },
+        {
+          "minQty": 2000,
+          "price": 53
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 67,
+      "name": "MS Angle 50x50x5mm",
+      "slug": "ms-angle-50x50x5mm",
+      "sku": "NEBM-42-067",
+      "shortDescription": "Mild-steel structural angle, 50x50x5mm.",
+      "description": "Mild-steel structural angle, 50x50x5mm. High tensile strength with superior bendability and corrosion resistance for RCC construction. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 42,
+      "brand": "SAIL",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=MS+Angle+50x50x5mm",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=MS+Angle+50x50x5mm+Detail"
+      ],
+      "price": 68,
+      "comparePrice": null,
+      "costPrice": 49,
+      "stock": 451,
+      "lowStockThreshold": 10,
+      "weight": 1,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "angle",
+        "50x50x5mm",
+        "construction-steel",
+        "sail"
+      ],
+      "featured": true,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.4,
+      "totalReviews": 55,
+      "metaTitle": "MS Angle 50x50x5mm — SAIL | North East Build Mart",
+      "metaDescription": "Mild-steel structural angle, 50x50x5mm. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-03-09T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        68,
+        65,
+        66
+      ],
+      "priceType": "tiered",
+      "unitType": "kg",
+      "minQty": 50,
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "price": 68
+        },
+        {
+          "minQty": 250,
+          "price": 64
+        },
+        {
+          "minQty": 1000,
+          "price": 60
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 68,
+      "name": "MS Square Pipe 40x40mm",
+      "slug": "ms-square-pipe-40x40mm",
+      "sku": "NEBM-42-068",
+      "shortDescription": "Mild-steel square hollow section, 40x40mm.",
+      "description": "Mild-steel square hollow section, 40x40mm. High tensile strength with superior bendability and corrosion resistance for RCC construction. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 42,
+      "brand": "APL Apollo",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=MS+Square+Pipe+40x40mm",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=MS+Square+Pipe+40x40mm+Detail"
+      ],
+      "price": 72,
+      "comparePrice": 78,
+      "costPrice": 52,
+      "stock": 464,
+      "lowStockThreshold": 10,
+      "weight": 1,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "square",
+        "pipe",
+        "40x40mm",
+        "construction-steel",
+        "apl apollo"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.5,
+      "totalReviews": 62,
+      "metaTitle": "MS Square Pipe 40x40mm — APL Apollo | North East Build Mart",
+      "metaDescription": "Mild-steel square hollow section, 40x40mm. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-03-10T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        67,
+        65,
+        66
+      ],
+      "priceType": "tiered",
+      "unitType": "kg",
+      "minQty": 50,
+      "priceTiers": [
+        {
+          "minQty": 50,
+          "price": 72
+        },
+        {
+          "minQty": 250,
+          "price": 68
+        },
+        {
+          "minQty": 1000,
+          "price": 63
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
+    },
+    {
+      "id": 69,
+      "name": "High-Strength TMT Fe-600 16mm",
+      "slug": "high-strength-tmt-fe-600-16mm",
+      "sku": "NEBM-43-069",
+      "shortDescription": "Fe-600 high-strength reinforcement bar, 16mm.",
+      "description": "Fe-600 high-strength reinforcement bar, 16mm. High tensile strength with superior bendability and corrosion resistance for RCC construction. Price on enquiry — contact North East Build Mart for a quotation.",
+      "categoryId": 43,
+      "brand": "Vizag Steel",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=High-Strength+TMT+Fe-600+16mm",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=High-Strength+TMT+Fe-600+16mm+Detail"
+      ],
+      "price": 66,
+      "comparePrice": null,
+      "costPrice": 48,
+      "stock": 39,
+      "lowStockThreshold": 10,
+      "weight": 1,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "high",
+        "strength",
+        "tmt",
+        "600",
+        "16mm",
+        "high-strength-reinforcement-bars",
+        "vizag steel"
+      ],
+      "featured": false,
+      "trending": false,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.6,
+      "totalReviews": 69,
+      "metaTitle": "High-Strength TMT Fe-600 16mm — Vizag Steel | North East Build Mart",
+      "metaDescription": "Fe-600 high-strength reinforcement bar, 16mm. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-03-11T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        70,
+        65,
+        66
+      ],
+      "priceType": "onEnquiry",
+      "unitType": "kg",
+      "minQty": 100,
+      "priceTiers": [],
+      "showExactPrice": false,
+      "showTieredPricing": false,
+      "cardPriceMode": "onEnquiry",
+      "special": false
+    },
+    {
+      "id": 70,
+      "name": "Corrosion-Resistant TMT (CRS) 10mm",
+      "slug": "corrosion-resistant-tmt-crs-10mm",
+      "sku": "NEBM-43-070",
+      "shortDescription": "Corrosion-resistant TMT bar (CRS), 10mm.",
+      "description": "Corrosion-resistant TMT bar (CRS), 10mm. High tensile strength with superior bendability and corrosion resistance for RCC construction. Bulk quantity pricing available — enquire for project rates.",
+      "categoryId": 43,
+      "brand": "Tata Tiscon",
+      "images": [
+        "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Corrosion-Resistant+TMT+(CRS)+10mm",
+        "https://placehold.co/600x400/16213e/FFFFFF?text=Corrosion-Resistant+TMT+(CRS)+10mm+Detail"
+      ],
+      "price": 64,
+      "comparePrice": 70,
+      "costPrice": 46,
+      "stock": 490,
+      "lowStockThreshold": 10,
+      "weight": 1,
+      "dimensions": {},
+      "variants": [],
+      "tags": [
+        "corrosion",
+        "resistant",
+        "tmt",
+        "crs",
+        "10mm",
+        "high-strength-reinforcement-bars",
+        "tata tiscon"
+      ],
+      "featured": false,
+      "trending": true,
+      "hot": false,
+      "isActive": true,
+      "rating": 4.7,
+      "totalReviews": 76,
+      "metaTitle": "Corrosion-Resistant TMT (CRS) 10mm — Tata Tiscon | North East Build Mart",
+      "metaDescription": "Corrosion-resistant TMT bar (CRS), 10mm. Enquire for the best project rate at North East Build Mart, Nagaon.",
+      "createdAt": "2026-03-12T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "frequentlyBoughtTogetherIds": [],
+      "relatedProductIds": [
+        69,
+        65,
+        66
+      ],
+      "priceType": "tiered",
+      "unitType": "kg",
+      "minQty": 100,
+      "priceTiers": [
+        {
+          "minQty": 100,
+          "price": 64
+        },
+        {
+          "minQty": 500,
+          "price": 60
+        },
+        {
+          "minQty": 2000,
+          "price": 56
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
       "special": false
     }
   ],
