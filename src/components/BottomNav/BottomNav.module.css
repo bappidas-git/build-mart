@@ -129,9 +129,9 @@
   font-weight: 700;
   line-height: 18px;
   text-align: center;
-  background: #ef4444;
+  background: var(--sf-color-secondary);
   color: #ffffff;
-  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
+  box-shadow: 0 2px 6px rgba(250, 156, 76, 0.45);
 }
 
 /* ===== Label ===== */

@@ -127,7 +127,7 @@ export const SOCIAL_LINKS = {
 // Store contact (sensible defaults — update per project). Single source so the
 // Header top bar, Footer, Help Center and Support page all stay in sync.
 export const SUPPORT_EMAIL = "support@mystore.com";
-export const SUPPORT_PHONE = "+91 1800 102 5555";
+export const SUPPORT_PHONE = "+91 86385 43526";
 export const SUPPORT_ADDRESS =
   "123 Commerce Street, Andheri East, Mumbai, Maharashtra 400069";
 export const SUPPORT_HOURS = "Mon – Sat: 9:00 AM – 8:00 PM IST";
