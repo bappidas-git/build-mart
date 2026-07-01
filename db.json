@@ -114,227 +114,605 @@
   "categories": [
     {
       "id": 1,
-      "name": "Electronics",
-      "slug": "electronics",
-      "description": "Gadgets, devices and electronic accessories",
-      "image": "https://placehold.co/400x300/667eea/FFFFFF?text=Electronics",
+      "name": "WPC Louvers",
+      "slug": "wpc-louvers",
+      "description": "WPC louvers for interior and exterior wall cladding",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=WPC+Louvers",
       "parentId": null,
       "isActive": true,
       "sortOrder": 1,
       "showInMainMenu": true,
       "menuOrder": 1,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2025-01-01T00:00:00.000Z"
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
     },
     {
       "id": 2,
-      "name": "Clothing",
-      "slug": "clothing",
-      "description": "Men, women and kids apparel",
-      "image": "https://placehold.co/400x300/764ba2/FFFFFF?text=Clothing",
+      "name": "Polycarbonate Sheets",
+      "slug": "polycarbonate-sheets",
+      "description": "Durable polycarbonate roofing and glazing sheets",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Polycarbonate+Sheets",
       "parentId": null,
       "isActive": true,
       "sortOrder": 2,
       "showInMainMenu": true,
       "menuOrder": 2,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2025-01-01T00:00:00.000Z"
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
     },
     {
       "id": 3,
-      "name": "Home & Garden",
-      "slug": "home-garden",
-      "description": "Furniture, decor and garden essentials",
-      "image": "https://placehold.co/400x300/4caf50/FFFFFF?text=Home+%26+Garden",
+      "name": "FRP Sheets",
+      "slug": "frp-sheets",
+      "description": "Fibre-reinforced plastic sheets for roofing and cladding",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=FRP+Sheets",
       "parentId": null,
       "isActive": true,
       "sortOrder": 3,
       "showInMainMenu": true,
       "menuOrder": 3,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2025-01-01T00:00:00.000Z"
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
     },
     {
       "id": 4,
-      "name": "Sports & Fitness",
-      "slug": "sports-fitness",
-      "description": "Equipment and gear for sports and fitness",
-      "image": "https://placehold.co/400x300/ff9800/FFFFFF?text=Sports",
+      "name": "Waterproofing Products",
+      "slug": "waterproofing-products",
+      "description": "Waterproofing chemicals, membranes and coatings",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Waterproofing+Products",
       "parentId": null,
       "isActive": true,
       "sortOrder": 4,
       "showInMainMenu": true,
       "menuOrder": 4,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2025-01-01T00:00:00.000Z"
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
     },
     {
       "id": 5,
-      "name": "Books",
-      "slug": "books",
-      "description": "Bestsellers, textbooks and more",
-      "image": "https://placehold.co/400x300/e91e63/FFFFFF?text=Books",
+      "name": "Tiles",
+      "slug": "tiles",
+      "description": "Floor, wall and vitrified tiles for every space",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Tiles",
       "parentId": null,
       "isActive": true,
       "sortOrder": 5,
       "showInMainMenu": true,
       "menuOrder": 5,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2025-01-01T00:00:00.000Z"
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
     },
     {
       "id": 6,
-      "name": "Laptops",
-      "slug": "laptops",
-      "description": "Laptops and accessories",
-      "image": "https://placehold.co/400x300/2196f3/FFFFFF?text=Laptops",
-      "parentId": 1,
-      "isActive": true,
-      "sortOrder": 1,
-      "showInMainMenu": false,
-      "menuOrder": 0,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2025-01-01T00:00:00.000Z"
-    },
-    {
-      "id": 7,
-      "name": "Audio",
-      "slug": "audio",
-      "description": "Headphones, speakers and audio gear",
-      "image": "https://placehold.co/400x300/9c27b0/FFFFFF?text=Audio",
-      "parentId": 1,
-      "isActive": true,
-      "sortOrder": 2,
-      "showInMainMenu": false,
-      "menuOrder": 0,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2025-01-01T00:00:00.000Z"
-    },
-    {
-      "id": 8,
-      "name": "Women's Ethnic Wear",
-      "slug": "womens-ethnic-wear",
-      "description": "Sarees, kurtas, lehengas and traditional wear",
-      "image": "https://placehold.co/400x300/e91e63/FFFFFF?text=Ethnic+Wear",
+      "name": "Doors",
+      "slug": "doors",
+      "description": "Steel, PVC, WPC and designer doors",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Doors",
       "parentId": null,
       "isActive": true,
       "sortOrder": 6,
       "showInMainMenu": true,
       "menuOrder": 6,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2025-01-01T00:00:00.000Z"
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
     },
     {
-      "id": 9,
-      "name": "Men's Fashion",
-      "slug": "mens-fashion",
-      "description": "Shirts, trousers, suits and accessories",
-      "image": "https://placehold.co/400x300/3f51b5/FFFFFF?text=Men+Fashion",
+      "id": 7,
+      "name": "Hardware",
+      "slug": "hardware",
+      "description": "Locks, handles, fasteners and construction hardware",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Hardware",
       "parentId": null,
       "isActive": true,
       "sortOrder": 7,
       "showInMainMenu": true,
       "menuOrder": 7,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2026-06-12T01:38:32.822Z"
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
     },
     {
-      "id": 10,
-      "name": "Beauty & Personal Care",
-      "slug": "beauty-personal-care",
-      "description": "Skincare, haircare, fragrances and grooming",
-      "image": "https://placehold.co/400x300/ff4081/FFFFFF?text=Beauty",
+      "id": 8,
+      "name": "Plumbing",
+      "slug": "plumbing",
+      "description": "Pipes, tanks and plumbing fittings",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Plumbing",
       "parentId": null,
       "isActive": true,
       "sortOrder": 8,
       "showInMainMenu": true,
       "menuOrder": 8,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2025-01-01T00:00:00.000Z"
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
     },
     {
-      "id": 11,
-      "name": "Kitchen & Dining",
-      "slug": "kitchen-dining",
-      "description": "Cookware, dinnerware, appliances and accessories",
-      "image": "https://placehold.co/400x300/795548/FFFFFF?text=Kitchen",
+      "id": 9,
+      "name": "Bath Fittings",
+      "slug": "bath-fittings",
+      "description": "Showers, faucets, basins and sanitary ware",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Bath+Fittings",
       "parentId": null,
       "isActive": true,
       "sortOrder": 9,
-      "showInMainMenu": false,
+      "showInMainMenu": true,
       "menuOrder": 9,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2026-06-14T14:28:04.495Z"
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
     },
     {
-      "id": 12,
-      "name": "Footwear",
-      "slug": "footwear",
-      "description": "Shoes, sneakers, sandals and boots",
-      "image": "https://placehold.co/400x300/607d8b/FFFFFF?text=Footwear",
+      "id": 10,
+      "name": "Cement",
+      "slug": "cement",
+      "description": "OPC, PPC and premium construction cement",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Cement",
       "parentId": null,
       "isActive": true,
       "sortOrder": 10,
-      "showInMainMenu": false,
+      "showInMainMenu": true,
       "menuOrder": 10,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2026-06-14T14:28:05.635Z"
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 11,
+      "name": "Steel Rods",
+      "slug": "steel-rods",
+      "description": "TMT bars and construction steel reinforcement",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Steel+Rods",
+      "parentId": null,
+      "isActive": true,
+      "sortOrder": 11,
+      "showInMainMenu": true,
+      "menuOrder": 11,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 12,
+      "name": "Special Products",
+      "slug": "special-products",
+      "description": "Curated collection of featured building materials",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Special+Products",
+      "parentId": null,
+      "isActive": true,
+      "sortOrder": 12,
+      "showInMainMenu": true,
+      "menuOrder": 12,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
     },
     {
       "id": 13,
-      "name": "Smartphones",
-      "slug": "smartphones",
-      "description": "Latest smartphones and mobile accessories",
-      "image": "https://placehold.co/400x300/00bcd4/FFFFFF?text=Smartphones",
-      "parentId": 1,
+      "name": "Floor Tiles",
+      "slug": "floor-tiles",
+      "description": "Floor Tiles for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Floor+Tiles",
+      "parentId": 5,
+      "isActive": true,
+      "sortOrder": 1,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 14,
+      "name": "Wall Tiles",
+      "slug": "wall-tiles",
+      "description": "Wall Tiles for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Wall+Tiles",
+      "parentId": 5,
+      "isActive": true,
+      "sortOrder": 2,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 15,
+      "name": "Vitrified Tiles",
+      "slug": "vitrified-tiles",
+      "description": "Vitrified Tiles for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Vitrified+Tiles",
+      "parentId": 5,
       "isActive": true,
       "sortOrder": 3,
       "showInMainMenu": false,
       "menuOrder": 0,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2025-01-01T00:00:00.000Z"
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
     },
     {
-      "id": 14,
-      "name": "Sarees",
-      "slug": "sarees",
-      "description": "Silk, cotton, chiffon and designer sarees",
-      "image": "https://placehold.co/400x300/c2185b/FFFFFF?text=Sarees",
+      "id": 16,
+      "name": "Bathroom & Kitchen Tiles",
+      "slug": "bathroom-kitchen-tiles",
+      "description": "Bathroom & Kitchen Tiles for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Bathroom+%26+Kitchen+Tiles",
+      "parentId": 5,
+      "isActive": true,
+      "sortOrder": 4,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 17,
+      "name": "Outdoor Tiles",
+      "slug": "outdoor-tiles",
+      "description": "Outdoor Tiles for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Outdoor+Tiles",
+      "parentId": 5,
+      "isActive": true,
+      "sortOrder": 5,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 18,
+      "name": "Steel Doors",
+      "slug": "steel-doors",
+      "description": "Steel Doors for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Steel+Doors",
+      "parentId": 6,
+      "isActive": true,
+      "sortOrder": 1,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 19,
+      "name": "PVC Doors",
+      "slug": "pvc-doors",
+      "description": "PVC Doors for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=PVC+Doors",
+      "parentId": 6,
+      "isActive": true,
+      "sortOrder": 2,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 20,
+      "name": "WPC Doors",
+      "slug": "wpc-doors",
+      "description": "WPC Doors for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=WPC+Doors",
+      "parentId": 6,
+      "isActive": true,
+      "sortOrder": 3,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 21,
+      "name": "Designer Doors",
+      "slug": "designer-doors",
+      "description": "Designer Doors for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Designer+Doors",
+      "parentId": 6,
+      "isActive": true,
+      "sortOrder": 4,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 22,
+      "name": "Bathroom Doors",
+      "slug": "bathroom-doors",
+      "description": "Bathroom Doors for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Bathroom+Doors",
+      "parentId": 6,
+      "isActive": true,
+      "sortOrder": 5,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 23,
+      "name": "Door Locks",
+      "slug": "door-locks",
+      "description": "Door Locks for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Door+Locks",
+      "parentId": 7,
+      "isActive": true,
+      "sortOrder": 1,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 24,
+      "name": "Handles & Hinges",
+      "slug": "handles-hinges",
+      "description": "Handles & Hinges for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Handles+%26+Hinges",
+      "parentId": 7,
+      "isActive": true,
+      "sortOrder": 2,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 25,
+      "name": "Fasteners",
+      "slug": "fasteners",
+      "description": "Fasteners for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Fasteners",
+      "parentId": 7,
+      "isActive": true,
+      "sortOrder": 3,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 26,
+      "name": "Cabinet Fittings",
+      "slug": "cabinet-fittings",
+      "description": "Cabinet Fittings for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Cabinet+Fittings",
+      "parentId": 7,
+      "isActive": true,
+      "sortOrder": 4,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 27,
+      "name": "Construction Hardware",
+      "slug": "construction-hardware",
+      "description": "Construction Hardware for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Construction+Hardware",
+      "parentId": 7,
+      "isActive": true,
+      "sortOrder": 5,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 28,
+      "name": "PVC Pipes",
+      "slug": "pvc-pipes",
+      "description": "PVC Pipes for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=PVC+Pipes",
       "parentId": 8,
       "isActive": true,
       "sortOrder": 1,
       "showInMainMenu": false,
       "menuOrder": 0,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2025-01-01T00:00:00.000Z"
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
     },
     {
-      "id": 15,
-      "name": "Kurtas",
-      "slug": "kurtas",
-      "description": "Anarkali, straight, A-line kurtas and sets",
-      "image": "https://placehold.co/400x300/ad1457/FFFFFF?text=Kurtas",
+      "id": 29,
+      "name": "CPVC Pipes",
+      "slug": "cpvc-pipes",
+      "description": "CPVC Pipes for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=CPVC+Pipes",
       "parentId": 8,
       "isActive": true,
       "sortOrder": 2,
       "showInMainMenu": false,
       "menuOrder": 0,
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2025-01-01T00:00:00.000Z"
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
     },
     {
-      "name": "Test",
-      "slug": "test",
-      "description": "jdsb jkdbdsk kjdbds kjsksdjc",
-      "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Maharathi+Books",
-      "parentId": null,
+      "id": 30,
+      "name": "SWR Pipes",
+      "slug": "swr-pipes",
+      "description": "SWR Pipes for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=SWR+Pipes",
+      "parentId": 8,
       "isActive": true,
-      "sortOrder": 11,
-      "createdAt": "2026-06-14T05:11:13.803Z",
-      "updatedAt": "2026-06-14T08:01:05.804Z",
-      "id": 16,
+      "sortOrder": 3,
       "showInMainMenu": false,
-      "menuOrder": 11
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 31,
+      "name": "Water Tanks",
+      "slug": "water-tanks",
+      "description": "Water Tanks for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Water+Tanks",
+      "parentId": 8,
+      "isActive": true,
+      "sortOrder": 4,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 32,
+      "name": "Pipe Fittings & Accessories",
+      "slug": "pipe-fittings-accessories",
+      "description": "Pipe Fittings & Accessories for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Pipe+Fittings+%26+Accessories",
+      "parentId": 8,
+      "isActive": true,
+      "sortOrder": 5,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 33,
+      "name": "Showers",
+      "slug": "showers",
+      "description": "Showers for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Showers",
+      "parentId": 9,
+      "isActive": true,
+      "sortOrder": 1,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 34,
+      "name": "Faucets & Taps",
+      "slug": "faucets-taps",
+      "description": "Faucets & Taps for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Faucets+%26+Taps",
+      "parentId": 9,
+      "isActive": true,
+      "sortOrder": 2,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 35,
+      "name": "Wash Basins",
+      "slug": "wash-basins",
+      "description": "Wash Basins for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Wash+Basins",
+      "parentId": 9,
+      "isActive": true,
+      "sortOrder": 3,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 36,
+      "name": "Sanitary Ware",
+      "slug": "sanitary-ware",
+      "description": "Sanitary Ware for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Sanitary+Ware",
+      "parentId": 9,
+      "isActive": true,
+      "sortOrder": 4,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 37,
+      "name": "Bathroom Accessories",
+      "slug": "bathroom-accessories",
+      "description": "Bathroom Accessories for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Bathroom+Accessories",
+      "parentId": 9,
+      "isActive": true,
+      "sortOrder": 5,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 38,
+      "name": "OPC Cement",
+      "slug": "opc-cement",
+      "description": "OPC Cement for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=OPC+Cement",
+      "parentId": 10,
+      "isActive": true,
+      "sortOrder": 1,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 39,
+      "name": "PPC Cement",
+      "slug": "ppc-cement",
+      "description": "PPC Cement for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=PPC+Cement",
+      "parentId": 10,
+      "isActive": true,
+      "sortOrder": 2,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 40,
+      "name": "Premium Construction Cement",
+      "slug": "premium-construction-cement",
+      "description": "Premium Construction Cement for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Premium+Construction+Cement",
+      "parentId": 10,
+      "isActive": true,
+      "sortOrder": 3,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 41,
+      "name": "TMT Bars",
+      "slug": "tmt-bars",
+      "description": "TMT Bars for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=TMT+Bars",
+      "parentId": 11,
+      "isActive": true,
+      "sortOrder": 1,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 42,
+      "name": "Construction Steel",
+      "slug": "construction-steel",
+      "description": "Construction Steel for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Construction+Steel",
+      "parentId": 11,
+      "isActive": true,
+      "sortOrder": 2,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": 43,
+      "name": "High-Strength Reinforcement Bars",
+      "slug": "high-strength-reinforcement-bars",
+      "description": "High-Strength Reinforcement Bars for interior and exterior use",
+      "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=High-Strength+Reinforcement+Bars",
+      "parentId": 11,
+      "isActive": true,
+      "sortOrder": 3,
+      "showInMainMenu": false,
+      "menuOrder": 0,
+      "createdAt": "2026-01-01T00:00:00.000Z",
+      "updatedAt": "2026-01-01T00:00:00.000Z"
     }
   ],
   "products": [
@@ -345,7 +723,7 @@
       "sku": "LAP-PBU-15-001",
       "shortDescription": "Powerful 15-inch laptop with Intel Core i7 processor and 16GB RAM",
       "description": "The ProBook Ultra Laptop 15\" is engineered for professionals who demand performance. Equipped with the latest Intel Core i7 processor, 16GB DDR5 RAM, and a 512GB NVMe SSD, this laptop handles everything from intensive multitasking to creative workloads with ease. The stunning 15.6-inch FHD IPS display delivers vivid colors and sharp details for an immersive visual experience.",
-      "categoryId": 6,
+      "categoryId": 1,
       "brand": "ProBook",
       "images": [
         "https://placehold.co/600x400/1a1a2e/FFFFFF?text=ProBook+Laptop",
@@ -412,7 +790,7 @@
       "metaTitle": "ProBook Ultra Laptop 15\" - Intel Core i7 | Best Price",
       "metaDescription": "Buy ProBook Ultra Laptop 15\" with Intel Core i7, 16GB RAM, 512GB SSD. Free shipping available.",
       "createdAt": "2025-01-10T00:00:00.000Z",
-      "updatedAt": "2025-03-01T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
       "frequentlyBoughtTogetherIds": [
         4,
         6
@@ -423,7 +801,15 @@
         16,
         4,
         6
-      ]
+      ],
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": true
     },
     {
       "id": 2,
@@ -432,7 +818,7 @@
       "sku": "AUD-SWP-TWS-001",
       "shortDescription": "Premium true wireless earbuds with active noise cancellation",
       "description": "Experience audio like never before with SoundWave Pro Wireless Earbuds. Featuring advanced Active Noise Cancellation (ANC) technology, 30-hour total battery life, and premium sound quality. The ergonomic design ensures a secure, comfortable fit for all-day wear. IPX5 water resistance makes them perfect for workouts and outdoor activities.",
-      "categoryId": 7,
+      "categoryId": 2,
       "brand": "SoundWave",
       "images": [
         "https://placehold.co/600x400/1a1a2e/FFFFFF?text=SoundWave+Earbuds",
@@ -501,12 +887,33 @@
       "metaTitle": "SoundWave Pro Wireless Earbuds - ANC | True Wireless",
       "metaDescription": "Shop SoundWave Pro Wireless Earbuds with Active Noise Cancellation, 30hr battery, IPX5 rating.",
       "createdAt": "2025-01-15T00:00:00.000Z",
-      "updatedAt": "2025-02-20T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
       "relatedProductIds": [
         10,
         4,
         3
-      ]
+      ],
+      "priceType": "tiered",
+      "unitType": "sheet",
+      "minQty": 1,
+      "priceTiers": [
+        {
+          "minQty": 1,
+          "price": 8999
+        },
+        {
+          "minQty": 10,
+          "price": 8549
+        },
+        {
+          "minQty": 50,
+          "price": 8099
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": true
     },
     {
       "id": 3,
@@ -515,7 +922,7 @@
       "sku": "ELC-FPS-SW5-001",
       "shortDescription": "Advanced health tracking smartwatch with GPS and AMOLED display",
       "description": "The FitPulse Smartwatch Series 5 is your ultimate health and fitness companion. Track your heart rate, SpO2, sleep quality, and stress levels with clinical-grade accuracy. Built-in GPS for precise route tracking, 7-day battery life, and 100+ workout modes. The always-on AMOLED display looks stunning in any lighting condition.",
-      "categoryId": 1,
+      "categoryId": 3,
       "brand": "FitPulse",
       "images": [
         "https://placehold.co/600x400/0f3460/FFFFFF?text=FitPulse+Watch",
@@ -572,7 +979,15 @@
       "metaTitle": "FitPulse Smartwatch Series 5 - Health & Fitness Tracker",
       "metaDescription": "Buy FitPulse Smartwatch Series 5 with GPS, heart rate monitor, SpO2 tracking and 7-day battery.",
       "createdAt": "2025-01-20T00:00:00.000Z",
-      "updatedAt": "2025-02-15T00:00:00.000Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "exact",
+      "unitType": "sheet",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": true
     },
     {
       "id": 4,
@@ -581,7 +996,7 @@
       "sku": "ELC-MKB-RGB-001",
       "shortDescription": "Mechanical gaming keyboard with per-key RGB backlight and tactile switches",
       "description": "Dominate your game with the MechKey RGB Gaming Keyboard. Features genuine mechanical switches rated for 100 million keystrokes, full per-key RGB customization with 16 million colors, and a durable aircraft-grade aluminum frame. Anti-ghosting with N-key rollover ensures every keystroke is registered, even in the most intense gaming sessions.",
-      "categoryId": 1,
+      "categoryId": 4,
       "brand": "MechKey",
       "images": [
         "https://placehold.co/600x400/1a1a2e/FFFFFF?text=MechKey+Keyboard",
@@ -637,7 +1052,7 @@
       "metaTitle": "MechKey RGB Gaming Keyboard - Mechanical Switches",
       "metaDescription": "Buy MechKey RGB Mechanical Gaming Keyboard with per-key RGB, aluminum frame, N-key rollover.",
       "createdAt": "2025-02-01T00:00:00.000Z",
-      "updatedAt": "2025-02-28T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
       "frequentlyBoughtTogetherIds": [
         1,
         6
@@ -646,7 +1061,15 @@
         3,
         16,
         13
-      ]
+      ],
+      "priceType": "onEnquiry",
+      "unitType": "bag",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": false,
+      "showTieredPricing": false,
+      "cardPriceMode": "onEnquiry",
+      "special": true
     },
     {
       "id": 5,
@@ -655,7 +1078,7 @@
       "sku": "CLT-UCT-CRW-001",
       "shortDescription": "Premium 100% organic cotton crew neck t-shirt",
       "description": "Made from 100% GOTS-certified organic cotton, the Urban Classic T-Shirt is the foundation of any wardrobe. The relaxed, slightly oversized fit offers comfort without compromising style. Pre-shrunk fabric ensures it maintains its shape wash after wash. Available in a range of versatile colors.",
-      "categoryId": 2,
+      "categoryId": 13,
       "brand": "Urban Threads",
       "images": [
         "https://placehold.co/600x400/764ba2/FFFFFF?text=Urban+T-Shirt",
@@ -751,7 +1174,28 @@
       "metaTitle": "Urban Classic Cotton T-Shirt - Organic | Sustainable Fashion",
       "metaDescription": "Shop Urban Classic 100% organic cotton t-shirts. Comfortable, sustainable and stylish.",
       "createdAt": "2025-02-10T00:00:00.000Z",
-      "updatedAt": "2025-03-05T00:00:00.000Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "tiered",
+      "unitType": "box",
+      "minQty": 1,
+      "priceTiers": [
+        {
+          "minQty": 1,
+          "price": 899
+        },
+        {
+          "minQty": 10,
+          "price": 854
+        },
+        {
+          "minQty": 50,
+          "price": 809
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": true
     },
     {
       "id": 6,
@@ -760,7 +1204,7 @@
       "sku": "ELC-ZPH-7C1-001",
       "shortDescription": "Compact 7-in-1 USB-C hub with 4K HDMI, 100W PD charging and SD card reader",
       "description": "The ZenPro USB-C 7-in-1 Hub transforms your single USB-C port into a productivity powerhouse. Connects up to 7 devices simultaneously: 4K@60Hz HDMI, 100W Power Delivery pass-through, 2x USB-A 3.0, USB-C data, SD and microSD card readers. The slim, pocket-friendly design makes it perfect for on-the-go professionals.",
-      "categoryId": 1,
+      "categoryId": 14,
       "brand": "ZenPro",
       "images": [
         "https://placehold.co/600x400/2196f3/FFFFFF?text=ZenPro+Hub",
@@ -810,7 +1254,15 @@
       "metaTitle": "ZenPro USB-C 7-in-1 Hub - 4K HDMI, 100W PD | Best Dock",
       "metaDescription": "Buy ZenPro 7-in-1 USB-C Hub with 4K HDMI, 100W Power Delivery, USB 3.0 and SD card readers.",
       "createdAt": "2025-02-20T00:00:00.000Z",
-      "updatedAt": "2025-03-10T00:00:00.000Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "exact",
+      "unitType": "box",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
     },
     {
       "id": 7,
@@ -819,7 +1271,7 @@
       "sku": "SAR-BNR-SLK-001",
       "shortDescription": "Handwoven Banarasi silk saree with rich zari work",
       "description": "This exquisite Banarasi silk saree is handwoven by master artisans of Varanasi. Featuring intricate gold zari work with traditional motifs, it comes with an unstitched blouse piece. The rich texture and luxurious feel make it perfect for weddings, festivals, and special occasions.",
-      "categoryId": 14,
+      "categoryId": 18,
       "brand": "WeaveKraft",
       "images": [
         "https://placehold.co/600x400/c2185b/FFFFFF?text=Banarasi+Saree",
@@ -877,7 +1329,15 @@
       "metaTitle": "Banarasi Silk Saree - Handwoven Zari Work | Best Price",
       "metaDescription": "Buy authentic Banarasi silk saree with intricate zari work. Perfect for weddings and festivals.",
       "createdAt": "2025-01-15T00:00:00.000Z",
-      "updatedAt": "2025-03-01T00:00:00.000Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": true
     },
     {
       "id": 8,
@@ -886,7 +1346,7 @@
       "sku": "KRT-ANK-DSG-001",
       "shortDescription": "Embroidered Anarkali kurta with dupatta and palazzo",
       "description": "Stunning designer Anarkali kurta set featuring delicate chikankari embroidery on premium georgette fabric. Comes with matching palazzo pants and a net dupatta with lace border. Flattering flared silhouette suitable for festivities and celebrations.",
-      "categoryId": 15,
+      "categoryId": 23,
       "brand": "EthnicVogue",
       "images": [
         "https://placehold.co/600x400/ad1457/FFFFFF?text=Anarkali+Kurta",
@@ -951,7 +1411,15 @@
       "metaTitle": "Designer Anarkali Kurta Set - Chikankari Embroidery",
       "metaDescription": "Buy designer Anarkali kurta set with chikankari embroidery. Includes palazzo and dupatta.",
       "createdAt": "2025-01-20T00:00:00.000Z",
-      "updatedAt": "2025-03-05T00:00:00.000Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": true
     },
     {
       "id": 9,
@@ -960,7 +1428,7 @@
       "sku": "FTW-ASR-RUN-001",
       "shortDescription": "Lightweight running shoes with responsive cushioning",
       "description": "AirStride running shoes are engineered for performance. Featuring a breathable knit upper, responsive foam midsole, and durable rubber outsole with multi-directional grip. Perfect for daily runs, gym workouts, and casual wear. Ultra-lightweight at just 250g per shoe.",
-      "categoryId": 12,
+      "categoryId": 28,
       "brand": "AirStride",
       "images": [
         "https://placehold.co/600x400/607d8b/FFFFFF?text=Running+Shoes",
@@ -1045,11 +1513,32 @@
       "metaTitle": "AirStride Running Shoes - Lightweight & Responsive",
       "metaDescription": "Buy AirStride running shoes with responsive cushioning. Breathable, lightweight, and durable.",
       "createdAt": "2025-02-01T00:00:00.000Z",
-      "updatedAt": "2025-03-10T00:00:00.000Z",
+      "updatedAt": "2026-07-02T00:00:00.000Z",
       "relatedProductIds": [
         12,
         19
-      ]
+      ],
+      "priceType": "tiered",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [
+        {
+          "minQty": 1,
+          "price": 3999
+        },
+        {
+          "minQty": 10,
+          "price": 3799
+        },
+        {
+          "minQty": 50,
+          "price": 3599
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": true
     },
     {
       "id": 10,
@@ -1058,7 +1547,7 @@
       "sku": "AUD-BBX-SPK-001",
       "shortDescription": "Portable waterproof Bluetooth speaker with deep bass",
       "description": "BassBox delivers room-filling sound in a compact, portable design. IPX7 waterproof rating means it can handle rain, pool splashes, and showers. 24-hour battery life, built-in microphone for calls, and TWS pairing to connect two speakers for stereo sound.",
-      "categoryId": 7,
+      "categoryId": 33,
       "brand": "BassBox",
       "images": [
         "https://placehold.co/600x400/9c27b0/FFFFFF?text=Bluetooth+Speaker",
@@ -1115,7 +1604,15 @@
       "metaTitle": "BassBox Bluetooth Speaker - IPX7 Waterproof, 24hr Battery",
       "metaDescription": "Buy BassBox portable Bluetooth speaker with deep bass and IPX7 waterproof rating.",
       "createdAt": "2025-01-25T00:00:00.000Z",
-      "updatedAt": "2025-03-08T00:00:00.000Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": true
     },
     {
       "id": 11,
@@ -1124,7 +1621,7 @@
       "sku": "KIT-CDS-24P-001",
       "shortDescription": "Premium bone china dinner set with elegant floral design",
       "description": "Elevate your dining experience with this 24-piece premium bone china dinner set. Includes 6 dinner plates, 6 quarter plates, 6 bowls, 2 serving bowls, 2 serving plates, and 2 spoons. Microwave and dishwasher safe with chip-resistant design and lead-free glaze.",
-      "categoryId": 11,
+      "categoryId": 34,
       "brand": "CeraHome",
       "images": [
         "https://placehold.co/600x400/795548/FFFFFF?text=Dinner+Set",
@@ -1175,7 +1672,15 @@
       "metaTitle": "24-Piece Ceramic Dinner Set - Premium Bone China",
       "metaDescription": "Buy premium 24-piece bone china dinner set. Microwave safe, dishwasher safe, elegant design.",
       "createdAt": "2025-02-10T00:00:00.000Z",
-      "updatedAt": "2025-03-05T00:00:00.000Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
     },
     {
       "id": 12,
@@ -1184,7 +1689,7 @@
       "sku": "SPT-PFX-YGA-001",
       "shortDescription": "Extra thick non-slip yoga mat with alignment lines",
       "description": "ProFlex yoga mat is designed for all levels of practice. 6mm thick TPE material provides excellent cushioning for joints while maintaining stability. Laser-etched alignment lines help perfect your form. Comes with a carrying strap. Eco-friendly, non-toxic, and free from PVC, latex, and heavy metals.",
-      "categoryId": 4,
+      "categoryId": 38,
       "brand": "ProFlex",
       "images": [
         "https://placehold.co/600x400/ff9800/FFFFFF?text=Yoga+Mat",
@@ -1241,7 +1746,28 @@
       "metaTitle": "ProFlex Yoga Mat - 6mm Thick, Non-Slip with Alignment Lines",
       "metaDescription": "Buy ProFlex eco-friendly yoga mat with alignment lines. Extra thick, non-slip, with carrying strap.",
       "createdAt": "2025-02-15T00:00:00.000Z",
-      "updatedAt": "2025-03-12T00:00:00.000Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "tiered",
+      "unitType": "bag",
+      "minQty": 1,
+      "priceTiers": [
+        {
+          "minQty": 1,
+          "price": 1499
+        },
+        {
+          "minQty": 10,
+          "price": 1424
+        },
+        {
+          "minQty": 50,
+          "price": 1349
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": true
     },
     {
       "id": 13,
@@ -1250,7 +1776,7 @@
       "sku": "ELC-VXN-55-001",
       "shortDescription": "55-inch 4K Ultra HD Smart LED TV with Dolby Vision",
       "description": "VisionX 55\" Smart LED TV delivers breathtaking picture quality with 4K Ultra HD resolution and Dolby Vision HDR. Built-in smart OS gives you access to all major streaming apps. Features 20W stereo speakers with Dolby Atmos, 3 HDMI ports, and screen mirroring. Ultra-slim bezel design.",
-      "categoryId": 1,
+      "categoryId": 41,
       "brand": "VisionX",
       "images": [
         "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Smart+TV+55",
@@ -1287,7 +1813,15 @@
       "metaTitle": "VisionX 55\" 4K Smart LED TV - Dolby Vision & Atmos",
       "metaDescription": "Buy VisionX 55\" 4K Smart LED TV with Dolby Vision HDR and Dolby Atmos sound.",
       "createdAt": "2025-01-05T00:00:00.000Z",
-      "updatedAt": "2025-03-15T00:00:00.000Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "onEnquiry",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": false,
+      "showTieredPricing": false,
+      "cardPriceMode": "onEnquiry",
+      "special": true
     },
     {
       "id": 14,
@@ -1296,7 +1830,7 @@
       "sku": "HOM-CBS-KNG-001",
       "shortDescription": "300 TC pure cotton bedsheet with 2 pillow covers",
       "description": "Luxuriously soft 300 thread count pure cotton bedsheet set in king size. Includes one bedsheet (108x108 inches) and 2 pillow covers (18x28 inches). Reactive printed with vibrant colors that won't fade. Pre-shrunk fabric ensures long-lasting fit. Machine washable.",
-      "categoryId": 3,
+      "categoryId": 15,
       "brand": "SleepNest",
       "images": [
         "https://placehold.co/600x400/4caf50/FFFFFF?text=Bedsheet+Set",
@@ -1353,7 +1887,15 @@
       "metaTitle": "King Size Cotton Bedsheet Set - 300 TC with Pillow Covers",
       "metaDescription": "Buy premium 300 TC cotton bedsheet with 2 pillow covers. Reactive printed, pre-shrunk, machine washable.",
       "createdAt": "2025-02-05T00:00:00.000Z",
-      "updatedAt": "2025-03-08T00:00:00.000Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "exact",
+      "unitType": "box",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
     },
     {
       "id": 15,
@@ -1362,7 +1904,7 @@
       "sku": "SPT-PSK-CKT-001",
       "shortDescription": "Grade A English willow cricket bat with premium grip",
       "description": "ProStrike cricket bat crafted from Grade A English willow for superior stroke play. Features a thick edge profile for maximum power and a mid-to-low sweet spot ideal for front-foot play. Comes with premium octopus grip and padded toe guard. Full size (SH). Knocked-in and ready to play.",
-      "categoryId": 4,
+      "categoryId": 24,
       "brand": "ProStrike",
       "images": [
         "https://placehold.co/600x400/ff9800/FFFFFF?text=Cricket+Bat",
@@ -1397,7 +1939,15 @@
       "metaTitle": "ProStrike Cricket Bat - Grade A English Willow",
       "metaDescription": "Buy ProStrike English willow cricket bat. Grade A, thick edge, ready to play.",
       "createdAt": "2025-01-30T00:00:00.000Z",
-      "updatedAt": "2025-03-10T00:00:00.000Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
     },
     {
       "id": 17,
@@ -1406,7 +1956,7 @@
       "sku": "CLT-MFS-PRM-001",
       "shortDescription": "Slim fit cotton formal shirt with wrinkle-free finish",
       "description": "Elevate your professional wardrobe with this premium formal shirt. Made from 100% Egyptian cotton with a wrinkle-free finish that keeps you looking sharp all day. Features a semi-spread collar, single-button barrel cuffs, and a tailored slim fit. Available in classic solid colors.",
-      "categoryId": 9,
+      "categoryId": 29,
       "brand": "UrbanEdge",
       "images": [
         "https://placehold.co/600x400/3f51b5/FFFFFF?text=Formal+Shirt",
@@ -1491,7 +2041,15 @@
       "metaTitle": "Men's Premium Formal Shirt - Egyptian Cotton, Slim Fit",
       "metaDescription": "Buy premium slim fit formal shirt. 100% Egyptian cotton, wrinkle-free finish.",
       "createdAt": "2025-02-12T00:00:00.000Z",
-      "updatedAt": "2025-03-10T00:00:00.000Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
     },
     {
       "id": 18,
@@ -1500,7 +2058,7 @@
       "sku": "HOM-WAC-ABS-001",
       "shortDescription": "Modern abstract art canvas prints for living room decor",
       "description": "Transform your living space with this set of 3 abstract canvas prints. Gallery-quality giclée printing on premium cotton canvas, stretched over solid wood frames. Ready to hang with pre-installed hardware. Each panel: 16x24 inches. UV-resistant inks ensure vibrant colors for years.",
-      "categoryId": 3,
+      "categoryId": 35,
       "brand": "ArtNova",
       "images": [
         "https://placehold.co/600x400/4caf50/FFFFFF?text=Wall+Art+Set",
@@ -1550,7 +2108,15 @@
       "metaTitle": "Abstract Wall Art Canvas Set of 3 - Modern Decor",
       "metaDescription": "Buy set of 3 abstract canvas prints for living room. Gallery-quality, ready to hang.",
       "createdAt": "2025-02-08T00:00:00.000Z",
-      "updatedAt": "2025-03-05T00:00:00.000Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
     },
     {
       "id": 19,
@@ -1559,7 +2125,7 @@
       "sku": "SPT-HFL-WTR-001",
       "shortDescription": "1L stainless steel vacuum insulated bottle - keeps cold 24hrs",
       "description": "HydroFlask double-wall vacuum insulated water bottle keeps drinks ice cold for 24 hours or hot for 12 hours. Made from 18/8 food-grade stainless steel with BPA-free lid. Wide mouth opening fits ice cubes easily. Powder-coated finish for a secure grip. Leak-proof and sweat-free design.",
-      "categoryId": 4,
+      "categoryId": 39,
       "brand": "HydroFlask",
       "images": [
         "https://placehold.co/600x400/ff9800/FFFFFF?text=Water+Bottle",
@@ -1616,7 +2182,28 @@
       "metaTitle": "HydroFlask 1L Insulated Water Bottle - 24hr Cold",
       "metaDescription": "Buy HydroFlask vacuum insulated water bottle. Keeps cold 24hrs, hot 12hrs. BPA-free.",
       "createdAt": "2025-01-18T00:00:00.000Z",
-      "updatedAt": "2025-03-12T00:00:00.000Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "tiered",
+      "unitType": "bag",
+      "minQty": 1,
+      "priceTiers": [
+        {
+          "minQty": 1,
+          "price": 1299
+        },
+        {
+          "minQty": 10,
+          "price": 1234
+        },
+        {
+          "minQty": 50,
+          "price": 1169
+        }
+      ],
+      "showExactPrice": false,
+      "showTieredPricing": true,
+      "cardPriceMode": "from",
+      "special": false
     },
     {
       "id": 20,
@@ -1625,7 +2212,7 @@
       "sku": "TOY-CKB-500-001",
       "shortDescription": "STEM learning building blocks set with storage box",
       "description": "Spark creativity and learning with this 500-piece building blocks set. Compatible with all major brands. Includes bricks, wheels, doors, windows, trees, and minifigures. Comes in a sturdy storage box with sorting compartments. Made from non-toxic ABS plastic, safe for children 3+ years. Great for developing motor skills and imagination.",
-      "categoryId": 5,
+      "categoryId": 42,
       "brand": "BrainBrix",
       "images": [
         "https://placehold.co/600x400/e91e63/FFFFFF?text=Building+Blocks",
@@ -1660,14 +2247,22 @@
       "metaTitle": "500-Piece Building Blocks Set - STEM Learning for Kids",
       "metaDescription": "Buy 500-piece building blocks set with storage box. Safe, non-toxic, compatible with major brands.",
       "createdAt": "2025-02-22T00:00:00.000Z",
-      "updatedAt": "2026-06-12T06:57:43.733Z"
+      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "priceType": "exact",
+      "unitType": "piece",
+      "minQty": 1,
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": false
     }
   ],
   "cart": [],
-  "orders": [
+  "enquiries": [
     {
       "id": 1,
-      "orderNumber": "ORD-20250310-0001",
+      "enquiryNumber": "ENQ-20260115-0001",
       "userId": 1,
       "items": [
         {
@@ -1677,77 +2272,35 @@
           "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=SoundWave+Earbuds",
           "sku": "AUD-SWP-TWS-BLK",
           "price": 8999,
-          "quantity": 1,
-          "subtotal": 8999
+          "quantity": 1
         }
       ],
-      "billingAddress": {
-        "firstName": "John",
-        "lastName": "Doe",
+      "contact": {
+        "name": "John Doe",
         "phone": "+91 9876543210",
-        "addressLine1": "123 Main Street",
-        "addressLine2": "Apt 4B",
-        "city": "Mumbai",
-        "state": "Maharashtra",
-        "postalCode": "400001",
-        "country": "India"
+        "email": "user@example.com"
       },
-      "shippingAddress": {
-        "firstName": "John",
-        "lastName": "Doe",
-        "phone": "+91 9876543210",
-        "addressLine1": "123 Main Street",
-        "addressLine2": "Apt 4B",
-        "city": "Mumbai",
-        "state": "Maharashtra",
-        "postalCode": "400001",
-        "country": "India"
-      },
-      "subtotal": 8999,
-      "discountAmount": 0,
-      "couponCode": null,
-      "shippingAmount": 0,
-      "taxAmount": 1440,
-      "total": 10439,
-      "paymentStatus": "refunded",
-      "paymentMethod": "upi",
-      "fulfillmentStatus": "fulfilled",
-      "shippingStatus": "shipped",
-      "trackingNumber": "SHIP123456789IN",
-      "trackingUrl": "https://shiprocket.co/tracking/SHIP123456789IN",
-      "shiprocketOrderId": null,
       "notes": "",
-      "createdAt": "2026-01-15T10:30:00.000Z",
-      "updatedAt": "2026-06-12T07:14:06.552Z",
+      "adminNotes": "",
+      "status": "Closed",
       "statusHistory": [
         {
           "at": "2026-01-15T10:30:00.000Z",
-          "by": "Customer",
-          "action": "Order placed"
+          "by": "John Doe",
+          "action": "Enquiry submitted"
         },
         {
-          "at": "2026-01-15T10:31:00.000Z",
-          "by": "System",
-          "action": "Payment captured",
-          "note": "UPI via Razorpay"
-        },
-        {
-          "at": "2026-01-16T09:00:00.000Z",
-          "by": "Admin User",
-          "action": "Fulfilled & shipped",
-          "note": "Tracking SHIP123456789IN"
-        },
-        {
-          "at": "2026-01-22T14:30:00.000Z",
-          "by": "Admin User",
-          "action": "Return refund processed (RET-20260120-0001)",
-          "note": "₹10,439 refunded"
+          "at": "2026-06-12T07:14:06.552Z",
+          "by": "Admin",
+          "action": "Status changed to Closed"
         }
-      ]
+      ],
+      "createdAt": "2026-01-15T10:30:00.000Z",
+      "updatedAt": "2026-06-12T07:14:06.552Z"
     },
     {
       "id": 2,
-      "orderNumber": "ORD-20250318-0002",
+      "enquiryNumber": "ENQ-20260201-0002",
       "userId": 1,
       "items": [
         {
@@ -1757,8 +2310,7 @@
           "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=ProBook+Laptop",
           "sku": "LAP-PBU-15-16-512",
           "price": 74999,
-          "quantity": 1,
-          "subtotal": 74999
+          "quantity": 1
         },
         {
           "productId": 6,
@@ -1767,71 +2319,35 @@
           "image": "https://placehold.co/600x400/2196f3/FFFFFF?text=ZenPro+Hub",
           "sku": "ELC-ZPH-7C1-GRY",
           "price": 3499,
-          "quantity": 1,
-          "subtotal": 3499
+          "quantity": 1
         }
       ],
-      "billingAddress": {
-        "firstName": "John",
-        "lastName": "Doe",
+      "contact": {
+        "name": "John Doe",
         "phone": "+91 9876543210",
-        "addressLine1": "123 Main Street",
-        "addressLine2": "Apt 4B",
-        "city": "Mumbai",
-        "state": "Maharashtra",
-        "postalCode": "400001",
-        "country": "India"
+        "email": "user@example.com"
       },
-      "shippingAddress": {
-        "firstName": "John",
-        "lastName": "Doe",
-        "phone": "+91 9876543210",
-        "addressLine1": "123 Main Street",
-        "addressLine2": "Apt 4B",
-        "city": "Mumbai",
-        "state": "Maharashtra",
-        "postalCode": "400001",
-        "country": "India"
-      },
-      "subtotal": 78498,
-      "discountAmount": 5000,
-      "couponCode": "WELCOME500",
-      "shippingAmount": 0,
-      "taxAmount": 11759,
-      "total": 85257,
-      "paymentStatus": "paid",
-      "paymentMethod": "card",
-      "fulfillmentStatus": "fulfilled",
-      "shippingStatus": "shipped",
-      "trackingNumber": "SHIP987654321IN",
-      "trackingUrl": "https://shiprocket.co/tracking/SHIP987654321IN",
-      "shiprocketOrderId": "SR-78923",
       "notes": "Please leave at reception",
-      "createdAt": "2026-02-01T14:20:00.000Z",
-      "updatedAt": "2026-02-03T09:00:00.000Z",
+      "adminNotes": "",
+      "status": "Converted",
       "statusHistory": [
         {
           "at": "2026-02-01T14:20:00.000Z",
-          "by": "Customer",
-          "action": "Order placed"
-        },
-        {
-          "at": "2026-02-01T14:21:00.000Z",
-          "by": "System",
-          "action": "Payment captured",
-          "note": "Card via Razorpay"
+          "by": "John Doe",
+          "action": "Enquiry submitted"
         },
         {
           "at": "2026-02-03T09:00:00.000Z",
-          "by": "Admin User",
-          "action": "Fulfilled & shipped",
-          "note": "Tracking SHIP987654321IN"
+          "by": "Admin",
+          "action": "Status changed to Converted"
         }
-      ]
+      ],
+      "createdAt": "2026-02-01T14:20:00.000Z",
+      "updatedAt": "2026-02-03T09:00:00.000Z"
     },
     {
       "id": 3,
-      "orderNumber": "ORD-20260310-0003",
+      "enquiryNumber": "ENQ-20260310-0003",
       "userId": 2,
       "items": [
         {
@@ -1841,68 +2357,35 @@
           "image": "https://placehold.co/600x400/0f3460/FFFFFF?text=FitPulse+Watch",
           "sku": "ELC-FPS-SW5-SLV-M",
           "price": 16999,
-          "quantity": 1,
-          "subtotal": 16999
+          "quantity": 1
         }
       ],
-      "billingAddress": {
-        "firstName": "Jane",
-        "lastName": "Smith",
+      "contact": {
+        "name": "Jane Smith",
         "phone": "+91 9123456789",
-        "addressLine1": "456 Park Avenue",
-        "city": "Delhi",
-        "state": "Delhi",
-        "postalCode": "110001",
-        "country": "India"
+        "email": "jane@example.com"
       },
-      "shippingAddress": {
-        "firstName": "Jane",
-        "lastName": "Smith",
-        "phone": "+91 9123456789",
-        "addressLine1": "456 Park Avenue",
-        "city": "Delhi",
-        "state": "Delhi",
-        "postalCode": "110001",
-        "country": "India"
-      },
-      "subtotal": 16999,
-      "discountAmount": 0,
-      "couponCode": null,
-      "shippingAmount": 99,
-      "taxAmount": 2720,
-      "total": 19818,
-      "paymentStatus": "refunded",
-      "paymentMethod": "card",
-      "fulfillmentStatus": "unfulfilled",
-      "shippingStatus": "pending",
-      "trackingNumber": null,
-      "shiprocketOrderId": null,
       "notes": "",
-      "createdAt": "2026-03-10T08:45:00.000Z",
-      "updatedAt": "2026-06-13T06:13:05.821Z",
+      "adminNotes": "",
+      "status": "Lost",
       "statusHistory": [
         {
           "at": "2026-03-10T08:45:00.000Z",
-          "by": "Customer",
-          "action": "Order placed"
-        },
-        {
-          "at": "2026-03-10T08:46:00.000Z",
-          "by": "System",
-          "action": "Payment captured",
-          "note": "Card via Razorpay"
+          "by": "Jane Smith",
+          "action": "Enquiry submitted"
         },
         {
           "at": "2026-06-13T06:13:05.821Z",
-          "by": "Admin User",
-          "action": "Refund issued (₹19,818)",
-          "note": "Refunded from order"
+          "by": "Admin",
+          "action": "Status changed to Lost"
         }
-      ]
+      ],
+      "createdAt": "2026-03-10T08:45:00.000Z",
+      "updatedAt": "2026-06-13T06:13:05.821Z"
     },
     {
       "id": 4,
-      "orderNumber": "ORD-20260315-0004",
+      "enquiryNumber": "ENQ-20260315-0004",
       "userId": 1,
       "items": [
         {
@@ -1912,60 +2395,36 @@
           "image": "https://placehold.co/600x400/764ba2/FFFFFF?text=Urban+T-Shirt",
           "sku": "CLT-UCT-CRW-M-WHT",
           "price": 899,
-          "quantity": 3,
-          "subtotal": 2697
+          "quantity": 3
         }
       ],
-      "billingAddress": {
-        "firstName": "John",
-        "lastName": "Doe",
+      "contact": {
+        "name": "John Doe",
         "phone": "+91 9876543210",
-        "addressLine1": "123 Main Street",
-        "city": "Mumbai",
-        "state": "Maharashtra",
-        "postalCode": "400001",
-        "country": "India"
+        "email": "user@example.com"
       },
-      "shippingAddress": {
-        "firstName": "John",
-        "lastName": "Doe",
-        "phone": "+91 9876543210",
-        "addressLine1": "123 Main Street",
-        "city": "Mumbai",
-        "state": "Maharashtra",
-        "postalCode": "400001",
-        "country": "India"
-      },
-      "subtotal": 2697,
-      "discountAmount": 270,
-      "couponCode": "FLAT10",
-      "shippingAmount": 49,
-      "taxAmount": 398,
-      "total": 2874,
-      "paymentStatus": "pending",
-      "paymentMethod": "cod",
-      "fulfillmentStatus": "fulfilled",
-      "shippingStatus": "shipped",
-      "trackingNumber": null,
-      "shiprocketOrderId": null,
       "notes": "",
-      "createdAt": "2026-03-15T16:00:00.000Z",
-      "updatedAt": "2026-06-12T14:17:08.244Z",
+      "adminNotes": "",
+      "status": "Converted",
       "statusHistory": [
         {
           "at": "2026-03-15T16:00:00.000Z",
-          "by": "Customer",
-          "action": "Order placed",
-          "note": "Cash on delivery"
+          "by": "John Doe",
+          "action": "Enquiry submitted"
         },
         {
           "at": "2026-06-12T14:17:08.244Z",
-          "by": "Admin User",
-          "action": "Fulfilled & shipped"
+          "by": "Admin",
+          "action": "Status changed to Converted"
         }
-      ]
+      ],
+      "createdAt": "2026-03-15T16:00:00.000Z",
+      "updatedAt": "2026-06-12T14:17:08.244Z"
     },
     {
+      "id": 5,
+      "enquiryNumber": "ENQ-20260320-0005",
+      "userId": 3,
       "items": [
         {
           "productId": 3,
@@ -1974,67 +2433,36 @@
           "image": "https://placehold.co/600x400/0f3460/FFFFFF?text=FitPulse+Watch",
           "sku": "",
           "price": 14999,
-          "quantity": 1,
-          "subtotal": 14999
+          "quantity": 1
         }
       ],
-      "shippingAddress": {
-        "firstName": "Bappi",
-        "lastName": "Das",
+      "contact": {
+        "name": "Bappi Das",
         "phone": "+919707112233",
-        "addressLine1": "Moutupuri, Barpeta",
-        "addressLine2": "",
-        "city": "Howly",
-        "state": "Assam",
-        "postalCode": "781316",
-        "country": "India"
+        "email": "mail4bappidas@gmail.com"
       },
-      "billingAddress": {
-        "firstName": "Bappi",
-        "lastName": "Das",
-        "phone": "+919707112233",
-        "addressLine1": "Moutupuri, Barpeta",
-        "addressLine2": "",
-        "city": "Howly",
-        "state": "Assam",
-        "postalCode": "781316",
-        "country": "India"
-      },
-      "subtotal": 14999,
-      "discountAmount": 0,
-      "couponCode": null,
-      "shippingAmount": 0,
-      "taxAmount": 2700,
-      "total": 17699,
-      "paymentMethod": "cod",
-      "paymentStatus": "pending",
-      "fulfillmentStatus": "cancelled",
-      "shippingStatus": "pending",
-      "trackingNumber": null,
       "notes": "",
-      "userId": 3,
-      "orderNumber": "ORD-MMYJ01ED-ZR26",
-      "createdAt": "2026-03-20T06:36:26.005Z",
-      "updatedAt": "2026-06-12T01:46:10.397Z",
-      "id": 5,
-      "cancelledAt": "2026-06-12T01:46:10.397Z",
+      "adminNotes": "Customer went with another supplier — enquiry marked lost.",
+      "status": "Lost",
       "statusHistory": [
         {
           "at": "2026-03-20T06:36:26.005Z",
-          "by": "Customer",
-          "action": "Order placed",
-          "note": "Cash on delivery"
+          "by": "Bappi Das",
+          "action": "Enquiry submitted"
         },
         {
           "at": "2026-06-12T01:46:10.397Z",
-          "by": "Customer",
-          "action": "Order cancelled",
-          "note": "Cancelled by customer"
+          "by": "Admin",
+          "action": "Status changed to Lost"
         }
       ],
-      "cancelReason": "Cancelled by customer"
+      "createdAt": "2026-03-20T06:36:26.005Z",
+      "updatedAt": "2026-06-12T01:46:10.397Z"
     },
     {
+      "id": 6,
+      "enquiryNumber": "ENQ-20260612-0006",
+      "userId": 3,
       "items": [
         {
           "productId": 3,
@@ -2043,72 +2471,36 @@
           "image": "https://placehold.co/600x400/0f3460/FFFFFF?text=FitPulse+Watch",
           "sku": "",
           "price": 14999,
-          "quantity": 1,
-          "subtotal": 14999
+          "quantity": 1
         }
       ],
-      "shippingAddress": {
-        "firstName": "Bappi",
-        "lastName": "Das",
+      "contact": {
+        "name": "Bappi Das",
         "phone": "+919707112233",
-        "addressLine1": "Moutupuri, Barpeta",
-        "addressLine2": "Near BH College",
-        "city": "Howly",
-        "state": "Assam",
-        "postalCode": "781316",
-        "country": "India"
+        "email": "mail4bappidas@gmail.com"
       },
-      "billingAddress": {
-        "firstName": "Bappi",
-        "lastName": "Das",
-        "phone": "+919707112233",
-        "addressLine1": "Moutupuri, Barpeta",
-        "addressLine2": "Near BH College",
-        "city": "Howly",
-        "state": "Assam",
-        "postalCode": "781316",
-        "country": "India"
-      },
-      "subtotal": 14999,
-      "discountAmount": 0,
-      "couponCode": null,
-      "shippingAmount": 0,
-      "taxAmount": 2700,
-      "total": 17699,
-      "paymentMethod": "cod",
-      "paymentStatus": "paid",
-      "fulfillmentStatus": "fulfilled",
-      "shippingStatus": "shipped",
-      "trackingNumber": "TEST63452634532563242346",
-      "trackingUrl": "https://www.delhivery.com/track/package/TEST63452634532563242346",
       "notes": "Delivered",
-      "userId": 3,
-      "orderNumber": "ORD-MQA9I6E7-0IR2",
-      "shiprocketOrderId": null,
-      "createdAt": "2026-06-12T01:42:57.247Z",
-      "updatedAt": "2026-06-12T01:49:56.924Z",
-      "id": 6,
+      "adminNotes": "",
+      "status": "Converted",
       "statusHistory": [
         {
           "at": "2026-06-12T01:42:57.247Z",
-          "by": "Customer",
-          "action": "Order placed",
-          "note": "Cash on delivery"
-        },
-        {
-          "at": "2026-06-12T01:48:30.000Z",
-          "by": "Admin User",
-          "action": "Payment marked as paid"
+          "by": "Bappi Das",
+          "action": "Enquiry submitted"
         },
         {
           "at": "2026-06-12T01:49:56.924Z",
-          "by": "Admin User",
-          "action": "Fulfilled & shipped",
-          "note": "Tracking TEST63452634532563242346"
+          "by": "Admin",
+          "action": "Status changed to Converted"
         }
-      ]
+      ],
+      "createdAt": "2026-06-12T01:42:57.247Z",
+      "updatedAt": "2026-06-12T01:49:56.924Z"
     },
     {
+      "id": 7,
+      "enquiryNumber": "ENQ-20260612-0007",
+      "userId": 3,
       "items": [
         {
           "productId": 2,
@@ -2117,87 +2509,36 @@
           "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=SoundWave+Earbuds",
           "sku": "",
           "price": 8999,
-          "quantity": 1,
-          "subtotal": 8999
+          "quantity": 1
         }
       ],
-      "shippingAddress": {
-        "firstName": "Bappi",
-        "lastName": "Das",
+      "contact": {
+        "name": "Bappi Das",
         "phone": "+919707112233",
-        "addressLine1": "Moutupuri, Barpeta",
-        "addressLine2": "Near BH College",
-        "city": "Howly",
-        "state": "Assam",
-        "postalCode": "781316",
-        "country": "India"
+        "email": "mail4bappidas@gmail.com"
       },
-      "billingAddress": {
-        "firstName": "Bappi",
-        "lastName": "Das",
-        "phone": "+919707112233",
-        "addressLine1": "Moutupuri, Barpeta",
-        "addressLine2": "Near BH College",
-        "city": "Howly",
-        "state": "Assam",
-        "postalCode": "781316",
-        "country": "India"
-      },
-      "subtotal": 8999,
-      "discountAmount": 500,
-      "couponCode": "WELCOME500",
-      "shippingAmount": 0,
-      "taxAmount": 1530,
-      "total": 10029,
-      "paymentMethod": "cod",
-      "paymentStatus": "paid",
-      "fulfillmentStatus": "fulfilled",
-      "shippingStatus": "delivered",
-      "trackingNumber": "12331231212",
       "notes": "Test Notes",
-      "userId": 3,
-      "orderNumber": "ORD-MQB0JHUB-9KL6",
-      "shiprocketOrderId": null,
-      "createdAt": "2026-06-12T14:19:48.371Z",
-      "updatedAt": "2026-06-12T14:49:17.688Z",
-      "id": 7,
+      "adminNotes": "",
+      "status": "Contacted",
       "statusHistory": [
         {
           "at": "2026-06-12T14:19:48.371Z",
-          "by": "Customer",
-          "action": "Order placed",
-          "note": "Cash on delivery"
+          "by": "Bappi Das",
+          "action": "Enquiry submitted"
         },
         {
-          "at": "2026-06-12T14:47:54.035Z",
-          "by": "Admin User",
-          "action": "Fulfilled & shipped"
-        },
-        {
-          "at": "2026-06-12T14:48:06.179Z",
-          "by": "Admin User",
-          "action": "Tracking updated"
-        },
-        {
-          "at": "2026-06-12T14:48:34.835Z",
-          "by": "Admin User",
-          "action": "Tracking updated",
-          "note": "Tracking 12331231212"
-        },
-        {
-          "at": "2026-06-12T14:49:04.101Z",
-          "by": "Admin User",
-          "action": "Marked delivered"
-        },
-        {
-          "at": "2026-06-12T14:49:17.716Z",
-          "by": "Admin User",
-          "action": "Payment marked as paid"
+          "at": "2026-06-12T14:49:17.688Z",
+          "by": "Admin",
+          "action": "Status changed to Contacted"
         }
       ],
-      "deliveredAt": "2026-06-12T14:49:04.053Z"
+      "createdAt": "2026-06-12T14:19:48.371Z",
+      "updatedAt": "2026-06-12T14:49:17.688Z"
     },
     {
+      "id": 8,
+      "enquiryNumber": "ENQ-20260613-0008",
+      "userId": 3,
       "items": [
         {
           "productId": 9,
@@ -2206,100 +2547,36 @@
           "image": "https://placehold.co/600x400/607d8b/FFFFFF?text=Running+Shoes",
           "sku": "",
           "price": 3999,
-          "quantity": 1,
-          "subtotal": 3999
+          "quantity": 1
         }
       ],
-      "shippingAddress": {
-        "firstName": "Bappi",
-        "lastName": "Das",
+      "contact": {
+        "name": "Bappi Das",
         "phone": "+919707112233",
-        "addressLine1": "Moutupuri, Barpeta",
-        "addressLine2": "Near BH College",
-        "city": "Howly",
-        "state": "Assam",
-        "postalCode": "781316",
-        "country": "India"
+        "email": "mail4bappidas@gmail.com"
       },
-      "billingAddress": {
-        "firstName": "Bappi",
-        "lastName": "Das",
-        "phone": "+919707112233",
-        "addressLine1": "Moutupuri, Barpeta",
-        "addressLine2": "Near BH College",
-        "city": "Howly",
-        "state": "Assam",
-        "postalCode": "781316",
-        "country": "India"
-      },
-      "subtotal": 3999,
-      "discountAmount": 0,
-      "couponCode": null,
-      "shippingAmount": 199,
-      "taxAmount": 720,
-      "total": 4918,
-      "paymentMethod": "cod",
-      "paymentStatus": "refunded",
-      "fulfillmentStatus": "fulfilled",
-      "shippingStatus": "delivered",
-      "trackingNumber": "532352353252",
       "notes": "Order Shipped",
-      "userId": 3,
-      "orderNumber": "ORD-MQC1HWSZ-CAN8",
-      "shiprocketOrderId": null,
-      "createdAt": "2026-06-13T07:34:20.243Z",
-      "updatedAt": "2026-06-13T12:57:28.282Z",
+      "adminNotes": "Enquiry closed after the returned items were settled.",
+      "status": "Closed",
       "statusHistory": [
         {
           "at": "2026-06-13T07:34:20.243Z",
-          "by": "Customer",
-          "action": "Order placed"
+          "by": "Bappi Das",
+          "action": "Enquiry submitted"
         },
         {
-          "at": "2026-06-13T07:36:12.080Z",
-          "by": "Admin User",
-          "action": "Fulfilled & shipped",
-          "note": "Tracking 532352353252 · tracking link added"
-        },
-        {
-          "at": "2026-06-13T07:38:00.486Z",
-          "by": "Admin User",
-          "action": "Tracking updated",
-          "note": "Tracking 532352353252 · tracking link added"
-        },
-        {
-          "at": "2026-06-13T12:49:23.385Z",
-          "by": "Admin User",
-          "action": "Marked delivered"
-        },
-        {
-          "at": "2026-06-13T12:49:44.526Z",
-          "by": "Admin User",
-          "action": "Payment marked as paid"
-        },
-        {
-          "at": "2026-06-13T12:55:11.832Z",
-          "by": "Admin User",
-          "action": "Refund initiated",
-          "note": "₹4,918 via store credit · ref ORDER ID - ORD-MQC1HWSZ-CAN8 — settlement pending"
-        },
-        {
-          "at": "2026-06-13T12:57:28.351Z",
-          "by": "Admin User",
-          "action": "Refund completed",
-          "note": "₹4,918 via store credit settled to customer"
+          "at": "2026-06-13T12:57:28.282Z",
+          "by": "Admin",
+          "action": "Status changed to Closed"
         }
       ],
-      "id": 8,
-      "trackingUrl": "https://www.indiapost.com/tracking",
-      "deliveredAt": "2026-06-13T12:49:23.351Z",
-      "refundStatus": "completed",
-      "refundMethod": "store_credit",
-      "pendingRefund": null,
-      "refundedAmount": 4918,
-      "refundCompletedAt": "2026-06-13T12:57:28.282Z"
+      "createdAt": "2026-06-13T07:34:20.243Z",
+      "updatedAt": "2026-06-13T12:57:28.282Z"
     },
     {
+      "id": 9,
+      "enquiryNumber": "ENQ-20260613-0009",
+      "userId": 3,
       "items": [
         {
           "productId": 1,
@@ -2308,61 +2585,36 @@
           "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=ProBook+Laptop",
           "sku": "",
           "price": 64999,
-          "quantity": 1,
-          "subtotal": 64999
+          "quantity": 1
         }
       ],
-      "shippingAddress": {
-        "firstName": "Bappi",
-        "lastName": "Das",
+      "contact": {
+        "name": "Bappi Das",
         "phone": "+919707112233",
-        "addressLine1": "Moutupuri, Barpeta",
-        "addressLine2": "Near BH College",
-        "city": "Howly",
-        "state": "Assam",
-        "postalCode": "781316",
-        "country": "India"
+        "email": "mail4bappidas@gmail.com"
       },
-      "billingAddress": {
-        "firstName": "Bappi",
-        "lastName": "Das",
-        "phone": "+919707112233",
-        "addressLine1": "Moutupuri, Barpeta",
-        "addressLine2": "Near BH College",
-        "city": "Howly",
-        "state": "Assam",
-        "postalCode": "781316",
-        "country": "India"
-      },
-      "subtotal": 64999,
-      "discountAmount": 0,
-      "couponCode": null,
-      "shippingAmount": 0,
-      "taxAmount": 11700,
-      "total": 76699,
-      "storeCreditUsed": 1000,
-      "amountPayable": 75699,
-      "paymentMethod": "upi",
-      "paymentStatus": "paid",
-      "fulfillmentStatus": "unfulfilled",
-      "shippingStatus": "pending",
-      "trackingNumber": null,
       "notes": "",
-      "userId": 3,
-      "orderNumber": "ORD-MQCGV6OM-Z965",
-      "shiprocketOrderId": null,
-      "createdAt": "2026-06-13T14:44:33.814Z",
-      "updatedAt": "2026-06-13T14:44:33.814Z",
+      "adminNotes": "",
+      "status": "Quotation Sent",
       "statusHistory": [
         {
           "at": "2026-06-13T14:44:33.814Z",
-          "by": "Customer",
-          "action": "Order placed"
+          "by": "Bappi Das",
+          "action": "Enquiry submitted"
+        },
+        {
+          "at": "2026-06-13T14:44:33.814Z",
+          "by": "Admin",
+          "action": "Status changed to Quotation Sent"
         }
       ],
-      "id": 9
+      "createdAt": "2026-06-13T14:44:33.814Z",
+      "updatedAt": "2026-06-13T14:44:33.814Z"
     },
     {
+      "id": 10,
+      "enquiryNumber": "ENQ-20260614-0010",
+      "userId": 3,
       "items": [
         {
           "productId": 1,
@@ -2371,8 +2623,7 @@
           "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=ProBook+Laptop",
           "sku": "",
           "price": 64999,
-          "quantity": 1,
-          "subtotal": 64999
+          "quantity": 1
         },
         {
           "productId": 3,
@@ -2381,67 +2632,36 @@
           "image": "https://placehold.co/600x400/0f3460/FFFFFF?text=FitPulse+Watch",
           "sku": "",
           "price": 14999,
-          "quantity": 1,
-          "subtotal": 14999
+          "quantity": 1
         }
       ],
-      "shippingAddress": {
-        "id": 1,
-        "label": "Home",
-        "firstName": "Bappi",
-        "lastName": "Das",
+      "contact": {
+        "name": "Bappi Das",
         "phone": "+919707112233",
-        "addressLine1": "Moutupuri, Barpeta",
-        "addressLine2": "Near BH College",
-        "city": "Howly",
-        "state": "Assam",
-        "postalCode": "781316",
-        "country": "India",
-        "isDefault": true
+        "email": "mail4bappidas@gmail.com"
       },
-      "billingAddress": {
-        "id": 1,
-        "label": "Home",
-        "firstName": "Bappi",
-        "lastName": "Das",
-        "phone": "+919707112233",
-        "addressLine1": "Moutupuri, Barpeta",
-        "addressLine2": "Near BH College",
-        "city": "Howly",
-        "state": "Assam",
-        "postalCode": "781316",
-        "country": "India",
-        "isDefault": true
-      },
-      "subtotal": 79998,
-      "discountAmount": 0,
-      "couponCode": null,
-      "shippingAmount": 0,
-      "taxAmount": 14400,
-      "total": 94398,
-      "storeCreditUsed": 0,
-      "amountPayable": 94398,
-      "paymentMethod": "upi",
-      "paymentStatus": "paid",
-      "fulfillmentStatus": "unfulfilled",
-      "shippingStatus": "pending",
-      "trackingNumber": null,
       "notes": "",
-      "userId": 3,
-      "orderNumber": "ORD-MQDUWC74-RUVY",
-      "shiprocketOrderId": null,
-      "createdAt": "2026-06-14T14:05:08.416Z",
-      "updatedAt": "2026-06-14T14:05:08.416Z",
+      "adminNotes": "",
+      "status": "In Discussion",
       "statusHistory": [
         {
           "at": "2026-06-14T14:05:08.416Z",
-          "by": "Customer",
-          "action": "Order placed"
+          "by": "Bappi Das",
+          "action": "Enquiry submitted"
+        },
+        {
+          "at": "2026-06-14T14:05:08.416Z",
+          "by": "Admin",
+          "action": "Status changed to In Discussion"
         }
       ],
-      "id": 10
+      "createdAt": "2026-06-14T14:05:08.416Z",
+      "updatedAt": "2026-06-14T14:05:08.416Z"
     },
     {
+      "id": 11,
+      "enquiryNumber": "ENQ-20260614-0011",
+      "userId": 3,
       "items": [
         {
           "productId": 2,
@@ -2450,578 +2670,33 @@
           "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=SoundWave+Earbuds",
           "sku": "",
           "price": 8999,
-          "quantity": 1,
-          "subtotal": 8999
+          "quantity": 1
         }
       ],
-      "shippingAddress": {
-        "id": 1,
-        "label": "Home",
-        "firstName": "Bappi",
-        "lastName": "Das",
+      "contact": {
+        "name": "Bappi Das",
         "phone": "+919707112233",
-        "addressLine1": "Moutupuri, Barpeta",
-        "addressLine2": "Near BH College",
-        "city": "Howly",
-        "state": "Assam",
-        "postalCode": "781316",
-        "country": "India",
-        "isDefault": true
+        "email": "mail4bappidas@gmail.com"
       },
-      "billingAddress": {
-        "id": 1,
-        "label": "Home",
-        "firstName": "Bappi",
-        "lastName": "Das",
-        "phone": "+919707112233",
-        "addressLine1": "Moutupuri, Barpeta",
-        "addressLine2": "Near BH College",
-        "city": "Howly",
-        "state": "Assam",
-        "postalCode": "781316",
-        "country": "India",
-        "isDefault": true
-      },
-      "subtotal": 8999,
-      "discountAmount": 0,
-      "couponCode": null,
-      "shippingAmount": 0,
-      "taxAmount": 1620,
-      "total": 10619,
-      "storeCreditUsed": 1000,
-      "amountPayable": 9619,
-      "paymentMethod": "upi",
-      "paymentStatus": "paid",
-      "fulfillmentStatus": "fulfilled",
-      "shippingStatus": "delivered",
-      "trackingNumber": "4423243243243244",
       "notes": "Test Note",
-      "userId": 3,
-      "orderNumber": "ORD-MQDVIQCV-30A9",
-      "shiprocketOrderId": null,
+      "adminNotes": "",
+      "status": "New",
+      "statusHistory": [
+        {
+          "at": "2026-06-14T14:22:33.199Z",
+          "by": "Bappi Das",
+          "action": "Enquiry submitted"
+        }
+      ],
       "createdAt": "2026-06-14T14:22:33.199Z",
-      "updatedAt": "2026-06-20T06:24:29.131Z",
-      "statusHistory": [
-        {
-          "at": "2026-06-14T14:22:33.200Z",
-          "by": "Customer",
-          "action": "Order placed"
-        },
-        {
-          "at": "2026-06-20T06:23:53.963Z",
-          "by": "Admin User",
-          "action": "Fulfilled & shipped",
-          "note": "Tracking 4423243243243244 · tracking link added"
-        },
-        {
-          "at": "2026-06-20T06:24:29.157Z",
-          "by": "Admin User",
-          "action": "Marked delivered"
-        }
-      ],
-      "id": 11,
-      "trackingUrl": "https://www.google.com",
-      "deliveredAt": "2026-06-20T06:24:29.130Z"
+      "updatedAt": "2026-06-20T06:24:29.131Z"
     }
   ],
-  "returns": [
-    {
-      "id": 1,
-      "returnNumber": "RET-20260120-0001",
-      "orderId": 1,
-      "orderNumber": "ORD-20250310-0001",
-      "userId": 1,
-      "items": [
-        {
-          "productId": 2,
-          "variantId": "v1",
-          "name": "SoundWave Pro Wireless Earbuds - Midnight Black",
-          "sku": "AUD-SWP-TWS-BLK",
-          "price": 8999,
-          "quantity": 1,
-          "subtotal": 8999
-        }
-      ],
-      "reason": "defective",
-      "reasonDetails": "Left earbud has no sound",
-      "status": "approved",
-      "refundAmount": 8999,
-      "refundStatus": "processed",
-      "refundMethod": "original_payment",
-      "images": [],
-      "notes": "Refund processed to original UPI account",
-      "createdAt": "2026-01-20T10:00:00.000Z",
-      "updatedAt": "2026-01-22T14:30:00.000Z",
-      "statusHistory": [
-        {
-          "at": "2026-01-20T10:00:00.000Z",
-          "by": "Customer",
-          "action": "Return created",
-          "note": "Reason: defective"
-        },
-        {
-          "at": "2026-01-21T11:00:00.000Z",
-          "by": "Admin User",
-          "action": "Return approved"
-        },
-        {
-          "at": "2026-01-22T10:00:00.000Z",
-          "by": "Admin User",
-          "action": "Items received"
-        },
-        {
-          "at": "2026-01-22T14:30:00.000Z",
-          "by": "Admin User",
-          "action": "Refund processed (₹10,439)",
-          "note": "Refund processed to original UPI account"
-        }
-      ],
-      "deductionAmount": 0,
-      "restocked": true,
-      "returnTrackingNumber": "RETN-SR-1029384",
-      "returnTrackingUrl": "https://shiprocket.co/tracking/RETN-SR-1029384",
-      "returnCarrier": "Shiprocket",
-      "pickupScheduledAt": "2026-01-21T11:30:00.000Z"
-    },
-    {
-      "id": 2,
-      "returnNumber": "RET-20260612-0002",
-      "orderId": 6,
-      "orderNumber": "ORD-MQA9I6E7-0IR2",
-      "userId": 3,
-      "items": [
-        {
-          "productId": 3,
-          "variantId": "v1",
-          "name": "FitPulse Smartwatch Series 5 - Black / Rubber Band",
-          "sku": "ELC-FPS-SW5-BLK-R",
-          "price": 14999,
-          "quantity": 1,
-          "subtotal": 14999
-        }
-      ],
-      "reason": "not_as_described",
-      "reasonDetails": "Strap quality is not as shown in the product photos.",
-      "status": "requested",
-      "refundAmount": 14999,
-      "refundStatus": "pending",
-      "refundMethod": "original_payment",
-      "deductionAmount": 0,
-      "restocked": false,
-      "returnTrackingNumber": null,
-      "returnTrackingUrl": null,
-      "returnCarrier": null,
-      "pickupScheduledAt": null,
-      "images": [],
-      "notes": "",
-      "statusHistory": [
-        {
-          "at": "2026-06-12T05:30:00.000Z",
-          "by": "Customer",
-          "action": "Return created",
-          "note": "Reason: not_as_described"
-        }
-      ],
-      "createdAt": "2026-06-12T05:30:00.000Z",
-      "updatedAt": "2026-06-12T05:30:00.000Z"
-    }
-  ],
-  "payments": [
-    {
-      "id": 1,
-      "orderId": 1,
-      "orderNumber": "ORD-20250310-0001",
-      "userId": 1,
-      "amount": 10439,
-      "currency": "INR",
-      "paymentMethod": "upi",
-      "gateway": "razorpay",
-      "transactionId": "pay_RZP123456789",
-      "gatewayOrderId": "order_RZP987654321",
-      "status": "refunded",
-      "gatewayResponse": {
-        "code": "SUCCESS",
-        "bank": null,
-        "wallet": "PhonePe"
-      },
-      "createdAt": "2026-01-15T10:31:00.000Z",
-      "updatedAt": "2026-06-12T07:12:56.342Z",
-      "refundAmount": 10439,
-      "refundReason": "Return RET-20260120-0001",
-      "refunds": [
-        {
-          "id": "ref_seed0001",
-          "amount": 10439,
-          "reason": "Return RET-20260120-0001",
-          "at": "2026-01-22T14:30:00.000Z",
-          "by": "Admin User"
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "orderId": 2,
-      "orderNumber": "ORD-20250318-0002",
-      "userId": 1,
-      "amount": 85257,
-      "currency": "INR",
-      "paymentMethod": "card",
-      "gateway": "razorpay",
-      "transactionId": "pay_RZP234567890",
-      "gatewayOrderId": "order_RZP876543210",
-      "status": "captured",
-      "gatewayResponse": {
-        "code": "SUCCESS",
-        "bank": "HDFC",
-        "last4": "4242"
-      },
-      "createdAt": "2026-02-01T14:21:00.000Z",
-      "updatedAt": "2026-02-01T14:21:45.000Z"
-    },
-    {
-      "id": 3,
-      "orderId": 3,
-      "orderNumber": "ORD-20260310-0003",
-      "userId": 2,
-      "amount": 19818,
-      "currency": "INR",
-      "paymentMethod": "card",
-      "gateway": "razorpay",
-      "transactionId": "pay_RZP345678901",
-      "gatewayOrderId": "order_RZP765432109",
-      "status": "refunded",
-      "gatewayResponse": {
-        "code": "SUCCESS",
-        "bank": "ICICI",
-        "last4": "1234"
-      },
-      "createdAt": "2026-03-10T08:46:00.000Z",
-      "updatedAt": "2026-06-13T06:13:05.674Z",
-      "refundAmount": 19818,
-      "refundReason": "Refunded from order",
-      "refunds": [
-        {
-          "id": "ref_mqbylfkanpi6",
-          "amount": 19818,
-          "reason": "Refunded from order",
-          "at": "2026-06-13T06:13:05.674Z",
-          "by": "Admin User"
-        }
-      ]
-    },
-    {
-      "id": 4,
-      "orderId": 6,
-      "orderNumber": "ORD-MQA9I6E7-0IR2",
-      "userId": 3,
-      "amount": 17699,
-      "currency": "INR",
-      "paymentMethod": "cod",
-      "gateway": "cod",
-      "transactionId": "cod_MQA9I6E7",
-      "gatewayOrderId": null,
-      "status": "captured",
-      "gatewayResponse": {},
-      "refunds": [],
-      "refundAmount": 0,
-      "refundReason": "",
-      "createdAt": "2026-06-12T01:48:30.000Z",
-      "updatedAt": "2026-06-12T01:48:30.000Z"
-    },
-    {
-      "id": 5,
-      "orderId": 7,
-      "orderNumber": "ORD-MQB0JHUB-9KL6",
-      "userId": 3,
-      "amount": 10029,
-      "currency": "INR",
-      "paymentMethod": "cod",
-      "gateway": "cod",
-      "transactionId": null,
-      "gatewayOrderId": null,
-      "status": "pending",
-      "gatewayResponse": {},
-      "refunds": [],
-      "refundAmount": 0,
-      "refundReason": "",
-      "createdAt": "2026-06-12T14:19:48.371Z",
-      "updatedAt": "2026-06-12T14:19:48.371Z"
-    },
-    {
-      "orderId": 8,
-      "orderNumber": "ORD-MQC1HWSZ-CAN8",
-      "userId": 3,
-      "amount": 4918,
-      "currency": "INR",
-      "paymentMethod": "cod",
-      "gateway": "cod",
-      "transactionId": null,
-      "gatewayOrderId": null,
-      "status": "refunded",
-      "gatewayResponse": {},
-      "createdAt": "2026-06-13T07:34:20.277Z",
-      "updatedAt": "2026-06-13T12:57:28.314Z",
-      "id": 6,
-      "refundAmount": 4918,
-      "refundReason": "AirStride Running Shoes - UK 7 - Black is returned",
-      "refunds": [
-        {
-          "id": "ref_mqcd1gqipep7",
-          "amount": 4918,
-          "reason": "AirStride Running Shoes - UK 7 - Black is returned",
-          "at": "2026-06-13T12:57:28.314Z",
-          "by": "Admin User"
-        }
-      ],
-      "pendingRefund": null
-    },
-    {
-      "orderId": 9,
-      "orderNumber": "ORD-MQCGV6OM-Z965",
-      "userId": 3,
-      "amount": 75699,
-      "currency": "INR",
-      "paymentMethod": "upi",
-      "gateway": "razorpay",
-      "transactionId": "pay_MOCKMQCGV6Q2",
-      "gatewayOrderId": "order_MOCKMQCGV6Q2",
-      "status": "captured",
-      "storeCreditApplied": 1000,
-      "gatewayResponse": {},
-      "createdAt": "2026-06-13T14:44:33.866Z",
-      "updatedAt": "2026-06-13T14:44:33.866Z",
-      "id": 7
-    },
-    {
-      "orderId": 10,
-      "orderNumber": "ORD-MQDUWC74-RUVY",
-      "userId": 3,
-      "amount": 94398,
-      "currency": "INR",
-      "paymentMethod": "upi",
-      "gateway": "razorpay",
-      "transactionId": "pay_MOCKMQDUWC82",
-      "gatewayOrderId": "order_MOCKMQDUWC82",
-      "status": "captured",
-      "storeCreditApplied": 0,
-      "gatewayResponse": {},
-      "createdAt": "2026-06-14T14:05:08.450Z",
-      "updatedAt": "2026-06-14T14:05:08.450Z",
-      "id": 8
-    },
-    {
-      "orderId": 11,
-      "orderNumber": "ORD-MQDVIQCV-30A9",
-      "userId": 3,
-      "amount": 9619,
-      "currency": "INR",
-      "paymentMethod": "upi",
-      "gateway": "razorpay",
-      "transactionId": "pay_MOCKMQDVIQEE",
-      "gatewayOrderId": "order_MOCKMQDVIQEE",
-      "status": "captured",
-      "storeCreditApplied": 1000,
-      "gatewayResponse": {},
-      "createdAt": "2026-06-14T14:22:33.254Z",
-      "updatedAt": "2026-06-14T14:22:33.254Z",
-      "id": 9
-    }
-  ],
-  "refunds": [
-    {
-      "id": 1,
-      "refundNumber": "REF-20260122-7K2A",
-      "type": "return_refund",
-      "orderId": 1,
-      "orderNumber": "ORD-20250310-0001",
-      "returnId": 1,
-      "returnNumber": "RET-20260120-0001",
-      "paymentId": 1,
-      "amount": 10439,
-      "method": "original_payment",
-      "reason": "Return RET-20260120-0001",
-      "status": "completed",
-      "couponRestored": false,
-      "initiatedAt": "2026-01-22T14:30:00.000Z",
-      "settledAt": "2026-01-22T14:30:00.000Z",
-      "by": "Admin User",
-      "createdAt": "2026-01-22T14:30:00.000Z",
-      "updatedAt": "2026-01-22T14:30:00.000Z"
-    },
-    {
-      "id": 2,
-      "refundNumber": "REF-20260613-9QM4",
-      "type": "order_refund",
-      "orderId": 3,
-      "orderNumber": "ORD-20260310-0003",
-      "returnId": null,
-      "returnNumber": null,
-      "paymentId": 3,
-      "amount": 19818,
-      "method": "original_payment",
-      "reason": "Refunded from order",
-      "status": "completed",
-      "couponRestored": false,
-      "initiatedAt": "2026-06-13T06:13:05.674Z",
-      "settledAt": "2026-06-13T06:13:05.674Z",
-      "by": "Admin User",
-      "createdAt": "2026-06-13T06:13:05.674Z",
-      "updatedAt": "2026-06-13T06:13:05.674Z"
-    },
-    {
-      "refundNumber": "REF-20260613-JQ3L",
-      "type": "order_refund",
-      "orderId": 8,
-      "orderNumber": "ORD-MQC1HWSZ-CAN8",
-      "returnId": null,
-      "returnNumber": null,
-      "paymentId": null,
-      "amount": 4918,
-      "method": "store_credit",
-      "reason": "AirStride Running Shoes - UK 7 - Black is returned",
-      "reference": "ORDER ID - ORD-MQC1HWSZ-CAN8",
-      "status": "completed",
-      "couponRestored": false,
-      "initiatedAt": "2026-06-13T12:55:11.910Z",
-      "settledAt": "2026-06-13T12:57:28.419Z",
-      "by": "Admin User",
-      "createdAt": "2026-06-13T12:55:11.910Z",
-      "updatedAt": "2026-06-13T12:57:28.419Z",
-      "id": 3
-    }
-  ],
-  "shipping_methods": [
-    {
-      "id": 1,
-      "name": "Standard Delivery",
-      "carrier": "Shiprocket",
-      "description": "Delivered in 5-7 business days",
-      "rateType": "flat",
-      "flatRate": 99,
-      "freeAbove": 999,
-      "estimatedDays": "5-7",
-      "isActive": true,
-      "createdAt": "2025-01-01T00:00:00.000Z"
-    },
-    {
-      "id": 2,
-      "name": "Express Delivery",
-      "carrier": "Shiprocket",
-      "description": "Delivered in 2-3 business days",
-      "rateType": "flat",
-      "flatRate": 199,
-      "freeAbove": 4999,
-      "estimatedDays": "2-3",
-      "isActive": true,
-      "createdAt": "2025-01-01T00:00:00.000Z"
-    },
-    {
-      "id": 3,
-      "name": "Same Day Delivery",
-      "carrier": "Dunzo",
-      "description": "Delivered today (select cities)",
-      "rateType": "flat",
-      "flatRate": 499,
-      "freeAbove": null,
-      "estimatedDays": "0",
-      "isActive": true,
-      "createdAt": "2025-01-01T00:00:00.000Z"
-    },
-    {
-      "id": 4,
-      "name": "Free Shipping",
-      "carrier": "Shiprocket",
-      "description": "Free standard shipping on all orders",
-      "rateType": "free",
-      "flatRate": 0,
-      "freeAbove": 0,
-      "estimatedDays": "5-7",
-      "isActive": false,
-      "createdAt": "2025-01-01T00:00:00.000Z"
-    }
-  ],
-  "coupons": [
-    {
-      "id": 1,
-      "code": "WELCOME500",
-      "description": "Welcome discount for new customers",
-      "type": "fixed",
-      "value": 500,
-      "minOrderAmount": 2000,
-      "maxDiscount": 500,
-      "usageLimit": 1000,
-      "usedCount": 48,
-      "perUserLimit": 1,
-      "isActive": true,
-      "expiresAt": "2026-12-31T23:59:59.000Z",
-      "createdAt": "2025-01-01T00:00:00.000Z",
-      "updatedAt": "2026-06-12T14:19:48.456Z"
-    },
-    {
-      "id": 2,
-      "code": "FLAT10",
-      "description": "Flat 10% off on all orders",
-      "type": "percentage",
-      "value": 10,
-      "minOrderAmount": 500,
-      "maxDiscount": 1000,
-      "usageLimit": null,
-      "usedCount": 213,
-      "perUserLimit": null,
-      "isActive": true,
-      "expiresAt": "2026-06-30T23:59:59.000Z",
-      "createdAt": "2025-02-01T00:00:00.000Z",
-      "updatedAt": "2026-03-15T00:00:00.000Z"
-    },
-    {
-      "id": 3,
-      "code": "SUMMER25",
-      "description": "Summer sale - 25% off",
-      "type": "percentage",
-      "value": 25,
-      "minOrderAmount": 1500,
-      "maxDiscount": 2500,
-      "usageLimit": 500,
-      "usedCount": 500,
-      "perUserLimit": 2,
-      "isActive": false,
-      "expiresAt": "2025-08-31T23:59:59.000Z",
-      "createdAt": "2025-06-01T00:00:00.000Z",
-      "updatedAt": "2025-09-01T00:00:00.000Z"
-    },
-    {
-      "id": 4,
-      "code": "NEWUSER20",
-      "description": "20% off for new users on first order",
-      "type": "percentage",
-      "value": 20,
-      "minOrderAmount": 1000,
-      "maxDiscount": 2000,
-      "usageLimit": null,
-      "usedCount": 89,
-      "perUserLimit": 1,
-      "isActive": true,
-      "expiresAt": "2026-12-31T23:59:59.000Z",
-      "createdAt": "2025-03-01T00:00:00.000Z",
-      "updatedAt": "2026-03-15T00:00:00.000Z"
-    },
-    {
-      "id": 5,
-      "code": "ELECTRONICS15",
-      "description": "15% off on all electronics",
-      "type": "percentage",
-      "value": 15,
-      "minOrderAmount": 3000,
-      "maxDiscount": 5000,
-      "usageLimit": 200,
-      "usedCount": 34,
-      "perUserLimit": 2,
-      "isActive": true,
-      "expiresAt": "2026-09-30T23:59:59.000Z",
-      "createdAt": "2025-03-10T00:00:00.000Z",
-      "updatedAt": "2026-03-18T00:00:00.000Z"
-    }
-  ],
+  "returns": [],
+  "payments": [],
+  "refunds": [],
+  "shipping_methods": [],
+  "coupons": [],
   "reviews": [
     {
       "id": 1,
@@ -3343,51 +3018,29 @@
   ],
   "settings": {
     "store": {
-      "name": "My E-Commerce Store",
-      "tagline": "Quality products, great prices",
-      "email": "hello@mystore.com",
-      "phone": "+91 9999999999",
-      "address": "123 Business Park, Mumbai, Maharashtra 400001",
+      "name": "North East Build Mart",
+      "tagline": "Deals in all kinds of building materials for interior and exterior use.",
+      "email": "info@northeastbuildmart.com",
+      "phone": "+91 86385 43526",
+      "phoneSecondary": "+91 88762 89972",
+      "address": "Lawkhuwa Road, Nagaon, Assam – 782002",
       "currency": "INR",
       "currencySymbol": "₹",
       "timezone": "Asia/Kolkata",
-      "logo": null,
-      "favicon": null,
-      "taxRate": 18,
-      "taxIncluded": false
-    },
-    "shipping": {
-      "shiprocketEnabled": false,
-      "shiprocketEmail": "",
-      "shiprocketPassword": "",
-      "defaultWeight": 0.5,
-      "defaultDimensions": {
-        "length": 15,
-        "width": 12,
-        "height": 8
-      }
-    },
-    "payment": {
-      "razorpayEnabled": false,
-      "razorpayKeyId": "",
-      "stripeEnabled": false,
-      "stripePublishableKey": "",
-      "codEnabled": true,
-      "codFee": 0,
-      "codMinOrder": 0,
-      "codMaxOrder": 50000
+      "logo": "https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889446/logo_fnscna.png",
+      "favicon": "https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889689/icon_bvsukn.png"
     },
     "notifications": {
       "orderConfirmationEmail": true,
       "shippingUpdateEmail": true,
       "adminNewOrderEmail": true,
-      "adminEmail": "admin@mystore.com",
+      "adminEmail": "info@northeastbuildmart.com",
       "lowStockAlert": true,
-      "lowStockEmail": "admin@mystore.com"
+      "lowStockEmail": "info@northeastbuildmart.com"
     },
     "seo": {
-      "metaTitle": "My E-Commerce Store - Quality Products Online",
-      "metaDescription": "Shop the best products online with fast delivery, secure payments and easy returns.",
+      "metaTitle": "North East Build Mart — Building Materials in Nagaon, Assam",
+      "metaDescription": "North East Build Mart deals in all kinds of building materials for interior and exterior use — tiles, doors, plumbing, cement, steel and more. Lawkhuwa Road, Nagaon, Assam.",
       "googleAnalyticsId": "",
       "facebookPixelId": ""
     },
@@ -3399,76 +3052,8 @@
       "whatsapp": ""
     }
   },
-  "walletTransactions": [
-    {
-      "id": 1,
-      "userId": 3,
-      "type": "credit",
-      "amount": 4918,
-      "reason": "Refund for order ORD-MQC1HWSZ-CAN8",
-      "orderId": 8,
-      "orderNumber": "ORD-MQC1HWSZ-CAN8",
-      "refundId": 3,
-      "refundNumber": "REF-20260613-JQ3L",
-      "balanceBefore": 0,
-      "balanceAfter": 4918,
-      "createdAt": "2026-06-13T12:57:28.419Z"
-    },
-    {
-      "userId": 3,
-      "type": "debit",
-      "amount": 1000,
-      "reason": "Applied to order ORD-MQCGV6OM-Z965",
-      "orderId": 9,
-      "orderNumber": "ORD-MQCGV6OM-Z965",
-      "refundId": null,
-      "refundNumber": null,
-      "balanceBefore": 4918,
-      "balanceAfter": 3918,
-      "createdAt": "2026-06-13T14:44:33.927Z",
-      "id": 2
-    },
-    {
-      "userId": 3,
-      "type": "debit",
-      "amount": 1000,
-      "reason": "Applied to order ORD-MQDVIQCV-30A9",
-      "orderId": 11,
-      "orderNumber": "ORD-MQDVIQCV-30A9",
-      "refundId": null,
-      "refundNumber": null,
-      "balanceBefore": 3918,
-      "balanceAfter": 2918,
-      "createdAt": "2026-06-14T14:22:33.343Z",
-      "id": 3
-    }
-  ],
+  "walletTransactions": [],
   "dealsConfig": {
-    "enabled": true,
-    "hero": {
-      "tag": "Limited Time",
-      "title": "Special Offers & Deals",
-      "subtitle": "Discover unbeatable prices on top products. New deals drop daily — don't miss out!"
-    },
-    "timer": {
-      "enabled": true,
-      "endAt": "",
-      "onExpiry": "endOfDay"
-    },
-    "featuredCouponIds": [
-      1,
-      2
-    ],
-    "dealOfTheDayIds": [
-      1,
-      3,
-      4
-    ],
-    "featuredProductIds": [
-      10,
-      12,
-      16
-    ],
-    "updatedAt": "2026-06-14T07:28:09.336Z"
+    "enabled": false
   }
 }
