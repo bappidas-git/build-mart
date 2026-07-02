@@ -906,6 +906,22 @@ const apiService = {
       } catch (error) { console.error("Get featured products error:", error); throw error; }
     },
 
+    // Special Products — the additive curated collection (products flagged
+    // `special: true`). Mirrors getFeatured's dual-mode shape so the homepage
+    // band and the /special-offers collection page share one data source. The
+    // `special` flag is additive: these items also live in their normal category
+    // listings (never filtered out) — this method just surfaces the flagged set.
+    getSpecial: async (limit = 12) => {
+      try {
+        if (IS_MOCK_API) {
+          const response = await api.get("/products", { params: { special: true } });
+          return response.data.slice(0, limit);
+        }
+        const response = await api.get("/products/special", { params: { limit } });
+        return extractData(response);
+      } catch (error) { console.error("Get special products error:", error); throw error; }
+    },
+
     getTrending: async (limit = 10) => {
       try {
         if (IS_MOCK_API) {

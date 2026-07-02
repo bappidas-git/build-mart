@@ -72,13 +72,13 @@ const Home = () => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const [cats, featured, all] = await Promise.all([
+        const [cats, featured, special] = await Promise.all([
           apiService.categories.getAll().catch(() => []),
           apiService.products.getFeatured(8).catch(() => []),
-          // Special Products band: filter the full set by the additive `special`
-          // flag (prompt 11 may add a dedicated getSpecial; the flag is the
-          // source of truth either way). Guarded so a failed call → empty band.
-          apiService.products.getAll().catch(() => []),
+          // Special Products band shares ONE data source with the /special-offers
+          // collection page: the dual-mode getSpecial (products flagged
+          // `special: true`). Guarded so a failed call → empty band.
+          apiService.products.getSpecial(8).catch(() => []),
         ]);
 
         // Top-level NEBM categories only (no hardcoded list).
@@ -91,10 +91,9 @@ const Home = () => {
           Array.isArray(featured) ? featured.slice(0, 8) : []
         );
 
-        const specials = (Array.isArray(all) ? all : [])
-          .filter((p) => p.special === true)
-          .slice(0, 8);
-        setSpecialProducts(specials);
+        setSpecialProducts(
+          Array.isArray(special) ? special.slice(0, 8) : []
+        );
       } catch (err) {
         console.error("Error fetching home data:", err);
       } finally {

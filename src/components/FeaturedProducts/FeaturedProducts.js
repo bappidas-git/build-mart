@@ -1,96 +1,73 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useCallback } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../hooks/useCart";
 import { useWishlist } from "../../context/WishlistContext";
-import {
-  formatCurrency,
-  getProductMinPrice,
-  truncateText,
-  buildCartItem,
-  productPath,
-  PLACEHOLDER_IMG,
-  onImageError,
-} from "../../utils/helpers";
+import ProductCard from "../storefront/ProductCard";
 import styles from "./FeaturedProducts.module.css";
 
-const ProductCard = ({ product, onAddToCart, onToggleWishlist, isWishlisted, onClick }) => {
-  const { sellingPrice, originalPrice, discount } = getProductMinPrice(product);
-
-  return (
-    <motion.div
-      className={styles.card}
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.2 }}
-      onClick={onClick}
-    >
-      <div className={styles.imageWrapper}>
-        <img
-          src={product.images?.[0] || PLACEHOLDER_IMG}
-          alt={product.name}
-          loading="lazy"
-          onError={onImageError}
-        />
-        {discount > 0 && <span className={styles.discountBadge}>{discount}% OFF</span>}
-        <button
-          className={`${styles.wishlistBtn} ${isWishlisted ? styles.wishlisted : ""}`}
-          onClick={(e) => { e.stopPropagation(); onToggleWishlist(product); }}
-          aria-label="Toggle wishlist"
-        >
-          {isWishlisted ? "\u2665" : "\u2661"}
-        </button>
-      </div>
-      <div className={styles.info}>
-        <p className={styles.brand}>{product.brand}</p>
-        <h3 className={styles.name}>{truncateText(product.name, 45)}</h3>
-        <div className={styles.rating}>
-          <span className={styles.stars}>{"★".repeat(Math.floor(product.rating || 0))}{"☆".repeat(5 - Math.floor(product.rating || 0))}</span>
-          <span className={styles.reviewCount}>({product.totalReviews || 0})</span>
-        </div>
-        <div className={styles.price}>
-          <span className={styles.salePrice}>{formatCurrency(sellingPrice)}</span>
-          {discount > 0 && <span className={styles.originalPrice}>{formatCurrency(originalPrice)}</span>}
-        </div>
-        <button
-          className={styles.addToCartBtn}
-          onClick={(e) => {
-            e.stopPropagation();
-            onAddToCart(buildCartItem(product));
-          }}
-        >
-          Add to Cart
-        </button>
-      </div>
-    </motion.div>
-  );
-};
-
-const FeaturedProducts = ({ products = [], title = "Featured Products", viewAllLink = "/products" }) => {
-  const { isDarkMode } = useTheme();
-  const navigate = useNavigate();
+// =============================================================================
+// FeaturedProducts — reusable storefront product band
+// =============================================================================
+// A titled grid with an optional "View All" link that renders the ONE canonical
+// storefront ProductCard for every item — the enquiry icon-button ("Add to
+// Enquiry List"), the gold "Special" badge, and the clean single price all come
+// from that shared card, so this band looks and behaves identically to every
+// other product surface. No local card, no "Add to Cart", no "% off" urgency
+// (NEBM is an enquiry platform). Renders nothing when there are no products.
+// =============================================================================
+const FeaturedProducts = ({
+  products = [],
+  title = "Featured Products",
+  subtitle,
+  viewAllText = "View All",
+  viewAllLink = "/products",
+}) => {
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
 
-  if (products.length === 0) return null;
+  // The shared card hands back a fully-built cart line (buildCartItem), so a band
+  // quick-add merges with PDP adds and the localStorage "cart" key is unchanged.
+  const handleAddToEnquiry = useCallback(
+    (cartItem) => addToCart(cartItem, 1),
+    [addToCart]
+  );
+
+  if (!products.length) return null;
 
   return (
-    <section className={`${styles.section} ${isDarkMode ? styles.dark : ""}`}>
-      <div className={styles.sectionHeader}>
-        <h2>{title}</h2>
-        <button className={styles.viewAllBtn} onClick={() => navigate(viewAllLink)}>View All &rarr;</button>
-      </div>
-      <div className={styles.grid}>
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            product={product}
-            onAddToCart={addToCart}
-            onToggleWishlist={toggleWishlist}
-            isWishlisted={isInWishlist(product.id)}
-            onClick={() => navigate(productPath(product))}
-          />
-        ))}
+    <section className={styles.section}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <div>
+            <h2 className={styles.title}>{title}</h2>
+            {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+          </div>
+          {viewAllLink && (
+            <Link to={viewAllLink} className={styles.viewAll}>
+              {viewAllText} &rarr;
+            </Link>
+          )}
+        </div>
+
+        <div className={styles.grid}>
+          {products.map((product, i) => (
+            <motion.div
+              key={product.id || i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: Math.min(i, 6) * 0.05, duration: 0.35 }}
+            >
+              <ProductCard
+                product={product}
+                onAddToCart={handleAddToEnquiry}
+                onToggleWishlist={toggleWishlist}
+                isWishlisted={isInWishlist(product.id)}
+              />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
