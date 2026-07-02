@@ -30,18 +30,6 @@
   display: block;
 }
 
-.discountBadge {
-  position: absolute;
-  top: var(--sf-space-2);
-  left: var(--sf-space-2);
-  background: var(--sf-color-danger);
-  color: #fff;
-  font-size: var(--sf-text-xs);
-  font-weight: var(--sf-font-bold);
-  padding: 3px 8px;
-  border-radius: var(--sf-radius-pill);
-}
-
 .wishlist {
   position: absolute;
   top: var(--sf-space-2);
@@ -118,6 +106,10 @@
 
 .addBtn {
   margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sf-space-2);
   min-height: var(--sf-tap-target);
   border: 1px solid var(--sf-color-primary);
   border-radius: var(--sf-radius-md);
@@ -127,6 +119,10 @@
   font-size: var(--sf-text-sm);
   cursor: pointer;
   transition: background var(--sf-transition-fast), color var(--sf-transition-fast);
+}
+
+.addIcon {
+  flex-shrink: 0;
 }
 
 .addBtn:hover:not(:disabled) {
