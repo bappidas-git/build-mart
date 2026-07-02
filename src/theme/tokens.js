@@ -11,8 +11,8 @@
 //
 //   2. STOREFRONT_CONFIG — the themeable *content* configuration that lets a new
 //      client re-skin the storefront's persuasive surfaces WITHOUT touching
-//      component code: which trust badges to show, the returns window, and which
-//      Average-Order-Value modules are enabled.
+//      component code: which trust badges to show and which Average-Order-Value
+//      modules are enabled.
 //
 // ETHICS BOUNDARY (read STOREFRONT_UX_GUIDELINES.md):
 //   The values here are *store-owner-attested capability* (e.g. "we stock
