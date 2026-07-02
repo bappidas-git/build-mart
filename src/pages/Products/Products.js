@@ -51,16 +51,73 @@ const normalizeSort = (raw) => {
   return SORT_ALIASES[v] || "relevance";
 };
 
+// Building-material price bands (wide spread: a cement bag vs. a designer door).
+// They stay generic \u20b9 ranges \u2014 the substantive requirement is honest onEnquiry
+// handling (see getFilterPrice), not the exact band edges.
 const PRICE_RANGES = [
   { label: "Under \u20b9500", min: 0, max: 500 },
-  { label: "\u20b9500 \u2013 \u20b91,000", min: 500, max: 1000 },
-  { label: "\u20b91,000 \u2013 \u20b95,000", min: 1000, max: 5000 },
-  { label: "Above \u20b95,000", min: 5000, max: Infinity },
+  { label: "\u20b9500 \u2013 \u20b92,000", min: 500, max: 2000 },
+  { label: "\u20b92,000 \u2013 \u20b910,000", min: 2000, max: 10000 },
+  { label: "Above \u20b910,000", min: 10000, max: Infinity },
 ];
 
 const RATING_OPTIONS = [4, 3, 2, 1];
 const DISCOUNT_OPTIONS = [50, 30, 20, 10];
 const PER_PAGE_OPTIONS = [12, 24, 48];
+
+// Human labels for the unitType attribute facet (\u00a74.6). Values not listed fall
+// back to a capitalized form, so a newly-seeded unit still renders sensibly.
+const UNIT_TYPE_LABELS = {
+  piece: "Piece",
+  sheet: "Sheet",
+  kg: "Kg",
+  bag: "Bag",
+  box: "Box",
+  set: "Set",
+  pack: "Pack",
+  sqft: "Sq. ft",
+  running_ft: "Running ft",
+};
+
+const unitTypeLabel = (u) =>
+  UNIT_TYPE_LABELS[u] || (u ? u.charAt(0).toUpperCase() + u.slice(1) : u);
+
+// ---------------------------------------------------------------------------
+// Representative numeric price for range-filtering and price sorting under the
+// NEBM pricing model:
+//   \u2022 exact   \u2192 the product's own `price`
+//   \u2022 tiered  \u2192 the LOWEST tier price (what "from \u20b9X" advertises)
+//   \u2022 onEnquiry \u2192 null \u2014 there is NO comparable number, so the caller must
+//     EXCLUDE these when a price bound is active and never coerce them to \u20b90
+//     (that would wrongly match "Under \u20b9500"). Legacy/variant products with no
+//     priceType fall back to getProductMinPrice so nothing regresses.
+// ---------------------------------------------------------------------------
+const getFilterPrice = (product) => {
+  if (!product) return null;
+  if (product.priceType === "onEnquiry") return null;
+  if (product.priceType === "tiered") {
+    const tiers = Array.isArray(product.priceTiers)
+      ? product.priceTiers.map((t) => Number(t.price)).filter((n) => !isNaN(n) && n > 0)
+      : [];
+    if (tiers.length) return Math.min(...tiers);
+  }
+  const direct = Number(product.price);
+  if (!isNaN(direct) && direct > 0) return direct;
+  const min = getProductMinPrice(product).sellingPrice;
+  return min > 0 ? min : null;
+};
+
+// Comparator for the price sorts. onEnquiry items (null price) always sink to
+// the END in BOTH directions, so a price sort never claims a fake ordering for
+// products that have no comparable price.
+const priceComparator = (dir) => (a, b) => {
+  const pa = getFilterPrice(a);
+  const pb = getFilterPrice(b);
+  if (pa == null && pb == null) return 0;
+  if (pa == null) return 1;
+  if (pb == null) return -1;
+  return dir === "asc" ? pa - pb : pb - pa;
+};
 
 // ---------------------------------------------------------------------------
 // Skeleton Card
@@ -211,7 +268,9 @@ const Products = () => {
   const [minRating, setMinRating] = useState(0);
   const [minDiscount, setMinDiscount] = useState(0);
   const [inStockOnly, setInStockOnly] = useState(false);
+  const [specialOnly, setSpecialOnly] = useState(false);
   const [selectedBrands, setSelectedBrands] = useState([]);
+  const [selectedUnitTypes, setSelectedUnitTypes] = useState([]);
   const [sortBy, setSortBy] = useState(urlSort);
   const [currentPage, setCurrentPage] = useState(urlPage);
   const [perPage, setPerPage] = useState(() =>
@@ -336,6 +395,31 @@ const Products = () => {
     return Array.from(brands).sort();
   }, [allProducts]);
 
+  // ---- Derived: unit types (a real building-material attribute) for the
+  // lightweight attribute facet. Ordered by frequency so the common units
+  // (Piece/Box) surface first; derived from the data so it never invents a
+  // unit that isn't seeded. ----
+  const availableUnitTypes = useMemo(() => {
+    const counts = new Map();
+    allProducts.forEach((p) => {
+      if (p.unitType) counts.set(p.unitType, (counts.get(p.unitType) || 0) + 1);
+    });
+    return Array.from(counts.keys()).sort(
+      (a, b) => (counts.get(b) || 0) - (counts.get(a) || 0) || a.localeCompare(b)
+    );
+  }, [allProducts]);
+
+  // ---- Derived: does the catalogue contain onEnquiry / special items? Used to
+  // conditionally show the "onEnquiry hidden" price note and the Special facet. ----
+  const hasOnEnquiryItems = useMemo(
+    () => allProducts.some((p) => p.priceType === "onEnquiry"),
+    [allProducts]
+  );
+  const hasSpecialItems = useMemo(
+    () => allProducts.some((p) => p.special === true),
+    [allProducts]
+  );
+
   // ---- Derived: product count per category id ----
   // Counts honour the parent-includes-children rule: a category's count is the
   // number of products in that category PLUS all of its descendants — i.e. the
@@ -401,14 +485,33 @@ const Products = () => {
       }
     }
 
-    // Price range
+    // Price range — ranged on a representative numeric price per pricing model
+    // (see getFilterPrice). onEnquiry products have NO comparable number, so
+    // they are EXCLUDED whenever a bound is active and INCLUDED when no bound is
+    // set — never matched as ₹0. A single pass keeps the two bounds consistent.
     const pMin = parseFloat(minPrice);
     const pMax = parseFloat(maxPrice);
-    if (!isNaN(pMin) && pMin > 0) {
-      result = result.filter((p) => getProductMinPrice(p).sellingPrice >= pMin);
+    const hasMin = !isNaN(pMin) && pMin > 0;
+    const hasMax = !isNaN(pMax) && pMax > 0;
+    if (hasMin || hasMax) {
+      result = result.filter((p) => {
+        const price = getFilterPrice(p);
+        if (price == null) return false; // onEnquiry / unpriceable → hidden while bounded
+        if (hasMin && price < pMin) return false;
+        if (hasMax && price > pMax) return false;
+        return true;
+      });
     }
-    if (!isNaN(pMax) && pMax > 0) {
-      result = result.filter((p) => getProductMinPrice(p).sellingPrice <= pMax);
+
+    // Special Products — the additive curated facet (a badge, NOT a category
+    // scope): filters to products flagged special === true.
+    if (specialOnly) {
+      result = result.filter((p) => p.special === true);
+    }
+
+    // Unit type — lightweight building-material attribute facet (Piece/Box/…).
+    if (selectedUnitTypes.length > 0) {
+      result = result.filter((p) => selectedUnitTypes.includes(p.unitType));
     }
 
     // Rating
@@ -434,10 +537,10 @@ const Products = () => {
     // Sorting
     switch (sortBy) {
       case "price-low":
-        result.sort((a, b) => getProductMinPrice(a).sellingPrice - getProductMinPrice(b).sellingPrice);
+        result.sort(priceComparator("asc"));
         break;
       case "price-high":
-        result.sort((a, b) => getProductMinPrice(b).sellingPrice - getProductMinPrice(a).sellingPrice);
+        result.sort(priceComparator("desc"));
         break;
       case "newest":
         result.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
@@ -453,7 +556,7 @@ const Products = () => {
     }
 
     return result;
-  }, [allProducts, categories, urlSearch, selectedCategories, minPrice, maxPrice, minRating, minDiscount, inStockOnly, selectedBrands, sortBy]);
+  }, [allProducts, categories, urlSearch, selectedCategories, minPrice, maxPrice, specialOnly, selectedUnitTypes, minRating, minDiscount, inStockOnly, selectedBrands, sortBy]);
 
   // ---- Pagination ----
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / perPage));
@@ -515,10 +618,16 @@ const Products = () => {
     selectedCategories.length > 0 ||
     minPrice !== "" ||
     maxPrice !== "" ||
+    specialOnly ||
+    selectedUnitTypes.length > 0 ||
     minRating > 0 ||
     minDiscount > 0 ||
     inStockOnly ||
     selectedBrands.length > 0;
+
+  // A price bound is active when either input holds a value — used to gate the
+  // subtle "Price-on-Enquiry items are hidden" note in the price filter.
+  const priceBoundActive = minPrice !== "" || maxPrice !== "";
 
   // Whether anything is constraining the result set — includes the search query
   // (set from the header), so the empty state always offers a way out.
@@ -528,6 +637,8 @@ const Products = () => {
     setSelectedCategories([]);
     setMinPrice("");
     setMaxPrice("");
+    setSpecialOnly(false);
+    setSelectedUnitTypes([]);
     setMinRating(0);
     setMinDiscount(0);
     setInStockOnly(false);
@@ -653,10 +764,25 @@ const Products = () => {
     resetToFirstPage();
   }, [resetToFirstPage]);
 
+  const handleSpecialToggle = useCallback(() => {
+    setSpecialOnly((v) => !v);
+    resetToFirstPage();
+  }, [resetToFirstPage]);
+
   const handleBrandToggle = useCallback(
     (brand) => {
       setSelectedBrands((prev) =>
         prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]
+      );
+      resetToFirstPage();
+    },
+    [resetToFirstPage]
+  );
+
+  const handleUnitTypeToggle = useCallback(
+    (unit) => {
+      setSelectedUnitTypes((prev) =>
+        prev.includes(unit) ? prev.filter((u) => u !== unit) : [...prev, unit]
       );
       resetToFirstPage();
     },
@@ -732,6 +858,26 @@ const Products = () => {
         </div>
       </div>
 
+      {/* Special Products — additive curated facet (a badge, not a category) */}
+      {hasSpecialItems && (
+        <div className={styles.filterSection}>
+          <h4 className={styles.filterTitle}>Collections</h4>
+          <label className={styles.toggleLabel}>
+            <span className={styles.checkboxText}>Special Products</span>
+            <button
+              className={`${styles.toggle} ${specialOnly ? styles.toggleOn : ""}`}
+              onClick={handleSpecialToggle}
+              type="button"
+              role="switch"
+              aria-checked={specialOnly}
+              aria-label="Show only Special Products"
+            >
+              <span className={styles.toggleThumb} />
+            </button>
+          </label>
+        </div>
+      )}
+
       {/* Price Range */}
       <div className={styles.filterSection}>
         <h4 className={styles.filterTitle}>Price Range</h4>
@@ -766,6 +912,11 @@ const Products = () => {
             </button>
           ))}
         </div>
+        {priceBoundActive && hasOnEnquiryItems && (
+          <p className={styles.priceNote}>
+            Price-on-Enquiry items are hidden while a price range is applied.
+          </p>
+        )}
       </div>
 
       {/* Rating */}
@@ -841,6 +992,26 @@ const Products = () => {
                   className={styles.checkbox}
                 />
                 <span className={styles.checkboxText}>{brand}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Unit type — lightweight building-material attribute facet */}
+      {availableUnitTypes.length > 0 && (
+        <div className={styles.filterSection}>
+          <h4 className={styles.filterTitle}>Unit Type</h4>
+          <div className={styles.filterList}>
+            {availableUnitTypes.map((unit) => (
+              <label key={unit} className={styles.checkboxLabel}>
+                <input
+                  type="checkbox"
+                  checked={selectedUnitTypes.includes(unit)}
+                  onChange={() => handleUnitTypeToggle(unit)}
+                  className={styles.checkbox}
+                />
+                <span className={styles.checkboxText}>{unitTypeLabel(unit)}</span>
               </label>
             ))}
           </div>

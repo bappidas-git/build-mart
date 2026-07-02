@@ -265,7 +265,17 @@
 
 .priceInput:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(255, 153, 0, 0.2);
+  /* Blue focus ring from the shared token (was a stray legacy-orange rgba). */
+  box-shadow: var(--sf-shadow-focus);
+}
+
+/* Subtle one-line note under the price filter: honestly tells the shopper that
+   Price-on-Enquiry items drop out while a numeric range is applied. */
+.priceNote {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-muted);
 }
 
 .priceSeparator {
