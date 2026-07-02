@@ -26,7 +26,7 @@ Every result below is the actual output of those runs. The **browser-only** obse
 ## 2. Diff footprint & lineage — reproduce exactly
 
 - **Footprint.** `git show ce35213 --numstat` → exactly **six** files: `AddToCartBar.js` (**30/25**), `AddToCartBar.module.css` (**40/21**), `TrustBadges.js` (**35/69**), `ProductDetails.js` (**118/65**), `ProductDetails.module.css` (**116/36**), `theme/tokens.js` (**25/47**) — commit total **364 ins / 263 del (net +101)**, reproducing `14b` byte-for-byte. Routes, providers, `db.json`, `utils/*`, `services/api.js`, `PriceBlock`, the shared gallery/variant/quantity/reviews components and the admin palette are **absent from the diff**.
-- **Lineage.** `ce35213^` = `1c01d68` (the Prompt-13 `13c` re-grounding note), whose tree is code-identical to Prompt-13's implementation `8a1db60` (13c added only a note). So Prompt-14 sits directly on the shipped Prompt-13 tree — the correct baseline for the bundle delta.
+- **Lineage.** `ce35213^` = `1c01d68` (the Prompt-13 `13c` re-grounding note), whose tree is code-identical to Prompt-13's implementation `8a1db60` (the intervening `13b`/`13c` commits added only notes). So Prompt-14 sits directly on the shipped Prompt-13 tree — the correct baseline for the bundle delta.
 - **Clean tree.** `git status --porcelain` is **empty** after the rebuilds (`build/` is gitignored), and HEAD is on `analysis/regrounding-verification-note` — so the verification left the tracked tree byte-identical.
 
 ---
