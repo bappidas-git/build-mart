@@ -27,7 +27,7 @@ Every result below is the actual output of those runs — the browser-only obser
 
 - **Footprint.** `git show 016e34e --numstat` → exactly **four** files: `PriceBlock.js` (**210/18**), `PriceBlock.module.css` (**118/0**), `ProductCard.js` (**15/5**), `ProductDetails.js` (**8/4**) — total **351 ins / 27 del**. Routes, providers, `db.json`, `utils/*`, `categories`, `PriceBlock` consumers other than the two call sites, and the admin palette are **absent from the diff**. A separate `ebaa98f` adds only `.claude/launch.json` (a `web` preview config; dev tooling, not the feature).
 - **Lineage.** `016e34e^` = `550a26a` (Prompt-14 `14c` re-grounding note, no code change) → `0f65425` (`14b`) → `ce35213` (Prompt-14 impl). So Prompt-15 sits directly on the committed, twice-verified Prompt-14 tree — the correct baseline for the bundle delta.
-- **Clean tree.** `git status --porcelain` is **empty** after both rebuilds and after the parent checkout was reverted (`build/` is gitignored); HEAD is `a02d1d5` (the `15b` note commit) on `analysis/regrounding-verification-note` — the verification left the tracked tree byte-identical.
+- **Clean tree.** `git status --porcelain` is **empty** after both rebuilds and after the parent checkout was reverted (`build/` is gitignored); HEAD is on `analysis/regrounding-verification-note` (this pass ran atop the `15b` note commit `a02d1d5`) — the verification left the tracked tree byte-identical.
 
 ---
 
