@@ -3,6 +3,20 @@ export const APP_NAME = process.env.REACT_APP_NAME || "North East Build Mart";
 export const APP_TAGLINE = "Quality products, great prices";
 export const APP_DESCRIPTION = "Shop with confidence – fast delivery, secure payments, easy returns";
 
+// NEBM brand tagline — the exact marketing line used on the storefront hero and
+// other brand surfaces. Kept separate from APP_TAGLINE (a short kicker used by
+// the About hero) so a full sentence never has to double as a tight eyebrow.
+export const BRAND_TAGLINE =
+  "Deals in all kinds of building materials for interior and exterior use.";
+
+// NEBM store contact — single source for the storefront brand/contact surfaces
+// (homepage hero + contact CTA). The Footer/Contact/Support pages carry their
+// own SUPPORT_* values today and are consolidated onto these by their own
+// prompts (23/24); until then these are the canonical NEBM details.
+export const BRAND_ADDRESS = "Lawkhuwa Road, Nagaon, Assam – 782002";
+export const BRAND_PHONE_1 = "+91 86385 43526";
+export const BRAND_PHONE_2 = "+91 88762 89972";
+
 // Brand assets — single source of truth so Header/Footer/Admin import one value.
 // Main logo works on both light and dark backgrounds; the icon is a square mark
 // used for the favicon, loader splash, mobile header and other small-icon spots.
@@ -170,31 +184,37 @@ export const FAQ_ITEMS = [
   },
 ];
 
-// Why choose us
+// Why choose us — NEBM (building-materials supplier). Reworded for the enquiry
+// model: no payments/returns/fake stats. Shared by the homepage trust band and
+// the About page.
 export const WHY_CHOOSE_US = [
   {
     id: 1,
-    title: "Fast Delivery",
-    description: "Same-day and express delivery options available across India",
-    icon: "mdi:truck-fast",
+    title: "Wide Catalogue",
+    description:
+      "Everything for interior and exterior work — sheets, tiles, doors, hardware and more, in one place.",
+    icon: "mdi:warehouse",
   },
   {
     id: 2,
-    title: "Secure Payments",
-    description: "256-bit SSL encryption protects every transaction",
-    icon: "mdi:shield-check",
+    title: "Bulk & Tiered Pricing",
+    description:
+      "Better rates on larger quantities — send an enquiry for a tailored bulk quote.",
+    icon: "mdi:tag-multiple",
   },
   {
     id: 3,
-    title: "Easy Returns",
-    description: "7-day hassle-free returns with full refund guarantee",
-    icon: "mdi:backup-restore",
+    title: "Trusted Brands",
+    description:
+      "Quality products from names builders and contractors rely on.",
+    icon: "mdi:check-decagram",
   },
   {
     id: 4,
-    title: "24/7 Support",
-    description: "Our support team is always here to help you",
-    icon: "mdi:headset",
+    title: "Local Delivery",
+    description:
+      "Reliable delivery across Nagaon and the wider North East region.",
+    icon: "mdi:truck-fast",
   },
 ];
 

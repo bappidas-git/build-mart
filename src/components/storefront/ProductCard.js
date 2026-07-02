@@ -35,7 +35,13 @@ const ProductCard = ({
   showAddToCart = true,
 }) => {
   if (!product) return null;
-  const { sellingPrice, originalPrice, discount } = getProductMinPrice(product);
+  // NEBM is an enquiry platform — the card shows a clean price with no discount
+  // urgency (no "% off" pill, no struck-through compare price). Full
+  // priceType-aware display (exact / tiered / on-enquiry via showExactPrice,
+  // cardPriceMode) and the gold "Special" badge are layered on by their own
+  // prompts (15 and 11). PriceBlock itself is untouched — PDP still uses it with
+  // a compare price.
+  const { sellingPrice } = getProductMinPrice(product);
   const ratingCount = Number(product.totalReviews) || 0;
   const rating = Number(product.rating) || 0;
   const outOfStock = product.stock === 0;
@@ -53,7 +59,6 @@ const ProductCard = ({
           loading="lazy"
           onError={onImageError}
         />
-        {discount > 0 && <span className={styles.discountBadge}>{discount}% OFF</span>}
         {onToggleWishlist && (
           <button
             type="button"
@@ -84,24 +89,39 @@ const ProductCard = ({
           </span>
         )}
 
-        <PriceBlock
-          price={sellingPrice}
-          comparePrice={originalPrice}
-          size="sm"
-          showSavings={false}
-        />
+        <PriceBlock price={sellingPrice} size="sm" showSavings={false} />
 
         {showAddToCart && onAddToCart && (
           <button
             type="button"
             className={styles.addBtn}
             disabled={outOfStock}
+            title={outOfStock ? "Out of stock" : "Add to Enquiry List"}
+            aria-label={outOfStock ? "Out of stock" : "Add to Enquiry List"}
             onClick={(e) => {
               e.preventDefault();
               onAddToCart(buildCartItem(product));
             }}
           >
-            {outOfStock ? "Out of Stock" : "Add to Cart"}
+            {!outOfStock && (
+              <svg
+                className={styles.addIcon}
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-2" />
+                <path d="M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                <path d="M15 11h4M17 9v4M9 12h3M9 16h3" />
+              </svg>
+            )}
+            <span>{outOfStock ? "Out of Stock" : "Add to Enquiry"}</span>
           </button>
         )}
       </div>

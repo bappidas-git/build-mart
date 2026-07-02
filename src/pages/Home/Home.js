@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { useTheme } from "../../context/ThemeContext";
@@ -8,16 +8,16 @@ import { useWishlist } from "../../context/WishlistContext";
 import apiService from "../../services/api";
 import { categoryParam } from "../../utils/categories";
 import HeroSection from "../../components/HeroSection/HeroSection";
-import { APP_NAME, WHY_CHOOSE_US } from "../../utils/constants";
+import CTASection from "../../components/CTASection/CTASection";
+import ProductCard from "../../components/storefront/ProductCard";
 import {
-  formatCurrency,
-  getProductMinPrice,
-  truncateText,
-  buildCartItem,
-  productPath,
-  PLACEHOLDER_IMG,
-  onImageError,
-} from "../../utils/helpers";
+  APP_NAME,
+  WHY_CHOOSE_US,
+  BRAND_ADDRESS,
+  BRAND_PHONE_1,
+  BRAND_PHONE_2,
+} from "../../utils/constants";
+import { onImageError } from "../../utils/helpers";
 import styles from "./Home.module.css";
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -35,227 +35,13 @@ const getRecentlyViewed = () => {
   }
 };
 
-const StarRating = ({ rating = 0, reviewCount = 0 }) => {
-  const stars = [];
-  const fullStars = Math.floor(rating);
-  const hasHalf = rating - fullStars >= 0.5;
+// Strip formatting so "+91 86385 43526" becomes a valid tel: target.
+const telHref = (phone) => `tel:${String(phone).replace(/[^\d+]/g, "")}`;
 
-  for (let i = 0; i < 5; i++) {
-    if (i < fullStars) {
-      stars.push(
-        <span key={i} className={styles.starFull}>
-          &#9733;
-        </span>
-      );
-    } else if (i === fullStars && hasHalf) {
-      stars.push(
-        <span key={i} className={styles.starHalf}>
-          &#9733;
-        </span>
-      );
-    } else {
-      stars.push(
-        <span key={i} className={styles.starEmpty}>
-          &#9733;
-        </span>
-      );
-    }
-  }
-
-  return (
-    <span className={styles.ratingWrap}>
-      <span className={styles.stars}>{stars}</span>
-      {reviewCount > 0 && (
-        <span className={styles.reviewCount}>({reviewCount})</span>
-      )}
-    </span>
-  );
-};
-
-// ── Product Card ─────────────────────────────────────────────────────────────
-
-const ProductCard = ({ product, onAddToCart, onToggleWishlist, isWishlisted }) => {
-  const navigate = useNavigate();
-  const { sellingPrice, originalPrice, discount } = getProductMinPrice(product);
-  const image = product.images?.[0] || product.image || PLACEHOLDER_IMG;
-  const name = product.name || "Untitled Product";
-
-  const handleCardClick = () => {
-    navigate(productPath(product));
-  };
-
-  const handleAddToCart = (e) => {
-    e.stopPropagation();
-    onAddToCart(product);
-  };
-
-  const handleWishlist = (e) => {
-    e.stopPropagation();
-    onToggleWishlist(product);
-  };
-
-  return (
-    <motion.div
-      className={styles.productCard}
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.25 }}
-      onClick={handleCardClick}
-    >
-      {/* Image container */}
-      <div className={styles.productImageWrap}>
-        <img
-          src={image}
-          alt={name}
-          className={styles.productImage}
-          loading="lazy"
-          onError={onImageError}
-        />
-        <div className={styles.productImageOverlay}>
-          <button
-            className={styles.quickViewBtn}
-            onClick={(e) => {
-              e.stopPropagation();
-              navigate(productPath(product));
-            }}
-          >
-            Quick View
-          </button>
-        </div>
-        {/* Wishlist heart */}
-        <button
-          className={`${styles.wishlistBtn} ${isWishlisted ? styles.wishlisted : ""}`}
-          onClick={handleWishlist}
-          aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
-        >
-          {isWishlisted ? "\u2764" : "\u2661"}
-        </button>
-        {/* Discount badge */}
-        {discount > 0 && (
-          <span className={styles.discountBadge}>-{discount}%</span>
-        )}
-      </div>
-
-      {/* Info */}
-      <div className={styles.productInfo}>
-        {product.brand && (
-          <p className={styles.productBrand}>{product.brand}</p>
-        )}
-        <h3 className={styles.productName}>{truncateText(name, 48)}</h3>
-
-        <StarRating
-          rating={product.rating || 0}
-          reviewCount={product.totalReviews || 0}
-        />
-
-        <div className={styles.priceRow}>
-          <span className={styles.salePrice}>{formatCurrency(sellingPrice)}</span>
-          {discount > 0 && (
-            <>
-              <span className={styles.originalPrice}>
-                {formatCurrency(originalPrice)}
-              </span>
-              <span className={styles.discountPercent}>{discount}% off</span>
-            </>
-          )}
-        </div>
-
-        <button className={styles.addToCartBtn} onClick={handleAddToCart}>
-          Add to Cart
-        </button>
-      </div>
-    </motion.div>
-  );
-};
-
-// ── Horizontal Scroll Buttons ────────────────────────────────────────────────
-
-const ScrollRow = ({ children, scrollRef }) => {
-  const scroll = (direction) => {
-    if (!scrollRef.current) return;
-    const amount = scrollRef.current.offsetWidth * 0.75;
-    scrollRef.current.scrollBy({
-      left: direction === "left" ? -amount : amount,
-      behavior: "smooth",
-    });
-  };
-
-  return (
-    <div className={styles.scrollContainer}>
-      <button
-        className={`${styles.scrollBtn} ${styles.scrollBtnLeft}`}
-        onClick={() => scroll("left")}
-        aria-label="Scroll left"
-      >
-        &#8249;
-      </button>
-      <div className={styles.scrollTrack} ref={scrollRef}>
-        {children}
-      </div>
-      <button
-        className={`${styles.scrollBtn} ${styles.scrollBtnRight}`}
-        onClick={() => scroll("right")}
-        aria-label="Scroll right"
-      >
-        &#8250;
-      </button>
-    </div>
-  );
-};
-
-// ── Countdown Timer ──────────────────────────────────────────────────────────
-
-const CountdownTimer = () => {
-  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
-
-  useEffect(() => {
-    const getEndOfDay = () => {
-      const end = new Date();
-      end.setHours(23, 59, 59, 999);
-      return end;
-    };
-
-    const update = () => {
-      const now = new Date();
-      const diff = Math.max(0, getEndOfDay() - now);
-      setTimeLeft({
-        hours: Math.floor(diff / 3600000),
-        minutes: Math.floor((diff % 3600000) / 60000),
-        seconds: Math.floor((diff % 60000) / 1000),
-      });
-    };
-
-    update();
-    const id = setInterval(update, 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  const pad = (n) => String(n).padStart(2, "0");
-
-  return (
-    <div className={styles.countdown}>
-      <span className={styles.countdownBlock}>
-        <strong>{pad(timeLeft.hours)}</strong>
-        <small>Hrs</small>
-      </span>
-      <span className={styles.countdownSep}>:</span>
-      <span className={styles.countdownBlock}>
-        <strong>{pad(timeLeft.minutes)}</strong>
-        <small>Min</small>
-      </span>
-      <span className={styles.countdownSep}>:</span>
-      <span className={styles.countdownBlock}>
-        <strong>{pad(timeLeft.seconds)}</strong>
-        <small>Sec</small>
-      </span>
-    </div>
-  );
-};
-
-// ── Section Header ───────────────────────────────────────────────────────────
-
-const SectionHeader = ({ title, subtitle, linkText, linkTo }) => (
+const SectionHeader = ({ title, subtitle, kicker, linkText, linkTo }) => (
   <div className={styles.sectionHeader}>
     <div>
+      {kicker && <span className={styles.sectionKicker}>{kicker}</span>}
       <h2 className={styles.sectionTitle}>{title}</h2>
       {subtitle && <p className={styles.sectionSubtitle}>{subtitle}</p>}
     </div>
@@ -268,7 +54,7 @@ const SectionHeader = ({ title, subtitle, linkText, linkTo }) => (
 );
 
 // ══════════════════════════════════════════════════════════════════════════════
-// HOME PAGE
+// HOME PAGE  (NEBM — enquiry model, no deals/checkout merchandising)
 // ══════════════════════════════════════════════════════════════════════════════
 
 const Home = () => {
@@ -278,39 +64,39 @@ const Home = () => {
 
   const [categories, setCategories] = useState([]);
   const [featuredProducts, setFeaturedProducts] = useState([]);
-  const [trendingProducts, setTrendingProducts] = useState([]);
-  const [flashDeals, setFlashDeals] = useState([]);
+  const [specialProducts, setSpecialProducts] = useState([]);
   const [recentlyViewed, setRecentlyViewed] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const flashScrollRef = useRef(null);
-  const recentScrollRef = useRef(null);
-
-  // ── Data fetching ────────────────────────────────────────────────────────
+  // ── Data fetching (dual-mode via apiService + extractData) ─────────────────
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const [cats, featured, trending] = await Promise.all([
+        const [cats, featured, all] = await Promise.all([
           apiService.categories.getAll().catch(() => []),
           apiService.products.getFeatured(8).catch(() => []),
-          apiService.products.getTrending(8).catch(() => []),
+          // Special Products band: filter the full set by the additive `special`
+          // flag (prompt 11 may add a dedicated getSpecial; the flag is the
+          // source of truth either way). Guarded so a failed call → empty band.
+          apiService.products.getAll().catch(() => []),
         ]);
 
-        setCategories(Array.isArray(cats) ? cats : []);
-        setFeaturedProducts(Array.isArray(featured) ? featured.slice(0, 8) : []);
-        setTrendingProducts(Array.isArray(trending) ? trending.slice(0, 8) : []);
+        // Top-level NEBM categories only (no hardcoded list).
+        const topLevel = (Array.isArray(cats) ? cats : []).filter(
+          (c) => !c.parentId && c.isActive !== false
+        );
+        setCategories(topLevel);
 
-        // Flash deals: combine and pick products with discounts
-        const allProducts = [...(featured || []), ...(trending || [])];
-        const deals = allProducts
-          .filter((p) => {
-            const { discount } = getProductMinPrice(p);
-            return discount > 0;
-          })
-          .slice(0, 12);
-        setFlashDeals(deals);
+        setFeaturedProducts(
+          Array.isArray(featured) ? featured.slice(0, 8) : []
+        );
+
+        const specials = (Array.isArray(all) ? all : [])
+          .filter((p) => p.special === true)
+          .slice(0, 8);
+        setSpecialProducts(specials);
       } catch (err) {
         console.error("Error fetching home data:", err);
       } finally {
@@ -322,19 +108,17 @@ const Home = () => {
     setRecentlyViewed(getRecentlyViewed());
   }, []);
 
-  // ── Handlers ─────────────────────────────────────────────────────────────
-
-  const handleAddToCart = useCallback(
-    (product) => {
-      // Variant-aware line whose id/price match the product page (see
-      // buildCartItem) so quick-adds merge instead of duplicating.
-      addToCart(buildCartItem(product), 1);
+  // ── Enquiry-list quick-add ─────────────────────────────────────────────────
+  // The shared ProductCard passes a fully-built cart line (buildCartItem), so a
+  // homepage quick-add merges with PDP adds and the localStorage "cart" key is
+  // unchanged. (Toast copy is reworded to "Enquiry List" by prompt 16.)
+  const handleAddToEnquiry = useCallback(
+    (cartItem) => {
+      addToCart(cartItem, 1);
     },
     [addToCart]
   );
 
-  // Wishlist works for guests (persisted to localStorage), matching the
-  // product detail page — no auth gate / dead-end redirect.
   const handleToggleWishlist = useCallback(
     (product) => {
       toggleWishlist(product);
@@ -342,12 +126,12 @@ const Home = () => {
     [toggleWishlist]
   );
 
-  // ── Skeleton loader ──────────────────────────────────────────────────────
+  // ── Renderers ──────────────────────────────────────────────────────────────
 
   const ProductSkeleton = () => (
-    <div className={styles.productCard}>
-      <div className={`${styles.productImageWrap} ${styles.skeleton}`} />
-      <div className={styles.productInfo}>
+    <div className={styles.skelCard}>
+      <div className={`${styles.skelMedia} ${styles.skeleton}`} />
+      <div className={styles.skelBody}>
         <div className={`${styles.skeletonLine} ${styles.skeletonW80}`} />
         <div className={`${styles.skeletonLine} ${styles.skeletonW50}`} />
         <div className={`${styles.skeletonLine} ${styles.skeletonW60}`} />
@@ -355,11 +139,11 @@ const Home = () => {
     </div>
   );
 
-  const renderProductGrid = (products, fallbackCount = 4) => {
+  const renderProductGrid = (products, skeletonCount = 4) => {
     if (loading) {
       return (
         <div className={styles.productGrid}>
-          {Array.from({ length: fallbackCount }).map((_, i) => (
+          {Array.from({ length: skeletonCount }).map((_, i) => (
             <ProductSkeleton key={i} />
           ))}
         </div>
@@ -376,11 +160,11 @@ const Home = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: i * 0.05, duration: 0.35 }}
+            transition={{ delay: Math.min(i, 6) * 0.05, duration: 0.35 }}
           >
             <ProductCard
               product={product}
-              onAddToCart={handleAddToCart}
+              onAddToCart={handleAddToEnquiry}
               onToggleWishlist={handleToggleWishlist}
               isWishlisted={isInWishlist(product.id)}
             />
@@ -399,53 +183,27 @@ const Home = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-      {/* 1. Hero Section */}
+      {/* 1. Hero */}
       <section className={styles.heroSection}>
         <HeroSection />
       </section>
 
-      {/* 2. Flash Deals */}
-      {flashDeals.length > 0 && (
-        <section className={styles.section}>
-          <div className={styles.container}>
-            <div className={styles.flashHeader}>
-              <SectionHeader
-                title="Flash Deals"
-                subtitle="Grab them before they're gone!"
-                linkText="View All"
-                linkTo="/products?sort=sale"
-              />
-              <CountdownTimer />
-            </div>
-            <ScrollRow scrollRef={flashScrollRef}>
-              {flashDeals.map((product, i) => (
-                <div className={styles.scrollCard} key={product.id || i}>
-                  <ProductCard
-                    product={product}
-                    onAddToCart={handleAddToCart}
-                    onToggleWishlist={handleToggleWishlist}
-                    isWishlisted={isInWishlist(product.id)}
-                  />
-                </div>
-              ))}
-            </ScrollRow>
-          </div>
-        </section>
-      )}
-
-      {/* 3. Shop by Category */}
+      {/* 2. Shop by Category */}
       <section className={`${styles.section} ${styles.categorySection}`}>
         <div className={styles.container}>
           <SectionHeader
             title="Shop by Category"
-            subtitle="Browse our wide selection of categories"
-            linkText="All Categories"
+            subtitle="Building materials for every interior and exterior job."
+            linkText="All Products"
             linkTo="/products"
           />
           <div className={styles.categoryGrid}>
             {loading
-              ? Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className={`${styles.categoryCard} ${styles.skeleton}`} />
+              ? Array.from({ length: 8 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className={`${styles.categoryCard} ${styles.skeleton}`}
+                  />
                 ))
               : categories.map((cat, i) => (
                   <motion.div
@@ -453,7 +211,7 @@ const Home = () => {
                     initial={{ opacity: 0, scale: 0.92 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ delay: i * 0.06 }}
+                    transition={{ delay: Math.min(i, 8) * 0.05 }}
                     whileHover={{ y: -4 }}
                   >
                     <Link
@@ -471,11 +229,6 @@ const Home = () => {
                       )}
                       <div className={styles.categoryOverlay}>
                         <h3 className={styles.categoryName}>{cat.name}</h3>
-                        {cat.productCount !== undefined && (
-                          <span className={styles.categoryCount}>
-                            {cat.productCount} Products
-                          </span>
-                        )}
                       </div>
                     </Link>
                   </motion.div>
@@ -484,77 +237,43 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 4. Featured Products */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-          <SectionHeader
-            title="Featured Products"
-            subtitle="Handpicked just for you"
-            linkText="View All"
-            linkTo="/products?sort=featured"
-          />
-          {renderProductGrid(featuredProducts, 4)}
-        </div>
-      </section>
-
-      {/* 5. Promotional Banner */}
-      <section className={styles.promoBanner}>
-        <div className={styles.container}>
-          <div className={styles.promoBannerInner}>
-            <motion.div
-              className={styles.promoContent}
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <span className={styles.promoTag}>Limited Time Offer</span>
-              <h2 className={styles.promoTitle}>
-                Up to 50% Off on Top Brands
-              </h2>
-              <p className={styles.promoText}>
-                Shop the season's best deals on electronics, fashion, home decor
-                and more. Don't miss out on incredible savings!
-              </p>
-              <Link to="/products?sort=sale" className={styles.promoCta}>
-                Shop Now
-              </Link>
-            </motion.div>
-            <motion.div
-              className={styles.promoGraphic}
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-            >
-              <div className={styles.promoCircle}>
-                <span className={styles.promoPercent}>50%</span>
-                <span className={styles.promoOff}>OFF</span>
-              </div>
-            </motion.div>
+      {/* 3. Featured Products */}
+      {(loading || featuredProducts.length > 0) && (
+        <section className={styles.section}>
+          <div className={styles.container}>
+            <SectionHeader
+              title="Featured Products"
+              subtitle="A handpicked selection from our catalogue."
+              linkText="View All"
+              linkTo="/products?sort=featured"
+            />
+            {renderProductGrid(featuredProducts, 4)}
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* 6. Trending Products */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-          <SectionHeader
-            title="Trending Now"
-            subtitle="See what everyone is buying"
-            linkText="View All"
-            linkTo="/products?sort=trending"
-          />
-          {renderProductGrid(trendingProducts, 4)}
-        </div>
-      </section>
+      {/* 4. Special Products band (curated collection — NOT a limited-time deal) */}
+      {!loading && specialProducts.length > 0 && (
+        <section className={`${styles.section} ${styles.specialSection}`}>
+          <div className={styles.container}>
+            <SectionHeader
+              kicker="Curated picks"
+              title="Special Products"
+              subtitle="Hand-picked items from across our catalogue."
+              linkText="View All"
+              linkTo="/special-offers"
+            />
+            {renderProductGrid(specialProducts, 4)}
+          </div>
+        </section>
+      )}
 
-      {/* 7. Why Choose Us */}
+      {/* 5. Why Choose NEBM */}
       <section className={`${styles.section} ${styles.trustSection}`}>
         <div className={styles.container}>
           <SectionHeader
             title={`Why Choose ${APP_NAME}`}
-            subtitle="We put our customers first"
+            subtitle="A supplier built for interior and exterior projects."
           />
           <div className={styles.trustGrid}>
             {WHY_CHOOSE_US.map((item, i) => (
@@ -577,26 +296,56 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 8. Recently Viewed */}
+      {/* 6. CTA band */}
+      <CTASection />
+
+      {/* 7. Contact CTA */}
+      <section className={styles.section}>
+        <div className={styles.container}>
+          <div className={styles.contactCta}>
+            <div className={styles.contactBody}>
+              <h2 className={styles.contactTitle}>Have a project in mind?</h2>
+              <p className={styles.contactText}>
+                Visit our store or call us — we'll help you find the right
+                materials and share bulk pricing.
+              </p>
+              <div className={styles.contactRows}>
+                <span className={styles.contactItem}>
+                  <Icon icon="mdi:map-marker-outline" aria-hidden="true" />
+                  {BRAND_ADDRESS}
+                </span>
+                <a className={styles.contactItem} href={telHref(BRAND_PHONE_1)}>
+                  <Icon icon="mdi:phone-outline" aria-hidden="true" />
+                  {BRAND_PHONE_1}
+                </a>
+                <a className={styles.contactItem} href={telHref(BRAND_PHONE_2)}>
+                  <Icon icon="mdi:phone-outline" aria-hidden="true" />
+                  {BRAND_PHONE_2}
+                </a>
+              </div>
+            </div>
+            <div className={styles.contactActions}>
+              <a
+                href={telHref(BRAND_PHONE_1)}
+                className={styles.contactCallBtn}
+              >
+                <Icon icon="mdi:phone" aria-hidden="true" />
+                Call to Enquire
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 8. Recently Viewed (optional, localStorage-driven) */}
       {recentlyViewed.length > 0 && (
         <section className={styles.section}>
           <div className={styles.container}>
             <SectionHeader
               title="Recently Viewed"
-              subtitle="Continue where you left off"
+              subtitle="Continue where you left off."
             />
-            <ScrollRow scrollRef={recentScrollRef}>
-              {recentlyViewed.map((product, i) => (
-                <div className={styles.scrollCard} key={product.id || i}>
-                  <ProductCard
-                    product={product}
-                    onAddToCart={handleAddToCart}
-                    onToggleWishlist={handleToggleWishlist}
-                    isWishlisted={isInWishlist(product.id)}
-                  />
-                </div>
-              ))}
-            </ScrollRow>
+            {renderProductGrid(recentlyViewed.slice(0, 4), 4)}
           </div>
         </section>
       )}
