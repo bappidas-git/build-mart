@@ -36,11 +36,13 @@ const ProductCard = ({
 }) => {
   if (!product) return null;
   // NEBM is an enquiry platform — the card shows a clean price with no discount
-  // urgency (no "% off" pill, no struck-through compare price). Full
-  // priceType-aware display (exact / tiered / on-enquiry via showExactPrice,
-  // cardPriceMode) and the gold "Special" badge are layered on by their own
-  // prompts (15 and 11). PriceBlock itself is untouched — PDP still uses it with
-  // a compare price.
+  // urgency (no "% off" pill, no struck-through compare price). The gold
+  // "Special" badge (below) flags products carrying `special: true` — an additive
+  // curation label, never a price change, shown on EVERY surface that renders this
+  // card (homepage band, /special-offers, listing grids). Full priceType-aware
+  // display (exact / tiered / on-enquiry via showExactPrice, cardPriceMode) is
+  // layered on by prompt 15. PriceBlock itself is untouched — PDP still uses it
+  // with a compare price.
   const { sellingPrice } = getProductMinPrice(product);
   const ratingCount = Number(product.totalReviews) || 0;
   const rating = Number(product.rating) || 0;
@@ -59,6 +61,11 @@ const ProductCard = ({
           loading="lazy"
           onError={onImageError}
         />
+        {product.special === true && (
+          <span className={styles.specialBadge} title="Special product">
+            Special
+          </span>
+        )}
         {onToggleWishlist && (
           <button
             type="button"

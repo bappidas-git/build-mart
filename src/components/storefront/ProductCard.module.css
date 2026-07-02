@@ -30,6 +30,27 @@
   display: block;
 }
 
+/* Gold "Special" ribbon — top-left so it never collides with the wishlist heart
+   (top-right). Additive: present only when product.special === true; purely
+   presentational (pointer-events off so the media link stays fully clickable). */
+.specialBadge {
+  position: absolute;
+  top: var(--sf-space-2);
+  left: var(--sf-space-2);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--sf-radius-pill);
+  background: var(--sf-color-accent);
+  color: #ffffff;
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-semibold);
+  letter-spacing: 0.02em;
+  box-shadow: var(--sf-shadow-sm);
+  pointer-events: none;
+}
+
 .wishlist {
   position: absolute;
   top: var(--sf-space-2);
