@@ -9,15 +9,18 @@ import styles from "./SearchModal.module.css";
 // ---------------------------------------------------------------------------
 // Static config
 // ---------------------------------------------------------------------------
+// NEBM building-material seed terms (was generic electronics/apparel). The
+// category chips are still derived at runtime from the live tree — only these
+// trending seeds are static.
 const TRENDING_SEARCHES = [
-  "Laptop",
-  "Earbuds",
-  "Smartwatch",
-  "Saree",
-  "Running Shoes",
-  "Bedsheet",
-  "T-Shirt",
-  "Speaker",
+  "WPC Louvers",
+  "Polycarbonate Sheet",
+  "FRP Sheet",
+  "TMT Bars",
+  "CPVC Pipe",
+  "Door Lock",
+  "Vitrified Tiles",
+  "Waterproofing",
 ];
 
 // Category filter chips (and the slugs each one matches) are derived at runtime
