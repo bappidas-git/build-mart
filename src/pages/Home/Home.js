@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
-import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../hooks/useCart";
 import { useWishlist } from "../../context/WishlistContext";
 import apiService from "../../services/api";
@@ -58,7 +57,6 @@ const SectionHeader = ({ title, subtitle, kicker, linkText, linkTo }) => (
 // ══════════════════════════════════════════════════════════════════════════════
 
 const Home = () => {
-  const { isDarkMode } = useTheme();
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
 
@@ -178,7 +176,7 @@ const Home = () => {
 
   return (
     <motion.div
-      className={`${styles.homePage} ${isDarkMode ? styles.dark : ""}`}
+      className={styles.homePage}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
@@ -199,7 +197,7 @@ const Home = () => {
           />
           <div className={styles.categoryGrid}>
             {loading
-              ? Array.from({ length: 8 }).map((_, i) => (
+              ? Array.from({ length: 12 }).map((_, i) => (
                   <div
                     key={i}
                     className={`${styles.categoryCard} ${styles.skeleton}`}
