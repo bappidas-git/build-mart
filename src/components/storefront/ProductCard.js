@@ -24,8 +24,8 @@ import styles from "./ProductCard.module.css";
 //
 // NEBM is an ENQUIRY platform: the single action is an ICON-ONLY "Add to Enquiry
 // List" button with a tooltip — no "Add to Cart"/"Buy Now" text, ever. The price
-// is a clean figure via PriceBlock (the full priceType-aware display — exact /
-// tiered / on-enquiry — is layered on by prompt 15; PriceBlock is untouched here).
+// flows through PriceBlock in card mode (prompt 15): exact → "₹X / unit", tiered
+// → "From ₹X / unit" (+ a gold bulk chip), onEnquiry → "Price on Enquiry".
 //
 // Badges (top-left of the media, stacked, never overlapping the top-right heart):
 //   • Special  — GOLD (#fa9c4c). ADDITIVE brand label shown on EVERY surface
@@ -60,11 +60,21 @@ const ProductCard = ({
 }) => {
   if (!product) return null;
 
-  const { sellingPrice, discount } = getProductMinPrice(product);
+  const { discount } = getProductMinPrice(product);
   const ratingCount = Number(product.totalReviews) || 0;
   const rating = Number(product.rating) || 0;
   const outOfStock = product.stock === 0;
   const isList = layout === "list";
+
+  // The media "% OFF" chip only makes sense when the card shows a single exact
+  // number to discount FROM. A tiered card shows "From ₹X" and an on-enquiry
+  // card shows "Price on Enquiry" — neither has a comparable struck price — so
+  // the chip is suppressed there, keeping the media badge consistent with the
+  // PriceBlock card price (prompt 15 §4.6). Legacy products with no priceType
+  // default to "exact", so the honest chip still shows exactly as before.
+  const showsExactPrice =
+    (product.priceType || "exact") === "exact" && product.showExactPrice !== false;
+  const showDiscountBadge = showBadges && discount > 0 && showsExactPrice;
 
   // The add prop was renamed onAddToCart → onAddToEnquiry in prompt 12; both are
   // accepted so existing callers (related/recently-viewed/bundles) keep working.
@@ -90,7 +100,7 @@ const ProductCard = ({
             merchandising chips (discount/featured/trending) reveal only when the
             caller opts in via showBadges. */}
         <div className={styles.badges}>
-          {showBadges && discount > 0 && (
+          {showDiscountBadge && (
             <span className={`${styles.badge} ${styles.badgeDiscount}`}>
               {discount}% OFF
             </span>
@@ -152,7 +162,7 @@ const ProductCard = ({
         )}
 
         <div className={styles.footer}>
-          <PriceBlock price={sellingPrice} size="sm" showSavings={false} />
+          <PriceBlock product={product} mode="card" size="sm" />
 
           {showAdd && addHandler && (
             <span className={styles.enquiryWrap} data-tip={enquiryTip}>

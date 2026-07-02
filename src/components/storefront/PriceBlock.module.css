@@ -39,6 +39,124 @@
   font-size: var(--sf-text-xs);
 }
 
+/* ---- unitType suffix + "From" prefix (scale with the price via em) ---------- */
+.unit {
+  color: var(--sf-color-text-muted);
+  font-weight: var(--sf-font-normal);
+  font-size: 0.62em;
+  letter-spacing: 0;
+}
+
+.from {
+  color: var(--sf-color-text-secondary);
+  font-weight: var(--sf-font-medium);
+  font-size: 0.62em;
+}
+
+/* ---- onEnquiry pill — calm, honest, no number ------------------------------- */
+.enquiry {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 14px;
+  border-radius: var(--sf-radius-pill);
+  background: var(--sf-color-primary-soft);
+  color: var(--sf-color-primary);
+  font-weight: var(--sf-font-semibold);
+  font-size: var(--sf-text-sm);
+  letter-spacing: 0.01em;
+}
+
+.lg .enquiry {
+  font-size: var(--sf-text-md);
+  padding: 7px 16px;
+}
+.sm .enquiry {
+  padding: 3px 10px;
+  font-size: var(--sf-text-xs);
+}
+
+/* ---- tiered card — gold "bulk pricing" chip --------------------------------- */
+.bulkChip {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 9px;
+  border-radius: var(--sf-radius-pill);
+  background: rgba(250, 156, 76, 0.16); /* NEBM gold tint */
+  color: var(--sf-color-accent);
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-semibold);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* ---- tiered details — quantity-vs-price table ------------------------------- */
+.tiered {
+  gap: var(--sf-space-3);
+}
+
+.minOrder {
+  font-size: var(--sf-text-sm);
+  color: var(--sf-color-text-secondary);
+  font-weight: var(--sf-font-medium);
+}
+
+.tierTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--sf-text-sm);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+  overflow: hidden;
+}
+
+.tierTable thead th {
+  text-align: left;
+  padding: var(--sf-space-2) var(--sf-space-3);
+  background: var(--sf-color-primary-soft);
+  color: var(--sf-color-primary);
+  font-weight: var(--sf-font-semibold);
+  font-size: var(--sf-text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.tierTable thead th.numCol {
+  text-align: right;
+}
+
+.tierTable tbody td {
+  padding: var(--sf-space-2) var(--sf-space-3);
+  border-top: 1px solid var(--sf-color-border);
+  color: var(--sf-color-text);
+  font-weight: var(--sf-font-medium);
+}
+
+.tierTable tbody tr:nth-child(even) {
+  background: var(--sf-color-surface-2);
+}
+
+.numCol {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Best-value (highest-discount) row — gold highlight, overrides the zebra. */
+.bestRow {
+  background: rgba(250, 156, 76, 0.13) !important;
+}
+.bestRow td {
+  font-weight: var(--sf-font-semibold);
+}
+
+.tierDiscount {
+  color: var(--sf-color-discount);
+  font-weight: var(--sf-font-semibold);
+}
+
+.tierBase {
+  color: var(--sf-color-text-muted);
+}
+
 /* ---- sizes ---- */
 .lg .price {
   font-size: var(--sf-text-3xl);

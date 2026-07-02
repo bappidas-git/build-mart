@@ -353,11 +353,15 @@ const ProductDetails = () => {
               onReviewsClick={scrollToReviews}
             />
 
-            {/* Price via PriceBlock (honest compare/discount). The enquiry-safe
-                note replaces the old checkout-implying tax copy; the full
-                priceType-aware exact/tiered/on-enquiry display is layered on by
-                prompt 15. */}
+            {/* Price via PriceBlock in details mode (prompt 15): exact → fixed
+                price + unit + honest compare/discount/savings; tiered → the full
+                quantity-vs-price table with computed per-unit discounts + a
+                minQty line; onEnquiry → "Price on Enquiry". The explicit price/
+                comparePrice carry the variant-adjusted figure for exact mode; the
+                enquiry-safe note replaces the old checkout-implying tax copy. */}
             <PriceBlock
+              product={product}
+              mode="details"
               price={currentPrice}
               comparePrice={comparePrice}
               currency="INR"
