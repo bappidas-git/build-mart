@@ -14,23 +14,28 @@ import {
   VariantSelector,
   QuantityStepper,
   TrustBadges,
-  DeliveryReturnsInfo,
   AddToCartBar,
   ReviewsSection,
   RelatedProducts,
-  FrequentlyBoughtTogether,
 } from "../../components/storefront";
 import styles from "./ProductDetails.module.css";
 
 // =============================================================================
-// Product Detail Page (PDP)
+// Product Detail Page (PDP) — North East Build Mart (ENQUIRY model)
 // =============================================================================
 // Assembled entirely from the reusable, themeable, domain-agnostic storefront
 // component library (src/components/storefront). This page owns DATA (loading,
-// variant/stock derivation, the reviews blend, cart wiring); the components own
-// PRESENTATION + the UX principles. Everything here is API/db.json-driven — no
+// variant/stock derivation, the reviews blend, enquiry-list wiring); the
+// components own PRESENTATION. Everything here is API/db.json-driven — no
 // hardcoded business content — and every persuasive element is bound to real
 // data (see the ethics notes in STOREFRONT_UX_GUIDELINES.md).
+//
+// NEBM is an enquiry platform: customers browse and ENQUIRE — they never buy,
+// pay, check out, ship or return. So the primary action is an icon "Add to
+// Enquiry List" button (no "Buy Now"), the trust panel carries only honest
+// capability signals + store contact (no shipping/COD/returns), and pricing
+// delegates to <PriceBlock/> (the priceType-aware exact/tiered/on-enquiry
+// display is layered on by prompt 15).
 // =============================================================================
 
 // ─── Loading Skeleton ───────────────────────────────────────────────────────
@@ -86,10 +91,8 @@ const ProductDetails = () => {
   const [reviewsLoading, setReviewsLoading] = useState(false);
   const [reviewsError, setReviewsError] = useState(false);
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const [bundle, setBundle] = useState([]);
   const [category, setCategory] = useState(null);
   const [settings, setSettings] = useState(null);
-  const [shipping, setShipping] = useState([]);
 
   // ── Fetch product ──────────────────────────────────────────────────────
   const fetchProduct = useCallback(async () => {
@@ -181,7 +184,7 @@ const ProductDetails = () => {
     }
   }, [product?.id]);
 
-  // ── Related + bundle (AOV) — real catalogue data only ───────────────────
+  // ── Related "you may also like" (AOV) — real catalogue data only ────────
   const fetchAov = useCallback(async () => {
     if (!product) return;
     const cfg = STOREFRONT_CONFIG.aov;
@@ -191,18 +194,12 @@ const ProductDetails = () => {
         .then(setRelatedProducts)
         .catch(() => setRelatedProducts([]));
     }
-    if (cfg.frequentlyBoughtTogether) {
-      apiService.products
-        .getFrequentlyBoughtTogether(product, cfg.maxBundle - 1)
-        .then(setBundle)
-        .catch(() => setBundle([]));
-    }
   }, [product]);
 
-  // ── Public store data for trust signals + transparent delivery info ─────
+  // ── Public store data for trust signals + store contact ─────────────────
+  // (No shipping fetch: NEBM is an enquiry platform — no delivery/COD/returns.)
   useEffect(() => {
     apiService.settings.get().then(setSettings).catch(() => {});
-    apiService.shipping.getMethods().then((m) => setShipping(Array.isArray(m) ? m : [])).catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -289,19 +286,15 @@ const ProductDetails = () => {
     [product, selectedVariant, quantity, addToCart]
   );
 
-  // Primary CTA with a brief, satisfying "Added ✓" confirmation (the cart toast
-  // + mini-cart drawer also fire from CartContext).
-  const handleAddClick = useCallback(() => {
+  // Primary action: add the current selection to the Enquiry List, with a brief
+  // "Added ✓" confirmation (the enquiry toast + drawer also fire from
+  // CartContext). NEBM never checks out — there is no Buy Now path.
+  const handleAddToEnquiry = useCallback(() => {
     if (isOutOfStock) return;
     handleAddToCart();
     setAdded(true);
     setTimeout(() => setAdded(false), 1400);
   }, [handleAddToCart, isOutOfStock]);
-
-  const handleBuyNow = useCallback(async () => {
-    await handleAddToCart({ openDrawer: false });
-    navigate("/checkout");
-  }, [handleAddToCart, navigate]);
 
   const scrollToReviews = useCallback(() => {
     setActiveTab("reviews");
@@ -360,17 +353,16 @@ const ProductDetails = () => {
               onReviewsClick={scrollToReviews}
             />
 
-            {/* Price — honest compare/discount + transparent tax note */}
+            {/* Price via PriceBlock (honest compare/discount). The enquiry-safe
+                note replaces the old checkout-implying tax copy; the full
+                priceType-aware exact/tiered/on-enquiry display is layered on by
+                prompt 15. */}
             <PriceBlock
               price={currentPrice}
               comparePrice={comparePrice}
               currency="INR"
               size="lg"
-              taxNote={
-                settings?.store?.taxIncluded === false
-                  ? "Exclusive of taxes — calculated at checkout"
-                  : "Inclusive of all taxes"
-              }
+              taxNote="Indicative price — enquire for the best project rate"
             />
 
             {currentSku && (
@@ -419,27 +411,38 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            {/* Primary / secondary CTAs (standard copy, clear hierarchy) */}
+            {/* Primary action: icon-only "Add to Enquiry List" (the tooltip +
+                aria-label name it — no label text on the face). No "Buy Now":
+                NEBM is an enquiry platform and never checks out. The wishlist
+                heart sits beside it. */}
             <div className={styles.actionButtons} ref={buyBoxRef}>
-              <button
-                className={`${styles.addToCartBtn} ${added ? styles.addToCartDone : ""}`}
-                onClick={handleAddClick}
-                disabled={isOutOfStock}
+              <span
+                className={styles.enquiryAction}
+                data-tip={isOutOfStock ? "Out of Stock" : added ? "Added ✓" : "Add to Enquiry List"}
               >
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <circle cx="9" cy="21" r="1" />
-                  <circle cx="20" cy="21" r="1" />
-                  <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
-                </svg>
-                {isOutOfStock ? "Out of Stock" : added ? "Added to Cart ✓" : "Add to Cart"}
-              </button>
-              <button
-                className={styles.buyNowBtn}
-                onClick={handleBuyNow}
-                disabled={isOutOfStock}
-              >
-                Buy Now
-              </button>
+                <button
+                  type="button"
+                  className={`${styles.enquiryBtn} ${added ? styles.enquiryDone : ""}`}
+                  onClick={handleAddToEnquiry}
+                  disabled={isOutOfStock}
+                  aria-label="Add to Enquiry List"
+                >
+                  {added ? (
+                    <>
+                      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span className={styles.enquiryDoneText}>Added ✓</span>
+                    </>
+                  ) : (
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-2" />
+                      <path d="M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                      <path d="M15 11h4M17 9v4M9 12h3M9 16h3" />
+                    </svg>
+                  )}
+                </button>
+              </span>
               <button
                 className={`${styles.wishlistBtn} ${wishlisted ? styles.wishlistBtnActive : ""}`}
                 onClick={() => toggleWishlist(product)}
@@ -452,11 +455,63 @@ const ProductDetails = () => {
               </button>
             </div>
 
-            {/* Trust signals near the decision point (config + live data) */}
-            <TrustBadges settings={settings} shipping={shipping} variant="grid" />
+            {/* Honest, enquiry-safe capability signals near the decision point
+                (config-driven; no shipping/COD/returns). */}
+            <TrustBadges variant="grid" />
 
-            {/* Transparent delivery, COD & returns — REAL data, shown upfront */}
-            <DeliveryReturnsInfo shipping={shipping} settings={settings} currency="INR" />
+            {/* Store contact — real NEBM details from settings; the enquiry-safe
+                replacement for the old delivery/returns panel. */}
+            {settings?.store && (
+              <div className={styles.contactPanel}>
+                <h3 className={styles.contactTitle}>
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
+                  </svg>
+                  Enquire with {settings.store.name || "us"}
+                </h3>
+                <p className={styles.contactLead}>
+                  Call or add this item to your Enquiry List for the best project
+                  price, bulk quantities and availability.
+                </p>
+                <ul className={styles.contactList}>
+                  {settings.store.phone && (
+                    <li className={styles.contactRow}>
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0122 16.92z" />
+                      </svg>
+                      <a className={styles.contactLink} href={`tel:${settings.store.phone.replace(/\s+/g, "")}`}>
+                        {settings.store.phone}
+                      </a>
+                      {settings.store.phoneSecondary && (
+                        <a className={styles.contactLink} href={`tel:${settings.store.phoneSecondary.replace(/\s+/g, "")}`}>
+                          {settings.store.phoneSecondary}
+                        </a>
+                      )}
+                    </li>
+                  )}
+                  {settings.store.email && (
+                    <li className={styles.contactRow}>
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <rect x="2" y="4" width="20" height="16" rx="2" />
+                        <path d="M22 7l-10 6L2 7" />
+                      </svg>
+                      <a className={styles.contactLink} href={`mailto:${settings.store.email}`}>
+                        {settings.store.email}
+                      </a>
+                    </li>
+                  )}
+                  {settings.store.address && (
+                    <li className={styles.contactRow}>
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                        <circle cx="12" cy="10" r="3" />
+                      </svg>
+                      <span className={styles.contactText}>{settings.store.address}</span>
+                    </li>
+                  )}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
 
@@ -508,6 +563,12 @@ const ProductDetails = () => {
                         <tr>
                           <td className={styles.specLabel}>SKU</td>
                           <td className={styles.specValue}>{currentSku}</td>
+                        </tr>
+                      )}
+                      {product.unitType && (
+                        <tr>
+                          <td className={styles.specLabel}>Sold by</td>
+                          <td className={styles.specValue}>{product.unitType}</td>
                         </tr>
                       )}
                       {product.weight && (
@@ -569,14 +630,7 @@ const ProductDetails = () => {
           </div>
         </div>
 
-        {/* ── AOV: curated bundle, then similar products (data-driven) ──── */}
-        <FrequentlyBoughtTogether
-          anchor={product}
-          companions={bundle}
-          onAddToCart={addToCart}
-          currency="INR"
-        />
-
+        {/* ── AOV: similar products (data-driven; enquiry-safe) ─────────── */}
         <RelatedProducts
           title="You may also like"
           products={relatedProducts}
@@ -586,7 +640,7 @@ const ProductDetails = () => {
         />
       </div>
 
-      {/* ── Sticky mobile Add-to-Cart (mobile-first) ──────────────────────── */}
+      {/* ── Sticky mobile Add-to-Enquiry (mobile-first) ───────────────────── */}
       <AddToCartBar
         anchorRef={buyBoxRef}
         price={currentPrice}
@@ -595,8 +649,7 @@ const ProductDetails = () => {
         image={product.images?.[0] || product.image}
         name={selectedVariant?.name || product.name}
         disabled={isOutOfStock}
-        onAddToCart={handleAddClick}
-        onBuyNow={handleBuyNow}
+        onAddToCart={handleAddToEnquiry}
       />
     </motion.div>
   );

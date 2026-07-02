@@ -148,59 +148,82 @@
   align-items: stretch;
 }
 
-.addToCartBtn,
-.buyNowBtn {
+/* Primary action: icon-only "Add to Enquiry List" + CSS tooltip. It is the
+   dominant control (flex:1) but carries no label text — the tooltip and the
+   aria-label name it. On add it flips to the success colour + a brief
+   "Added ✓". No "Buy Now": NEBM is an enquiry platform. */
+.enquiryAction {
+  position: relative;
+  flex: 1;
+  display: flex;
+}
+
+.enquiryBtn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--sf-space-2);
   flex: 1;
   min-height: 52px;
+  border: none;
   border-radius: var(--sf-radius-md);
+  background: var(--sf-gradient-primary);
+  color: var(--sf-color-primary-contrast);
   font-size: var(--sf-text-base);
   font-weight: var(--sf-font-semibold);
   cursor: pointer;
   transition: filter var(--sf-transition-fast), transform var(--sf-transition-fast),
-    background var(--sf-transition-fast), color var(--sf-transition-fast);
+    background var(--sf-transition-fast);
 }
 
-.addToCartBtn {
-  border: none;
-  background: var(--sf-gradient-primary);
-  color: var(--sf-color-primary-contrast);
-}
-
-.addToCartBtn:hover:not(:disabled) {
+.enquiryBtn:hover:not(:disabled) {
   filter: brightness(1.05);
   transform: translateY(-1px);
 }
 
-.addToCartDone {
+.enquiryDone {
   background: var(--sf-color-success);
 }
 
-.buyNowBtn {
-  border: 1.5px solid var(--sf-color-primary);
-  background: transparent;
-  color: var(--sf-color-primary);
+.enquiryDoneText {
+  font-size: var(--sf-text-base);
+  font-weight: var(--sf-font-semibold);
 }
 
-.buyNowBtn:hover:not(:disabled) {
-  background: var(--sf-color-primary-soft);
-  transform: translateY(-1px);
-}
-
-.addToCartBtn:focus-visible,
-.buyNowBtn:focus-visible,
+.enquiryBtn:focus-visible,
 .wishlistBtn:focus-visible {
   outline: none;
   box-shadow: var(--sf-shadow-focus);
 }
 
-.addToCartBtn:disabled,
-.buyNowBtn:disabled {
+.enquiryBtn:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+.enquiryAction::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  z-index: 5;
+  padding: 4px 8px;
+  border-radius: var(--sf-radius-sm);
+  background: var(--sf-color-text);
+  color: var(--sf-color-surface);
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-medium);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity var(--sf-transition-fast), transform var(--sf-transition-fast);
+}
+
+.enquiryAction:hover::after,
+.enquiryAction:focus-within::after {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .wishlistBtn {
@@ -227,6 +250,75 @@
   color: var(--sf-color-accent);
   border-color: var(--sf-color-accent);
   background: var(--sf-color-primary-soft);
+}
+
+/* ── Store contact / enquire panel (enquiry-safe; replaces delivery/returns) ─ */
+.contactPanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-3);
+  padding: var(--sf-space-5);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-lg);
+  background: var(--sf-color-surface);
+}
+
+.contactTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--sf-space-2);
+  margin: 0;
+  font-size: var(--sf-text-md);
+  font-weight: var(--sf-font-semibold);
+  color: var(--sf-color-text);
+}
+
+.contactTitle svg {
+  color: var(--sf-color-primary);
+}
+
+.contactLead {
+  margin: 0;
+  font-size: var(--sf-text-sm);
+  line-height: var(--sf-leading-normal);
+  color: var(--sf-color-text-secondary);
+}
+
+.contactList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-2);
+}
+
+.contactRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sf-space-2) var(--sf-space-3);
+  font-size: var(--sf-text-sm);
+  color: var(--sf-color-text-secondary);
+}
+
+.contactRow svg {
+  color: var(--sf-color-primary);
+  flex-shrink: 0;
+}
+
+.contactLink {
+  color: var(--sf-color-primary);
+  text-decoration: none;
+  font-weight: var(--sf-font-medium);
+}
+
+.contactLink:hover {
+  text-decoration: underline;
+}
+
+.contactText {
+  color: var(--sf-color-text-secondary);
 }
 
 /* ── Tabs ────────────────────────────────────────────────────────────────── */
@@ -431,17 +523,5 @@
   }
   .productName {
     font-size: var(--sf-text-xl);
-  }
-  .actionButtons {
-    flex-wrap: wrap;
-  }
-  .addToCartBtn,
-  .buyNowBtn {
-    flex: 1 1 100%;
-    order: 2;
-  }
-  .wishlistBtn {
-    order: 1;
-    width: 100%;
   }
 }

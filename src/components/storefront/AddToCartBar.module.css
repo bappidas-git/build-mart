@@ -79,23 +79,25 @@
   flex-shrink: 0;
 }
 
-.addBtn,
-.buyNow {
-  min-height: var(--sf-tap-target);
-  padding: 0 var(--sf-space-5);
-  border-radius: var(--sf-radius-md);
-  font-weight: var(--sf-font-semibold);
-  font-size: var(--sf-text-sm);
-  cursor: pointer;
-  transition: filter var(--sf-transition-fast), background var(--sf-transition-fast),
-    color var(--sf-transition-fast);
-  white-space: nowrap;
+/* Icon-only Add-to-Enquiry action + CSS tooltip (no visible label text). */
+.addWrap {
+  position: relative;
+  display: inline-flex;
 }
 
 .addBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 56px;
+  min-height: var(--sf-tap-target);
+  padding: 0 var(--sf-space-4);
   border: none;
+  border-radius: var(--sf-radius-md);
   background: var(--sf-gradient-primary);
   color: var(--sf-color-primary-contrast);
+  cursor: pointer;
+  transition: filter var(--sf-transition-fast), background var(--sf-transition-fast);
 }
 
 .addBtn:hover:not(:disabled) {
@@ -106,22 +108,39 @@
   background: var(--sf-color-success);
 }
 
-.buyNow {
-  border: 1.5px solid var(--sf-color-primary);
-  background: transparent;
-  color: var(--sf-color-primary);
-}
-
-.addBtn:focus-visible,
-.buyNow:focus-visible {
+.addBtn:focus-visible {
   outline: none;
   box-shadow: var(--sf-shadow-focus);
 }
 
-.addBtn:disabled,
-.buyNow:disabled {
+.addBtn:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+}
+
+.addWrap::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  right: 0;
+  z-index: 5;
+  padding: 4px 8px;
+  border-radius: var(--sf-radius-sm);
+  background: var(--sf-color-text);
+  color: var(--sf-color-surface);
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-medium);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity var(--sf-transition-fast), transform var(--sf-transition-fast);
+}
+
+.addWrap:hover::after,
+.addWrap:focus-within::after {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Mobile-first: the bar only exists on phones/large-phones. It intentionally
