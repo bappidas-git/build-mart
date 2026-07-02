@@ -13,43 +13,67 @@ import {
 import styles from "./ProductCard.module.css";
 
 // =============================================================================
-// ProductCard — the reusable storefront product card
+// ProductCard — the ONE canonical storefront product card
 // =============================================================================
-// One card, used by every product surface (related/you-may-also-like carousels,
-// recently-viewed, bundles, and listing grids). Domain-agnostic: it renders
-// whatever real product data it's given. Social proof (stars + count) shows ONLY
-// when there are real ratings; otherwise it's omitted — never a hollow "(0)".
+// Used by every product surface: the /products listing (grid + list), the
+// homepage Featured/Special bands, /special-offers, and the related /
+// you-may-also-like / recently-viewed / bundle carousels. Domain-agnostic — it
+// renders whatever real product it is given. Social proof (stars + count) shows
+// ONLY when there are real ratings; otherwise it is omitted — never a hollow
+// "(0)".
+//
+// NEBM is an ENQUIRY platform: the single action is an ICON-ONLY "Add to Enquiry
+// List" button with a tooltip — no "Add to Cart"/"Buy Now" text, ever. The price
+// is a clean figure via PriceBlock (the full priceType-aware display — exact /
+// tiered / on-enquiry — is layered on by prompt 15; PriceBlock is untouched here).
+//
+// Badges (top-left of the media, stacked, never overlapping the top-right heart):
+//   • Special  — GOLD (#fa9c4c). ADDITIVE brand label shown on EVERY surface
+//     whenever product.special === true (never gated): a curation flag, not a
+//     price change.
+//   • Featured / Trending — BLUE chips — and the honest, derived Discount chip
+//     are MERCHANDISING badges shown only where the caller opts in via
+//     `showBadges` (the listing). The curated homepage bands / carousels leave it
+//     off so they stay clean (no "% off" urgency — prompt 11).
 //
 // Props:
 //   product           object  (required)
-//   onAddToCart       fn      (cartItem) => void  — omit to hide the button
+//   onAddToEnquiry    fn      (cartItem) => void  — omit to hide the button
+//   onAddToCart       fn      legacy alias for onAddToEnquiry (kept for callers)
 //   onToggleWishlist  fn      (product) => void   — omit to hide the heart
 //   isWishlisted      boolean
-//   showAddToCart     boolean default true (when onAddToCart given)
+//   showAddToEnquiry  boolean default true (when a handler is given)
+//   showAddToCart     boolean legacy alias override
+//   showBadges        boolean default false — reveal Featured/Trending/Discount
+//   layout            "grid" | "list"  default "grid"
 // =============================================================================
 const ProductCard = ({
   product,
+  onAddToEnquiry,
   onAddToCart,
   onToggleWishlist,
   isWishlisted = false,
-  showAddToCart = true,
+  showAddToEnquiry = true,
+  showAddToCart,
+  showBadges = false,
+  layout = "grid",
 }) => {
   if (!product) return null;
-  // NEBM is an enquiry platform — the card shows a clean price with no discount
-  // urgency (no "% off" pill, no struck-through compare price). The gold
-  // "Special" badge (below) flags products carrying `special: true` — an additive
-  // curation label, never a price change, shown on EVERY surface that renders this
-  // card (homepage band, /special-offers, listing grids). Full priceType-aware
-  // display (exact / tiered / on-enquiry via showExactPrice, cardPriceMode) is
-  // layered on by prompt 15. PriceBlock itself is untouched — PDP still uses it
-  // with a compare price.
-  const { sellingPrice } = getProductMinPrice(product);
+
+  const { sellingPrice, discount } = getProductMinPrice(product);
   const ratingCount = Number(product.totalReviews) || 0;
   const rating = Number(product.rating) || 0;
   const outOfStock = product.stock === 0;
+  const isList = layout === "list";
+
+  // The add prop was renamed onAddToCart → onAddToEnquiry in prompt 12; both are
+  // accepted so existing callers (related/recently-viewed/bundles) keep working.
+  const addHandler = onAddToEnquiry || onAddToCart;
+  const showAdd = showAddToCart === undefined ? showAddToEnquiry : showAddToCart;
+  const enquiryTip = outOfStock ? "Out of Stock" : "Add to Enquiry List";
 
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${isList ? styles.cardList : ""}`}>
       <Link
         to={productPath(product)}
         className={styles.media}
@@ -61,11 +85,36 @@ const ProductCard = ({
           loading="lazy"
           onError={onImageError}
         />
-        {product.special === true && (
-          <span className={styles.specialBadge} title="Special product">
-            Special
-          </span>
-        )}
+
+        {/* Badges — top-left, stacked. Special is always additive; the
+            merchandising chips (discount/featured/trending) reveal only when the
+            caller opts in via showBadges. */}
+        <div className={styles.badges}>
+          {showBadges && discount > 0 && (
+            <span className={`${styles.badge} ${styles.badgeDiscount}`}>
+              {discount}% OFF
+            </span>
+          )}
+          {product.special === true && (
+            <span
+              className={`${styles.badge} ${styles.badgeSpecial}`}
+              title="Special product"
+            >
+              Special
+            </span>
+          )}
+          {showBadges && product.featured === true && (
+            <span className={`${styles.badge} ${styles.badgeFeatured}`}>
+              Featured
+            </span>
+          )}
+          {showBadges && product.trending === true && (
+            <span className={`${styles.badge} ${styles.badgeTrending}`}>
+              Trending
+            </span>
+          )}
+        </div>
+
         {onToggleWishlist && (
           <button
             type="button"
@@ -89,6 +138,12 @@ const ProductCard = ({
           {truncateText(product.name, 48)}
         </Link>
 
+        {isList && product.shortDescription && (
+          <p className={styles.desc}>
+            {truncateText(product.shortDescription, 120)}
+          </p>
+        )}
+
         {ratingCount > 0 && (
           <span className={styles.rating}>
             <StarRating rating={rating} size={13} />
@@ -96,41 +151,40 @@ const ProductCard = ({
           </span>
         )}
 
-        <PriceBlock price={sellingPrice} size="sm" showSavings={false} />
+        <div className={styles.footer}>
+          <PriceBlock price={sellingPrice} size="sm" showSavings={false} />
 
-        {showAddToCart && onAddToCart && (
-          <button
-            type="button"
-            className={styles.addBtn}
-            disabled={outOfStock}
-            title={outOfStock ? "Out of stock" : "Add to Enquiry List"}
-            aria-label={outOfStock ? "Out of stock" : "Add to Enquiry List"}
-            onClick={(e) => {
-              e.preventDefault();
-              onAddToCart(buildCartItem(product));
-            }}
-          >
-            {!outOfStock && (
-              <svg
-                className={styles.addIcon}
-                viewBox="0 0 24 24"
-                width="18"
-                height="18"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
+          {showAdd && addHandler && (
+            <span className={styles.enquiryWrap} data-tip={enquiryTip}>
+              <button
+                type="button"
+                className={styles.enquiryBtn}
+                disabled={outOfStock}
+                aria-label={enquiryTip}
+                onClick={(e) => {
+                  e.preventDefault();
+                  addHandler(buildCartItem(product));
+                }}
               >
-                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-2" />
-                <path d="M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                <path d="M15 11h4M17 9v4M9 12h3M9 16h3" />
-              </svg>
-            )}
-            <span>{outOfStock ? "Out of Stock" : "Add to Enquiry"}</span>
-          </button>
-        )}
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-2" />
+                  <path d="M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  <path d="M15 11h4M17 9v4M9 12h3M9 16h3" />
+                </svg>
+              </button>
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );
