@@ -11,14 +11,8 @@ import {
   getCategoryScopeIds,
   orderCategoriesHierarchically,
 } from "../../utils/categories";
-import {
-  formatCurrency,
-  getProductMinPrice,
-  truncateText,
-  buildCartItem,
-  productPath,
-  getDeviceType,
-} from "../../utils/helpers";
+import { getProductMinPrice, getDeviceType } from "../../utils/helpers";
+import ProductCard from "../../components/storefront/ProductCard";
 import styles from "./Products.module.css";
 
 // ---------------------------------------------------------------------------
@@ -124,25 +118,6 @@ const RatingStars = ({ value = 0, count }) => {
 // ---------------------------------------------------------------------------
 // SVG Icons
 // ---------------------------------------------------------------------------
-const HeartIcon = ({ filled }) =>
-  filled ? (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="#fa9c4c" stroke="#fa9c4c" strokeWidth="2">
-      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" />
-    </svg>
-  ) : (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" />
-    </svg>
-  );
-
-const CartIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="9" cy="21" r="1" />
-    <circle cx="20" cy="21" r="1" />
-    <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6" />
-  </svg>
-);
-
 const GridIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
     <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -646,31 +621,13 @@ const Products = () => {
     [syncUrlParams]
   );
 
-  const handleProductClick = useCallback(
-    (product) => {
-      // Route is /products/:slug, resolved via getBySlug (with a legacy-id
-      // fallback + canonical redirect), so link by the human-readable slug.
-      navigate(productPath(product));
-    },
-    [navigate]
-  );
-
-  const handleAddToCart = useCallback(
-    (e, product) => {
-      e.stopPropagation();
-      // buildCartItem produces the same id scheme the product page uses, so a
-      // quick-add merges with a detail-page add instead of creating a duplicate.
-      addToCart(buildCartItem(product));
-    },
+  // Enquiry-list quick-add. The shared ProductCard hands back a fully-built cart
+  // line (buildCartItem — same id scheme the PDP uses), so a listing quick-add
+  // merges with a detail-page add instead of creating a duplicate. NEBM is an
+  // enquiry platform, so this is the ONLY card action (no cart/buy path).
+  const handleAddToEnquiry = useCallback(
+    (cartItem) => addToCart(cartItem, 1),
     [addToCart]
-  );
-
-  const handleWishlistToggle = useCallback(
-    (e, product) => {
-      e.stopPropagation();
-      toggleWishlist(product);
-    },
-    [toggleWishlist]
   );
 
   // Select semantics (value, or 0 to clear). onChange handles keyboard + click;
@@ -900,94 +857,30 @@ const Products = () => {
   );
 
   // ---- Product card ----
-  const renderProductCard = (product, index) => {
-    const priceInfo = getProductMinPrice(product);
-    const discount = priceInfo.discount;
-    const wishlisted = isInWishlist(product.id);
-
-    return (
-      <motion.div
-        key={product.id}
-        className={`${styles.cardWrap} ${viewMode === "list" ? styles.cardWrapList : ""}`}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.4) }}
-      >
-        <div
-          className={`${styles.card} ${viewMode === "list" ? styles.cardList : ""}`}
-          onClick={() => handleProductClick(product)}
-        >
-          {/* Image area */}
-          <div className={styles.cardImageWrap}>
-            <img
-              src={product.images?.[0] || product.image || "https://placehold.co/400x300?text=No+Image"}
-              alt={product.name}
-              className={styles.cardImage}
-              loading="lazy"
-            />
-            {/* Wishlist */}
-            <button
-              className={styles.wishlistBtn}
-              onClick={(e) => handleWishlistToggle(e, product)}
-              aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
-            >
-              <HeartIcon filled={wishlisted} />
-            </button>
-            {/* Discount badge */}
-            {discount > 0 && (
-              <span className={styles.discountBadge}>{discount}% OFF</span>
-            )}
-          </div>
-
-          {/* Body */}
-          <div className={styles.cardBody}>
-            <h3 className={styles.cardTitle}>{viewMode === "list" ? product.name : truncateText(product.name, 48)}</h3>
-
-            {viewMode === "list" && product.shortDescription && (
-              <p className={styles.cardDesc}>{truncateText(product.shortDescription, 120)}</p>
-            )}
-
-            {/* Social proof — shown ONLY when real ratings exist (no hollow "(0)") */}
-            {(product.totalReviews || 0) > 0 && (
-              <div className={styles.cardRating}>
-                <RatingStars value={product.rating || 0} count={product.totalReviews || 0} />
-              </div>
-            )}
-
-            <div className={styles.cardPriceRow}>
-              <span className={styles.cardPrice}>
-                {formatCurrency(priceInfo.sellingPrice, "INR")}
-              </span>
-              {priceInfo.originalPrice > priceInfo.sellingPrice && (
-                <span className={styles.cardComparePrice}>
-                  {formatCurrency(priceInfo.originalPrice, "INR")}
-                </span>
-              )}
-              {discount > 0 && (
-                <span className={styles.cardDiscountText}>{discount}% off</span>
-              )}
-            </div>
-
-            {product.stock !== undefined && product.stock <= 5 && product.stock > 0 && (
-              <span className={styles.lowStock}>Only {product.stock} left</span>
-            )}
-            {product.stock === 0 && (
-              <span className={styles.outOfStock}>Out of Stock</span>
-            )}
-
-            <button
-              className={styles.addToCartBtn}
-              onClick={(e) => handleAddToCart(e, product)}
-              disabled={product.stock === 0}
-            >
-              <CartIcon />
-              <span>Add to Cart</span>
-            </button>
-          </div>
-        </div>
-      </motion.div>
-    );
-  };
+  // Delegates to the ONE canonical storefront ProductCard (single source of
+  // truth) — the merchandising badges (Featured/Trending/Special + honest
+  // discount, via showBadges), the icon-only "Add to Enquiry List" action and
+  // the clean PriceBlock price all live there, so the listing looks and behaves
+  // identically to every other product surface. `layout` switches the card
+  // between the grid and horizontal-list presentations.
+  const renderProductCard = (product, index) => (
+    <motion.div
+      key={product.id}
+      className={`${styles.cardWrap} ${viewMode === "list" ? styles.cardWrapList : ""}`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: Math.min(index * 0.04, 0.4) }}
+    >
+      <ProductCard
+        product={product}
+        layout={viewMode === "list" ? "list" : "grid"}
+        onAddToEnquiry={handleAddToEnquiry}
+        onToggleWishlist={toggleWishlist}
+        isWishlisted={isInWishlist(product.id)}
+        showBadges
+      />
+    </motion.div>
+  );
 
   // ============================
   // RENDER
