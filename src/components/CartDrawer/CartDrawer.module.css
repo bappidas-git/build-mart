@@ -148,80 +148,6 @@
 }
 
 /* ========================================
-   Free Shipping Progress Bar
-   ======================================== */
-
-.shippingBanner {
-  padding: 14px 24px;
-  flex-shrink: 0;
-}
-
-.dark .shippingBanner {
-  background: rgba(78, 163, 227, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.light .shippingBanner {
-  background: #f8faff;
-  border-bottom: 1px solid #edf2f7;
-}
-
-.shippingText {
-  margin: 0 0 10px 0;
-  font-size: 0.82rem;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.dark .shippingText {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.light .shippingText {
-  color: #4a5568;
-}
-
-.dark .shippingText strong {
-  color: var(--sf-color-primary);
-}
-
-.light .shippingText strong {
-  color: var(--sf-color-primary);
-}
-
-.checkIcon {
-  flex-shrink: 0;
-  color: #10b981;
-}
-
-.progressBarTrack {
-  width: 100%;
-  height: 6px;
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.dark .progressBarTrack {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.light .progressBarTrack {
-  background: #e2e8f0;
-}
-
-.progressBarFill {
-  height: 100%;
-  border-radius: 3px;
-  background: linear-gradient(90deg, var(--sf-color-primary), var(--sf-color-primary-dark));
-  transition: width 0.4s ease;
-}
-
-.dark .progressBarFill {
-  background: linear-gradient(90deg, var(--sf-color-primary), var(--sf-color-accent));
-}
-
-/* ========================================
    Items Container (Scrollable)
    ======================================== */
 
@@ -499,100 +425,13 @@
   color: #cbd5e0;
 }
 
-/* Bottom row: quantity, total, remove */
+/* Bottom row: quantity stepper (left) + remove (right) — no line total */
 .itemBottom {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   margin-top: 4px;
-}
-
-/* Quantity controls */
-.quantityControl {
-  display: flex;
-  align-items: center;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.dark .quantityControl {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.light .quantityControl {
-  border: 1px solid #e2e8f0;
-}
-
-.quantityBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 28px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.dark .quantityBtn {
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.dark .quantityBtn:hover:not(:disabled) {
-  background: rgba(78, 163, 227, 0.2);
-  color: var(--sf-color-primary);
-}
-
-.light .quantityBtn {
-  background: #f7fafc;
-  color: #4a5568;
-}
-
-.light .quantityBtn:hover:not(:disabled) {
-  background: var(--sf-color-primary-soft);
-  color: var(--sf-color-primary);
-}
-
-.quantityBtn:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
-.quantityValue {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 32px;
-  height: 28px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  text-align: center;
-}
-
-.dark .quantityValue {
-  background: rgba(255, 255, 255, 0.03);
-  color: #f1f5f9;
-}
-
-.light .quantityValue {
-  background: #ffffff;
-  color: #1e293b;
-}
-
-/* Line total */
-.lineTotal {
-  font-size: 0.82rem;
-  font-weight: 600;
-  margin-left: auto;
-}
-
-.dark .lineTotal {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.light .lineTotal {
-  color: #2d3748;
 }
 
 /* Remove button */
@@ -630,12 +469,12 @@
 }
 
 /* ========================================
-   Footer / Cart Summary (Sticky Bottom)
+   Footer — single "Submit Enquiry" CTA (no summary/shipping/checkout)
    ======================================== */
 
 .footer {
   flex-shrink: 0;
-  /* extra bottom inset keeps the checkout button above the home indicator */
+  /* extra bottom inset keeps the CTA above the home indicator */
   padding: 20px 24px calc(24px + env(safe-area-inset-bottom, 0px));
 }
 
@@ -649,93 +488,17 @@
   background: #ffffff;
 }
 
-.summarySection {
+/* Primary "Submit Enquiry" button — brand blue with a gold hover accent. */
+.submitBtn {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 18px;
-}
-
-.summaryRow {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-}
-
-.summaryLabel {
-  font-size: 0.875rem;
-}
-
-.dark .summaryLabel {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.light .summaryLabel {
-  color: #718096;
-}
-
-.summaryValue {
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
-.dark .summaryValue {
-  color: #f1f5f9;
-}
-
-.light .summaryValue {
-  color: #1e293b;
-}
-
-.freeShipping {
-  color: #10b981 !important;
-  font-weight: 700;
-}
-
-/* Action buttons */
-.footerActions {
-  display: flex;
-  gap: 10px;
-}
-
-.viewCartBtn {
-  flex: 1;
-  padding: 13px 16px;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-align: center;
-}
-
-.dark .viewCartBtn {
-  background: rgba(255, 255, 255, 0.08);
-  color: #e2e8f0;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-.dark .viewCartBtn:hover {
-  background: rgba(255, 255, 255, 0.14);
-}
-
-.light .viewCartBtn {
-  background: #ffffff;
-  color: #1e293b;
-  border: 1px solid #e2e8f0;
-}
-
-.light .viewCartBtn:hover {
-  background: #f7fafc;
-  border-color: #cbd5e0;
-}
-
-.checkoutBtn {
-  flex: 1;
-  padding: 13px 16px;
-  border-radius: 10px;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
   border: none;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   color: #ffffff;
@@ -745,22 +508,25 @@
   text-align: center;
 }
 
-.dark .checkoutBtn {
-  background: var(--sf-gradient-primary);
+.dark .submitBtn {
   box-shadow: 0 4px 14px rgba(78, 163, 227, 0.35);
 }
 
-.checkoutBtn:hover {
-  box-shadow: 0 6px 20px rgba(24, 133, 216, 0.45);
+.submitBtn:hover {
+  box-shadow: 0 6px 20px rgba(250, 156, 76, 0.4);
   transform: translateY(-1px);
+  /* gold accent ring on hover for a warm secondary cue */
+  outline: 2px solid var(--sf-color-accent);
+  outline-offset: 2px;
 }
 
-.dark .checkoutBtn:hover {
-  box-shadow: 0 6px 20px rgba(78, 163, 227, 0.5);
-}
-
-.checkoutBtn:active {
+.submitBtn:active {
   transform: translateY(0);
+}
+
+.submitBtn:focus-visible {
+  outline: 2px solid var(--sf-color-accent);
+  outline-offset: 2px;
 }
 
 /* ========================================
@@ -774,10 +540,6 @@
 
   .header {
     padding: 16px 18px;
-  }
-
-  .shippingBanner {
-    padding: 12px 18px;
   }
 
   .itemsContainer {
@@ -797,11 +559,6 @@
 
   .footer {
     padding: 16px 18px calc(20px + env(safe-area-inset-bottom, 0px));
-  }
-
-  .footerActions {
-    flex-direction: column;
-    gap: 8px;
   }
 }
 

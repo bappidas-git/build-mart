@@ -10,6 +10,19 @@ import { useAuth } from "./AuthContext";
 import apiService from "../services/api";
 import Swal from "sweetalert2";
 
+// ─────────────────────────────────────────────────────────────────────────────
+// NOTE ON NAMING — the UI says "Enquiry List", the code still says "cart".
+// NEBM is an enquiry platform: customers build an "Enquiry List" and submit an
+// enquiry — they never pay or check out to buy. The *user-facing* copy below has
+// been reworded to "Enquiry List", but the INTERNAL names are intentionally
+// retained: the localStorage `"cart"` key, the `apiService.cart.*` namespace, and
+// every exposed field/function (`cartItems`, `addToCart`, `isCartOpen`, …). These
+// are load-bearing — renaming the storage key or API namespace would drop persisted
+// lists and break the login-merge / logout-clear / debounced dual-mode server sync.
+// So we rename the copy, not the plumbing. (See prompts/00-analysis-and-requirement-map.md
+// §5 + risk register §6.8.)
+// ─────────────────────────────────────────────────────────────────────────────
+
 const CartContext = createContext();
 
 export const useCart = () => {
@@ -273,10 +286,10 @@ export const CartProvider = ({ children }) => {
 
       cartToast({
         icon: "success",
-        title: wasUpdate ? "Cart Updated" : "Added to Cart",
+        title: wasUpdate ? "Enquiry List Updated" : "Added to Enquiry List",
         text: wasUpdate
           ? `${incoming.name} quantity updated`
-          : `${incoming.name} has been added to your cart`,
+          : `${incoming.name} has been added to your Enquiry List`,
       });
 
       if (openDrawer) setIsCartOpen(true);
@@ -285,7 +298,7 @@ export const CartProvider = ({ children }) => {
       cartToast({
         icon: "error",
         title: "Error",
-        text: "Failed to add item to cart",
+        text: "Failed to add item to your Enquiry List",
         timer: 2000,
       });
     }
@@ -296,7 +309,7 @@ export const CartProvider = ({ children }) => {
     cartToast({
       icon: "info",
       title: "Removed",
-      text: "Item removed from cart",
+      text: "Item removed from your Enquiry List",
       timer: 1500,
     });
   }, []);
@@ -326,12 +339,16 @@ export const CartProvider = ({ children }) => {
     if (!options.silent) {
       cartToast({
         icon: "info",
-        title: "Cart Cleared",
-        text: "Your cart has been emptied",
+        title: "Enquiry List Cleared",
+        text: "Your Enquiry List has been emptied",
       });
     }
   }, []);
 
+  // Retained on the context value for compatibility, but intentionally UNUSED by
+  // the enquiry UI: an Enquiry List shows no monetary total (customers enquire,
+  // they don't buy). Kept so any lingering importer still resolves — do not wire
+  // it back into the drawer/list. `getCartItemCount` (below) stays in use for the badge.
   const getCartTotal = useCallback(
     () =>
       cartItems.reduce((total, item) => total + item.price * item.quantity, 0),
