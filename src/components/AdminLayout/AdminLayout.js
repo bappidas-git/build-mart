@@ -73,9 +73,9 @@ const menuItems = [
     isSection: true,
   },
   {
-    title: "Orders",
-    icon: "mdi:cart-outline",
-    path: "/admin/orders",
+    title: "Enquiries",
+    icon: "mdi:clipboard-text-outline",
+    path: "/admin/enquiries",
   },
   {
     title: "Returns",
@@ -172,29 +172,28 @@ const AdminLayout = () => {
       if (isMountedRef.current) setNotificationLoading(true);
       const notificationItems = [];
 
-      // Fetch new/pending orders
+      // Fetch active enquiries (still moving through the follow-up pipeline).
       try {
-        const orders = await apiService.admin.getOrders();
-        // Orders awaiting fulfillment (legacy `status` kept as a fallback).
-        const newOrders = orders.filter(
-          (order) =>
-            order.fulfillmentStatus === "unfulfilled" ||
-            order.status === "pending" ||
-            order.status === "processing"
+        const enquiries = await apiService.admin.getEnquiries();
+        // Active/open subset of the canonical status set — a missing status is
+        // treated as brand-new so pre-migration rows still surface.
+        const ACTIVE_STATUSES = ["New", "Contacted", "In Discussion", "Quotation Sent"];
+        const activeEnquiries = enquiries.filter((e) =>
+          ACTIVE_STATUSES.includes(e.status || "New")
         );
-        newOrders.forEach((order) => {
+        activeEnquiries.forEach((enq) => {
           notificationItems.push({
-            id: `order-${order.id}`,
-            type: "order",
-            title: "New Order",
-            message: `Order #${order.orderNumber?.slice(-8) || order.id} - ${order.shippingAddress?.firstName || order.contactInfo?.firstName || "Customer"}`,
-            time: order.createdAt,
-            status: order.fulfillmentStatus || order.status,
-            link: "/admin/orders",
+            id: `enquiry-${enq.id}`,
+            type: "enquiry",
+            title: "New Enquiry",
+            message: `${enq.enquiryNumber || enq.orderNumber || enq.id} — ${enq.contact?.name || enq.customerName || "Customer"}`,
+            time: enq.createdAt,
+            status: enq.status || "New",
+            link: "/admin/enquiries",
           });
         });
       } catch (err) {
-        console.error("Error fetching orders for notifications:", err);
+        console.error("Error fetching enquiries for notifications:", err);
       }
 
       // Fetch new leads
@@ -583,16 +582,16 @@ const AdminLayout = () => {
                           width: 40,
                           height: 40,
                           bgcolor: alpha(
-                            theme.palette[notification.type === "order" ? "success" : "info"].main,
+                            theme.palette[notification.type === "enquiry" ? "success" : "info"].main,
                             0.15
                           ),
-                          color: notification.type === "order" ? "success.main" : "info.main",
+                          color: notification.type === "enquiry" ? "success.main" : "info.main",
                         })}
                       >
                         <Icon
                           icon={
-                            notification.type === "order"
-                              ? "mdi:cart-outline"
+                            notification.type === "enquiry"
+                              ? "mdi:clipboard-text-outline"
                               : "mdi:account-plus"
                           }
                           style={{ fontSize: 20 }}
@@ -684,11 +683,11 @@ const AdminLayout = () => {
                       "&:hover": { textDecoration: "underline" },
                     }}
                     onClick={() => {
-                      navigate("/admin/orders");
+                      navigate("/admin/enquiries");
                       handleNotificationClose();
                     }}
                   >
-                    View All Orders
+                    View All Enquiries
                   </Typography>
                   <Typography variant="caption" color="text.disabled" sx={{ mx: 1 }}>
                     |
@@ -800,16 +799,16 @@ const AdminLayout = () => {
                             width: 48,
                             height: 48,
                             bgcolor: alpha(
-                              theme.palette[notification.type === "order" ? "success" : "info"].main,
+                              theme.palette[notification.type === "enquiry" ? "success" : "info"].main,
                               0.15
                             ),
-                            color: notification.type === "order" ? "success.main" : "info.main",
+                            color: notification.type === "enquiry" ? "success.main" : "info.main",
                           })}
                         >
                           <Icon
                             icon={
-                              notification.type === "order"
-                                ? "mdi:cart-outline"
+                              notification.type === "enquiry"
+                                ? "mdi:clipboard-text-outline"
                                 : "mdi:account-plus"
                             }
                             style={{ fontSize: 24 }}

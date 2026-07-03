@@ -1677,6 +1677,49 @@ const apiService = {
       } catch (error) { console.error("Admin get enquiries error:", error); throw error; }
     },
 
+    // Single enquiry (fresh fetch for the detail dialog / after an update).
+    getEnquiry: async (id) => {
+      try {
+        if (IS_MOCK_API) {
+          const response = await api.get(`/enquiries/${id}`);
+          return response.data;
+        }
+        const response = await api.get(`/admin/enquiries/${id}`);
+        return extractData(response);
+      } catch (error) { console.error("Admin get enquiry error:", error); throw error; }
+    },
+
+    // Update an enquiry (status, adminNotes, …). Optional `event`
+    // ({ action, note }) appends an audit-trail entry to statusHistory — the
+    // enquiry twin of updateOrder. Mock mode reads-and-appends client-side; the
+    // Laravel branch sends the event with the PATCH and the server appends it
+    // (actor derived from the bearer token). This never touches payment/
+    // shipping/coupon fields, so none of the ex-commerce cancel/refund cascades
+    // can fire from here.
+    updateEnquiry: async (id, updates, event = null) => {
+      try {
+        if (IS_MOCK_API) {
+          const payload = { ...updates, updatedAt: new Date().toISOString() };
+          if (event) {
+            const current = await api.get(`/enquiries/${id}`);
+            payload.statusHistory = [
+              ...(current.data.statusHistory || []),
+              historyEvent(event.action, event.note),
+            ];
+          }
+          const response = await api.patch(`/enquiries/${id}`, payload);
+          return response.data;
+        }
+        const response = await api.patch(`/admin/enquiries/${id}`, event ? { ...updates, event } : updates);
+        return extractData(response);
+      } catch (error) { console.error("Admin update enquiry error:", error); throw error; }
+    },
+
+    // Convenience alias — set just the status, stamping a timeline entry.
+    updateEnquiryStatus: async (id, status) => {
+      return apiService.admin.updateEnquiry(id, { status }, { action: `Status → ${status}` });
+    },
+
     // --- Products ---
     getProducts: async (params = {}) => {
       try {
