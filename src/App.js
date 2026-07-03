@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   Navigate,
+  useParams,
 } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AnimatePresence } from "framer-motion";
@@ -30,7 +31,7 @@ import Products from "./pages/Products/Products";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import EnquiryList from "./pages/EnquiryList/EnquiryList";
 import SubmitEnquiry from "./pages/Checkout/Checkout";
-import OrderConfirmation from "./pages/OrderConfirmation/OrderConfirmation";
+import EnquiryConfirmation from "./pages/OrderConfirmation/OrderConfirmation";
 import OrderHistory from "./pages/OrderHistory/OrderHistory";
 import Profile from "./pages/Profile/Profile";
 import HelpCenter from "./pages/HelpCenter/HelpCenter";
@@ -61,6 +62,13 @@ import AdminSettings from "./pages/Admin/AdminSettings";
 
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import "./App.css";
+
+// Redirect the legacy /order-confirmation/:orderNumber path to the canonical
+// enquiry-confirmation URL, preserving the reference so bookmarks never 404.
+function LegacyOrderConfirmationRedirect() {
+  const { orderNumber } = useParams();
+  return <Navigate to={`/enquiry-confirmation/${orderNumber}`} replace />;
+}
 
 function App() {
   return (
@@ -113,7 +121,10 @@ function App() {
                                 <Route path="/products/:slug" element={<ProductDetails />} />
                                 <Route path="/enquiry-list" element={<EnquiryList />} />
                                 <Route path="/checkout" element={<SubmitEnquiry />} />
-                                <Route path="/order-confirmation/:orderNumber" element={<OrderConfirmation />} />
+                                <Route path="/enquiry-confirmation/:enquiryNumber" element={<EnquiryConfirmation />} />
+                                {/* Legacy path kept alive so old bookmarks/links
+                                    canonicalize to the enquiry-confirmation URL. */}
+                                <Route path="/order-confirmation/:orderNumber" element={<LegacyOrderConfirmationRedirect />} />
                                 <Route path="/orders" element={<OrderHistory />} />
                                 <Route path="/profile" element={<Profile />} />
                                 <Route path="/wishlist" element={<Wishlist />} />

@@ -101,11 +101,11 @@
   height: 96px;
   margin: 0 auto 1.5rem;
   border-radius: 50%;
-  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  background: linear-gradient(135deg, #4ea3e3 0%, #1885d8 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 32px rgba(72, 187, 120, 0.35);
+  box-shadow: 0 8px 32px rgba(24, 133, 216, 0.35);
   position: relative;
   transform: scale(0);
   transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -135,7 +135,7 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 3px solid rgba(72, 187, 120, 0.4);
+  border: 3px solid rgba(24, 133, 216, 0.4);
   animation: pulseRing 1.5s 0.8s ease-out forwards;
   opacity: 0;
 }
@@ -155,7 +155,7 @@
   font-size: 2rem;
   font-weight: 800;
   margin: 0 0 0.5rem;
-  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  background: linear-gradient(135deg, #4ea3e3 0%, #1885d8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -164,14 +164,16 @@
 .successSubtext {
   color: #718096;
   font-size: 1.05rem;
-  margin: 0;
+  margin: 0 auto;
+  max-width: 520px;
+  line-height: 1.6;
 }
 
 .dark .successSubtext {
   color: #a0aec0;
 }
 
-/* ===== Order Number Banner ===== */
+/* ===== Enquiry Reference Banner ===== */
 .orderNumberBanner {
   text-align: center;
   padding: 1.5rem;
@@ -237,64 +239,13 @@
   opacity: 0.85;
 }
 
-/* ===== Delivery Banner ===== */
-.deliveryBanner {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1.15rem 1.5rem;
-  background: #ffffff;
-  border-radius: 14px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
-  margin-bottom: 1.5rem;
-  border-left: 4px solid #48bb78;
-}
-
-.dark .deliveryBanner {
-  background: rgba(18, 34, 56, 0.8);
-  border-color: rgba(78, 163, 227, 0.12);
-  border-left-color: #48bb78;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
-}
-
-.deliveryIcon {
-  color: #48bb78;
-  flex-shrink: 0;
-}
-
-.deliveryText {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.deliveryLabel {
-  font-size: 0.8rem;
-  color: #718096;
-  font-weight: 500;
-}
-
-.dark .deliveryLabel {
-  color: #a0aec0;
-}
-
-.deliveryDate {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #1a202c;
-}
-
-.dark .deliveryDate {
-  color: #f7fafc;
-}
-
 /* ===== Content Grid ===== */
 .contentGrid {
   display: grid;
   grid-template-columns: 1fr 340px;
   gap: 1.5rem;
   align-items: start;
+  margin-top: 1.5rem;
 }
 
 .mainColumn {
@@ -380,7 +331,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  margin-bottom: 1.25rem;
 }
 
 .orderItem {
@@ -453,89 +403,45 @@
   color: #718096;
 }
 
+.itemPriceCell {
+  flex-shrink: 0;
+  text-align: right;
+}
+
 .itemPrice {
   font-weight: 700;
   font-size: 1rem;
   color: var(--sf-color-primary);
-  flex-shrink: 0;
 }
 
 .dark .itemPrice {
   color: var(--sf-color-primary);
 }
 
-/* ===== Totals ===== */
-.totalsSection {
-  border-top: 1px solid #edf2f7;
-  padding-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+.itemUnit {
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: #718096;
 }
 
-.dark .totalsSection {
-  border-top-color: rgba(78, 163, 227, 0.1);
+.dark .itemUnit {
+  color: #a0aec0;
 }
 
-.totalsRow {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  color: #4a5568;
-  padding: 0.2rem 0;
+.itemPriceMuted {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: #718096;
+  background: #edf2f7;
+  padding: 0.25rem 0.6rem;
+  border-radius: 8px;
+  white-space: nowrap;
 }
 
-.dark .totalsRow {
+.dark .itemPriceMuted {
   color: #cbd5e0;
-}
-
-.totalsRowFinal {
-  border-top: 1px solid #e2e8f0;
-  margin-top: 0.5rem;
-  padding-top: 0.75rem;
-  font-weight: 800;
-  font-size: 1.1rem;
-  color: #1a202c;
-}
-
-.dark .totalsRowFinal {
-  border-top-color: rgba(78, 163, 227, 0.15);
-  color: #f7fafc;
-}
-
-/* ===== Address Block ===== */
-.addressBlock {
-  line-height: 1.7;
-}
-
-.addressBlock p {
-  margin: 0;
-  font-size: 0.925rem;
-  color: #4a5568;
-}
-
-.dark .addressBlock p {
-  color: #cbd5e0;
-}
-
-.addressName {
-  font-weight: 700;
-  color: #1a202c !important;
-  font-size: 1rem !important;
-}
-
-.dark .addressName {
-  color: #f7fafc !important;
-}
-
-.addressPhone {
-  margin-top: 0.5rem !important;
-  color: #718096 !important;
-  font-size: 0.85rem !important;
-}
-
-.dark .addressPhone {
-  color: #a0aec0 !important;
+  background: rgba(78, 163, 227, 0.12);
 }
 
 .textMuted {
@@ -548,60 +454,81 @@
   color: #718096;
 }
 
-/* ===== Payment ===== */
-.paymentBadge {
-  display: inline-block;
-  padding: 0.45rem 1rem;
-  background: #edf2f7;
-  border-radius: 8px;
-  font-weight: 700;
+/* ===== What Happens Next ===== */
+.nextSteps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.nextStepRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
   font-size: 0.9rem;
-  color: #2d3748;
-  letter-spacing: 0.03em;
-  margin-bottom: 0.75rem;
+  line-height: 1.55;
+  color: #4a5568;
 }
 
-.dark .paymentBadge {
-  background: rgba(78, 163, 227, 0.12);
-  color: #e2e8f0;
+.dark .nextStepRow {
+  color: #cbd5e0;
 }
 
-.paymentStatus {
+.nextStepIcon {
+  color: var(--sf-color-primary);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.telLink {
+  color: var(--sf-color-primary);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.telLink:hover {
+  text-decoration: underline;
+}
+
+.dark .telLink {
+  color: var(--sf-color-primary-light, var(--sf-color-primary));
+}
+
+.contactBadge {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  margin-top: 1.15rem;
+  padding: 0.7rem 0.85rem;
+  background: rgba(250, 156, 76, 0.12);
+  border: 1px solid rgba(250, 156, 76, 0.35);
+  border-radius: 10px;
   font-size: 0.85rem;
-  color: #48bb78;
-  font-weight: 600;
+  color: #4a5568;
 }
 
-.paymentStatusDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #48bb78;
-  animation: pulse 2s infinite;
+.contactBadge svg {
+  color: var(--sf-color-accent, #fa9c4c);
+  flex-shrink: 0;
 }
 
-.paymentStatusPending {
-  color: #d69e2e;
+.contactBadge strong {
+  color: #1a202c;
+  font-weight: 700;
 }
 
-.paymentStatusPending .paymentStatusDot {
-  background: #d69e2e;
+.dark .contactBadge {
+  color: #cbd5e0;
+  background: rgba(250, 156, 76, 0.1);
+  border-color: rgba(250, 156, 76, 0.28);
 }
 
-.paymentStatusFailed {
-  color: #e53e3e;
-}
-
-.paymentStatusFailed .paymentStatusDot {
-  background: #e53e3e;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+.dark .contactBadge strong {
+  color: #f7fafc;
 }
 
 /* ===== Action Buttons ===== */
@@ -611,7 +538,7 @@
   gap: 0.75rem;
 }
 
-.btnTrack {
+.btnBrowse {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -628,16 +555,8 @@
   transition: all 0.2s;
 }
 
-.btnTrack:hover {
+.btnBrowse:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(24, 133, 216, 0.4);
-}
-
-.dark .btnTrack {
-  background: var(--sf-gradient-primary);
-}
-
-.dark .btnTrack:hover {
   box-shadow: 0 4px 16px rgba(24, 133, 216, 0.4);
 }
 
@@ -670,40 +589,6 @@
 
 .dark .btnContinue:hover {
   background: rgba(78, 163, 227, 0.08);
-}
-
-.btnInvoice {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  width: 100%;
-  padding: 0.85rem 1.5rem;
-  background: #f7fafc;
-  color: #4a5568;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btnInvoice:hover {
-  background: #edf2f7;
-  border-color: #cbd5e0;
-}
-
-.dark .btnInvoice {
-  background: rgba(18, 34, 56, 0.6);
-  color: #a0aec0;
-  border-color: rgba(78, 163, 227, 0.15);
-}
-
-.dark .btnInvoice:hover {
-  background: rgba(78, 163, 227, 0.08);
-  border-color: rgba(78, 163, 227, 0.25);
-  color: #e2e8f0;
 }
 
 /* ===== Shared Buttons ===== */
@@ -813,18 +698,12 @@
     height: 120px;
   }
 
-  .itemPrice {
+  .itemPriceCell {
     align-self: flex-end;
   }
 
   .notFoundActions {
     flex-direction: column;
     align-items: center;
-  }
-
-  .deliveryBanner {
-    flex-direction: column;
-    text-align: center;
-    padding: 1.25rem;
   }
 }
