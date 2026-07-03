@@ -39,7 +39,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService/TermsOfService";
 import CookiePolicy from "./pages/CookiePolicy/CookiePolicy";
 import RefundPolicy from "./pages/RefundPolicy/RefundPolicy";
-import Support from "./pages/Support/Support";
+import Contact from "./pages/Support/Support";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import SpecialOffers from "./pages/SpecialOffers/SpecialOffers";
 import Wishlist from "./pages/Wishlist/Wishlist";
@@ -130,7 +130,8 @@ function App() {
                                 <Route path="/wishlist" element={<Wishlist />} />
                                 <Route path="/special-offers" element={<SpecialOffers />} />
                                 <Route path="/help" element={<HelpCenter />} />
-                                <Route path="/support" element={<Support />} />
+                                <Route path="/support" element={<Contact />} />
+                                <Route path="/contact" element={<Contact />} />
                                 <Route path="/about" element={<AboutUs />} />
                                 <Route path="/privacy" element={<PrivacyPolicy />} />
                                 <Route path="/terms" element={<TermsOfService />} />
