@@ -28,6 +28,7 @@ import AdminLayout from "./components/AdminLayout/AdminLayout";
 import Home from "./pages/Home/Home";
 import Products from "./pages/Products/Products";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
+import EnquiryList from "./pages/EnquiryList/EnquiryList";
 import Checkout from "./pages/Checkout/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation/OrderConfirmation";
 import OrderHistory from "./pages/OrderHistory/OrderHistory";
@@ -110,6 +111,7 @@ function App() {
                                     legacy numeric /products/:id still resolves and
                                     redirects to the canonical slug URL. */}
                                 <Route path="/products/:slug" element={<ProductDetails />} />
+                                <Route path="/enquiry-list" element={<EnquiryList />} />
                                 <Route path="/checkout" element={<Checkout />} />
                                 <Route path="/order-confirmation/:orderNumber" element={<OrderConfirmation />} />
                                 <Route path="/orders" element={<OrderHistory />} />

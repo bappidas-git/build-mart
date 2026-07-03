@@ -1,0 +1,423 @@
+/* =============================================================================
+ * Enquiry List — full-page list of products the customer wants a quote on.
+ * Apple-minimal, mobile-first, soft rounded rows. All colour/spacing/radius/
+ * shadow comes from the shared --sf-* storefront tokens (Blue #1885d8 primary,
+ * Gold #fa9c4c accent), so dark mode flips automatically with body.dark and a
+ * client re-skin needs no edits here. No totals / shipping / payment anywhere.
+ * ========================================================================== */
+
+.page {
+  min-height: calc(100vh - 64px);
+  padding: var(--sf-space-6) 0 var(--sf-space-4);
+  background: var(--sf-color-bg);
+  transition: background var(--sf-transition), color var(--sf-transition);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--sf-container-max, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--sf-space-4);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-inline: var(--sf-space-5);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-inline: var(--sf-space-6);
+  }
+}
+
+/* ---- Header ---------------------------------------------------------------- */
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-1);
+  margin: var(--sf-space-2) 0 var(--sf-space-6);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--sf-space-3);
+}
+
+.headerIcon {
+  color: var(--sf-color-primary);
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: var(--sf-text-2xl);
+  font-weight: var(--sf-font-bold);
+  letter-spacing: -0.02em;
+  color: var(--sf-color-text);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: var(--sf-text-sm);
+  font-weight: var(--sf-font-medium);
+  color: var(--sf-color-text-muted);
+  margin: 0;
+  padding-left: calc(30px + var(--sf-space-3)); /* align under the title text */
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: var(--sf-text-xl);
+  }
+
+  .subtitle {
+    padding-left: 0;
+  }
+}
+
+/* ---- Row list -------------------------------------------------------------- */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-3);
+}
+
+.row {
+  display: flex;
+  gap: var(--sf-space-4);
+  padding: var(--sf-space-4);
+  border-radius: var(--sf-radius-lg);
+  background: var(--sf-color-surface);
+  border: 1px solid var(--sf-color-border);
+  box-shadow: var(--sf-shadow-xs);
+  transition: box-shadow var(--sf-transition), border-color var(--sf-transition),
+    transform var(--sf-transition);
+}
+
+.row:hover {
+  box-shadow: var(--sf-shadow-sm);
+  border-color: var(--sf-color-border-strong);
+}
+
+/* Image — links to the product (canonical slug URL via productPath). */
+.rowImage {
+  flex-shrink: 0;
+  width: 104px;
+  height: 104px;
+  border-radius: var(--sf-radius-md);
+  overflow: hidden;
+  background: var(--sf-color-surface-2);
+  display: block;
+}
+
+.rowImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--sf-transition);
+}
+
+.rowImage:hover img {
+  transform: scale(1.05);
+}
+
+/* Body — info column (left) + controls (right) on desktop. */
+.rowBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sf-space-4);
+}
+
+.rowInfo {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-1);
+}
+
+.brand {
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--sf-color-text-muted);
+}
+
+.name {
+  font-size: var(--sf-text-md);
+  font-weight: var(--sf-font-semibold);
+  line-height: var(--sf-leading-tight);
+  color: var(--sf-color-text);
+  text-decoration: none;
+  transition: color var(--sf-transition-fast);
+}
+
+.name:hover {
+  color: var(--sf-color-primary);
+}
+
+.variant {
+  font-size: var(--sf-text-sm);
+  font-weight: var(--sf-font-medium);
+  color: var(--sf-color-text-secondary);
+}
+
+.priceWrap {
+  margin-top: var(--sf-space-2);
+}
+
+/* Controls — quantity stepper + remove, right-aligned on desktop. */
+.rowControls {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--sf-space-3);
+}
+
+.removeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sf-space-1);
+  padding: var(--sf-space-1) var(--sf-space-2);
+  border: none;
+  border-radius: var(--sf-radius-sm);
+  background: transparent;
+  color: var(--sf-color-text-muted);
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-medium);
+  cursor: pointer;
+  transition: background var(--sf-transition-fast), color var(--sf-transition-fast);
+}
+
+.removeBtn:hover {
+  background: var(--sf-color-danger-bg);
+  color: var(--sf-color-danger);
+}
+
+.removeBtn:focus-visible {
+  outline: 2px solid var(--sf-color-danger);
+  outline-offset: 2px;
+}
+
+/* ---- Empty state ----------------------------------------------------------- */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--sf-space-16) var(--sf-space-6);
+  gap: var(--sf-space-3);
+}
+
+.emptyImage {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: var(--sf-space-2);
+}
+
+.emptyTitle {
+  font-size: var(--sf-text-xl);
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text);
+  margin: 0;
+}
+
+.emptyText {
+  font-size: var(--sf-text-base);
+  color: var(--sf-color-text-muted);
+  line-height: var(--sf-leading-normal);
+  max-width: 380px;
+  margin: 0 0 var(--sf-space-3);
+}
+
+.browseBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sf-space-3) var(--sf-space-8);
+  border: none;
+  border-radius: var(--sf-radius-md);
+  background: var(--sf-gradient-primary);
+  color: var(--sf-color-primary-contrast);
+  font-size: var(--sf-text-base);
+  font-weight: var(--sf-font-semibold);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(24, 133, 216, 0.3);
+  transition: box-shadow var(--sf-transition), transform var(--sf-transition);
+}
+
+.browseBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(250, 156, 76, 0.4);
+  outline: 2px solid var(--sf-color-accent);
+  outline-offset: 2px;
+}
+
+.browseBtn:active {
+  transform: translateY(0);
+}
+
+.browseBtn:focus-visible {
+  outline: 2px solid var(--sf-color-accent);
+  outline-offset: 2px;
+}
+
+/* ---- Sticky action bar ----------------------------------------------------- */
+.stickyBar {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--sf-z-sticky);
+  margin-top: var(--sf-space-6);
+  padding: var(--sf-space-4) 0 calc(var(--sf-space-4) + env(safe-area-inset-bottom, 0px));
+  background: var(--sf-color-surface); /* fallback if color-mix unsupported */
+  background: color-mix(in srgb, var(--sf-color-surface) 92%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid var(--sf-color-border);
+}
+
+.stickyInner {
+  width: 100%;
+  max-width: var(--sf-container-max, 1280px);
+  margin-inline: auto;
+  padding-inline: var(--sf-space-4);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--sf-space-3);
+}
+
+@media (min-width: 768px) {
+  .stickyInner {
+    padding-inline: var(--sf-space-5);
+  }
+}
+
+@media (min-width: 1024px) {
+  .stickyInner {
+    padding-inline: var(--sf-space-6);
+  }
+}
+
+.secondaryBtn {
+  padding: var(--sf-space-3) var(--sf-space-5);
+  border: 1px solid var(--sf-color-border-strong);
+  border-radius: var(--sf-radius-md);
+  background: transparent;
+  color: var(--sf-color-text-secondary);
+  font-size: var(--sf-text-sm);
+  font-weight: var(--sf-font-semibold);
+  cursor: pointer;
+  transition: background var(--sf-transition-fast), color var(--sf-transition-fast),
+    border-color var(--sf-transition-fast);
+}
+
+.secondaryBtn:hover {
+  background: var(--sf-color-surface-2);
+  color: var(--sf-color-text);
+  border-color: var(--sf-color-primary);
+}
+
+.secondaryBtn:focus-visible {
+  outline: 2px solid var(--sf-color-primary);
+  outline-offset: 2px;
+}
+
+/* Primary "Proceed to Submit Enquiry" — brand blue with a gold hover accent. */
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sf-space-2);
+  padding: var(--sf-space-3) var(--sf-space-6);
+  border: none;
+  border-radius: var(--sf-radius-md);
+  background: var(--sf-gradient-primary);
+  color: var(--sf-color-primary-contrast);
+  font-size: var(--sf-text-base);
+  font-weight: var(--sf-font-semibold);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(24, 133, 216, 0.3);
+  transition: box-shadow var(--sf-transition), transform var(--sf-transition);
+}
+
+.primaryBtn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(250, 156, 76, 0.4);
+  outline: 2px solid var(--sf-color-accent);
+  outline-offset: 2px;
+}
+
+.primaryBtn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.primaryBtn:focus-visible {
+  outline: 2px solid var(--sf-color-accent);
+  outline-offset: 2px;
+}
+
+.primaryBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Clear the fixed mobile BottomNav (~60px) so the sticky bar doesn't overlap it. */
+@media (max-width: 768px) {
+  .stickyBar {
+    bottom: 60px;
+  }
+
+  .stickyInner {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    width: 100%;
+  }
+}
+
+/* ---- Responsive rows ------------------------------------------------------- */
+@media (max-width: 640px) {
+  .rowBody {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--sf-space-3);
+  }
+
+  .rowControls {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .rowImage {
+    width: 84px;
+    height: 84px;
+  }
+}
+
+/* Respect users who prefer reduced motion (the shared tokens also zero the
+   transition durations; this drops the hover lift too). */
+@media (prefers-reduced-motion: reduce) {
+  .row:hover,
+  .browseBtn:hover,
+  .primaryBtn:hover:not(:disabled) {
+    transform: none;
+  }
+
+  .rowImage:hover img {
+    transform: none;
+  }
+}

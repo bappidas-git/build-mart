@@ -64,6 +64,18 @@ const normalizeCartItem = (raw = {}) => {
     comparePrice: Number(raw.comparePrice) || 0,
     currency: raw.currency || "INR",
     quantity: Math.max(1, parseInt(raw.quantity, 10) || 1),
+    // Optional display/link passthroughs — only carried when the caller supplied
+    // them, so an add path that omits them leaves the line shape unchanged. These
+    // let the Enquiry List page (prompt 17) deep-link to the canonical slug URL,
+    // show the brand, and render the honest price-mode via PriceBlock (exact /
+    // tiered "From" / onEnquiry). When absent the page falls back to the stored
+    // `price` (exact) or "Price on Enquiry" — it never fabricates a discount.
+    ...(raw.slug ? { slug: raw.slug } : {}),
+    ...(raw.brand ? { brand: raw.brand } : {}),
+    ...(raw.priceType ? { priceType: raw.priceType } : {}),
+    ...(raw.unitType ? { unitType: raw.unitType } : {}),
+    ...(raw.minQty != null ? { minQty: raw.minQty } : {}),
+    ...(Array.isArray(raw.priceTiers) ? { priceTiers: raw.priceTiers } : {}),
     // Only carried when known; gates the stock cap (otherwise unenforced).
     ...(stock !== null && !Number.isNaN(stock) ? { stock } : {}),
   };
