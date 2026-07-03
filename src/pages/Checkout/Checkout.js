@@ -6,7 +6,13 @@ import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../hooks/useCart";
 import { useAuth } from "../../hooks/useAuth";
 import { useOrder } from "../../context/OrderContext";
-import { productPath, PLACEHOLDER_IMG, onImageError } from "../../utils/helpers";
+import {
+  productPath,
+  PLACEHOLDER_IMG,
+  onImageError,
+  isValidPhone,
+  isEmailValid,
+} from "../../utils/helpers";
 import PriceBlock from "../../components/storefront/PriceBlock";
 import QuantityStepper from "../../components/storefront/QuantityStepper";
 import styles from "./Checkout.module.css";
@@ -64,9 +70,9 @@ const SubmitEnquiry = () => {
     const errs = {};
     if (!name.trim()) errs.name = "Please enter your name";
     if (!phone.trim()) errs.phone = "Please enter your phone number";
-    else if (!/^[+\d][\d\s-]{7,14}$/.test(phone.trim()))
-      errs.phone = "Enter a valid phone number";
-    if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+    else if (!isValidPhone(phone))
+      errs.phone = "Enter a valid 10-digit mobile number";
+    if (email.trim() && !isEmailValid(email))
       errs.email = "Enter a valid email address";
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -97,7 +103,11 @@ const SubmitEnquiry = () => {
           // items are quoted by our team, so no price is captured here.
           price: item.priceType === "exact" ? item.price : null,
         })),
-        contact: { name: name.trim(), phone: phone.trim(), email: email.trim() },
+        contact: {
+          name: name.trim(),
+          phone: phone.trim(),
+          email: email.trim() || null,
+        },
         notes: note.trim(),
         status: "New",
       };
