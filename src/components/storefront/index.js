@@ -13,7 +13,6 @@ export { default as QuantityStepper } from "./QuantityStepper";
 export { default as VariantSelector } from "./VariantSelector";
 export { default as TrustBadges } from "./TrustBadges";
 export { default as ProductGallery } from "./ProductGallery";
-export { default as DeliveryReturnsInfo } from "./DeliveryReturnsInfo";
 export { default as AddToCartBar } from "./AddToCartBar";
 export { default as ProductCard } from "./ProductCard";
 export { default as RelatedProducts } from "./RelatedProducts";

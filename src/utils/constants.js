@@ -1,7 +1,8 @@
 // App Info (override via .env)
 export const APP_NAME = process.env.REACT_APP_NAME || "North East Build Mart";
-export const APP_TAGLINE = "Quality products, great prices";
-export const APP_DESCRIPTION = "Shop with confidence – fast delivery, secure payments, easy returns";
+export const APP_TAGLINE = "Building materials for interior & exterior";
+export const APP_DESCRIPTION =
+  "Building materials for interior and exterior work — browse the catalogue and send an enquiry for pricing, bulk quotes and availability.";
 
 // NEBM brand tagline — the exact marketing line used on the storefront hero and
 // other brand surfaces. Kept separate from APP_TAGLINE (a short kicker used by
@@ -138,49 +139,48 @@ export const SOCIAL_LINKS = {
   WHATSAPP: "",
 };
 
-// Store contact (sensible defaults — update per project). Single source so the
-// Header top bar, Footer, Help Center and Support page all stay in sync.
-export const SUPPORT_EMAIL = "support@mystore.com";
-export const SUPPORT_PHONE = "+91 86385 43526";
-export const SUPPORT_ADDRESS =
-  "123 Commerce Street, Andheri East, Mumbai, Maharashtra 400069";
+// Store contact — NEBM. Single source so the Header top bar, Help Center and
+// Support/legal pages all stay in sync with the brand details above.
+export const SUPPORT_EMAIL = "info@northeastbuildmart.com";
+export const SUPPORT_PHONE = BRAND_PHONE_1;
+export const SUPPORT_ADDRESS = BRAND_ADDRESS;
 export const SUPPORT_HOURS = "Mon – Sat: 9:00 AM – 8:00 PM IST";
 
 // Date the legal/policy pages were last reviewed. Single source so the Privacy,
 // Terms, Cookie and Refund pages never show contradictory "last updated" dates.
 export const POLICY_LAST_UPDATED = "June 1, 2026";
 
-// FAQs
+// FAQs — written for the enquiry model (NEBM is not an online checkout store).
 export const FAQ_ITEMS = [
   {
     id: 1,
-    question: "How long does delivery take?",
+    question: "How do I get a price or place an enquiry?",
     answer:
-      "Standard delivery takes 5-7 business days. Express delivery is available in 2-3 business days. Same-day delivery is available in select cities.",
+      "Browse the catalogue, add the items you need to your Enquiry List, and submit an enquiry with your contact details. Our team reviews it and gets back to you with pricing, availability and the best way to proceed.",
   },
   {
     id: 2,
-    question: "What is your return policy?",
+    question: "Why do some products show \"Price on Enquiry\"?",
     answer:
-      "We offer a 7-day hassle-free return policy. If you're not satisfied with your purchase, you can request a return within 7 days of delivery. Refunds are processed within 5-7 business days.",
+      "Prices on building materials vary with grade, brand, quantity and current stock. For these items we quote you directly so the rate is accurate for what your project actually needs — just add them to your Enquiry List and send it across.",
   },
   {
     id: 3,
-    question: "Is payment secure?",
+    question: "Do you offer bulk or project pricing?",
     answer:
-      "Yes, all payments are processed through industry-standard SSL encryption. We support UPI, credit/debit cards, net banking, and Cash on Delivery.",
+      "Yes. Many products have tiered pricing, so larger quantities get better rates. For project or contractor requirements, mention the quantities in your enquiry and we'll prepare a tailored bulk quote.",
   },
   {
     id: 4,
-    question: "Do you offer Cash on Delivery?",
+    question: "Do you deliver, and where?",
     answer:
-      "Yes, Cash on Delivery is available on orders up to ₹50,000 in most pin codes across India.",
+      "We deliver across Nagaon and the wider North East region. Delivery options, timelines and any charges are confirmed along with your quote, based on the items and destination.",
   },
   {
     id: 5,
-    question: "How do I track my order?",
+    question: "How can I reach North East Build Mart?",
     answer:
-      "Once your order is shipped, you'll receive an email with a tracking number. You can track your order from the 'My Orders' section in your account.",
+      "Call or message us on either of our numbers, email us, or visit the store on Lawkhuwa Road, Nagaon. You can also send an enquiry from any product page and we'll respond as soon as we can.",
   },
 ];
 
@@ -261,10 +261,10 @@ export const BREAKPOINTS = {
   XL: 1440,
 };
 
-// Trust badges
+// Trust badges — enquiry model (no payments/returns messaging).
 export const TRUST_BADGES = [
-  "100% Secure Payment",
-  "Easy 7-Day Returns",
-  "24/7 Support",
-  "Best Price Guarantee",
+  "Wide Building-Materials Range",
+  "Bulk & Tiered Pricing",
+  "Local North East Delivery",
+  "Trusted Brands",
 ];

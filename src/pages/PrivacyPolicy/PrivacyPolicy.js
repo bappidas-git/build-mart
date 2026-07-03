@@ -9,13 +9,13 @@ const PrivacyPolicy = () => {
   const { isDarkMode } = useTheme();
 
   const sections = [
-    { title: "Information We Collect", content: `When you use ${APP_NAME}, we may collect personal information such as your name, email address, phone number, shipping address, and payment details. We also collect browsing data, device information, and cookies to improve your shopping experience.` },
-    { title: "How We Use Your Information", content: "We use your information to process orders, provide customer support, send order updates, personalize your experience, improve our services, and comply with legal obligations. We may also use your data for marketing with your consent." },
-    { title: "Data Sharing", content: "We share your data with payment processors, shipping partners, and service providers necessary to fulfill your orders. We do not sell your personal information to third parties. Data may be shared with law enforcement if legally required." },
-    { title: "Data Security", content: "We implement industry-standard security measures including SSL encryption, secure payment processing, and regular security audits. Your payment information is never stored on our servers." },
+    { title: "Information We Collect", content: `When you use ${APP_NAME}, we may collect personal information such as your name, email address, phone number and delivery address, along with the details of the enquiries you send us. We also collect browsing data, device information, and cookies to improve your experience.` },
+    { title: "How We Use Your Information", content: "We use your information to respond to your enquiries, prepare quotations, arrange delivery, provide customer support, personalize your experience, improve our services, and comply with legal obligations. We may also use your data to send updates with your consent." },
+    { title: "Data Sharing", content: "We share your data with delivery partners and service providers necessary to respond to your enquiries and arrange deliveries. We do not sell your personal information to third parties. Data may be shared with law enforcement if legally required." },
+    { title: "Data Security", content: "We implement industry-standard security measures including SSL/TLS encryption and regular security reviews to protect your information. We do not take or store card or online payment details on this website." },
     { title: "Cookies & Tracking", content: "We use cookies and similar technologies to remember your preferences, analyze site traffic, and deliver personalized content. You can manage cookie preferences through your browser settings." },
     { title: "Your Rights", content: "You have the right to access, correct, delete, or export your personal data. You can also opt out of marketing communications at any time. Contact us to exercise these rights." },
-    { title: "Data Retention", content: "We retain your data for as long as your account is active or as needed to provide services. Order data is retained for legal and tax compliance purposes." },
+    { title: "Data Retention", content: "We retain your data for as long as your account is active or as needed to provide our services. Enquiry records are retained for legitimate business, legal and tax compliance purposes." },
     { title: "Changes to This Policy", content: "We may update this privacy policy from time to time. We will notify you of significant changes via email or through our platform." },
   ];
 

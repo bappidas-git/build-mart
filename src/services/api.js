@@ -76,6 +76,22 @@ export const extractMeta = (response) => {
   return response.data?.meta || null;
 };
 
+/**
+ * Strip credentials from a user record (or array of them) before it reaches the
+ * client. JSON Server hands back the raw row including the plaintext password,
+ * so any admin surface that lists/reads users must sanitise here. Accepts a
+ * single user, an array, or a nullish value. Never surface users[].password.
+ */
+export const stripUserSecrets = (input) => {
+  const clean = (u) => {
+    if (!u || typeof u !== "object") return u;
+    const { password, confirmPassword, ...safe } = u;
+    return safe;
+  };
+  if (Array.isArray(input)) return input.map(clean);
+  return clean(input);
+};
+
 /** Extract human-readable error message */
 export const getErrorMessage = (error) => {
   if (error.response?.data) {
@@ -2431,12 +2447,16 @@ const apiService = {
     // --- Users ---
     getUsers: async (params = {}) => {
       try {
+        // Strip credentials before any user record reaches the client. JSON
+        // Server returns the raw row (password and all), so the admin Users
+        // list must sanitise it here; the Laravel branch is sanitised too as
+        // defence-in-depth. Never surface users[].password.
         if (IS_MOCK_API) {
           const response = await api.get("/users", { params });
-          return response.data;
+          return stripUserSecrets(response.data);
         }
         const response = await api.get("/admin/users", { params });
-        return extractData(response);
+        return stripUserSecrets(extractData(response));
       } catch (error) { console.error("Admin get users error:", error); return []; }
     },
 
@@ -2444,10 +2464,10 @@ const apiService = {
       try {
         if (IS_MOCK_API) {
           const response = await api.get(`/users/${id}`);
-          return response.data;
+          return stripUserSecrets(response.data);
         }
         const response = await api.get(`/admin/users/${id}`);
-        return extractData(response);
+        return stripUserSecrets(extractData(response));
       } catch (error) { console.error("Admin get user error:", error); throw error; }
     },
 
@@ -2458,10 +2478,10 @@ const apiService = {
             ...updates,
             updatedAt: new Date().toISOString(),
           });
-          return response.data;
+          return stripUserSecrets(response.data);
         }
         const response = await api.patch(`/admin/users/${id}`, updates);
-        return extractData(response);
+        return stripUserSecrets(extractData(response));
       } catch (error) { console.error("Admin update user error:", error); throw error; }
     },
 

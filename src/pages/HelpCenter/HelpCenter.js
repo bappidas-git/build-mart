@@ -11,11 +11,11 @@ const HelpCenter = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const helpTopics = [
-    { icon: "&#128230;", title: "Orders & Shipping", desc: "Track orders, delivery times, shipping info", link: "/orders" },
-    { icon: "&#128257;", title: "Returns & Refunds", desc: "Return policy, refund process, exchanges", link: "/refund" },
-    { icon: "&#128179;", title: "Payments", desc: "Payment methods, billing, invoices", link: "/support" },
+    { icon: "&#128230;", title: "Browse & Enquire", desc: "Find products and send an enquiry for pricing", link: "/products" },
+    { icon: "&#128203;", title: "Your Enquiries", desc: "View the enquiries you've submitted", link: "/orders" },
+    { icon: "&#127991;", title: "Pricing & Bulk Quotes", desc: "Tiered pricing, quotes and \"Price on Enquiry\"", link: "/products" },
     { icon: "&#128100;", title: "Account & Settings", desc: "Profile, password, login issues", link: "/profile" },
-    { icon: "&#127873;", title: "Deals & Offers", desc: "Coupons, special offers, rewards", link: "/special-offers" },
+    { icon: "&#128666;", title: "Delivery & Coverage", desc: "Where and how we deliver across the North East", link: "/about" },
     { icon: "&#128274;", title: "Privacy & Security", desc: "Data protection, account security", link: "/privacy" },
   ];
 

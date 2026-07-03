@@ -870,7 +870,7 @@ const AdminProducts = () => {
             )}
 
             {/* Inventory */}
-            <Grid item xs={12}><Divider /><Typography variant="subtitle2" color="text.secondary" fontWeight={600} sx={{ mt: 1 }}>Inventory & Shipping</Typography></Grid>
+            <Grid item xs={12}><Divider /><Typography variant="subtitle2" color="text.secondary" fontWeight={600} sx={{ mt: 1 }}>Inventory & Dimensions</Typography></Grid>
             <Grid item xs={12} sm={4}>
               <TextField label="Stock Quantity" type="number" value={form.stock} onChange={(e) => setField("stock", clampNum(e.target.value, { int: true }))} fullWidth size="small" inputProps={{ min: 0 }} />
             </Grid>
