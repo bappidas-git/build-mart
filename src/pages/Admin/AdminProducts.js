@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Box, Paper, Typography, Button, Table, TableBody, TableCell,
   TableContainer, TableHead, TableRow, IconButton, Chip, Avatar,
@@ -9,6 +9,7 @@ import {
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import apiService from "../../services/api";
+import { orderCategoriesHierarchically } from "../../utils/categories";
 
 const emptyProduct = {
   name: "", slug: "", sku: "", shortDescription: "", description: "",
@@ -16,7 +17,12 @@ const emptyProduct = {
   stock: 0, lowStockThreshold: 10, weight: 0,
   dimensions: { length: 0, width: 0, height: 0 },
   variants: [],
+  // specifications: key/value rows rendered on the storefront product spec table.
+  specifications: [],
   tags: [], featured: false, trending: false, hot: false, isActive: true,
+  // special: additive "Special Products" badge (NOT an exclusive category) — feeds
+  // the storefront Special Products collection.
+  special: false,
   metaTitle: "", metaDescription: "",
 };
 
@@ -64,7 +70,12 @@ const AdminProducts = () => {
 
   const openCreate = () => {
     setEditingProduct(null);
-    setForm({ ...emptyProduct, dimensions: { length: 0, width: 0, height: 0 }, variants: [] });
+    setForm({
+      ...emptyProduct,
+      dimensions: { length: 0, width: 0, height: 0 },
+      variants: [],
+      specifications: [],
+    });
     setErrors({});
     setImageInput("");
     setTagsInput("");
@@ -93,8 +104,13 @@ const AdminProducts = () => {
             sku: v.sku || "",
           }))
         : [],
+      // Clone specification rows for the same reason.
+      specifications: Array.isArray(p.specifications)
+        ? p.specifications.map((s) => ({ label: s.label || "", value: s.value || "" }))
+        : [],
       tags: p.tags || [], featured: !!p.featured,
       trending: !!p.trending, hot: !!p.hot, isActive: p.isActive !== false,
+      special: !!p.special,
       metaTitle: p.metaTitle || "", metaDescription: p.metaDescription || "",
     });
     setErrors({});
@@ -129,6 +145,19 @@ const AdminProducts = () => {
   const removeVariant = (idx) =>
     setForm((f) => ({ ...f, variants: f.variants.filter((_, i) => i !== idx) }));
 
+  // ── Specifications ─────────────────────────────────────────────────────
+  const addSpec = () =>
+    setForm((f) => ({ ...f, specifications: [...f.specifications, { label: "", value: "" }] }));
+
+  const updateSpec = (idx, key, value) =>
+    setForm((f) => ({
+      ...f,
+      specifications: f.specifications.map((s, i) => (i === idx ? { ...s, [key]: value } : s)),
+    }));
+
+  const removeSpec = (idx) =>
+    setForm((f) => ({ ...f, specifications: f.specifications.filter((_, i) => i !== idx) }));
+
   // Make a URL-safe slug that doesn't collide with another product's slug.
   const makeUniqueSlug = (base) => {
     let slug = slugify(base);
@@ -155,6 +184,11 @@ const AdminProducts = () => {
         stock: clampNum(v.stock, { int: true }),
         sku: v.sku.trim(),
       }));
+
+    // Drop rows where both label and value are blank; trim the rest.
+    const cleanedSpecs = form.specifications
+      .map((s) => ({ label: (s.label || "").trim(), value: (s.value || "").trim() }))
+      .filter((s) => s.label || s.value);
 
     // ── Validation ──────────────────────────────────────────────────────
     const nextErrors = {};
@@ -213,15 +247,26 @@ const AdminProducts = () => {
       variants: cleanedVariants,
       tags: tagsInput.split(",").map((s) => s.trim()).filter(Boolean),
       featured: form.featured, trending: form.trending, hot: form.hot, isActive: form.isActive,
+      // special: additive Special Products badge (see prompt 11 storefront collection).
+      special: form.special,
       metaTitle: form.metaTitle, metaDescription: form.metaDescription,
     };
+    // Only attach specifications to a create payload when non-empty, keeping fresh
+    // records clean. On edit we always send it (below) so clearing all rows sticks.
+    if (cleanedSpecs.length) editable.specifications = cleanedSpecs;
 
     try {
       setSaving(true);
       if (editingProduct) {
         // updateProduct PUTs the full record (mock) — merge over the original so
         // server-managed fields (rating, totalReviews, createdAt) survive the edit.
-        await apiService.admin.updateProduct(editingProduct.id, { ...editingProduct, ...editable });
+        // specifications is set explicitly so removing every row overrides the
+        // original's stale array rather than being masked by the spread.
+        await apiService.admin.updateProduct(editingProduct.id, {
+          ...editingProduct,
+          ...editable,
+          specifications: cleanedSpecs,
+        });
       } else {
         await apiService.admin.createProduct(editable);
       }
@@ -253,6 +298,17 @@ const AdminProducts = () => {
 
   const getCategoryName = (id) => categories.find((c) => String(c.id) === String(id))?.name || "—";
   const fc = (n) => `₹${Number(n || 0).toLocaleString("en-IN")}`;
+
+  // Category options ordered as a tree (parent immediately followed by its
+  // children, depth-first) with a depth per id, so the Select can visually nest
+  // subcategories. Storing/reading still uses the raw categoryId.
+  const categoryOptions = useMemo(() => {
+    const { ordered, depthOf } = orderCategoriesHierarchically(categories);
+    return ordered.map((c) => ({ id: c.id, name: c.name, depth: depthOf(c.id) }));
+  }, [categories]);
+
+  // "— " prefix (one per level) makes sub-category depth legible in a flat Select.
+  const indentName = (name, depth) => (depth > 0 ? `${"— ".repeat(depth)}${name}` : name);
 
   // For variant products the product-level stock is rarely the real figure, so
   // show the summed variant stock; the chip colour follows the same total.
@@ -293,9 +349,17 @@ const AdminProducts = () => {
           />
           <FormControl size="small" sx={{ minWidth: 180 }}>
             <InputLabel>Category</InputLabel>
-            <Select value={categoryFilter} label="Category" onChange={(e) => setCategoryFilter(e.target.value)}>
+            <Select
+              value={categoryFilter} label="Category"
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              renderValue={(val) => (val === "all" ? "All Categories" : getCategoryName(val))}
+            >
               <MenuItem value="all">All Categories</MenuItem>
-              {categories.map((c) => (<MenuItem key={c.id} value={String(c.id)}>{c.name}</MenuItem>))}
+              {categoryOptions.map((c) => (
+                <MenuItem key={c.id} value={String(c.id)} sx={{ pl: 2 + c.depth * 1.5 }}>
+                  {indentName(c.name, c.depth)}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </Box>
@@ -351,6 +415,18 @@ const AdminProducts = () => {
                       </TableCell>
                       <TableCell>
                         <Box sx={{ display: "flex", gap: 0.5, flexWrap: "wrap" }}>
+                          {p.special && (
+                            <Chip
+                              label="Special"
+                              size="small"
+                              icon={<Icon icon="mdi:star-shooting-outline" style={{ fontSize: 13 }} />}
+                              sx={{
+                                height: 20, fontSize: "0.65rem",
+                                bgcolor: "#fa9c4c", color: "#fff",
+                                "& .MuiChip-icon": { color: "#fff", ml: 0.5 },
+                              }}
+                            />
+                          )}
                           {p.featured && <Chip label="Featured" size="small" color="primary" sx={{ height: 20, fontSize: "0.65rem" }} />}
                           {p.trending && <Chip label="Trending" size="small" color="secondary" sx={{ height: 20, fontSize: "0.65rem" }} />}
                           {p.hot && <Chip label="Hot" size="small" color="error" sx={{ height: 20, fontSize: "0.65rem" }} />}
@@ -401,9 +477,17 @@ const AdminProducts = () => {
             <Grid item xs={12} sm={6}>
               <FormControl size="small" fullWidth>
                 <InputLabel>Category</InputLabel>
-                <Select value={form.categoryId ?? ""} label="Category" onChange={(e) => setField("categoryId", e.target.value)}>
+                <Select
+                  value={form.categoryId ?? ""} label="Category"
+                  onChange={(e) => setField("categoryId", e.target.value)}
+                  renderValue={(val) => (val === "" || val == null ? "None" : getCategoryName(val))}
+                >
                   <MenuItem value="">None</MenuItem>
-                  {categories.map((c) => (<MenuItem key={c.id} value={c.id}>{c.name}</MenuItem>))}
+                  {categoryOptions.map((c) => (
+                    <MenuItem key={c.id} value={c.id} sx={{ pl: 2 + c.depth * 1.5 }}>
+                      {indentName(c.name, c.depth)}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -414,7 +498,58 @@ const AdminProducts = () => {
               <TextField label="Full Description" value={form.description} onChange={(e) => setField("description", e.target.value)} fullWidth size="small" multiline rows={4} />
             </Grid>
 
+            {/* Specifications — key/value rows rendered on the storefront spec table. */}
+            <Grid item xs={12}>
+              <Divider />
+              <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mt: 1 }}>
+                <Box>
+                  <Typography variant="subtitle2" color="text.secondary" fontWeight={600}>
+                    <Icon icon="mdi:format-list-bulleted" style={{ fontSize: 16, verticalAlign: "-2px", marginRight: 4 }} />
+                    Specifications (optional)
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    Technical details shown on the storefront product page (e.g. Material → WPC, Thickness → 18mm).
+                  </Typography>
+                </Box>
+                <Button size="small" startIcon={<Icon icon="mdi:plus" />} onClick={addSpec} sx={{ flexShrink: 0 }}>
+                  Add Specification
+                </Button>
+              </Box>
+            </Grid>
+            {form.specifications.length === 0 ? (
+              <Grid item xs={12}>
+                <Box sx={{ p: 2, border: "1px dashed", borderColor: "divider", borderRadius: 1, textAlign: "center" }}>
+                  <Typography variant="caption" color="text.secondary">No specifications added.</Typography>
+                </Box>
+              </Grid>
+            ) : (
+              form.specifications.map((s, idx) => (
+                <Grid item xs={12} key={idx}>
+                  <Box sx={{ display: "flex", gap: 1, flexWrap: { xs: "wrap", md: "nowrap" }, alignItems: "flex-start" }}>
+                    <TextField
+                      label={`Label ${idx + 1}`} value={s.label}
+                      onChange={(e) => updateSpec(idx, "label", e.target.value)}
+                      size="small" sx={{ flex: 1, minWidth: 140 }}
+                      placeholder="e.g., Material"
+                    />
+                    <TextField
+                      label="Value" value={s.value}
+                      onChange={(e) => updateSpec(idx, "value", e.target.value)}
+                      size="small" sx={{ flex: 2, minWidth: 160 }}
+                      placeholder="e.g., WPC (Wood-Plastic Composite)"
+                    />
+                    <Tooltip title="Remove specification">
+                      <IconButton color="error" onClick={() => removeSpec(idx)} sx={{ mt: 0.25 }}>
+                        <Icon icon="mdi:delete-outline" />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
+                </Grid>
+              ))
+            )}
+
             {/* Pricing */}
+            {/* Pricing controls (priceType/tiers/unit/display flags) are added in prompt 27 */}
             <Grid item xs={12}><Divider /><Typography variant="subtitle2" color="text.secondary" fontWeight={600} sx={{ mt: 1 }}>Pricing</Typography></Grid>
             <Grid item xs={12} sm={4}>
               <TextField
@@ -538,6 +673,7 @@ const AdminProducts = () => {
                 <FormControlLabel control={<Switch checked={form.featured} onChange={(e) => setField("featured", e.target.checked)} />} label="Featured" />
                 <FormControlLabel control={<Switch checked={form.trending} onChange={(e) => setField("trending", e.target.checked)} />} label="Trending" />
                 <FormControlLabel control={<Switch checked={form.hot} onChange={(e) => setField("hot", e.target.checked)} />} label="Hot" />
+                <FormControlLabel control={<Switch checked={form.special} onChange={(e) => setField("special", e.target.checked)} />} label="Special Product (badged collection)" />
               </Box>
             </Grid>
 
