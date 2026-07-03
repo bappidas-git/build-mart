@@ -6,12 +6,12 @@ import { useWishlist } from "../../context/WishlistContext";
 import { useCart } from "../../hooks/useCart";
 import { useAuth } from "../../hooks/useAuth";
 import {
-  formatCurrency,
   getProductMinPrice,
   getDefaultCartVariant,
   buildCartItem,
   productPath,
 } from "../../utils/helpers";
+import PriceBlock from "../../components/storefront/PriceBlock";
 import styles from "./Wishlist.module.css";
 
 const SORT_OPTIONS = [
@@ -85,20 +85,20 @@ const Wishlist = () => {
     }, 300);
   };
 
-  const handleAddToCart = (e, item) => {
+  const handleAddToEnquiryList = (e, item) => {
     e.stopPropagation();
     // Same normalized line shape as card/PDP quick-adds (same default variant
-    // and id scheme) so a wishlist add merges into the existing cart line. The
-    // wishlist row's product id lives in `productId`, not `id`.
+    // and id scheme) so a wishlist add merges into the existing Enquiry List
+    // line. The wishlist row's product id lives in `productId`, not `id`.
     addToCart(buildCartItem({ ...item, id: item.productId }), 1);
   };
 
-  const handleMoveToCart = async (e, item) => {
+  const handleMoveToEnquiryList = async (e, item) => {
     e.stopPropagation();
-    handleAddToCart(e, item);
+    handleAddToEnquiryList(e, item);
     setRemovingId(item.productId);
     setTimeout(() => {
-      // Silent: keeps the "Added to Cart" toast on screen instead of
+      // Silent: keeps the "Added to Enquiry List" toast on screen instead of
       // replacing it with a "Removed" toast mid-move.
       removeFromWishlist(item.productId, { silent: true });
       setRemovingId(null);
@@ -262,9 +262,13 @@ const Wishlist = () => {
           <AnimatePresence mode="popLayout">
             {sortedItems.map((item, index) => {
               const priceInfo = getProductMinPrice(item);
-              const hasDiscount = priceInfo.discount > 0;
-              // Stock of what "Add to Cart" would add: the default (cheapest)
-              // variant when the product has variants, else the product itself.
+              // Keep the media discount badge ONLY for a genuine exact-price
+              // compare delta (a real selling price below a real compare price);
+              // never fabricate one for an on-enquiry (price 0) row.
+              const hasDiscount = priceInfo.sellingPrice > 0 && priceInfo.discount > 0;
+              // Stock of what "Add to Enquiry List" would add: the default
+              // (cheapest) variant when the product has variants, else the
+              // product itself.
               // Unknown stock (older saved rows) is treated as in-stock.
               const defaultVariant = getDefaultCartVariant(item);
               const stockValue = defaultVariant ? defaultVariant.stock : item.stock;
@@ -327,16 +331,20 @@ const Wishlist = () => {
                       <StarRating rating={item.rating} count={item.totalReviews} />
                     )}
 
-                    {/* Price */}
+                    {/* Price — the shared PriceBlock renders the product's
+                        price-mode honestly: exact ₹ (with a struck compare when
+                        there's a genuine delta) or a calm "Price on Enquiry"
+                        pill. Never forces a sale/original pair on an on-enquiry
+                        row. */}
                     <div className={styles.priceRow}>
-                      <span className={styles.salePrice}>
-                        {formatCurrency(priceInfo.sellingPrice, "INR")}
-                      </span>
-                      {hasDiscount && (
-                        <span className={styles.originalPrice}>
-                          {formatCurrency(priceInfo.originalPrice, "INR")}
-                        </span>
-                      )}
+                      <PriceBlock
+                        product={item}
+                        price={priceInfo.sellingPrice}
+                        comparePrice={item.comparePrice}
+                        currency="INR"
+                        mode="card"
+                        size="md"
+                      />
                     </div>
 
                     {/* Stock Status */}
@@ -352,22 +360,22 @@ const Wishlist = () => {
                     <div className={styles.cardActions}>
                       <button
                         className={styles.addToCartBtn}
-                        onClick={(e) => handleAddToCart(e, item)}
+                        onClick={(e) => handleAddToEnquiryList(e, item)}
                         disabled={!inStock}
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <circle cx="9" cy="21" r="1" />
-                          <circle cx="20" cy="21" r="1" />
-                          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+                          <path d="M9 2h6a2 2 0 0 1 2 2h1a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1a2 2 0 0 1 2-2z" />
+                          <line x1="9" y1="12" x2="15" y2="12" />
+                          <line x1="9" y1="16" x2="13" y2="16" />
                         </svg>
-                        Add to Cart
+                        Add to Enquiry List
                       </button>
                       <button
                         className={styles.moveToCartBtn}
-                        onClick={(e) => handleMoveToCart(e, item)}
+                        onClick={(e) => handleMoveToEnquiryList(e, item)}
                         disabled={!inStock}
                       >
-                        Move to Cart
+                        Move to Enquiry List
                       </button>
                     </div>
                   </div>
