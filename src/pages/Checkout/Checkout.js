@@ -120,7 +120,7 @@ const SubmitEnquiry = () => {
           result.order.enquiryNumber ||
           result.order.orderNumber ||
           result.order.id;
-        navigate(`/order-confirmation/${ref}`);
+        navigate(`/enquiry-confirmation/${ref}`);
       }
     } catch (e) {
       console.error("Submit enquiry error:", e);

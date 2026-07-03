@@ -33,7 +33,7 @@ export const ROUTES = {
   PRODUCT_DETAIL: "/products/:slug",
   PROFILE: "/profile",
   ORDERS: "/orders",
-  ORDER_CONFIRMATION: "/order-confirmation",
+  ENQUIRY_CONFIRMATION: "/enquiry-confirmation",
   CHECKOUT: "/checkout",
   WISHLIST: "/wishlist",
   SUPPORT: "/support",
