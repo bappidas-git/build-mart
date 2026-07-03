@@ -2,7 +2,7 @@
 
 Full authentication flows, the complete error catalogue (every failure the frontend handles, with its
 status code and exact JSON), validation rules, a consolidated edge-case/pitfall list, and the
-**frontend-parity test checklist** to run after building each module.
+**frontend-parity test checklist** to run after building each module — all for **North East Build Mart**.
 
 ---
 
@@ -26,6 +26,10 @@ the other.
 - **Scopes/abilities:** issue customer tokens and admin tokens with **distinct Sanctum abilities** (or
   use separate guards). A customer token must be rejected (**401**/**403**) on any `/admin/*` route and
   vice-versa. All `/admin/*` routes require a valid **admin-scoped** token.
+
+> **Enquiries are guest-friendly.** `POST /enquiries` (and the public reads) require **no** token; a
+> logged-in customer's `userId` is sent (and should be derived from the token when present). Do not
+> force auth on the enquiry-submission path.
 
 ### 1.2 Customer flows
 
@@ -75,7 +79,14 @@ logged-out token can never be replayed. A revoked/expired token on any later req
 
 > **JWT alternative:** acceptable only if it meets this exact contract — opaque Bearer string in
 > `data.token`, the same endpoints/bodies/envelope, customer vs admin separation, and **server-side
-> revocation on logout** (maintain a denylist/short TTL + refresh). **Sanctum is the default.**
+> revocation on logout**. **Sanctum is the default.**
+
+### 1.6 Password hygiene (non-negotiable)
+
+`users[].password` / `admins[].password` exist in `db.json` as seed plaintext to hash on import. The
+API must **never** serialize `password` into any response, and the frontend must never place it in
+state, storage or logs. `GET /auth/user`, login `data.user`, and `data.admin` all return the **safe**
+record (every field except `password`).
 
 ---
 
@@ -97,21 +108,14 @@ Every documented failure the frontend handles:
 | 2 | Duplicate email on register | `POST /auth/register` | **422** | `{ message: "An account with this email already exists. Please log in instead." }` (or `errors.email`) |
 | 3 | Invalid login credentials | `POST /auth/login`, `POST /admin/auth/login` | **401** (or 422) | `{ message: "Invalid email or password" }` — *not* an auto-logout (login is excluded) |
 | 4 | Unauthenticated / expired / wrong-scope token | any protected | **401** | `{ message: "Unauthenticated." }` → client drops the matching session |
-| 5 | Not found | `GET /...slug/{}`, `/{id}`, `/number/{}` | **404** | `{ message: "Not found" }` |
-| 6 | Coupon invalid (unknown) | `POST /coupons/validate` | **404** or 400/422 | `{ message: "Invalid coupon code" }` |
-| 7 | Coupon expired | `POST /coupons/validate` | 400/422 | `{ message: "Coupon has expired" }` |
-| 8 | Coupon usage limit reached | `POST /coupons/validate` | 400/422 | `{ message: "Coupon usage limit reached" }` |
-| 9 | Coupon below minimum | `POST /coupons/validate` | 400/422 | `{ message: "Minimum order amount is ₹<minOrderAmount>" }` |
-| 10 | Coupon per-user limit reached | `POST /coupons/validate`, `POST /orders` | 400/422 | `{ message: "<human message>" }` (server-enforced) |
-| 11 | Refund exceeds remaining | `POST /admin/payments/{id}/refund` | **422** | `{ message: "Refund exceeds the remaining ₹<n>" }` |
-| 12 | Category in use on delete | `DELETE /admin/categories/{id}` | **409** | `{ message: "Cannot delete this category — N subcategories and M products still reference it. Reassign or remove them first." }` |
-| 13 | Cancel not allowed (already shipped/delivered) | `POST /orders/{id}/cancel` | 409/422 | `{ message: "<human message>" }` |
-| 14 | Review not allowed (no eligible purchase) | `POST /products/{id}/reviews` | **403** | `{ message: "<human message>" }` |
-| 15 | DELETE of absent row | any `DELETE` | **404** | `{}` — client treats a confirmed 404 as success (file 00 §13) |
-| 16 | Server fault | any | **5xx** | logged by client; does not drop session — reserve for real faults |
+| 5 | Not found | `GET /...slug/{}`, `/{id}`, `/enquiries/number/{}` | **404** | `{ message: "Not found" }` |
+| 6 | Invalid enquiry (empty items / missing contact / bad quantity) | `POST /enquiries` | **422** | `{ message, errors: { … } }` (see §3) |
+| 7 | Category in use on delete | `DELETE /admin/categories/{id}` | **409** | `{ message: "Cannot delete this category — N subcategories and M products still reference it. Reassign or remove them first." }` |
+| 8 | DELETE of absent row | any `DELETE` | **404** | `{}` — client treats a confirmed 404 as success (file 00 §13) |
+| 9 | Server fault | any | **5xx** | logged by client; does not drop session — reserve for real faults |
 
-> Coupon rejections (6–10) and `REFUND_EXCEEDS` (11) and `CATEGORY_IN_USE` (12) are treated by the
-> client as **expected outcomes** (not console errors) as long as they are 4xx with a `message`.
+> `CATEGORY_IN_USE` (7) is treated by the client as an **expected** outcome (not a console error) as
+> long as it is a 4xx with a `message`.
 
 ---
 
@@ -125,66 +129,63 @@ These mirror the client's checks; enforce them server-side (the client cannot be
 | `password` | length ≥ 6 (`isPasswordStrong`) | `required, min:6, confirmed` (register & change-password) → 422 |
 | `password_confirmation` | must match | `confirmed` |
 | `current_password` | required on change-password | must match the stored hash → 422 |
-| `phone` (IN) | `/^(\+91|0)?[6-9]\d{9}$/` after stripping spaces/dashes/parens | optional but validate when present; tolerate stored `"+91 9876543210"` style |
-| address fields | `firstName, lastName, phone, addressLine1, city, state, postalCode` required (checkout & profile) | validate on order/profile writes |
-| `rating` | 1–5 | `required, integer, between:1,5` |
+| `phone` (IN) | `/^(\+91|0)?[6-9]\d{9}$/` after stripping spaces/dashes/parens | validate when present; tolerate stored `"+91 98765 43210"` style |
+| address fields | `firstName, lastName, phone, addressLine1, city, state, postalCode` required (profile address book) | validate on profile writes |
+| **enquiry `items`** | non-empty; each item has a resolvable `productId` and `quantity ≥ 1` | `required, array, min:1` → 422 |
+| **enquiry `contact.name`** | required, trimmed | `required` → 422 |
+| **enquiry `contact.phone`** | required, IN phone rule | `required` + phone rule → 422 |
+| **enquiry `contact.email`** | optional | `nullable, email` |
+| **enquiry `notes`** | optional free text | `nullable` |
+| `rating` | 1–5 | `required, integer, between:1,5` (admin review create) |
 | review `title` | ≤ 80 chars | optional |
 | review `body` | ≤ 1000 chars | optional |
 | contact `message` | ≥ 20 chars | validate on `POST /leads/contact` |
-| coupon `code` | uppercased/trimmed | store & match uppercased |
 
 ---
 
 ## 4. Consolidated edge cases & pitfalls
 
 1. **DELETE never cascades; return 404 when absent.** Block category deletes that have dependents
-   (409) — do not delete the products/subcategories (file 03 §9). The `deleteWithVerify` dance in the
-   mock is only papering over a json-server bug; your clean 200/404 makes it a no-op.
-2. **Idempotency.** Refund settlement, wallet credit/debit, coupon restore, and store-credit return
-   must be **idempotent** (guards: `couponRestored`, `storeCreditReturned`, `storeCreditCredited`;
-   settle the newest *pending* refund row only). A retried request must not double-apply.
-3. **Recompute money server-side.** Never trust client `subtotal/discount/shipping/tax/total/
-   amountPayable/storeCreditUsed`. Recompute from products/coupon/shipping/tax (file 00 §14, file 03 §1).
-   Never trust a client-sent wallet balance — debit against the server ledger with the overspend guard.
-4. **ISO-8601 UTC with ms + `Z`** for every timestamp (`2026-01-15T10:30:00.000Z`). `new Date(...)`
-   parses these; a different format will mis-render dates and break the return window.
-5. **Numeric top-level ids; string variant ids.** Don't quote `order.id`; do keep `variants[].id`
-   (`"v1"`) a string. The client compares some ids type-tolerantly but expects numeric resource ids.
-6. **JSON-shape fidelity.** Every nested structure must serialize with the exact camelCase keys/nesting
-   (`items`, `variants`, `addresses`, `statusHistory`, `refunds`, `recall`, `pendingRefund`,
-   `gatewayResponse`, `dimensions`, `settings.*`, `dealsConfig.*`). Use API Resources.
-7. **Pagination meta.** Lists are consumed as plain arrays today — **return the full working set**.
-   `extractMeta()` reads `response.data.meta` only; if you paginate later, include
-   `{ current_page, last_page, per_page, total }` and don't truncate before the client is updated.
-8. **Server owns `orderNumber`/`returnNumber`/`refundNumber`.** Ignore any client-sent `orderNumber`
-   on `POST /orders`; generate and return the canonical value (file 00 §7).
-9. **`deliveredAt` gates the return window.** "Mark delivered" must set `shippingStatus:"delivered"`
-   **and** `deliveredAt`; the storefront's 7-day return eligibility keys on it (falls back to
-   `updatedAt`).
-10. **Order History badge derivation** (so your status values render correctly): `fulfillmentStatus
-    ==="returned"` ⇒ *Returned*; `fulfillmentStatus==="cancelled"` **or** `paymentStatus ∈
-    (failed, refunded)` ⇒ *Cancelled*; `shippingStatus==="delivered"` ⇒ *Delivered*;
-    `shippingStatus==="shipped"` ⇒ *Shipped*; else *Processing*. A **partial** refund must **not**
-    cancel the order (keep `paymentStatus:"partially_refunded"`, not `refunded`).
-11. **`statusHistory.by` from the token.** Customer-initiated cascades record `"Customer"`;
-    admin actions record the admin's name; system events `"System"`. Never accept `by` from the client.
-12. **Two-step refunds.** While `refundStatus:"processing"`, leave the order's `paymentStatus`
-    untouched (storefront shows the order normally with a "refund in progress" note); only `complete`
-    books the money and flips `paymentStatus`.
-13. **Store-credit vs external split.** A part-credit order's external capture = `amountPayable`; the
-    credit portion returns to the wallet on cancel, never double-refunded to the card.
-14. **Admin vs storefront list scoping.** Public `/categories` & `/shipping/methods` may return all /
-    active respectively (client filters); admin `/admin/categories` & `/admin/shipping-methods` include
-    inactive. `/admin/orders` must add `customerEmail`/`customerName`. `/admin/payments` must support
-    `?orderId=`.
-15. **One review per (user, product), re-submit ⇒ pending.** Editing an approved review removes it from
-    the storefront until re-approved.
-16. **Coupon edit preserves usage.** `PUT /admin/coupons/{id}` must merge (keep `usedCount`/
-    `createdAt`); a naive replace would reset usage and break "Limit Reached".
-17. **Empty collections are valid** (`cart`, `wishlist` seed empty; `banners` may be empty → UI uses
-    defaults). Return `[]`, not 404.
-18. **`weight` is non-integer** (kg, e.g. `0.065`); product `dimensions` may be null; variant arrays may
-    be empty — tolerate all.
+   (**409**) — do not delete the products/subcategories (file 03 §5). The `deleteWithVerify` dance in
+   the mock only papers over a json-server bug; your clean 200/404 makes it a no-op.
+2. **The enquiry path moves no money.** `POST /enquiries` must **never** create a payment, redeem a
+   coupon, move a wallet, deduct stock or compute a total. Enforce the `type:"enquiry"` intent
+   server-side (file 03 §2). An enquiry is a pure lead.
+3. **Empty Enquiry List.** Submitting with zero items is invalid → **422**; the storefront also blocks
+   it in the UI (the Submit Enquiry screen shows an empty state and no submit).
+4. **Missing contact phone.** `contact.phone` (and `contact.name`) are required; reject with **422**.
+   `contact.email` is optional and may be `null`.
+5. **Guest vs logged-in enquiry.** `userId` is **nullable** — a guest may submit. When logged in, the
+   client sends `userId`; derive it from the token server-side and don't trust a mismatched body value.
+6. **On-enquiry / tiered items carry no price.** An enquiry item's `price` is populated **only** for an
+   `exact`-priced product; `tiered` and `onEnquiry` items send `price: null`. Never infer or invent a
+   price for them, and never sum item prices into a total.
+7. **Server owns `enquiryNumber` and `status`.** Ignore any client-sent `enquiryNumber` on
+   `POST /enquiries`; generate the canonical `ENQ-YYYYMMDD-NNNN`. Force `status:"New"` at create; only
+   admin `PATCH /admin/enquiries/{id}` changes it thereafter (file 00 §7, §14).
+8. **`statusHistory.by` from the token.** The first entry (`"Enquiry submitted"`) records the
+   submitting contact's name; admin status changes record the admin's name; system events `"System"`.
+   Never accept `by` from the client.
+9. **ISO-8601 UTC with ms + `Z`** for every timestamp (`2026-01-15T10:30:00.000Z`). `new Date(...)`
+   parses these; a different format mis-renders dates.
+10. **Numeric top-level ids; string variant ids.** Don't quote `enquiry.id`; do keep `variants[].id`
+    (`"v1"`) a string. The client compares some ids type-tolerantly but expects numeric resource ids.
+11. **JSON-shape fidelity.** Every nested structure must serialize with the exact camelCase keys/nesting
+    (`items`, `contact`, `statusHistory`, `variants`, `priceTiers`, `addresses`, `dimensions`,
+    `settings.*`). Use API Resources.
+12. **Pagination meta.** Lists are consumed as plain arrays today — **return the full working set**.
+    `extractMeta()` reads `response.data.meta` only; if you paginate later, include
+    `{ current_page, last_page, per_page, total }` and don't truncate before the client is updated.
+13. **Admin vs storefront list scoping.** Public `/categories` may return all (client filters/sorts);
+    admin `/admin/categories` includes inactive. `/admin/enquiries` must add computed
+    `customerName`/`customerEmail`. `/admin/products` returns inactive products too.
+14. **Empty collections are valid** (`cart`, `wishlist` may be empty; `banners` may be empty → UI uses
+    defaults). Return `[]`, not 404. The retired collections (payments/refunds/returns/…) are seeded
+    empty and are not read by any live screen.
+15. **`weight` is non-integer** (kg); product `dimensions` may be `{}`; `variants`/`priceTiers` arrays
+    may be empty (most building-material products have no variants) — tolerate all.
+16. **Never leak `password`** (§1.6). And never surface the legacy `users.storeCredit` field as a
+    feature — NEBM has no wallet.
 
 ---
 
@@ -196,53 +197,41 @@ confirm **identical behaviour to the mock**:
 **Auth & session**
 - [ ] Customer login (with/without "Remember me"), reload keeps session (remember) or not (session).
 - [ ] Register duplicate email → 422 with the documented message; no auto-login.
-- [ ] Change password (wrong current → 422; valid → success).
+- [ ] Change password (wrong current → 422; valid → success). `password` never appears in any response.
 - [ ] Admin login → `/admin/dashboard`; admin and customer sessions coexist in one tab; a 401 on one
       doesn't log out the other; logout revokes the token (replay → 401).
 
 **Catalogue & storefront**
-- [ ] Home (featured/trending/categories/banners), Products listing (category/price/search/sort/paging
-      all work — client-side), PDP by slug, related + frequently-bought-together resolve.
-- [ ] Reviews: only approved show on PDP; `getMine` shows your pending/approved/rejected.
+- [ ] Home (featured / **Special Products** / categories / banners), Products listing
+      (category/price/search/sort/paging all work — client-side), PDP by slug, related +
+      frequently-bought-together resolve.
+- [ ] Pricing displays correctly per product: **exact** (fixed ₹), **tiered** (break table / "from ₹"),
+      **on-enquiry** (no price). Category deep-links (`?category=<slug>`) resolve, parent includes
+      children.
+- [ ] Reviews: only approved show on PDP.
 
-**Cart & checkout (the money math — file 03 §1)**
-- [ ] Subtotal, coupon discount (percentage capped by `maxDiscount`; fixed; min-order enforced),
-      shipping (free/flat/freeAbove), **tax = round(max(0,subtotal−discount)×rate/100)**, total.
-- [ ] Place order **COD** → payment `pending`, order `paymentStatus:"pending"`.
-- [ ] Place order **online** → payment `captured`, order `paymentStatus:"paid"`.
-- [ ] Place order **fully store-credit** → `paymentMethod:"store_credit"`, payment `captured`, wallet
-      debited, ledger debit written, balance drops.
-- [ ] Coupon `usedCount` increments on placement; server **recomputes** and rejects tampered totals.
-- [ ] COD availability respects `codEnabled`/`codMinOrder`/`codMaxOrder`.
+**Enquiry List & submission**
+- [ ] Add to Enquiry List (with quantity); adjust/remove lines; list persists for a logged-in user;
+      **no totals** shown anywhere.
+- [ ] Submit Enquiry with a note + contact (name, phone, optional email) → success screen shows the
+      `ENQ-…` reference; the enquiry appears under **My Enquiries** for a logged-in user.
+- [ ] Empty list → blocked; missing name/phone → 422; guest submit works (userId null); on-enquiry /
+      tiered items send `price: null`.
+- [ ] Submitting an enquiry creates **no** payment/coupon/wallet/stock side effect (server-verified).
 
-**Order lifecycle**
-- [ ] Cancel **before ship** (customer): COD → payment voided; online paid → refund initiated; coupon
-      restored; stock restocked; history records "Customer".
-- [ ] Admin cancel with **recall** (after ship): `recall{}`, `shippingStatus:"recalled"`, refund
-      initiated; **void** path for uncollected COD.
-- [ ] Refund **initiate → complete** books onto the payment (`partially_refunded`→`refunded`), mirrors
-      order `paymentStatus`, settles the ledger row; **fail** reverts.
-- [ ] Direct partial refund rejects over-amount (422 `REFUND_EXCEEDS`).
+**Admin — Enquiries**
+- [ ] List shows `customerName`/`customerEmail`; detail shows items/quantities/contact/note.
+- [ ] Advance status New → Contacted → In Discussion → Quotation Sent → Converted (and Closed/Lost);
+      each change appends a `statusHistory` entry attributed to the admin; `adminNotes` save.
 
-**Returns**
-- [ ] Storefront "request a return" creates a **contact lead** (`category:"returns"`).
-- [ ] Admin create return (server `RET-` number, seeded history); approve → schedule pickup → in
-      transit → received → **refund**.
-- [ ] Refund to **original payment**: order `partially_refunded`/`refunded`, `fulfillmentStatus:
-      "returned"`, ledger `return_refund` row; **restock** when opted in.
-- [ ] Refund to **store credit**: wallet credited (idempotent), balance rises.
-- [ ] **Full** return restores the coupon; a **partial** return does not.
-
-**Wallet, coupons, reviews, categories, deals**
-- [ ] Wallet balance = ledger Σ; transactions newest-first; overspend impossible.
-- [ ] Apply coupon at checkout & restore on full cancel/return; admin coupon edit preserves `usedCount`.
-- [ ] Submit review (gated to delivered, non-returned purchase); edit ⇒ pending; admin approve/reject/
-      delete; admin-authored review (`source:"admin"`, `userId:null`, approved).
+**Admin — Products, Categories, Reviews, Users, Leads, Settings, Dashboard**
+- [ ] Products CRUD incl. the pricing model (`priceType`, `priceTiers`, `unitType`, `special`, display
+      flags).
 - [ ] Delete category with products/subcategories → **blocked (409)**; a free category deletes (200).
-- [ ] Special Offers page reads `dealsConfig` (enabled toggle hides page+nav; hero/timer; featured id
-      arrays in order; empty arrays → documented auto-fallback). Settings tax rate / COD limits drive
-      checkout.
-
-**Dashboard**
-- [ ] `GET /admin/dashboard/stats` returns the 8 fields with values consistent with the data
-      (file 02 §N).
+- [ ] Reviews: admin approve/reject/delete; admin-authored review (`source:"admin"`, `userId:null`,
+      approved) appears on the PDP once approved.
+- [ ] Users: toggle `isActive`. Leads: contact/newsletter rows list; status/notes update; delete.
+- [ ] Settings: `PATCH /admin/settings/{section}` merges one of `store`/`notifications`/`seo`/`social`
+      and returns the whole object (no shipping/payment section).
+- [ ] `GET /admin/dashboard/stats` returns the **8** enquiry-centric fields with values consistent with
+      the data (file 02 §K).

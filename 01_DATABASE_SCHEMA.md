@@ -1,42 +1,39 @@
 # 01 — MySQL Database Schema
 
-Complete schema for all **18** `db.json` collections. For each: every column with type, nullability,
-default, keys, indexes and enumerated values; foreign keys & relationships; the recommended storage
-for nested JSON; and seed/migration guidance.
+Complete schema for the **North East Build Mart (NEBM)** collections. For each: every column with
+type, nullability, default, keys, indexes and enumerated values; foreign keys & relationships; the
+recommended storage for nested JSON; and seed/migration guidance.
 
 **Read alongside file 00 §10 (JSON-shape fidelity):** however you store a nested structure, the API
 **response** must serialize it with the exact camelCase keys, nesting and types shown here. Use
 Laravel **API Resources** to guarantee that. Conventions: PKs `BIGINT UNSIGNED AUTO_INCREMENT`
-serialized as **numbers**; timestamps ISO-8601 `…Z`; money INR **integer rupees**; booleans as JSON
-`true/false`.
+serialized as **numbers**; timestamps ISO-8601 `…Z`; product prices INR **integer rupees**; booleans as
+JSON `true/false`.
+
+> **NEBM has no money movement.** There are no orders/payments/refunds/returns/shipping/coupons/wallet
+> tables to build. The ex-commerce collections still exist in `db.json` but are **seeded empty** and are
+> **not part of the contract** — see §"Retired collections" at the end.
 
 ---
 
 ## ER overview (relationships)
 
 ```
-users 1───* orders            orders 1───* payments        orders 1───* refunds
-users 1───* returns           orders 1───* returns         returns 1──* refunds (returnId)
-users 1───* reviews           payments 1─* refunds (paymentId)
-users 1───* walletTransactions   users 1───* cart           users 1───* wishlist
-categories 1───* products     categories 1───* categories (parentId self-ref)
-products 1───* reviews        coupons (referenced by code on orders, by id in dealsConfig)
-admins (auth only)            banners (standalone)          shipping_methods (standalone)
-settings (singleton)          dealsConfig (singleton; references coupon & product ids)
+users 1───* enquiries          users 1───* reviews         users 1───* wishlist
+users 1───* cart (Enquiry List mirror)
+categories 1───* products      categories 1───* categories (parentId self-ref)
+products 1───* reviews         products (referenced by id in enquiries.items, wishlist, related/FBT arrays)
+leads (standalone)             admins (auth only)          banners (standalone)
+settings (singleton)
 ```
 
-Foreign keys (logical; see each table for on-delete rules — **never cascade-delete**, see file 03 §9):
+Foreign keys (logical; see each table for on-delete rules — **never cascade-delete**, see file 03 §5):
 
 - `products.categoryId → categories.id`
 - `categories.parentId → categories.id` (self, nullable)
-- `orders.userId → users.id`
-- `payments.orderId → orders.id`, `payments.userId → users.id`
-- `returns.orderId → orders.id`, `returns.userId → users.id`
-- `refunds.orderId → orders.id`, `refunds.returnId → returns.id`, `refunds.paymentId → payments.id`
-- `reviews.productId → products.id`, `reviews.userId → users.id` (nullable for admin-authored),
-  `reviews.orderId → orders.id` (nullable)
+- `enquiries.userId → users.id` (**nullable** — guests may submit enquiries)
+- `reviews.productId → products.id`, `reviews.userId → users.id` (nullable for admin-authored)
 - `cart.userId → users.id`, `wishlist.userId → users.id`
-- `walletTransactions.userId → users.id`, `…orderId → orders.id`, `…refundId → refunds.id`
 
 ---
 
@@ -50,7 +47,7 @@ Standalone homepage hero banners. **(seed: 3 rows)**
 | `title` | VARCHAR(255) | no | | |
 | `subtitle` | VARCHAR(255) | yes | | |
 | `cta` | VARCHAR(100) | yes | | button label, e.g. `"Shop Now"` |
-| `link` | VARCHAR(255) | yes | | e.g. `"/products?category=electronics"` |
+| `link` | VARCHAR(255) | yes | | e.g. `"/products?category=tiles"` |
 | `gradient` | VARCHAR(255) | yes | | CSS gradient string |
 
 > `banners.getAll()` tolerates an empty list (falls back to UI defaults). No `createdAt/updatedAt`
@@ -71,9 +68,11 @@ Standalone homepage hero banners. **(seed: 3 rows)**
 | `avatar` | VARCHAR(255) | yes | null | |
 | `addresses` | JSON | no | `[]` | array of address objects (below) |
 | `isActive` | TINYINT(1) | no | 1 | admin can toggle (`PATCH /admin/users/{id}`) |
-| `storeCredit` | INT | no | 0 | **denormalised cache** of wallet balance = Σcredits − Σdebits from `walletTransactions`. Ledger is source of truth; keep this equal on every wallet write |
 | `createdAt` | TIMESTAMP | no | now | ISO-8601 `…Z` |
 | `updatedAt` | TIMESTAMP | no | now | |
+
+> **Legacy field:** seed rows still carry `storeCredit` (INT) from the boilerplate wallet. NEBM has no
+> wallet — ignore it; you need not build the column. **Never surface `password`** into a response.
 
 **`addresses[]` object** (recommended storage: **JSON column** — order matters, full array is
 replaced on save by `PUT /auth/user { addresses:[…] }`):
@@ -114,7 +113,7 @@ replaced on save by `PUT /auth/user { addresses:[…] }`):
 
 ---
 
-## 4. `categories`  **(seed: 16 rows, self-referencing tree)**
+## 4. `categories`  **(seed: 43 rows — self-referencing NEBM tree)**
 
 | Column | Type | Null | Default | Notes |
 | --- | --- | --- | --- | --- |
@@ -126,80 +125,115 @@ replaced on save by `PUT /auth/user { addresses:[…] }`):
 | `parentId` | BIGINT UNSIGNED FK→categories.id | yes | null | top-level when null |
 | `isActive` | TINYINT(1) | no | 1 | storefront `getAll()` hides `isActive===false` |
 | `sortOrder` | INT | no | 0 | storefront sorts ascending by this |
-| `showInMainMenu` | TINYINT(1) | no | 0 | drives the top-nav menu |
+| `showInMainMenu` | TINYINT(1) | no | 0 | drives the top-nav menu (`getMainMenuCategories`) |
 | `menuOrder` | INT | no | 0 | order within the main menu |
 | `createdAt` | TIMESTAMP | no | now | |
 | `updatedAt` | TIMESTAMP | no | now | |
 
 Indexes: `slug` (unique), `parentId`, `isActive`, (`showInMainMenu`,`menuOrder`).
 
-> **Referential integrity (file 03 §9):** deleting a category that still has child categories
+**The NEBM tree** (top-level → sub-categories): **WPC Louvers · Polycarbonate Sheets · FRP Sheets ·
+Waterproofing Products** (no subs) · **Tiles** (Floor · Wall · Vitrified · Bathroom & Kitchen ·
+Outdoor) · **Doors** (Steel · PVC · WPC · Designer · Bathroom) · **Hardware** (Door Locks · Handles &
+Hinges · Fasteners · Cabinet Fittings · Construction Hardware) · **Plumbing** (PVC · CPVC · SWR Pipes ·
+Water Tanks · Fittings & Accessories) · **Bath Fittings** (Showers · Faucets & Taps · Wash Basins ·
+Sanitary Ware · Bathroom Accessories) · **Cement** (OPC · PPC · Premium) · **Steel Rods** (TMT Bars ·
+Construction Steel · High-Strength Reinforcement). *"Special Products" is **not** a category — it is a
+badged collection driven by the `products.special` flag (§5).*
+
+> **Referential integrity (file 03 §5):** deleting a category that still has child categories
 > (`parentId`) **or** products (`categoryId`) must be **blocked** (no cascade). The public
-> `GET /categories` may return everything (the client filters `isActive` & sorts); `GET
-> /admin/categories` must include inactive rows.
+> `GET /categories` may return everything (the client filters `isActive`, sorts, and applies
+> parent-includes-children scoping via `getCategoryScopeIds`); `GET /admin/categories` must include
+> inactive rows.
 
 ---
 
-## 5. `products`  **(seed: 21 rows)**
+## 5. `products`  **(seed: 70 rows)**
 
 | Column | Type | Null | Default | Notes |
 | --- | --- | --- | --- | --- |
 | `id` | BIGINT UNSIGNED PK | no | auto | numeric |
 | `name` | VARCHAR(255) | no | | |
 | `slug` | VARCHAR(255) UNIQUE | no | | `/products/slug/{slug}` |
-| `sku` | VARCHAR(100) | yes | | top-level SKU |
+| `sku` | VARCHAR(100) | yes | | top-level SKU (e.g. `"NEBM-1-001"`) |
 | `shortDescription` | VARCHAR(500) | yes | | |
 | `description` | TEXT | yes | | |
 | `categoryId` | BIGINT UNSIGNED FK→categories.id | yes | null | |
-| `brand` | VARCHAR(150) | yes | | |
+| `brand` | VARCHAR(150) | yes | | e.g. `"Greenpanel"`, `"CenturyPly"` |
 | `images` | JSON | no | `[]` | array of URL strings |
-| `price` | INT | no | 0 | INR; selling price |
+| `price` | INT | no | 0 | INR; reference/display price |
 | `comparePrice` | INT | yes | | strike-through original |
 | `costPrice` | INT | yes | | admin-only cost |
 | `stock` | INT | no | 0 | top-level stock |
 | `lowStockThreshold` | INT | yes | 10 | dashboard "low stock" uses `stock ≤ (this ?? 10)` |
-| `weight` | DECIMAL(8,3) | yes | | kg (e.g. `1.8`, `0.065`) — **non-integer allowed here** |
-| `dimensions` | JSON | yes | | `{ length, width, height }` numbers (cm); may be null |
-| `variants` | JSON | no | `[]` | array of variant objects (below) |
+| `weight` | DECIMAL(8,3) | yes | | kg — **non-integer allowed here** |
+| `dimensions` | JSON | yes | `{}` | `{ length, width, height }` numbers (cm); may be `{}` |
+| `variants` | JSON | no | `[]` | array of variant objects (below); often empty for building materials |
 | `tags` | JSON | no | `[]` | array of strings |
 | `featured` | TINYINT(1) | no | 0 | `/products/featured` |
 | `trending` | TINYINT(1) | no | 0 | `/products/trending` |
 | `hot` | TINYINT(1) | no | 0 | |
 | `isActive` | TINYINT(1) | no | 1 | inactive hidden in related/FBT/storefront |
-| `rating` | DECIMAL(2,1) | yes | | aggregate display rating (e.g. `4.6`) |
+| `rating` | DECIMAL(2,1) | yes | | aggregate display rating (e.g. `4.2`) |
 | `totalReviews` | INT | yes | 0 | aggregate display count |
 | `metaTitle` | VARCHAR(255) | yes | | |
 | `metaDescription` | VARCHAR(500) | yes | | |
 | `frequentlyBoughtTogetherIds` | JSON | yes | `[]` | array of product ids (numbers) |
 | `relatedProductIds` | JSON | yes | `[]` | array of product ids (numbers), curated order |
+| **`priceType`** | ENUM | no | `"onEnquiry"` | `"exact"` \| `"tiered"` \| `"onEnquiry"` — drives price display |
+| **`unitType`** | VARCHAR(30) | yes | null | selling unit, e.g. `"piece"`, `"sq ft"`, `"bag"`, `"kg"` |
+| **`minQty`** | INT | yes | 1 | minimum enquiry quantity |
+| **`priceTiers`** | JSON | no | `[]` | quantity-break table (below); non-empty for `tiered` |
+| **`showExactPrice`** | TINYINT(1) | no | 0 | show the fixed `price` on the PDP |
+| **`showTieredPricing`** | TINYINT(1) | no | 0 | show the tier table on the PDP |
+| **`cardPriceMode`** | VARCHAR(20) | no | `"hidden"` | product-card price mode: `"exact"` \| `"from"` \| `"hidden"` |
+| **`special`** | TINYINT(1) | no | 0 | member of the **Special Products** collection (§Special Products) |
 | `createdAt` | TIMESTAMP | no | now | |
 | `updatedAt` | TIMESTAMP | no | now | |
 
-**`variants[]` object** (recommended: **JSON column**; if normalized to a child table, serialize back
-to this exact shape):
+Seed pricing mix (70 products): **28 `exact` · 32 `tiered` · 10 `onEnquiry`**; **10** flagged `special`.
+
+**`priceTiers[]` object** (JSON; each row is a quantity break, ascending by `minQty`):
 
 | Field | Type | Notes |
 | --- | --- | --- |
-| `id` | **string** | e.g. `"v1"` — **must stay a string**; matched with `===` for cart/restock |
-| `name` | string | e.g. `"16GB RAM / 512GB SSD"` |
-| `price` | number (INR) | variant price |
-| `stock` | number | variant stock (restocked on returns/cancel) |
-| `sku` | string | variant SKU |
-| `attributes` | object | optional, e.g. `{ "Color": "Midnight Black" }` or `{ "Size":"M","Color":"White" }` |
-| `swatchHex` | string | optional, e.g. `"#1a1a2e"` (color swatch) |
+| `minQty` | number | quantity at which this price applies |
+| `price` | number (INR) | unit price at/above that quantity |
 
-> Products with no variants have `variants: []` (e.g. the TV id 13, cricket bat id 15). Empty
-> `tags`/`dimensions` occur (test product id 21). `rating`/`totalReviews`/`metaTitle` may be absent on
-> admin-created rows — tolerate nulls. **`frequentlyBoughtTogetherIds`/`relatedProductIds` reference
-> live product ids;** the storefront resolves them against the real catalogue (inactive/self filtered
-> out client-side).
+Example: `[{ "minQty": 1, "price": 340 }, { "minQty": 5, "price": 320 }, { "minQty": 20, "price": 299 }]`
+renders as *"from ₹299"* on the card (`cardPriceMode:"from"`) and a full break table on the PDP.
+
+**`variants[]` object** (recommended: **JSON column**; if normalized, serialize back to this exact
+shape). Optional for NEBM — most building materials have `variants: []`:
+
+| Field | Type | Notes |
+| --- | --- | --- |
+| `id` | **string** | e.g. `"v1"` — **must stay a string**; matched with `===` for Enquiry List/enquiry items |
+| `name` | string | e.g. `"6mm / Clear"` |
+| `price` | number (INR) | variant price |
+| `stock` | number | variant stock |
+| `sku` | string | variant SKU |
+| `attributes` | object | optional, e.g. `{ "Thickness": "6mm" }` |
+| `swatchHex` | string | optional color swatch |
+
+> `rating`/`totalReviews`/`metaTitle` may be absent on admin-created rows — tolerate nulls.
+> `frequentlyBoughtTogetherIds`/`relatedProductIds` reference live product ids; the storefront resolves
+> them against the real catalogue (inactive/self filtered out client-side).
+
+### Special Products (the `special` flag)
+There is **no** separate "special" table or category. `products.getSpecial()` returns products with
+`special === true` (mock: `GET /products?special=true`; Laravel: `GET /products/special?limit=`).
+These items **also** appear normally in their category listings — the flag is purely additive, used to
+populate the home-page band and the `/special-offers` collection page.
 
 ---
 
-## 6. `cart`  **(seed: 0 rows — empty)**
+## 6. `cart`  **(seed: 0 rows — empty)** — the **Enquiry List** mirror
 
-Server-side cart for a logged-in user. The client treats local state as source of truth and **mirrors
-it to the server as a full replace** (delete existing rows for the user, re-POST each line). Each row:
+Server-side persistence of a logged-in user's **Enquiry List** (the renamed cart). The client treats
+local state as the source of truth and **mirrors it to the server as a full replace** (delete existing
+rows for the user, re-POST each line). There are **no totals** — quantities only.
 
 | Column | Type | Null | Notes |
 | --- | --- | --- | --- |
@@ -210,277 +244,79 @@ it to the server as a full replace** (delete existing rows for the user, re-POST
 | `variantName` | VARCHAR(255) | yes | |
 | `name` | VARCHAR(255) | no | |
 | `image` | VARCHAR(255) | yes | |
-| `price` | INT | no | |
+| `price` | INT | yes | reference price snapshot (may be null for on-enquiry) |
 | `comparePrice` | INT | yes | |
-| `currency` | VARCHAR(3) | no | `"INR"` |
+| `priceType` | VARCHAR(20) | yes | `exact`/`tiered`/`onEnquiry` snapshot |
+| `unitType` | VARCHAR(30) | yes | |
+| `currency` | VARCHAR(3) | yes | `"INR"` |
 | `quantity` | INT | no | ≥ 1 |
 | `stock` | INT | yes | carried only when known |
 | `createdAt`/`updatedAt` | TIMESTAMP | yes | |
 
-**Endpoints used:** `GET /cart` (current user's lines), `POST /cart` (add a line — body is the row
-above minus id), `PATCH /cart/{id}`, `DELETE /cart/{id}`, `DELETE /cart` (clear all for user). The
-exact POST payload is the field list above (`userId` included). See file 02 (Cart).
+**Endpoints used:** `GET /cart`, `POST /cart` (add a line — body is the row above minus id),
+`PATCH /cart/{id}`, `DELETE /cart/{id}`, `DELETE /cart` (clear all for user). See file 02
+(Enquiry List). Scope every row to the authenticated user (derive `userId` from the token).
 
 ---
 
-## 7. `orders`  **(seed: 9 rows)** — central transactional table
+## 7. `enquiries`  **(seed: 11 rows)** — the central table
+
+Repurposed from the boilerplate `orders` table. A **pure lead**: contact + items + note + a workflow
+`status`. **No money, payment, shipping, coupon or address fields.**
 
 | Column | Type | Null | Default | Notes |
 | --- | --- | --- | --- | --- |
 | `id` | BIGINT UNSIGNED PK | no | auto | |
-| `orderNumber` | VARCHAR(40) UNIQUE | no | server-gen | `ORD-YYYYMMDD-NNNN` — **server owns** (file 00 §7) |
-| `userId` | BIGINT UNSIGNED FK→users.id | yes | | |
-| `items` | JSON | no | | array of line items (below) |
-| `billingAddress` | JSON | no | | address object (below) |
-| `shippingAddress` | JSON | no | | address object (below) |
-| `subtotal` | INT | no | | Σ(item.price×qty) |
-| `discountAmount` | INT | no | 0 | coupon discount |
-| `couponCode` | VARCHAR(40) | yes | null | applied code (uppercased) |
-| `shippingAmount` | INT | no | 0 | |
-| `taxAmount` | INT | no | 0 | rounded (file 03) |
-| `total` | INT | no | | subtotal − discount + shipping + tax |
-| `storeCreditUsed` | INT | yes | 0 | wallet applied at checkout |
-| `amountPayable` | INT | yes | | total − storeCreditUsed (what the gateway/COD collects) |
-| `paymentMethod` | ENUM | no | | `card`,`upi`,`net_banking`,`wallet`,`cod`,`store_credit` |
-| `paymentStatus` | ENUM | no | `pending` | see enum block below |
-| `fulfillmentStatus` | ENUM | no | `unfulfilled` | see enum block |
-| `shippingStatus` | ENUM | no | `pending` | see enum block |
-| `trackingNumber` | VARCHAR(100) | yes | null | |
-| `trackingUrl` | VARCHAR(255) | yes | null | |
-| `shiprocketOrderId` | VARCHAR(50) | yes | null | |
-| `notes` | VARCHAR(500) | yes | `""` | |
-| `statusHistory` | JSON | no | `[]` | audit timeline (below) |
-| `cancelReason` | VARCHAR(255) | yes | null | |
-| `cancelledAt` | TIMESTAMP | yes | null | |
-| `deliveredAt` | TIMESTAMP | yes | null | **return window keyed on this** |
-| `refundStatus` | ENUM | yes | null | `processing`,`completed`,`failed` |
-| `refundMethod` | VARCHAR(30) | yes | null | `original_payment`,`bank_transfer`,`upi`,`store_credit` |
-| `refundedAmount` | INT | yes | 0 | running settled refund total |
-| `refundCompletedAt` | TIMESTAMP | yes | null | |
-| `pendingRefund` | JSON | yes | null | in-flight refund stub (below) |
-| `recall` | JSON | yes | null | shipment recall info (below) |
-| `couponRestored` | TINYINT(1) | yes | 0 | idempotency guard for coupon restore |
-| `storeCreditReturned` | TINYINT(1) | yes | 0 | idempotency guard for wallet return |
+| `enquiryNumber` | VARCHAR(40) UNIQUE | no | server-gen | `ENQ-YYYYMMDD-NNNN` — **server owns** (file 00 §7) |
+| `userId` | BIGINT UNSIGNED FK→users.id | **yes** | null | **nullable** — guests may submit |
+| `items` | JSON | no | `[]` | array of enquiry line items (below) |
+| `contact` | JSON | no | | `{ name, phone, email }` (below) |
+| `notes` | VARCHAR(1000) | yes | `""` | the customer's note/message |
+| `adminNotes` | VARCHAR(2000) | yes | `""` | internal admin notes (not shown to the customer) |
+| `status` | ENUM | no | `New` | enum below |
+| `statusHistory` | JSON | no | `[]` | append-only audit timeline (below) |
 | `createdAt` | TIMESTAMP | no | now | |
 | `updatedAt` | TIMESTAMP | no | now | |
 
-**Computed-on-read (admin only, NOT stored):** `GET /admin/orders` must include
-`customerEmail` and `customerName` per order (eager-load the user). Mock joins `users` client-side;
-falls back to the order's own values if present.
+**Computed-on-read (admin only, NOT stored):** `GET /admin/enquiries` includes `customerName` and
+`customerEmail` per row — from `contact.name`/`contact.email`, falling back to the joined user account.
 
-**Enums:**
+**`status` enum** (the workflow pipeline — file 03 §3):
 
 ```
-paymentStatus      : pending | paid | partially_paid | partially_refunded | refunded | voided | failed
-                     (+ refund_pending is used on PAYMENTS, not orders; orders use refundStatus=processing)
-fulfillmentStatus  : unfulfilled | partially_fulfilled | fulfilled | returned | cancelled
-shippingStatus     : pending | shipped | delivered | recalled
-paymentMethod      : card | upi | net_banking | wallet | cod | store_credit
-refundStatus       : processing | completed | failed
+status : New | Contacted | In Discussion | Quotation Sent | Converted | Closed | Lost
 ```
 
-**`items[]` object** (JSON):
+**`items[]` object** (JSON) — a lightweight snapshot captured at submit time; **no line totals**:
 
 | Field | Type | Notes |
 | --- | --- | --- |
 | `productId` | number | |
 | `variantId` | string \| null | `"v1"` etc. |
-| `name` | string | includes variant suffix, e.g. `"SoundWave Pro … - Midnight Black"` |
+| `name` | string | includes any variant suffix, e.g. `"… - 6mm / Clear"` |
 | `image` | string | |
 | `sku` | string | may be `""` |
-| `price` | number (INR) | unit price |
 | `quantity` | number | |
-| `subtotal` | number (INR) | price×quantity |
+| `priceType` | string | `"exact"` \| `"tiered"` \| `"onEnquiry"` (snapshot of the product's mode) |
+| `unitType` | string \| null | e.g. `"piece"` |
+| `price` | number \| null | **only an `exact` item carries a number**; `tiered`/`onEnquiry` ⇒ `null` |
 
-**`billingAddress` / `shippingAddress` object** (JSON): `firstName, lastName, phone, addressLine1,
-addressLine2?, city, state, postalCode, country`. (Same checkout address shape as `users.addresses[]`
-minus `id/label/isDefault`.)
+> Legacy seed rows (pre-pivot) may carry the older item shape `{ productId, variantId, name, image,
+> sku, price, quantity }` with `price` populated and no `priceType`/`unitType` — tolerate both.
 
-**`statusHistory[]` object** (JSON; append-only audit timeline): `{ at: ISO, by: string, action:
-string, note?: string }`. `by` is the actor — `"Customer"`, `"System"`, or the admin's full name
-(e.g. `"Admin User"`). **Server derives `by` from the bearer token** (file 03).
+**`contact` object** (JSON): `{ name: string, phone: string, email: string|null }`. `phone` is required
+at submit; `email` is optional.
 
-**`pendingRefund` object** (JSON, nullable): `{ amount, method, reason, reference?, initiatedAt, by }`.
+**`statusHistory[]` object** (JSON; append-only): `{ at: ISO, by: string, action: string, note?: string }`.
+`by` is the actor — the submitting contact's name (or `"Customer"`) on creation, or the admin's name
+on a status change. **Server derives `by` from the bearer token** for admin actions (file 00 §14).
+The first entry is always `{ …, action: "Enquiry submitted" }`, seeded at create.
 
-**`recall` object** (JSON, nullable): `{ trackingNumber, trackingUrl, carrier, scheduledAt, by }`.
-
-Indexes: `orderNumber` (unique), `userId`, `paymentStatus`, `fulfillmentStatus`, `createdAt`.
-
----
-
-## 8. `returns`  **(seed: 2 rows)**
-
-| Column | Type | Null | Default | Notes |
-| --- | --- | --- | --- | --- |
-| `id` | BIGINT UNSIGNED PK | no | auto | |
-| `returnNumber` | VARCHAR(40) UNIQUE | no | server-gen | `RET-YYYYMMDD-NNNN` |
-| `orderId` | BIGINT UNSIGNED FK→orders.id | yes | | |
-| `orderNumber` | VARCHAR(40) | yes | | denormalised for display/lookup |
-| `userId` | BIGINT UNSIGNED FK→users.id | yes | | |
-| `items` | JSON | no | `[]` | same item shape as orders.items (no `image` required) |
-| `reason` | VARCHAR(40) | no | | enum below |
-| `reasonDetails` | VARCHAR(500) | yes | | free text |
-| `status` | ENUM | no | `requested` | enum below |
-| `refundAmount` | INT | no | 0 | requested gross refund |
-| `refundStatus` | ENUM | no | `pending` | `pending` \| `processed` |
-| `refundMethod` | ENUM | no | `original_payment` | `original_payment`,`store_credit`,`bank_transfer`,`upi` |
-| `deductionAmount` | INT | no | 0 | restocking fee; **payable = refundAmount − deductionAmount** |
-| `restocked` | TINYINT(1) | no | 0 | set true when items returned to stock |
-| `returnTrackingNumber` | VARCHAR(100) | yes | null | reverse waybill |
-| `returnTrackingUrl` | VARCHAR(255) | yes | null | |
-| `returnCarrier` | VARCHAR(100) | yes | null | |
-| `pickupScheduledAt` | TIMESTAMP | yes | null | |
-| `images` | JSON | no | `[]` | customer-supplied photo URLs |
-| `notes` | VARCHAR(500) | yes | `""` | admin notes |
-| `rejectReason` | VARCHAR(255) | yes | null | set when status=`rejected` |
-| `storeCreditCredited` | TINYINT(1) | yes | 0 | idempotency guard for store-credit refund |
-| `statusHistory` | JSON | no | `[]` | `{ at, by, action, note? }` |
-| `createdAt` | TIMESTAMP | no | now | |
-| `updatedAt` | TIMESTAMP | no | now | |
-
-**Enums:**
-
-```
-status        : requested | approved | pickup_scheduled | in_transit | received | refunded | rejected
-reason        : defective | wrong_item | not_as_described | changed_mind | size_fit | size_issue | quality | other
-                (storefront constants use size_fit & quality; admin uses size_issue — store the raw string,
-                 accept the full union)
-refundStatus  : pending | processed
-refundMethod  : original_payment | store_credit | bank_transfer | upi
-```
-
-Indexes: `returnNumber` (unique), `orderId`, `userId`, `status`.
+Indexes: `enquiryNumber` (unique), `userId`, `status`, `createdAt`.
 
 ---
 
-## 9. `payments`  **(seed: 7 rows)**
-
-| Column | Type | Null | Default | Notes |
-| --- | --- | --- | --- | --- |
-| `id` | BIGINT UNSIGNED PK | no | auto | |
-| `orderId` | BIGINT UNSIGNED FK→orders.id | no | | |
-| `orderNumber` | VARCHAR(40) | yes | | denormalised |
-| `userId` | BIGINT UNSIGNED FK→users.id | yes | | |
-| `amount` | INT | no | | what the gateway/COD/wallet charged (= order `amountPayable`, or `total` for a fully-store-credit order) |
-| `currency` | VARCHAR(3) | no | `"INR"` | |
-| `paymentMethod` | ENUM | no | | `card`,`upi`,`net_banking`,`wallet`,`cod`,`store_credit` |
-| `gateway` | ENUM | no | | `razorpay`,`cod`,`store_credit` |
-| `transactionId` | VARCHAR(100) | yes | null | gateway txn id; null for uncollected COD |
-| `gatewayOrderId` | VARCHAR(100) | yes | null | |
-| `status` | ENUM | no | | enum below |
-| `gatewayResponse` | JSON | no | `{}` | raw gateway payload (below) |
-| `storeCreditApplied` | INT | yes | 0 | store credit portion on the order |
-| `refundAmount` | INT | yes | 0 | **running** total refunded |
-| `refundReason` | VARCHAR(255) | yes | `""` | latest reason |
-| `refunds` | JSON | yes | `[]` | per-refund history (below) |
-| `pendingRefund` | JSON | yes | null | in-flight refund stub `{ amount, method, reason, initiatedAt, by }` |
-| `createdAt` | TIMESTAMP | no | now | |
-| `updatedAt` | TIMESTAMP | no | now | |
-
-**Enums:**
-
-```
-status        : captured | pending | refund_pending | partially_refunded | refunded | voided | failed
-paymentMethod : card | upi | net_banking | wallet | cod | store_credit
-gateway       : razorpay | cod | store_credit
-```
-
-**`refunds[]` object** (JSON): `{ id: string (e.g. "ref_seed0001"), amount: number, reason: string,
-at: ISO, by: string }`. The summary UI reads **net captured = `amount − refundAmount`**; `status`
-becomes `partially_refunded` until `refundAmount ≥ amount`, then `refunded` (file 03).
-
-**`gatewayResponse` object** (JSON): free-form. Seed examples: `{ "code":"SUCCESS", "bank":"HDFC",
-"last4":"4242" }`, `{ "code":"SUCCESS","bank":null,"wallet":"PhonePe" }`, or `{}` for COD/store-credit.
-
-Indexes: `orderId`, `status`, `userId`. **`GET /admin/payments` must support `?orderId=`** filter.
-
----
-
-## 10. `refunds`  **(seed: 3 rows)** — first-class refund ledger
-
-Queryable audit ledger surfaced under Admin → Payments · Refunds. One row per refund event
-(cancellation, order refund, recall, return refund, direct payment refund).
-
-| Column | Type | Null | Default | Notes |
-| --- | --- | --- | --- | --- |
-| `id` | BIGINT UNSIGNED PK | no | auto | |
-| `refundNumber` | VARCHAR(40) UNIQUE | no | server-gen | `REF-YYYYMMDD-XXXX` |
-| `type` | ENUM | no | | `return_refund`,`order_cancellation`,`recall_refund`,`order_refund`,`payment_refund` |
-| `orderId` | BIGINT UNSIGNED FK→orders.id | yes | null | |
-| `orderNumber` | VARCHAR(40) | yes | null | |
-| `returnId` | BIGINT UNSIGNED FK→returns.id | yes | null | |
-| `returnNumber` | VARCHAR(40) | yes | null | |
-| `paymentId` | BIGINT UNSIGNED FK→payments.id | yes | null | null when refunded to store credit |
-| `amount` | INT | no | 0 | |
-| `method` | VARCHAR(30) | no | `original_payment` | `original_payment`,`store_credit`,`bank_transfer`,`upi` |
-| `reason` | VARCHAR(255) | yes | `""` | |
-| `reference` | VARCHAR(255) | yes | null | external ref the admin typed |
-| `status` | ENUM | no | `pending` | `pending`,`completed`,`failed` |
-| `couponRestored` | TINYINT(1) | yes | 0 | |
-| `initiatedAt` | TIMESTAMP | yes | now | |
-| `settledAt` | TIMESTAMP | yes | null | set when `status=completed` |
-| `by` | VARCHAR(150) | yes | | actor name |
-| `createdAt` | TIMESTAMP | no | now | |
-| `updatedAt` | TIMESTAMP | no | now | |
-
-> Note the seed `type` values are a superset of the prompt's list: also includes `order_refund`
-> (admin order-level refund) and `payment_refund` (direct payment refund). Accept all five.
-> **The order/payment remain the source of truth for state — a failed ledger write must never block a
-> refund** (file 03).
-
-Indexes: `refundNumber` (unique), `orderId`, `returnId`, `paymentId`, `status`.
-
----
-
-## 11. `shipping_methods`  **(seed: 4 rows)**
-
-| Column | Type | Null | Default | Notes |
-| --- | --- | --- | --- | --- |
-| `id` | BIGINT UNSIGNED PK | no | auto | |
-| `name` | VARCHAR(150) | no | | e.g. `"Standard Delivery"` |
-| `carrier` | VARCHAR(100) | yes | | e.g. `"Shiprocket"`, `"Dunzo"` |
-| `description` | VARCHAR(255) | yes | | |
-| `rateType` | ENUM | no | `flat` | `flat` \| `free` \| `calculated` |
-| `flatRate` | INT | no | 0 | INR (0 for free) |
-| `freeAbove` | INT | yes | null | free when subtotal ≥ this (null/0 ⇒ no threshold) |
-| `estimatedDays` | VARCHAR(20) | yes | | e.g. `"5-7"`, `"0"` |
-| `isActive` | TINYINT(1) | no | 1 | storefront `GET /shipping/methods` returns **active only** |
-| `createdAt` | TIMESTAMP | yes | now | |
-
-> Checkout shipping cost: `rateType==="free"` OR (`freeAbove` set AND `subtotal ≥ freeAbove`) ⇒ 0;
-> else `flatRate` (file 03 §2). Admin sees all methods via `GET /admin/shipping-methods`.
-
----
-
-## 12. `coupons`  **(seed: 5 rows)**
-
-| Column | Type | Null | Default | Notes |
-| --- | --- | --- | --- | --- |
-| `id` | BIGINT UNSIGNED PK | no | auto | |
-| `code` | VARCHAR(40) UNIQUE | no | | uppercased/trimmed, e.g. `WELCOME500` |
-| `description` | VARCHAR(255) | yes | | |
-| `type` | ENUM | no | | `fixed` \| `percentage` |
-| `value` | INT | no | | rupees (fixed) or percent (percentage) |
-| `minOrderAmount` | INT | no | 0 | min subtotal to qualify |
-| `maxDiscount` | INT | yes | null | cap for percentage coupons (null ⇒ uncapped) |
-| `usageLimit` | INT | yes | null | global cap (null ⇒ unlimited) |
-| `usedCount` | INT | no | 0 | **server-owned** redemption counter |
-| `perUserLimit` | INT | yes | null | per-customer cap (null ⇒ unlimited) — **enforce server-side** |
-| `isActive` | TINYINT(1) | no | 1 | |
-| `expiresAt` | TIMESTAMP | yes | null | null ⇒ no expiry |
-| `createdAt` | TIMESTAMP | no | now | |
-| `updatedAt` | TIMESTAMP | no | now | |
-
-Indexes: `code` (unique), `isActive`, `expiresAt`.
-
-> `usedCount` increments on order create (with a code) and decrements on **full** cancel/return
-> (floored at 0). `perUserLimit` is **not** enforced by the mock — you must enforce it server-side in
-> `POST /coupons/validate` and on order create (file 03 §7). Update via **PATCH-merge** so `usedCount`/
-> `createdAt` survive an edit.
-
----
-
-## 13. `reviews`  **(seed: 7 rows)**
+## 8. `reviews`  **(seed: 8 rows)**
 
 | Column | Type | Null | Default | Notes |
 | --- | --- | --- | --- | --- |
@@ -495,22 +331,20 @@ Indexes: `code` (unique), `isActive`, `expiresAt`.
 | `isVerifiedPurchase` | TINYINT(1) | no | 0 | |
 | `helpfulCount` | INT | no | 0 | |
 | `source` | VARCHAR(20) | yes | null | `"admin"` for admin-authored; else absent/null |
-| `orderId` | BIGINT UNSIGNED | yes | null | the order that gated the review |
-| `orderNumber` | VARCHAR(40) | yes | null | |
-| `photos` | JSON | yes | null | optional array of image URLs (seed rows 5 & 7) |
+| `photos` | JSON | yes | null | optional array of image URLs |
 | `createdAt` | TIMESTAMP | no | now | |
 | `updatedAt` | TIMESTAMP | no | now | |
 
 Indexes: `productId`, `userId`, `status`, **unique (`userId`,`productId`)** for non-null userId
-(one review per user per product — re-submit updates the row; file 03 §8).
+(one review per user per product — re-submit updates the row; file 03 §4).
 
 > Storefront `GET /products/{id}/reviews` returns **approved only**. `GET /reviews/mine` returns the
 > signed-in user's reviews in **all** statuses. Product `rating`/`totalReviews` are display aggregates
-> you may recompute from approved reviews (see file 03 §8 note).
+> you may recompute from approved reviews (file 03 §4).
 
 ---
 
-## 14. `wishlist`  **(seed: 0 rows — empty)**
+## 9. `wishlist`  **(seed: 3 rows)**
 
 Server wishlist for a logged-in user. The client stores a **flat product snapshot** per row and, on
 the Laravel branch, expects the product nested under `product` on read (it normalises both shapes).
@@ -527,16 +361,18 @@ supporting either is fine as long as `productId` and a product snapshot are pres
 | `createdAt` | TIMESTAMP | client also reads `addedAt` (alias) |
 
 **POST `/wishlist` body the client sends** (flat snapshot — store what you need, at minimum `productId`
-+ `userId`): `productId, slug, name, image, brand, category, price, comparePrice, rating, totalReviews,
++ `userId`): `productId, slug, name, image, brand, price, comparePrice, rating, totalReviews,
 shortDescription, variants, stock, trending, hot, addedAt, userId`.
 
-**On read**, the Laravel branch maps `item.product.{id,slug,name,images[0],brand,category,price,
-comparePrice,rating,totalReviews,shortDescription,variants,stock,trending,hot}` → flat. So returning
-each row as `{ id, productId, createdAt, product: { …product fields… } }` is the clean approach.
+**On read**, the Laravel branch maps `item.product.{id,slug,name,images[0],brand,price,comparePrice,
+rating,totalReviews,shortDescription,variants,stock,trending,hot}` → flat. So returning each row as
+`{ id, productId, createdAt, product: { …product fields… } }` is the clean approach.
 
 ---
 
-## 15. `leads`  **(seed: 4 rows)** — contact + newsletter, one table
+## 10. `leads`  **(seed: 4 rows)** — contact + newsletter, one table
+
+The CRM surface: storefront contact-form submissions and newsletter sign-ups.
 
 | Column | Type | Null | Default | Notes |
 | --- | --- | --- | --- | --- |
@@ -545,8 +381,8 @@ each row as `{ id, productId, createdAt, product: { …product fields… } }` is
 | `name` | VARCHAR(150) | yes | null | null for newsletter rows |
 | `email` | VARCHAR(255) | no | | |
 | `phone` | VARCHAR(20) | yes | null | |
-| `orderNumber` | VARCHAR(40) | yes | null | contact form may attach one |
-| `category` | VARCHAR(30) | yes | null | contact category (below); null for newsletter |
+| `orderNumber` | VARCHAR(40) | yes | null | free-text reference the contact form may attach (legacy name) |
+| `category` | VARCHAR(30) | yes | null | contact category; null for newsletter |
 | `subject` | VARCHAR(255) | yes | null | |
 | `message` | TEXT | yes | null | |
 | `status` | VARCHAR(20) | no | | contact: `new`,`contacted`,`resolved`,`spam`; newsletter: `subscribed`,`unsubscribed` |
@@ -554,106 +390,72 @@ each row as `{ id, productId, createdAt, product: { …product fields… } }` is
 | `createdAt` | TIMESTAMP | no | now | |
 | `updatedAt` | TIMESTAMP | no | now | |
 
-**Contact `category` values** (from the storefront Support form): `general`, `order`, `shipping`,
-`returns`, `product`, `payment`, `account`, `other`. *(The storefront's "request a return" flow submits
-a contact lead with `category:"returns"` — there is no customer-facing returns endpoint.)*
-
-> `POST /leads/contact` body: `{ name, email, phone?, orderNumber?, category, subject, message }` →
+> `POST /leads/contact` body: `{ name, email, phone?, orderNumber?, category?, subject?, message }` →
 > server sets `type:"contact"`, `status:"new"`, `notes:""`. `POST /leads/newsletter` body: `{ email }`
 > → server sets `type:"newsletter"`, `status:"subscribed"`, and the other contact fields to null.
+> *(Seed contact rows carry legacy categories/order references from the boilerplate — tolerate any
+> free-text `category`/`orderNumber`.)*
 
 ---
 
-## 16. `settings` — **singleton** (one object, six sections)
+## 11. `settings` — **singleton** (one object, four sections)
 
-Not a list. Store as a **single row** (e.g. `settings` table with one row, or a key/value table, or a
-JSON document) and serialize as one nested object. `GET /settings` (public) and `GET /admin/settings`
-return the whole object; `PATCH /admin/settings/{section}` merges fields into **one** section.
+Not a list. Store as a **single row** (or a JSON document) and serialize as one nested object.
+`GET /settings` (public) and `GET /admin/settings` return the whole object; `PATCH /admin/settings/{section}`
+merges fields into **one** section and returns the whole object.
 
 ```jsonc
 {
   "store": {
-    "name": "My E-Commerce Store", "tagline": "…", "email": "hello@mystore.com",
-    "phone": "+91 9999999999", "address": "…", "currency": "INR", "currencySymbol": "₹",
-    "timezone": "Asia/Kolkata", "logo": null, "favicon": null,
-    "taxRate": 18,            // % GST — checkout reads this
-    "taxIncluded": false
-  },
-  "shipping": {
-    "shiprocketEnabled": false, "shiprocketEmail": "", "shiprocketPassword": "",
-    "defaultWeight": 0.5, "defaultDimensions": { "length": 15, "width": 12, "height": 8 }
-  },
-  "payment": {
-    "razorpayEnabled": false, "razorpayKeyId": "", "stripeEnabled": false, "stripePublishableKey": "",
-    "codEnabled": true,       // checkout COD availability
-    "codFee": 0, "codMinOrder": 0, "codMaxOrder": 50000   // COD bounds (file 03 §2)
+    "name": "North East Build Mart",
+    "tagline": "Deals in all kinds of building materials for interior and exterior use.",
+    "email": "info@northeastbuildmart.com",
+    "phone": "+91 86385 43526",
+    "phoneSecondary": "+91 88762 89972",
+    "address": "Lawkhuwa Road, Nagaon, Assam – 782002",
+    "currency": "INR", "currencySymbol": "₹",
+    "timezone": "Asia/Kolkata",
+    "logo": "https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889446/logo_fnscna.png",
+    "favicon": "https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889689/icon_bvsukn.png"
   },
   "notifications": {
-    "orderConfirmationEmail": true, "shippingUpdateEmail": true, "adminNewOrderEmail": true,
-    "adminEmail": "admin@mystore.com", "lowStockAlert": true, "lowStockEmail": "admin@mystore.com"
+    "adminNewOrderEmail": true, "adminEmail": "info@northeastbuildmart.com",
+    "lowStockAlert": true, "lowStockEmail": "info@northeastbuildmart.com"
   },
-  "seo": { "metaTitle": "…", "metaDescription": "…", "googleAnalyticsId": "", "facebookPixelId": "" },
+  "seo": {
+    "metaTitle": "North East Build Mart — Building Materials in Nagaon, Assam",
+    "metaDescription": "…", "googleAnalyticsId": "", "facebookPixelId": ""
+  },
   "social": { "facebook": "", "instagram": "", "twitter": "", "youtube": "", "whatsapp": "" }
 }
 ```
 
 **Storage recommendation:** a single `settings` row with one `JSON` column per section (or one JSON
 document). `PATCH /admin/settings/{section}` does a **shallow merge** of the posted fields into that
-section and returns the **whole** settings object. Section names: `store`, `shipping`, `payment`,
-`notifications`, `seo`, `social`. `taxIncluded`, `razorpayPassword`/keys etc. are secrets — return them
-to admin but consider masking write-only secrets.
+section and returns the **whole** settings object. Section names: **`store`, `notifications`, `seo`,
+`social`** — there is **no** `shipping` or `payment` section (removed), and **no** `taxRate` (no money
+math).
 
 ---
 
-## 17. `walletTransactions`  **(seed: 2 rows)** — store-credit ledger
+## Retired collections (present in `db.json`, seeded empty — do NOT build)
 
-The **source of truth** for a user's store-credit balance. Append-only.
+These ex-commerce collections remain as top-level keys in `db.json` only so the dormant helper code
+doesn't throw; every one is an **empty array** and **no live NEBM feature reads or writes them**. There
+is **no schema to build** for any of them, and `dealsConfig` is trimmed to a dead master toggle:
 
-| Column | Type | Null | Default | Notes |
-| --- | --- | --- | --- | --- |
-| `id` | BIGINT UNSIGNED PK | no | auto | numeric |
-| `userId` | BIGINT UNSIGNED FK→users.id | no | | |
-| `type` | ENUM | no | | `credit` \| `debit` |
-| `amount` | INT | no | | always positive; sign comes from `type` |
-| `reason` | VARCHAR(255) | yes | `""` | e.g. `"Refund for order …"`, `"Applied to order …"` |
-| `orderId` | BIGINT UNSIGNED | yes | null | linked order |
-| `orderNumber` | VARCHAR(40) | yes | null | |
-| `refundId` | BIGINT UNSIGNED | yes | null | linked refund (credits) |
-| `refundNumber` | VARCHAR(40) | yes | null | |
-| `balanceBefore` | INT | no | | balance prior to this entry |
-| `balanceAfter` | INT | no | | balance after (running) |
-| `createdAt` | TIMESTAMP | no | now | |
+| Key | Seed | Status |
+| --- | --- | --- |
+| `payments` | `[]` | removed (no payment) |
+| `refunds` | `[]` | removed |
+| `returns` | `[]` | removed |
+| `shipping_methods` | `[]` | removed (no shipping) |
+| `coupons` | `[]` | removed |
+| `walletTransactions` | `[]` | removed (no wallet/store credit) |
+| `dealsConfig` | `{ "enabled": false }` | removed (Special Offers admin retired; superseded by the `products.special` flag) |
 
-> **Balance = Σ(credit.amount) − Σ(debit.amount), floored at 0.** `GET /wallet/balance` returns
-> `{ balance }` (or a number); `GET /wallet/transactions` returns rows **newest-first**. Debits are
-> **guarded against overspend** (cap at current balance). Every credit/debit links to its
-> order/refund. Keep `users.storeCredit` synced to the running balance. Details: file 03 §6.
-
-Indexes: `userId`, (`userId`,`orderId`), (`userId`,`type`).
-
----
-
-## 18. `dealsConfig` — **singleton** (one object)
-
-Drives the Special Offers page + the "Today's Deals" nav entry. Single record. `GET /deals/config`
-(public) / `GET /admin/deals/config`; **`PUT` replaces the whole object** (`PUT /admin/deals/config`).
-
-```jsonc
-{
-  "enabled": true,                                  // master toggle; nav reads this
-  "hero":  { "tag": "Limited Time", "title": "Special Offers & Deals", "subtitle": "…" },
-  "timer": { "enabled": true, "endAt": "", "onExpiry": "endOfDay" },  // onExpiry: "endOfDay" | "hide"
-  "featuredCouponIds":  [1, 2],     // coupon ids, IN ORDER ([] ⇒ auto: all valid active coupons)
-  "dealOfTheDayIds":    [1, 3, 4],  // product ids, IN ORDER ([] ⇒ auto: top 3 by discount)
-  "featuredProductIds": [10, 12, 16],// product ids, IN ORDER ([] ⇒ auto: all discounted products)
-  "updatedAt": "2026-06-14T07:28:09.336Z"
-}
-```
-
-> The id arrays reference **live `coupons` / `products` ids** — store only ids, never copies. A
-> non-empty array = manual selection in that exact order; an empty array = the documented automatic
-> fallback (file 03 §10). `enabled` defaults to `true` unless explicitly `false`. Store as one JSON
-> document or discrete columns; serialize exactly as above.
+If you build the Laravel API, simply **omit** these tables and endpoints. Their dormant `apiService`
+namespaces (`wallet`, `returns`, `coupons`, `shipping`, `deals`) need no implementation.
 
 ---
 
@@ -661,23 +463,21 @@ Drives the Special Offers page + the "Today's Deals" nav entry. Single record. `
 
 To reproduce the working dataset the frontend is verified against:
 
-1. **Migrations** for the 18 tables above (16 list tables + 2 singletons). Use `JSON` columns for the
-   nested structures (simplest path to shape fidelity), or normalized child tables with API Resources
-   that re-serialize to the exact shapes.
+1. **Migrations** for the NEBM tables (banners, users, admins, categories, products, cart, enquiries,
+   reviews, wishlist, leads) + the `settings` singleton. Use `JSON` columns for the nested structures
+   (simplest path to shape fidelity), or normalized child tables with API Resources that re-serialize
+   to the exact shapes.
 2. **Seeders** importing `db.json` verbatim (it is the canonical fixture):
-   - Preserve **ids exactly** (so `categoryId`, `relatedProductIds`, `dealsConfig` id arrays, order/
-     payment/return/refund cross-links all resolve). Seed with explicit ids; reset `AUTO_INCREMENT`
-     past the max id afterward.
-   - Hash the seed plaintext passwords (`users`: `password123` / `Bappi@12345`; `admins`:
-     `admin123`) — but the seed logins must still work, so hash those exact strings.
-   - Keep all timestamps as the seed's ISO strings.
-   - Seed the two singletons (`settings`, `dealsConfig`) as single records.
-3. **Counts to match:** banners 3, users 3, admins 1, categories 16, products 21, cart 0, orders 9,
-   returns 2, payments 7, refunds 3, shipping_methods 4, coupons 5, reviews 7, wishlist 0, leads 4,
-   walletTransactions 2.
-4. **Cross-link integrity to preserve from seed** (these prove the cascades): order 1 ↔ return 1 ↔
-   payment 1 ↔ refund 1 (a completed return refund); order 8 (COD, store-credit refund) ↔ payment 6 ↔
-   refund 3 ↔ walletTransactions 1 (credit 4918); order 9 (store credit applied 1000) ↔ payment 7
-   (`storeCreditApplied:1000`) ↔ walletTransactions 2 (debit 1000); user 3 `storeCredit: 3918`
-   (= 4918 − 1000) must equal the ledger.
-5. Verify the **dashboard stats** endpoint reproduces sane numbers from the seed (file 02 / 03).
+   - Preserve **ids exactly** (so `categoryId`, `parentId`, `relatedProductIds`,
+     `frequentlyBoughtTogetherIds`, and `enquiries.items[].productId` all resolve). Seed with explicit
+     ids; reset `AUTO_INCREMENT` past the max id afterward.
+   - Hash the seed plaintext passwords (`users`: `password123` / `Bappi@12345`; `admins`: `admin123`)
+     — but the seed logins must still work, so hash those exact strings.
+   - Keep all timestamps as the seed's ISO strings; keep `enquiryNumber` values (`ENQ-YYYYMMDD-NNNN`).
+   - Seed the `settings` singleton as one record.
+   - INR **integer** prices where a fixed price exists; `tiered` products carry a `priceTiers[]`;
+     `onEnquiry` products show no price.
+3. **Counts to match:** banners 3, users 3, admins 1, categories 43, products 70, cart 0, enquiries 11,
+   reviews 8, wishlist 3, leads 4. (Retired-empty: payments/refunds/returns/shipping_methods/coupons/
+   walletTransactions 0.)
+4. Verify the **dashboard stats** endpoint reproduces sane numbers from the seed (file 02 §K / file 03 §6).
