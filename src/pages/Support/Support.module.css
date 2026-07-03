@@ -25,10 +25,19 @@
 .contactInfo { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .infoCard { padding: 20px; border-radius: 12px; background: #fff; border: 1px solid #e2e8f0; }
 .dark .infoCard { background: #1e293b; border-color: #334155; }
-.infoIcon { font-size: 1.5rem; margin-bottom: 8px; }
+/* Gold accent lives on the icon only, keeping the accent sparing */
+.infoIcon { display: inline-flex; color: var(--sf-color-accent); margin-bottom: 8px; }
 .infoCard h3 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
 .infoCard p { font-size: 0.95rem; color: var(--sf-color-primary); font-weight: 500; }
-.infoCard span { font-size: 0.8rem; color: #94a3b8; }
+.infoCard span { display: block; margin-top: 4px; font-size: 0.8rem; color: #94a3b8; }
+/* Two tappable phone numbers, stacked with generous touch targets */
+.phoneList { display: flex; flex-direction: column; gap: 4px; }
+.phoneLink { font-size: 0.95rem; color: var(--sf-color-primary); font-weight: 500; text-decoration: none; padding: 4px 0; }
+.phoneLink:hover { text-decoration: underline; }
+/* Rounded, bordered map that clips the iframe; a blocked embed can't overflow */
+.mapCard { border-radius: 12px; overflow: hidden; background: #fff; border: 1px solid #e2e8f0; line-height: 0; }
+.dark .mapCard { background: #1e293b; border-color: #334155; }
+.mapCard iframe { display: block; width: 100%; height: 220px; border: 0; }
 .quickLinks { padding: 20px; border-radius: 12px; background: #fff; border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 8px; }
 .dark .quickLinks { background: #1e293b; border-color: #334155; }
 .quickLinks h3 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
