@@ -1602,38 +1602,79 @@ const apiService = {
     },
 
     // --- Dashboard ---
+    // Enquiry-centric KPI snapshot for /admin/dashboard. NEBM is an enquiry +
+    // lead operation (no revenue, returns or coupons), so this reads only the
+    // four collections the dashboard cares about. The old order store has been
+    // repurposed into the enquiry store (`/enquiries`); each row carries an
+    // enquiry `status` from the canonical set:
+    //   New · Contacted · In Discussion · Quotation Sent · Converted · Closed · Lost
     getDashboardStats: async () => {
       try {
         if (IS_MOCK_API) {
-          const [products, orders, users, returns, coupons] = await Promise.all([
+          const [products, enquiries, users, leads] = await Promise.all([
             api.get("/products"),
-            api.get("/orders"),
+            api.get("/enquiries"),
             api.get("/users"),
-            api.get("/returns").catch(() => ({ data: [] })),
-            api.get("/coupons").catch(() => ({ data: [] })),
+            api.get("/leads").catch(() => ({ data: [] })),
           ]);
-          const totalRevenue = orders.data.reduce((sum, o) => sum + (o.total || 0), 0);
-          const pendingOrders = orders.data.filter((o) => o.fulfillmentStatus === "unfulfilled" || o.paymentStatus === "pending").length;
-          // "Pending" = open returns still awaiting admin action: not yet closed
-          // (rejected/refunded) and the refund has not already been processed.
-          const pendingReturns = returns.data.filter(
-            (r) => !["rejected", "refunded"].includes(r.status) && !["processed", "completed"].includes(r.refundStatus || "")
-          ).length;
+          // Active/open = an enquiry still moving through the pipeline. A missing
+          // status (or the legacy `unfulfilled` flag) is treated as brand-new, so
+          // rows that predate the status migration still count as New/Open.
+          const OPEN_STATUSES = ["New", "Contacted", "In Discussion", "Quotation Sent"];
+          const isNew = (e) =>
+            e.status === "New" ||
+            (!e.status && (e.fulfillmentStatus === "unfulfilled" || !e.fulfillmentStatus));
+          const newEnquiries = enquiries.data.filter(isNew).length;
+          const openEnquiries = enquiries.data.filter((e) => OPEN_STATUSES.includes(e.status) || isNew(e)).length;
+          const convertedEnquiries = enquiries.data.filter((e) => e.status === "Converted").length;
           const lowStockProducts = products.data.filter((p) => p.stock <= (p.lowStockThreshold || 10)).length;
           return {
             totalProducts: products.data.length,
-            totalOrders: orders.data.length,
-            totalRevenue,
+            totalEnquiries: enquiries.data.length,
+            newEnquiries,
+            openEnquiries,
+            convertedEnquiries,
+            totalLeads: leads.data.length,
             totalUsers: users.data.length,
-            pendingOrders,
-            pendingReturns,
             lowStockProducts,
-            activeCoupons: coupons.data.filter((c) => c.isActive).length,
           };
         }
+        // Laravel must return the SAME 8 keys as the mock branch above:
+        // totalProducts, totalEnquiries, newEnquiries, openEnquiries,
+        // convertedEnquiries, totalLeads, totalUsers, lowStockProducts.
         const response = await api.get("/admin/dashboard/stats");
         return extractData(response);
       } catch (error) { console.error("Dashboard stats error:", error); throw error; }
+    },
+
+    // Read-only enquiry list backing the dashboard's "Recent Enquiries" table.
+    // The order store has been repurposed into `/enquiries`; the full
+    // /admin/orders → /admin/enquiries rename lives in a later prompt, so this
+    // thin accessor lets the dashboard surface real enquiry rows now without
+    // leaning on getOrders (whose `/orders` collection no longer exists). Joins
+    // the users store so a missing contact name falls back to the account holder.
+    getEnquiries: async (params = {}) => {
+      try {
+        if (IS_MOCK_API) {
+          const [enqRes, usersRes] = await Promise.all([
+            api.get("/enquiries", { params }),
+            api.get("/users").catch(() => ({ data: [] })),
+          ]);
+          const usersById = {};
+          (usersRes.data || []).forEach((u) => { usersById[u.id] = u; });
+          return (enqRes.data || []).map((e) => {
+            const u = usersById[e.userId];
+            const accountName = u ? `${u.firstName || ""} ${u.lastName || ""}`.trim() : "";
+            return {
+              ...e,
+              customerName: e.contact?.name || accountName || null,
+              customerEmail: e.contact?.email || u?.email || null,
+            };
+          });
+        }
+        const response = await api.get("/admin/enquiries", { params });
+        return extractData(response);
+      } catch (error) { console.error("Admin get enquiries error:", error); throw error; }
     },
 
     // --- Products ---
