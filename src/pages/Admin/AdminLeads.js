@@ -96,6 +96,7 @@ const AdminLeads = () => {
         (lead) =>
           lead.email?.toLowerCase().includes(query) ||
           lead.name?.toLowerCase().includes(query) ||
+          lead.phone?.toLowerCase().includes(query) ||
           lead.subject?.toLowerCase().includes(query) ||
           lead.message?.toLowerCase().includes(query)
       );
@@ -191,21 +192,6 @@ const AdminLeads = () => {
 
   const getTypeColor = (type) => {
     return type === "contact" ? "#6366f1" : "#10b981";
-  };
-
-  const getCategoryIcon = (category) => {
-    switch (category) {
-      case "order":
-        return "mdi:cart-outline";
-      case "payment":
-        return "mdi:credit-card-outline";
-      case "delivery":
-        return "mdi:truck-delivery";
-      case "technical":
-        return "mdi:bug-outline";
-      default:
-        return "mdi:help-circle-outline";
-    }
   };
 
   const contactStatuses = ["new", "contacted", "resolved", "spam"];
@@ -336,7 +322,7 @@ const AdminLeads = () => {
           <Grid item xs={12} md={4}>
             <TextField
               fullWidth
-              placeholder="Search by email, name, subject..."
+              placeholder="Search by name, email, phone, subject..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               InputProps={{
@@ -470,9 +456,19 @@ const AdminLeads = () => {
                                 {lead.name}
                               </Typography>
                             )}
-                            <Typography variant="caption" color="text.secondary">
+                            <Typography variant="caption" color="text.secondary" sx={{ display: "block" }}>
                               {lead.email}
                             </Typography>
+                            {lead.phone && (
+                              <Typography
+                                variant="caption"
+                                color="text.secondary"
+                                sx={{ display: "flex", alignItems: "center", gap: 0.25 }}
+                              >
+                                <Icon icon="mdi:phone-outline" style={{ fontSize: 12 }} />
+                                {lead.phone}
+                              </Typography>
+                            )}
                           </Box>
                         </Box>
                       </TableCell>
@@ -484,7 +480,6 @@ const AdminLeads = () => {
                             </Typography>
                             {lead.category && (
                               <Chip
-                                icon={<Icon icon={getCategoryIcon(lead.category)} style={{ fontSize: 14 }} />}
                                 label={lead.category}
                                 size="small"
                                 variant="outlined"
@@ -617,6 +612,12 @@ const AdminLeads = () => {
                       <Typography variant="body2" color="text.secondary">Email:</Typography>
                       <Typography variant="body2">{selectedLead.email}</Typography>
                     </Box>
+                    {selectedLead.phone && (
+                      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                        <Typography variant="body2" color="text.secondary">Phone:</Typography>
+                        <Typography variant="body2">{selectedLead.phone}</Typography>
+                      </Box>
+                    )}
                     <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                       <Typography variant="body2" color="text.secondary">Date:</Typography>
                       <Typography variant="body2">{formatDate(selectedLead.createdAt)}</Typography>
@@ -641,18 +642,11 @@ const AdminLeads = () => {
                         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                           <Typography variant="body2" color="text.secondary">Category:</Typography>
                           <Chip
-                            icon={<Icon icon={getCategoryIcon(selectedLead.category)} style={{ fontSize: 14 }} />}
                             label={selectedLead.category}
                             size="small"
                             variant="outlined"
                             sx={{ textTransform: "capitalize" }}
                           />
-                        </Box>
-                      )}
-                      {selectedLead.orderNumber && (
-                        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                          <Typography variant="body2" color="text.secondary">Order Number:</Typography>
-                          <Typography variant="body2" fontFamily="monospace">{selectedLead.orderNumber}</Typography>
                         </Box>
                       )}
                       {selectedLead.subject && (
