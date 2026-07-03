@@ -244,7 +244,8 @@ const CartDrawer = ({ open, onClose }) => {
               )}
             </div>
 
-            {/* Footer — single "Submit Enquiry" CTA (no totals/shipping/checkout) */}
+            {/* Footer — "Submit Enquiry" CTA + a link to the full Enquiry List
+                page (no totals/shipping/checkout). */}
             {cart.length > 0 && (
               <div className={styles.footer}>
                 <button
@@ -258,6 +259,12 @@ const CartDrawer = ({ open, onClose }) => {
                     aria-hidden="true"
                   />
                   Submit Enquiry
+                </button>
+                <button
+                  className={styles.viewListBtn}
+                  onClick={() => handleNavigate("/enquiry-list")}
+                >
+                  View Enquiry List
                 </button>
               </div>
             )}
