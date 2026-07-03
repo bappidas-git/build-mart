@@ -50,12 +50,7 @@ import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminProducts from "./pages/Admin/AdminProducts";
 import AdminCategories from "./pages/Admin/AdminCategories";
 import AdminEnquiries from "./pages/Admin/AdminEnquiries";
-import AdminReturns from "./pages/Admin/AdminReturns";
-import AdminPayments from "./pages/Admin/AdminPayments";
 import AdminUsers from "./pages/Admin/AdminUsers";
-import AdminShipping from "./pages/Admin/AdminShipping";
-import AdminCoupons from "./pages/Admin/AdminCoupons";
-import AdminSpecialOffers from "./pages/Admin/AdminSpecialOffers";
 import AdminReviews from "./pages/Admin/AdminReviews";
 import AdminLeads from "./pages/Admin/AdminLeads";
 import AdminSettings from "./pages/Admin/AdminSettings";
@@ -93,12 +88,7 @@ function App() {
                         <Route path="enquiries" element={<AdminEnquiries />} />
                         {/* Old bookmarks: /admin/orders → /admin/enquiries */}
                         <Route path="orders" element={<Navigate to="/admin/enquiries" replace />} />
-                        <Route path="returns" element={<AdminReturns />} />
-                        <Route path="payments" element={<AdminPayments />} />
                         <Route path="users" element={<AdminUsers />} />
-                        <Route path="shipping" element={<AdminShipping />} />
-                        <Route path="coupons" element={<AdminCoupons />} />
-                        <Route path="special-offers" element={<AdminSpecialOffers />} />
                         <Route path="reviews" element={<AdminReviews />} />
                         <Route path="leads" element={<AdminLeads />} />
                         <Route path="settings" element={<AdminSettings />} />

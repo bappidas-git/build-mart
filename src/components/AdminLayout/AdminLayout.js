@@ -68,7 +68,7 @@ const menuItems = [
     path: "/admin/reviews",
   },
   {
-    title: "Sales",
+    title: "Enquiries",
     icon: null,
     isSection: true,
   },
@@ -78,36 +78,9 @@ const menuItems = [
     path: "/admin/enquiries",
   },
   {
-    title: "Returns",
-    // NB: "mdi:package-variant-return" does not exist in the MDI set, which is
-    // why this nav item rendered without an icon.
-    icon: "mdi:backup-restore",
-    path: "/admin/returns",
-  },
-  {
-    title: "Payments",
-    icon: "mdi:credit-card-outline",
-    path: "/admin/payments",
-  },
-  {
-    title: "Coupons",
-    icon: "mdi:tag-outline",
-    path: "/admin/coupons",
-  },
-  {
-    title: "Special Offers",
-    icon: "mdi:sale",
-    path: "/admin/special-offers",
-  },
-  {
     title: "Operations",
     icon: null,
     isSection: true,
-  },
-  {
-    title: "Shipping",
-    icon: "mdi:truck-outline",
-    path: "/admin/shipping",
   },
   {
     title: "Users",
