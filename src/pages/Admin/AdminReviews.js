@@ -16,10 +16,11 @@ const STATUS_CONFIG = {
   rejected: { label: "Rejected", color: "error" },
 };
 
-// Quick-pick mock shoppers so the admin can post varied reviews fast.
+// Quick-pick sample customers so the admin can post varied reviews fast.
+// Assam-flavoured names to match North East Build Mart's Nagaon customer base.
 const MOCK_REVIEWERS = [
-  "Aarav Sharma", "Priya Menon", "Rahul Verma", "Sneha Iyer",
-  "Vikram Singh", "Ananya Reddy", "Karan Mehta", "Divya Nair",
+  "Nabajyoti Bora", "Priyanka Das", "Rakesh Saikia", "Anjali Deka",
+  "Bhaskar Kalita", "Rituparna Gogoi", "Manash Barua", "Pallabi Hazarika",
 ];
 
 const EMPTY_REVIEW = {
