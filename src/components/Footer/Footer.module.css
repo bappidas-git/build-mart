@@ -1,6 +1,6 @@
 /* ============================================
    Footer Component Styles
-   Professional e-commerce footer
+   North East Build Mart — enquiry platform
    ============================================ */
 
 /* Shared container */
@@ -10,8 +10,13 @@
   padding: 0 24px;
 }
 
-/* Main Footer Wrapper */
+/* Main Footer Wrapper.
+   Blue / Gold are fixed here (not theme tokens): the footer surface is always
+   dark in both light and dark mode, so the accents stay legible either way and
+   match the brand exactly (#1885d8 / #fa9c4c). */
 .footer {
+  --footer-blue: #1885d8;
+  --footer-gold: #fa9c4c;
   position: relative;
   margin-top: auto;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
@@ -109,7 +114,7 @@
 }
 
 .emailInput:focus {
-  border-color: var(--sf-color-primary);
+  border-color: var(--footer-blue);
 }
 
 .emailInput:disabled {
@@ -126,11 +131,11 @@
   white-space: nowrap;
   transition: background 0.2s ease, transform 0.1s ease;
   color: #ffffff;
-  background: var(--sf-color-primary);
+  background: var(--footer-blue);
 }
 
 .subscribeBtn:hover:not(:disabled) {
-  background: var(--sf-color-primary-dark);
+  background: #1069b0;
 }
 
 .subscribeBtn:active:not(:disabled) {
@@ -158,15 +163,11 @@
 }
 
 .footer[data-theme="light"] .newsletterError {
-  color: #b91c1c;
+  color: #fecaca;
 }
 
 .newsletterSuccess {
   color: #bbf7d0;
-}
-
-.footer[data-theme="light"] .newsletterSuccess {
-  color: #15803d;
 }
 
 /* ========== MAIN FOOTER ========== */
@@ -187,21 +188,13 @@
 
 .footerGrid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  grid-template-columns: 1.5fr 1fr 1.5fr 1.4fr;
   gap: 40px;
 }
 
 /* Column Styles */
 .footerCol {
   min-width: 0;
-}
-
-.brandName {
-  font-size: 1.35rem;
-  font-weight: 800;
-  color: #ffffff;
-  margin: 0 0 16px;
-  letter-spacing: -0.01em;
 }
 
 /* Brand logo image on the dark footer. Fixed height + width:auto keeps the
@@ -217,8 +210,9 @@
 .aboutText {
   font-size: 0.9rem;
   line-height: 1.7;
-  margin: 0 0 24px;
+  margin: 0;
   color: #94a3b8;
+  max-width: 34ch;
 }
 
 .colTitle {
@@ -240,32 +234,7 @@
   width: 32px;
   height: 3px;
   border-radius: 2px;
-  background: var(--sf-color-primary);
-}
-
-/* Social Icons */
-.socialIcons {
-  display: flex;
-  gap: 12px;
-}
-
-.socialLink {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  color: #94a3b8;
-  text-decoration: none;
-  transition: all 0.25s ease;
-}
-
-.socialLink:hover {
-  background: var(--sf-color-primary);
-  color: #ffffff;
-  transform: translateY(-2px);
+  background: var(--footer-blue);
 }
 
 /* Link Lists */
@@ -278,6 +247,17 @@
   gap: 12px;
 }
 
+/* Category list — a tidy two-column grid so all top-level categories fit
+   without the column running much taller than its neighbours. */
+.categoryList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+}
+
 .footerLink {
   color: #94a3b8;
   text-decoration: none;
@@ -288,7 +268,7 @@
 }
 
 .footerLink:hover {
-  color: #ffffff;
+  color: var(--footer-gold);
   padding-left: 4px;
 }
 
@@ -314,7 +294,7 @@
 .contactIcon {
   flex-shrink: 0;
   margin-top: 2px;
-  color: var(--sf-color-primary);
+  color: var(--footer-blue);
 }
 
 .contactLink {
@@ -324,93 +304,14 @@
 }
 
 .contactLink:hover {
-  color: #ffffff;
-}
-
-/* ========== TRUST & PAYMENT BAR ========== */
-
-.trustBar {
-  padding: 24px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.footer[data-theme="light"] .trustBar {
-  background: #172033;
-}
-
-.footer[data-theme="dark"] .trustBar {
-  background: #0b1120;
-}
-
-.trustBarInner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-  flex-wrap: wrap;
-}
-
-/* Payment Methods */
-.paymentMethods {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.paymentLabel {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.5);
-  white-space: nowrap;
-}
-
-.paymentIcons {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.paymentBadge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  overflow: hidden;
-  opacity: 0.85;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.paymentBadge:hover {
-  opacity: 1;
-  transform: scale(1.05);
-}
-
-/* Trust Badges */
-.trustBadges {
-  display: flex;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-
-.trustBadge {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.6);
-  white-space: nowrap;
-}
-
-.trustBadge svg {
-  color: var(--sf-color-primary);
+  color: var(--footer-gold);
 }
 
 /* ========== BOTTOM BAR ========== */
 
 .bottomBar {
   padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .footer[data-theme="light"] .bottomBar {
@@ -429,10 +330,34 @@
   flex-wrap: wrap;
 }
 
+.bottomLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .copyright {
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.55);
   margin: 0;
+}
+
+.credit {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0;
+}
+
+.creditLink {
+  color: var(--footer-gold);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.creditLink:hover {
+  color: #ffb877;
+  text-decoration: underline;
 }
 
 .legalLinks {
@@ -449,7 +374,7 @@
 }
 
 .legalLink:hover {
-  color: #ffffff;
+  color: var(--footer-gold);
 }
 
 /* ========== RESPONSIVE: Tablet (2 columns) ========== */
@@ -471,26 +396,18 @@
     gap: 36px;
   }
 
-  .trustBarInner {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 20px;
-  }
-
-  .trustBadges {
-    justify-content: center;
-  }
-
-  .paymentMethods {
-    flex-direction: column;
-    gap: 12px;
+  .aboutText {
+    max-width: none;
   }
 
   .bottomBarInner {
     flex-direction: column;
     text-align: center;
     gap: 12px;
+  }
+
+  .bottomLeft {
+    align-items: center;
   }
 
   .legalLinks {
@@ -537,30 +454,14 @@
     gap: 32px;
   }
 
-  .socialIcons {
-    justify-content: flex-start;
-  }
-
-  .trustBar {
-    padding: 20px 0;
-  }
-
-  .trustBadges {
-    gap: 16px;
-    justify-content: center;
-  }
-
-  .trustBadge {
-    font-size: 0.8rem;
-  }
-
   .legalLinks {
     flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
   }
 
-  .copyright {
+  .copyright,
+  .credit {
     font-size: 0.8rem;
   }
 }
@@ -568,11 +469,11 @@
 /* ========== ACCESSIBILITY ========== */
 
 .footerLink:focus-visible,
-.socialLink:focus-visible,
 .contactLink:focus-visible,
 .legalLink:focus-visible,
+.creditLink:focus-visible,
 .subscribeBtn:focus-visible,
 .emailInput:focus-visible {
-  outline: 2px solid var(--sf-color-primary);
+  outline: 2px solid var(--footer-blue);
   outline-offset: 2px;
 }
