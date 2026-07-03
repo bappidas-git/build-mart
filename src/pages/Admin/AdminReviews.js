@@ -115,12 +115,12 @@ const AdminReviews = () => {
 
   return (
     <Box>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3, gap: 2, flexWrap: "wrap" }}>
         <Box>
           <Typography variant="h5" fontWeight="bold">Reviews</Typography>
           <Typography variant="body2" color="text.secondary">Moderate and manage product reviews</Typography>
         </Box>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, flexWrap: "wrap" }}>
           {pendingCount > 0 && (
             <Chip label={`${pendingCount} pending review${pendingCount > 1 ? "s" : ""}`} color="warning" icon={<Icon icon="mdi:clock-outline" />} />
           )}
@@ -131,16 +131,16 @@ const AdminReviews = () => {
       </Box>
 
       <Paper elevation={0} sx={{ border: "1px solid", borderColor: "divider", overflow: "hidden" }}>
-        <Box sx={{ p: 2, borderBottom: "1px solid", borderColor: "divider", display: "flex", gap: 2 }}>
+        <Box sx={{ p: 2, borderBottom: "1px solid", borderColor: "divider", display: "flex", gap: 2, flexWrap: "wrap" }}>
           <TextField
             placeholder="Search reviews..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             size="small"
-            sx={{ flex: 1, maxWidth: 320 }}
+            sx={{ flex: 1, minWidth: { xs: "100%", sm: 200 }, maxWidth: { sm: 320 } }}
             InputProps={{ startAdornment: <InputAdornment position="start"><Icon icon="mdi:magnify" /></InputAdornment> }}
           />
-          <FormControl size="small" sx={{ minWidth: 150 }}>
+          <FormControl size="small" sx={{ minWidth: 150, flex: { xs: 1, sm: "0 1 auto" } }}>
             <InputLabel>Status</InputLabel>
             <Select value={statusFilter} label="Status" onChange={(e) => setStatusFilter(e.target.value)}>
               <MenuItem value="all">All</MenuItem>
@@ -148,7 +148,7 @@ const AdminReviews = () => {
             </Select>
           </FormControl>
         </Box>
-        <TableContainer>
+        <TableContainer sx={{ overflowX: "auto" }}>
           <Table sx={{ minWidth: 1100 }}>
             <TableHead>
               <TableRow>
@@ -193,17 +193,17 @@ const AdminReviews = () => {
                       </TableCell>
                       <TableCell><Chip label={sc.label} size="small" color={sc.color} /></TableCell>
                       <TableCell><Typography variant="caption">{formatDate(review.createdAt)}</Typography></TableCell>
-                      <TableCell align="right">
+                      <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
                         <Tooltip title="View">
-                          <IconButton size="small" onClick={() => { setSelectedReview(review); setDialogOpen(true); }}><Icon icon="mdi:eye-outline" /></IconButton>
+                          <IconButton size="small" onClick={() => { setSelectedReview(review); setDialogOpen(true); }} sx={{ minWidth: 44, minHeight: 44 }}><Icon icon="mdi:eye-outline" /></IconButton>
                         </Tooltip>
                         {review.status !== "approved" && (
-                          <Tooltip title="Approve"><IconButton size="small" color="success" onClick={() => handleStatusUpdate(review, "approved")}><Icon icon="mdi:check-circle-outline" /></IconButton></Tooltip>
+                          <Tooltip title="Approve"><IconButton size="small" color="success" onClick={() => handleStatusUpdate(review, "approved")} sx={{ minWidth: 44, minHeight: 44 }}><Icon icon="mdi:check-circle-outline" /></IconButton></Tooltip>
                         )}
                         {review.status !== "rejected" && (
-                          <Tooltip title={review.status === "approved" ? "Un-approve" : "Reject"}><IconButton size="small" color="error" onClick={() => handleStatusUpdate(review, "rejected")}><Icon icon="mdi:close-circle-outline" /></IconButton></Tooltip>
+                          <Tooltip title={review.status === "approved" ? "Un-approve" : "Reject"}><IconButton size="small" color="error" onClick={() => handleStatusUpdate(review, "rejected")} sx={{ minWidth: 44, minHeight: 44 }}><Icon icon="mdi:close-circle-outline" /></IconButton></Tooltip>
                         )}
-                        <Tooltip title="Delete"><IconButton size="small" color="error" onClick={() => handleDelete(review)}><Icon icon="mdi:delete-outline" /></IconButton></Tooltip>
+                        <Tooltip title="Delete"><IconButton size="small" color="error" onClick={() => handleDelete(review)} sx={{ minWidth: 44, minHeight: 44 }}><Icon icon="mdi:delete-outline" /></IconButton></Tooltip>
                       </TableCell>
                     </TableRow>
                   );

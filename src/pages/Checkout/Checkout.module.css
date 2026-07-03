@@ -26,7 +26,8 @@
 
 /* Layout: summary + contact on the left, action sidebar on the right. */
 .layout { display: grid; grid-template-columns: 1fr 340px; gap: 28px; align-items: start; }
-@media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+/* Below md the summary/contact and the action sidebar stack into one column. */
+@media (max-width: 1024px) { .layout { grid-template-columns: 1fr; } }
 /* Grid items default to min-width:auto, which would let a long nowrap product
    title force the column wider than the viewport on small screens. */
 .mainContent, .sidebar { min-width: 0; }
@@ -52,16 +53,16 @@
 .itemPrice { margin-top: 4px; }
 
 .itemControls { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
-.removeBtn { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border: none; border-radius: 8px; background: transparent; color: #94a3b8; cursor: pointer; transition: color 0.2s, background 0.2s; }
+.removeBtn { display: inline-flex; align-items: center; justify-content: center; width: var(--sf-tap-target); height: var(--sf-tap-target); border: none; border-radius: 8px; background: transparent; color: #94a3b8; cursor: pointer; transition: color 0.2s, background 0.2s; }
 .removeBtn:hover { color: #ef4444; background: rgba(239, 68, 68, 0.1); }
 @media (max-width: 480px) {
   .item { flex-wrap: wrap; }
   .itemControls { flex-direction: row; width: 100%; justify-content: space-between; }
 }
 
-/* Contact form */
+/* Contact form — name/phone sit two-up on tablet, stack on phones. */
 .formRow { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-@media (max-width: 520px) { .formRow { grid-template-columns: 1fr; } }
+@media (max-width: 480px) { .formRow { grid-template-columns: 1fr; } }
 .formGroup { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
 .formGroup:last-child { margin-bottom: 0; }
 .formGroup label { font-size: 0.85rem; font-weight: 600; color: #475569; }
@@ -76,8 +77,7 @@
 
 /* Sidebar action card */
 .sidebar { position: sticky; top: 152px; }
-@media (max-width: 1024px) { .sidebar { top: 116px; } }
-@media (max-width: 900px) { .sidebar { position: static; } }
+@media (max-width: 1024px) { .sidebar { position: static; top: auto; } }
 .summaryCard { padding: 22px; border-radius: 16px; background: #fff; border: 1px solid #e2e8f0; box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04); }
 .dark .summaryCard { background: #1e293b; border-color: #334155; box-shadow: none; }
 .summaryHead { display: flex; align-items: center; gap: 8px; font-size: 1.05rem; font-weight: 700; color: var(--sf-color-primary); }

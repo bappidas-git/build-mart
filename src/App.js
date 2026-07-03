@@ -7,7 +7,7 @@ import {
   useParams,
 } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, MotionConfig } from "framer-motion";
 
 // Context Providers
 import { ThemeContextProvider } from "./context/ThemeContext";
@@ -68,6 +68,10 @@ function LegacyOrderConfirmationRedirect() {
 function App() {
   return (
     <ErrorBoundary>
+    {/* reducedMotion="user" makes every framer-motion animation (drawers,
+        bottom sheets, card springs) honour the OS "reduce motion" setting,
+        complementing the CSS-token zeroing in storefront-tokens.css. */}
+    <MotionConfig reducedMotion="user">
     <ThemeContextProvider>
       <AuthProvider>
         <AdminProvider>
@@ -147,6 +151,7 @@ function App() {
         </AdminProvider>
       </AuthProvider>
     </ThemeContextProvider>
+    </MotionConfig>
     </ErrorBoundary>
   );
 }

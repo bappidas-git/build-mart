@@ -321,6 +321,7 @@
   align-items: center;
   gap: 0.4rem;
   white-space: nowrap;
+  min-height: var(--sf-tap-target); /* 44px touch target */
   padding: 0.6rem 1rem;
   border-radius: 999px;
   border: 1px solid #e2e8f0;
@@ -1137,7 +1138,7 @@
    Responsive
    ========================================================================== */
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .profilePage {
     padding: 1rem 0 6rem;
   }
@@ -1288,7 +1289,7 @@
 .dark .walletTxAmountDebit { color: #fca5a5; }
 .walletTxBalance { font-size: 0.72rem; color: #94a3b8; }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
   .walletBalanceCard { flex-wrap: wrap; gap: 12px; }
   .walletBalanceHint { margin: 0; max-width: none; text-align: left; flex-basis: 100%; }
   .walletBalanceValue { font-size: 1.6rem; }

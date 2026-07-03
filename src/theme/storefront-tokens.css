@@ -115,6 +115,19 @@
   --sf-transition: 0.25s ease;
   --sf-transition-slow: 0.4s ease;
 
+  /* ---- Responsive breakpoints ------------------------------------------- */
+  /* Canonical stops shared with TOKENS.breakpoints (tokens.js) for the MUI
+   * layer. NOTE: CSS `@media` queries cannot read custom properties, so these
+   * are the single source of truth for the *values* — author every storefront
+   * media query at exactly one of these five widths (xs480 · sm768 · md1024 ·
+   * lg1280 · xl1440). They double as usable vars for container-query fallbacks
+   * and JS-free calc() math. Do not invent one-off widths. */
+  --sf-bp-xs: 480px;
+  --sf-bp-sm: 768px;
+  --sf-bp-md: 1024px;
+  --sf-bp-lg: 1280px;
+  --sf-bp-xl: 1440px;
+
   /* ---- Layout & a11y ---------------------------------------------------- */
   --sf-container-max: 1280px;          /* canonical content width (App.css .container) */
   --sf-tap-target: 44px;               /* min touch target (WCAG 2.5.5) */

@@ -112,61 +112,106 @@ const AdminUsers = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             size="small"
-            sx={{ width: 320 }}
+            sx={{ width: { xs: "100%", sm: 320 } }}
             InputProps={{ startAdornment: <InputAdornment position="start"><Icon icon="mdi:magnify" /></InputAdornment> }}
           />
         </Box>
-        <TableContainer>
-          <Table sx={{ minWidth: 720 }}>
-            <TableHead>
-              <TableRow>
-                <TableCell>User</TableCell>
-                <TableCell>Phone</TableCell>
-                <TableCell>Joined</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell align="right">Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {loading ? (
-                [...Array(5)].map((_, i) => (<TableRow key={i}><TableCell colSpan={5}><Skeleton height={52} /></TableCell></TableRow>))
-              ) : filtered.length === 0 ? (
-                <TableRow><TableCell colSpan={5} align="center" sx={{ py: 6 }}><Typography color="text.secondary">No users found</Typography></TableCell></TableRow>
-              ) : (
-                filtered.map((user) => (
-                  <TableRow key={user.id} hover>
-                    <TableCell>
-                      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                        <Avatar src={user.avatar || undefined} sx={{ width: 40, height: 40, bgcolor: "primary.main", fontSize: "0.9rem", fontWeight: 600 }}>
-                          {user.firstName?.[0]}{user.lastName?.[0]}
-                        </Avatar>
-                        <Box>
-                          <Typography variant="body2" fontWeight={500}>{user.firstName} {user.lastName}</Typography>
-                          <Typography variant="caption" color="text.secondary">{user.email}</Typography>
+        {/* Desktop / tablet: full table. Below md we render stacked cards instead. */}
+        <Box sx={{ display: { xs: "none", md: "block" } }}>
+          <TableContainer sx={{ overflowX: "auto" }}>
+            <Table sx={{ minWidth: 720 }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>User</TableCell>
+                  <TableCell>Phone</TableCell>
+                  <TableCell>Joined</TableCell>
+                  <TableCell>Status</TableCell>
+                  <TableCell align="right">Actions</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {loading ? (
+                  [...Array(5)].map((_, i) => (<TableRow key={i}><TableCell colSpan={5}><Skeleton height={52} /></TableCell></TableRow>))
+                ) : filtered.length === 0 ? (
+                  <TableRow><TableCell colSpan={5} align="center" sx={{ py: 6 }}><Typography color="text.secondary">No users found</Typography></TableCell></TableRow>
+                ) : (
+                  filtered.map((user) => (
+                    <TableRow key={user.id} hover>
+                      <TableCell>
+                        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                          <Avatar src={user.avatar || undefined} sx={{ width: 40, height: 40, bgcolor: "primary.main", fontSize: "0.9rem", fontWeight: 600 }}>
+                            {user.firstName?.[0]}{user.lastName?.[0]}
+                          </Avatar>
+                          <Box>
+                            <Typography variant="body2" fontWeight={500}>{user.firstName} {user.lastName}</Typography>
+                            <Typography variant="caption" color="text.secondary">{user.email}</Typography>
+                          </Box>
                         </Box>
-                      </Box>
-                    </TableCell>
-                    <TableCell><Typography variant="body2">{user.phone || "—"}</Typography></TableCell>
-                    <TableCell><Typography variant="body2">{formatDate(user.createdAt)}</Typography></TableCell>
-                    <TableCell>
+                      </TableCell>
+                      <TableCell><Typography variant="body2">{user.phone || "—"}</Typography></TableCell>
+                      <TableCell><Typography variant="body2">{formatDate(user.createdAt)}</Typography></TableCell>
+                      <TableCell>
+                        <Chip label={user.isActive !== false ? "Active" : "Inactive"} size="small" color={user.isActive !== false ? "success" : "default"} />
+                      </TableCell>
+                      <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
+                        <Tooltip title="View Details">
+                          <IconButton size="small" onClick={() => openDetail(user)} sx={{ minWidth: 44, minHeight: 44 }}><Icon icon="mdi:eye-outline" /></IconButton>
+                        </Tooltip>
+                        <Tooltip title={user.isActive !== false ? "Deactivate" : "Activate"}>
+                          <IconButton size="small" onClick={() => handleToggleStatus(user)} sx={{ minWidth: 44, minHeight: 44 }}>
+                            <Icon icon={user.isActive !== false ? "mdi:account-off-outline" : "mdi:account-check-outline"} />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+
+        {/* Mobile: stacked cards — same fields and row handlers as the table. */}
+        <Box sx={{ display: { xs: "block", md: "none" } }}>
+          {loading ? (
+            [...Array(5)].map((_, i) => (
+              <Box key={i} sx={{ p: 2, borderBottom: "1px solid", borderColor: "divider" }}>
+                <Skeleton height={64} />
+              </Box>
+            ))
+          ) : filtered.length === 0 ? (
+            <Box sx={{ py: 6, textAlign: "center" }}><Typography color="text.secondary">No users found</Typography></Box>
+          ) : (
+            filtered.map((user) => (
+              <Box key={user.id} sx={{ p: 2, borderBottom: "1px solid", borderColor: "divider", "&:last-of-type": { borderBottom: "none" } }}>
+                <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1.5 }}>
+                  <Avatar src={user.avatar || undefined} sx={{ width: 40, height: 40, bgcolor: "primary.main", fontSize: "0.9rem", fontWeight: 600, flexShrink: 0 }}>
+                    {user.firstName?.[0]}{user.lastName?.[0]}
+                  </Avatar>
+                  <Box sx={{ minWidth: 0, flex: 1 }}>
+                    <Typography variant="body2" fontWeight={500} noWrap>{user.firstName} {user.lastName}</Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{user.email}</Typography>
+                    <Box sx={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 1, mt: 0.75 }}>
                       <Chip label={user.isActive !== false ? "Active" : "Inactive"} size="small" color={user.isActive !== false ? "success" : "default"} />
-                    </TableCell>
-                    <TableCell align="right">
-                      <Tooltip title="View Details">
-                        <IconButton size="small" onClick={() => openDetail(user)}><Icon icon="mdi:eye-outline" /></IconButton>
-                      </Tooltip>
-                      <Tooltip title={user.isActive !== false ? "Deactivate" : "Activate"}>
-                        <IconButton size="small" onClick={() => handleToggleStatus(user)}>
-                          <Icon icon={user.isActive !== false ? "mdi:account-off-outline" : "mdi:account-check-outline"} />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
-                  </TableRow>
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                      <Typography variant="caption" color="text.secondary">{user.phone || "—"}</Typography>
+                      <Typography variant="caption" color="text.secondary">Joined {formatDate(user.createdAt)}</Typography>
+                    </Box>
+                  </Box>
+                  <Box sx={{ flexShrink: 0 }}>
+                    <Tooltip title="View Details">
+                      <IconButton size="small" onClick={() => openDetail(user)} sx={{ minWidth: 44, minHeight: 44 }}><Icon icon="mdi:eye-outline" /></IconButton>
+                    </Tooltip>
+                    <Tooltip title={user.isActive !== false ? "Deactivate" : "Activate"}>
+                      <IconButton size="small" onClick={() => handleToggleStatus(user)} sx={{ minWidth: 44, minHeight: 44 }}>
+                        <Icon icon={user.isActive !== false ? "mdi:account-off-outline" : "mdi:account-check-outline"} />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
+                </Box>
+              </Box>
+            ))
+          )}
+        </Box>
       </Paper>
 
       {/* User Detail Dialog */}

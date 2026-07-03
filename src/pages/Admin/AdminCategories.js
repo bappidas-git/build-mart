@@ -229,7 +229,7 @@ const AdminCategories = () => {
           />
         </Box>
 
-        <TableContainer>
+        <TableContainer sx={{ overflowX: "auto" }}>
           <Table sx={{ minWidth: 720 }}>
             <TableHead>
               <TableRow>
@@ -290,9 +290,9 @@ const AdminCategories = () => {
                     <TableCell>
                       <Chip label={cat.isActive !== false ? "Active" : "Inactive"} size="small" color={cat.isActive !== false ? "success" : "default"} />
                     </TableCell>
-                    <TableCell align="right">
-                      <Tooltip title="Edit"><IconButton size="small" onClick={() => openEdit(cat)}><Icon icon="mdi:pencil-outline" /></IconButton></Tooltip>
-                      <Tooltip title="Delete"><IconButton size="small" color="error" onClick={() => handleDelete(cat)}><Icon icon="mdi:delete-outline" /></IconButton></Tooltip>
+                    <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
+                      <Tooltip title="Edit"><IconButton size="small" onClick={() => openEdit(cat)} sx={{ minWidth: 44, minHeight: 44 }}><Icon icon="mdi:pencil-outline" /></IconButton></Tooltip>
+                      <Tooltip title="Delete"><IconButton size="small" color="error" onClick={() => handleDelete(cat)} sx={{ minWidth: 44, minHeight: 44 }}><Icon icon="mdi:delete-outline" /></IconButton></Tooltip>
                     </TableCell>
                   </TableRow>
                 ))

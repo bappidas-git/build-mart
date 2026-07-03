@@ -582,8 +582,8 @@ const AdminProducts = () => {
                       </TableCell>
                       <TableCell><Chip label={p.isActive !== false ? "Active" : "Draft"} size="small" color={p.isActive !== false ? "success" : "default"} /></TableCell>
                       <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
-                        <Tooltip title="Edit"><IconButton size="small" onClick={() => openEdit(p)}><Icon icon="mdi:pencil-outline" /></IconButton></Tooltip>
-                        <Tooltip title="Delete"><IconButton size="small" color="error" onClick={() => handleDelete(p)}><Icon icon="mdi:delete-outline" /></IconButton></Tooltip>
+                        <Tooltip title="Edit"><IconButton size="small" onClick={() => openEdit(p)} sx={{ minWidth: 44, minHeight: 44 }}><Icon icon="mdi:pencil-outline" /></IconButton></Tooltip>
+                        <Tooltip title="Delete"><IconButton size="small" color="error" onClick={() => handleDelete(p)} sx={{ minWidth: 44, minHeight: 44 }}><Icon icon="mdi:delete-outline" /></IconButton></Tooltip>
                       </TableCell>
                     </TableRow>
                   );

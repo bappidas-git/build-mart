@@ -165,26 +165,26 @@ const AdminEnquiries = () => {
           <TextField
             placeholder="Search by enquiry #, name, phone, email..."
             value={search} onChange={(e) => setSearch(e.target.value)}
-            size="small" sx={{ flex: 1, minWidth: 240, maxWidth: 380 }}
+            size="small" sx={{ flex: 1, minWidth: { xs: "100%", sm: 240 }, maxWidth: { sm: 380 } }}
             InputProps={{ startAdornment: <InputAdornment position="start"><Icon icon="mdi:magnify" /></InputAdornment> }}
           />
-          <FormControl size="small" sx={{ minWidth: 160 }}>
+          <FormControl size="small" sx={{ minWidth: 160, flex: { xs: 1, sm: "0 1 auto" } }}>
             <InputLabel>Status</InputLabel>
             <Select value={statusFilter} label="Status" onChange={(e) => setStatusFilter(e.target.value)}>
               <MenuItem value="all">All</MenuItem>
               {Object.entries(ENQUIRY_STATUS).map(([k, v]) => (<MenuItem key={k} value={k}>{v.label}</MenuItem>))}
             </Select>
           </FormControl>
-          <TextField label="From" type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} size="small" InputLabelProps={{ shrink: true }} sx={{ width: 150 }} />
-          <TextField label="To" type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} size="small" InputLabelProps={{ shrink: true }} sx={{ width: 150 }} />
-          <FormControl size="small" sx={{ minWidth: 150 }}>
+          <TextField label="From" type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} size="small" InputLabelProps={{ shrink: true }} sx={{ width: { xs: "calc(50% - 8px)", sm: 150 } }} />
+          <TextField label="To" type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} size="small" InputLabelProps={{ shrink: true }} sx={{ width: { xs: "calc(50% - 8px)", sm: 150 } }} />
+          <FormControl size="small" sx={{ minWidth: 150, flex: { xs: 1, sm: "0 1 auto" } }}>
             <InputLabel>Sort</InputLabel>
             <Select value={sortBy} label="Sort" onChange={(e) => setSortBy(e.target.value)}>
               {Object.entries(SORT_OPTIONS).map(([k, v]) => (<MenuItem key={k} value={k}>{v.label}</MenuItem>))}
             </Select>
           </FormControl>
         </Box>
-        <TableContainer>
+        <TableContainer sx={{ overflowX: "auto" }}>
           <Table sx={{ minWidth: 820 }}>
             <TableHead>
               <TableRow>
@@ -218,7 +218,7 @@ const AdminEnquiries = () => {
                       <TableCell><Chip label={sc.label} size="small" color={sc.color} sx={{ height: 22, fontSize: "0.7rem" }} /></TableCell>
                       <TableCell><Typography variant="caption">{formatDate(enq.createdAt)}</Typography></TableCell>
                       <TableCell align="right">
-                        <Tooltip title="View & Update"><IconButton size="small" onClick={() => openDetail(enq)}><Icon icon="mdi:eye-outline" /></IconButton></Tooltip>
+                        <Tooltip title="View & Update"><IconButton size="small" onClick={() => openDetail(enq)} sx={{ minWidth: 44, minHeight: 44 }}><Icon icon="mdi:eye-outline" /></IconButton></Tooltip>
                       </TableCell>
                     </TableRow>
                   );

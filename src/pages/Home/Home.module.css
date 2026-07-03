@@ -77,25 +77,38 @@
   text-decoration: underline;
 }
 
-/* ── Product grid (4 → 2 → 1) ──────────────────────────────────────────────── */
+/* ── Product grid (5 → 4 → 3 → 2, always ≥2-up on phones) ──────────────────── */
 
 .productGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* lg default */
   gap: var(--sf-space-6);
+}
+
+@media (min-width: 1440px) {
+  .productGrid {
+    grid-template-columns: repeat(5, 1fr); /* xl */
+  }
 }
 
 @media (max-width: 1024px) {
   .productGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* md */
     gap: var(--sf-space-4);
   }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 768px) {
   .productGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr); /* sm */
     gap: var(--sf-space-4);
+  }
+}
+
+@media (max-width: 480px) {
+  .productGrid {
+    grid-template-columns: repeat(2, 1fr); /* xs — stay 2-up */
+    gap: var(--sf-space-3);
   }
 }
 
@@ -162,7 +175,7 @@
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .categoryGrid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--sf-space-3);
@@ -233,7 +246,7 @@
   }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 480px) {
   .trustGrid {
     grid-template-columns: 1fr;
     gap: var(--sf-space-4);
@@ -330,7 +343,7 @@ a.contactItem:hover {
   font-size: 1.15rem;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .contactCta {
     padding: var(--sf-space-6);
   }

@@ -80,8 +80,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: var(--sf-tap-target);   /* 44px touch target (glyph stays ~20px) */
+  height: var(--sf-tap-target);
   border: none;
   border-radius: var(--sf-radius-pill);
   background: var(--sf-color-surface);
@@ -250,7 +250,8 @@
   justify-content: center;
 }
 
-@media (max-width: 640px) {
+/* Compact list-view thumbnail on phones (xs and below). */
+@media (max-width: 480px) {
   .cardList .media {
     width: 130px;
   }

@@ -185,8 +185,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;                 /* 44px touch target */
+  height: 44px;
   flex-shrink: 0;
   border: none;
   border-radius: 10px;
@@ -807,8 +807,8 @@
   }
 
   .closeBtn {
-    width: 36px;
-    height: 36px;
+    width: 44px;                /* keep 44px touch target on mobile */
+    height: 44px;
     font-size: 16px;
     border-radius: 8px;
   }
@@ -852,7 +852,7 @@
   }
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 1280px) {
   .resultsGrid {
     grid-template-columns: repeat(3, 1fr);
   }

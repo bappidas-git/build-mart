@@ -388,8 +388,8 @@
   }
 }
 
-/* ---- Responsive rows ------------------------------------------------------- */
-@media (max-width: 640px) {
+/* ---- Responsive rows (stack only on true phones) --------------------------- */
+@media (max-width: 480px) {
   .rowBody {
     flex-direction: column;
     align-items: stretch;

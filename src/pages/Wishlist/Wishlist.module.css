@@ -138,8 +138,15 @@
 /* ===== Product Grid ===== */
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* lg default */
   gap: 20px;
+}
+
+/* xl (≥1440px): up to 5 across */
+@media (min-width: 1440px) {
+  .grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 
 /* ===== Product Card ===== */
@@ -604,13 +611,13 @@
 }
 
 /* ===== Responsive ===== */
-@media (max-width: 1200px) {
+@media (max-width: 1024px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
@@ -632,7 +639,7 @@
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 480px) {
   .page {
     padding: 20px 0 60px;
   }
