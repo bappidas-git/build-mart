@@ -34,6 +34,7 @@ import { useThemeContext } from "../../context/ThemeContext";
 import buildAdminTheme from "../../theme/adminTheme";
 import useAdminBodyClass from "../../hooks/useAdminBodyClass";
 import apiService from "../../services/api";
+import BrandLoader from "../BrandLoader/BrandLoader";
 import Swal from "sweetalert2";
 
 const LOGO =
@@ -254,7 +255,7 @@ const AdminLayout = () => {
     return (
       <ThemeProvider theme={adminTheme}>
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh", bgcolor: "background.default" }}>
-          <CircularProgress />
+          <BrandLoader label="Restoring your session…" />
         </Box>
       </ThemeProvider>
     );

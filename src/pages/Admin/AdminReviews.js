@@ -9,6 +9,7 @@ import {
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import apiService from "../../services/api";
+import AdminEmptyState from "../../components/EmptyState/AdminEmptyState";
 
 const STATUS_CONFIG = {
   pending: { label: "Pending", color: "warning" },
@@ -166,7 +167,15 @@ const AdminReviews = () => {
               {loading ? (
                 [...Array(3)].map((_, i) => (<TableRow key={i}><TableCell colSpan={8}><Skeleton height={52} /></TableCell></TableRow>))
               ) : filtered.length === 0 ? (
-                <TableRow><TableCell colSpan={8} align="center" sx={{ py: 6 }}><Typography color="text.secondary">No reviews found</Typography></TableCell></TableRow>
+                <TableRow>
+                  <TableCell colSpan={8} sx={{ py: 0, borderBottom: "none" }}>
+                    <AdminEmptyState
+                      icon="mdi:message-text-outline"
+                      title="No reviews yet"
+                      description="Customer reviews will appear here for moderation."
+                    />
+                  </TableCell>
+                </TableRow>
               ) : (
                 filtered.map((review) => {
                   const sc = STATUS_CONFIG[review.status] || { label: review.status, color: "default" };

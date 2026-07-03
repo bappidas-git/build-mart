@@ -11,6 +11,7 @@ import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import apiService from "../../services/api";
 import { orderCategoriesHierarchically } from "../../utils/categories";
+import AdminEmptyState from "../../components/EmptyState/AdminEmptyState";
 
 // Unit-of-measure options for the pricing block (matches the storefront
 // PriceBlock unitType suffix). The current value is prepended in the Select if a
@@ -515,7 +516,15 @@ const AdminProducts = () => {
               {loading ? (
                 [...Array(5)].map((_, i) => (<TableRow key={i}><TableCell colSpan={8}><Skeleton height={56} /></TableCell></TableRow>))
               ) : filtered.length === 0 ? (
-                <TableRow><TableCell colSpan={8} align="center" sx={{ py: 6 }}><Typography color="text.secondary">No products found</Typography></TableCell></TableRow>
+                <TableRow>
+                  <TableCell colSpan={8} sx={{ py: 0, borderBottom: "none" }}>
+                    <AdminEmptyState
+                      icon="mdi:package-variant-closed"
+                      title="No products found"
+                      description="Add products or adjust your filters to see them here."
+                    />
+                  </TableCell>
+                </TableRow>
               ) : (
                 filtered.map((p) => {
                   const stock = effectiveStock(p);

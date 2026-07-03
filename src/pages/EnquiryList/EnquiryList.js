@@ -13,6 +13,7 @@ import {
 import QuantityStepper from "../../components/storefront/QuantityStepper";
 import PriceBlock from "../../components/storefront/PriceBlock";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import EmptyState from "../../components/EmptyState/EmptyState";
 import styles from "./EnquiryList.module.css";
 
 // Full-page Enquiry List. NEBM customers build an Enquiry List and submit an
@@ -21,11 +22,6 @@ import styles from "./EnquiryList.module.css";
 // shared QuantityStepper + PriceBlock and edits go through updateQuantity /
 // removeFromCart, which the context mirrors (debounced) to the server for
 // logged-in users. `getCartTotal` is intentionally NOT read here.
-//
-// Empty-state illustration is an Icons8 "clouds" illustration; onImageError
-// degrades to the inline SVG placeholder if it ever fails to load.
-const EMPTY_ILLUSTRATION = "https://img.icons8.com/clouds/256/purchase-order.png";
-
 const EnquiryList = () => {
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
@@ -67,32 +63,12 @@ const EnquiryList = () => {
 
         {/* Body — empty state or the row list */}
         {isEmpty ? (
-          <motion.div
-            className={styles.emptyState}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: "easeOut" }}
-          >
-            <img
-              src={EMPTY_ILLUSTRATION}
-              alt=""
-              className={styles.emptyImage}
-              onError={onImageError}
-              width={200}
-              height={200}
-            />
-            <h2 className={styles.emptyTitle}>Your Enquiry List is empty</h2>
-            <p className={styles.emptyText}>
-              Browse our building materials and add products you'd like a quote on.
-            </p>
-            <button
-              type="button"
-              className={styles.browseBtn}
-              onClick={() => navigate("/products")}
-            >
-              Browse Products
-            </button>
-          </motion.div>
+          <EmptyState
+            icon="mdi:clipboard-text-outline"
+            title="Your Enquiry List is empty"
+            description="Add building materials you're interested in and send us one enquiry."
+            action={{ label: "Browse Products", to: "/products" }}
+          />
         ) : (
           <div className={styles.list}>
             {/* Exit animation consistent with the drawer: `layout` smoothly

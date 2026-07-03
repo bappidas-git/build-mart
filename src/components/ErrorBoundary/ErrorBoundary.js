@@ -1,5 +1,11 @@
 import React from "react";
 
+// NEBM logo icon (Cloudinary) — the same mark used by the HTML splash and the
+// BrandLoader, so the error card stays on-brand. It fails gracefully (hidden) if
+// the network is down.
+const LOGO_ICON =
+  "https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889689/icon_bvsukn.png";
+
 // Resolve the active theme without depending on React context (this component
 // must work even if the provider tree above it failed to render).
 const isDarkTheme = () => {
@@ -109,10 +115,31 @@ class ErrorBoundary extends React.Component {
               : "0 20px 60px rgba(24,133,216,0.15)",
           }}
         >
-          <div style={{ fontSize: "52px", lineHeight: 1, marginBottom: "16px" }}>
-            <span role="img" aria-label="warning">
-              ⚠️
-            </span>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "84px",
+              height: "84px",
+              margin: "0 auto 20px",
+              borderRadius: "22px",
+              background: dark
+                ? "rgba(78, 163, 227, 0.12)"
+                : "rgba(24, 133, 216, 0.08)",
+              border: `1px solid ${palette.border}`,
+            }}
+          >
+            <img
+              src={LOGO_ICON}
+              alt="North East Build Mart"
+              width={52}
+              height={52}
+              style={{ width: "52px", height: "52px", objectFit: "contain" }}
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
+            />
           </div>
           <h1
             style={{

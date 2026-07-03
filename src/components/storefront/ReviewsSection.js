@@ -1,5 +1,6 @@
 import React from "react";
 import StarRating from "./StarRating";
+import EmptyState from "../EmptyState/EmptyState";
 import { formatDate, onImageError } from "../../utils/helpers";
 import styles from "./ReviewsSection.module.css";
 
@@ -94,9 +95,12 @@ const ReviewsSection = ({
           )}
         </div>
       ) : list.length === 0 ? (
-        <div className={styles.state}>
-          <p>No written reviews yet. Be the first to share your experience.</p>
-        </div>
+        <EmptyState
+          compact
+          icon="mdi:message-text-outline"
+          title="No written reviews yet"
+          description="Be the first to share your experience with this product."
+        />
       ) : (
         <div className={styles.list}>
           {list.map((review, idx) => (
