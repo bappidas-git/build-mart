@@ -8,6 +8,7 @@ import {
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import apiService from "../../services/api";
+import AdminEmptyState from "../../components/EmptyState/AdminEmptyState";
 
 // Canonical, ordered enquiry pipeline for North East Build Mart. There are no
 // payments/fulfillment here — an enquiry simply moves through a follow-up
@@ -201,7 +202,15 @@ const AdminEnquiries = () => {
               {loading ? (
                 [...Array(5)].map((_, i) => (<TableRow key={i}><TableCell colSpan={7}><Skeleton height={52} /></TableCell></TableRow>))
               ) : visible.length === 0 ? (
-                <TableRow><TableCell colSpan={7} align="center" sx={{ py: 6 }}><Typography color="text.secondary">No enquiries found</Typography></TableCell></TableRow>
+                <TableRow>
+                  <TableCell colSpan={7} sx={{ py: 0, borderBottom: "none" }}>
+                    <AdminEmptyState
+                      icon="mdi:clipboard-text-outline"
+                      title="No enquiries yet"
+                      description="New enquiries submitted from the storefront will appear here."
+                    />
+                  </TableCell>
+                </TableRow>
               ) : (
                 visible.map((enq) => {
                   const sc = ENQUIRY_STATUS[statusOf(enq)] || { label: statusOf(enq), color: "default" };

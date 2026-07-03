@@ -8,6 +8,7 @@ import {
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import apiService from "../../services/api";
+import AdminEmptyState from "../../components/EmptyState/AdminEmptyState";
 
 // Mirror the enquiry status hues used by the Enquiries manager so the chip in
 // this panel reads the same everywhere.
@@ -133,7 +134,15 @@ const AdminUsers = () => {
                 {loading ? (
                   [...Array(5)].map((_, i) => (<TableRow key={i}><TableCell colSpan={5}><Skeleton height={52} /></TableCell></TableRow>))
                 ) : filtered.length === 0 ? (
-                  <TableRow><TableCell colSpan={5} align="center" sx={{ py: 6 }}><Typography color="text.secondary">No users found</Typography></TableCell></TableRow>
+                  <TableRow>
+                    <TableCell colSpan={5} sx={{ py: 0, borderBottom: "none" }}>
+                      <AdminEmptyState
+                        icon="mdi:account-outline"
+                        title="No users found"
+                        description="Registered customers will be listed here."
+                      />
+                    </TableCell>
+                  </TableRow>
                 ) : (
                   filtered.map((user) => (
                     <TableRow key={user.id} hover>
@@ -180,7 +189,11 @@ const AdminUsers = () => {
               </Box>
             ))
           ) : filtered.length === 0 ? (
-            <Box sx={{ py: 6, textAlign: "center" }}><Typography color="text.secondary">No users found</Typography></Box>
+            <AdminEmptyState
+              icon="mdi:account-outline"
+              title="No users found"
+              description="Registered customers will be listed here."
+            />
           ) : (
             filtered.map((user) => (
               <Box key={user.id} sx={{ p: 2, borderBottom: "1px solid", borderColor: "divider", "&:last-of-type": { borderBottom: "none" } }}>

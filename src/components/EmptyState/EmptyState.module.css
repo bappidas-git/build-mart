@@ -1,0 +1,121 @@
+/* =============================================================================
+ * EmptyState — storefront empty state (CSS Modules + --sf-* tokens)
+ * =============================================================================
+ * Center-aligned, generous whitespace, a single muted brand-tinted icon in a
+ * soft circle, one heading, one supporting line and at most one CTA. Token
+ * driven so it re-skins with the storefront and reads on light + dark.
+ * ========================================================================== */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--sf-space-3);
+  max-width: 440px;
+  margin: 0 auto;
+  padding: var(--sf-space-16) var(--sf-space-4);
+}
+
+.compact {
+  padding: var(--sf-space-10) var(--sf-space-4);
+  gap: var(--sf-space-2);
+}
+
+/* ---- Muted, brand-tinted icon in a soft circle ---------------------------- */
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  border-radius: var(--sf-radius-pill);
+  margin-bottom: var(--sf-space-1);
+}
+
+.compact .iconWrap {
+  width: 76px;
+  height: 76px;
+}
+
+.compact .icon {
+  width: 36px;
+  height: 36px;
+}
+
+.blue {
+  background: var(--sf-color-primary-soft);
+  color: var(--sf-color-primary);
+}
+
+/* Gold tint — used sparingly (brand rule). */
+.gold {
+  background: rgba(250, 156, 76, 0.12);
+  color: var(--sf-color-accent);
+}
+
+.iconImg {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.compact .iconImg {
+  width: 48px;
+  height: 48px;
+}
+
+/* ---- Copy ----------------------------------------------------------------- */
+.title {
+  margin: 0;
+  font-size: var(--sf-text-xl);
+  font-weight: var(--sf-font-semibold);
+  color: var(--sf-color-text);
+  line-height: var(--sf-leading-tight);
+}
+
+.compact .title {
+  font-size: var(--sf-text-lg);
+}
+
+.desc {
+  margin: 0;
+  max-width: 380px;
+  font-size: var(--sf-text-base);
+  color: var(--sf-color-text-secondary);
+  line-height: var(--sf-leading-normal);
+}
+
+.compact .desc {
+  font-size: var(--sf-text-sm);
+}
+
+/* ---- Single CTA ----------------------------------------------------------- */
+.cta {
+  margin-top: var(--sf-space-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--sf-tap-target);
+  padding: 0 var(--sf-space-6);
+  border: none;
+  border-radius: var(--sf-radius-md);
+  background: var(--sf-gradient-primary);
+  color: var(--sf-color-primary-contrast);
+  font-family: inherit;
+  font-size: var(--sf-text-base);
+  font-weight: var(--sf-font-semibold);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--sf-transition-fast), box-shadow var(--sf-transition-fast);
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sf-shadow-md);
+}
+
+.cta:focus-visible {
+  outline: none;
+  box-shadow: var(--sf-shadow-focus);
+}

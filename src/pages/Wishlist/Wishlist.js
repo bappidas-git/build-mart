@@ -12,6 +12,7 @@ import {
   productPath,
 } from "../../utils/helpers";
 import PriceBlock from "../../components/storefront/PriceBlock";
+import EmptyState from "../../components/EmptyState/EmptyState";
 import styles from "./Wishlist.module.css";
 
 const SORT_OPTIONS = [
@@ -179,28 +180,13 @@ const Wishlist = () => {
               <span className={styles.itemCount}>(0 items)</span>
             </div>
           </div>
-          <motion.div
-            className={styles.emptyState}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className={styles.emptyHeart}>
-              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-              </svg>
-            </div>
-            <h2 className={styles.emptyTitle}>Your wishlist is empty</h2>
-            <p className={styles.emptyText}>
-              Save the items you love to come back to them later.
-            </p>
-            <button
-              className={styles.shopButton}
-              onClick={() => navigate("/products")}
-            >
-              Start Shopping
-            </button>
-          </motion.div>
+          <EmptyState
+            icon="mdi:heart-outline"
+            tone="gold"
+            title="Your wishlist is empty"
+            description="Save the items you love to come back to them later."
+            action={{ label: "Start Shopping", to: "/products" }}
+          />
         </div>
       </div>
     );

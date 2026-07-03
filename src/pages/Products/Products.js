@@ -13,6 +13,7 @@ import {
 } from "../../utils/categories";
 import { getProductMinPrice, getDeviceType } from "../../utils/helpers";
 import ProductCard from "../../components/storefront/ProductCard";
+import EmptyState from "../../components/EmptyState/EmptyState";
 import styles from "./Products.module.css";
 
 // ---------------------------------------------------------------------------
@@ -210,20 +211,6 @@ const ChevronLeft = () => (
 
 const ChevronRight = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 6 15 12 9 18" /></svg>
-);
-
-// ---------------------------------------------------------------------------
-// Empty state illustration (simple inline SVG)
-// ---------------------------------------------------------------------------
-const EmptyIllustration = () => (
-  <svg className={styles.emptyIllustration} width="200" height="160" viewBox="0 0 200 160" fill="none">
-    <rect x="40" y="30" width="120" height="90" rx="8" fill="var(--empty-box, #e2e8f0)" />
-    <rect x="55" y="50" width="90" height="10" rx="4" fill="var(--empty-line, #cbd5e1)" />
-    <rect x="55" y="70" width="60" height="10" rx="4" fill="var(--empty-line, #cbd5e1)" />
-    <rect x="55" y="90" width="75" height="10" rx="4" fill="var(--empty-line, #cbd5e1)" />
-    <circle cx="100" cy="135" r="18" fill="var(--empty-circle, #94a3b8)" opacity="0.3" />
-    <text x="100" y="140" textAnchor="middle" fontSize="20" fill="var(--empty-circle, #94a3b8)">?</text>
-  </svg>
 );
 
 // ---------------------------------------------------------------------------
@@ -1197,26 +1184,26 @@ const Products = () => {
               {paginatedProducts.map((product, index) => renderProductCard(product, index))}
             </div>
           ) : (
-            <div className={styles.emptyState}>
-              <EmptyIllustration />
-              <h3 className={styles.emptyTitle}>No products found</h3>
-              <p className={styles.emptyText}>
-                {urlSearch ? (
+            <EmptyState
+              icon="mdi:package-variant-closed"
+              title={urlSearch ? "No products match your search" : "No products found"}
+              description={
+                urlSearch ? (
                   <>
                     We could not find any products matching{" "}
                     <strong>&ldquo;{urlSearch}&rdquo;</strong>. Try a different
-                    search or adjust your filters.
+                    keyword or clear your filters.
                   </>
                 ) : (
                   "We could not find any products matching your criteria. Try adjusting your filters."
-                )}
-              </p>
-              {hasAnyConstraint && (
-                <button className={styles.emptyBtn} onClick={clearAllFilters}>
-                  Clear All Filters
-                </button>
-              )}
-            </div>
+                )
+              }
+              action={
+                hasAnyConstraint
+                  ? { label: "Clear filters", onClick: clearAllFilters }
+                  : undefined
+              }
+            />
           )}
 
           {/* Pagination */}

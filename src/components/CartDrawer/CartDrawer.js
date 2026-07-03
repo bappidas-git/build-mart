@@ -12,6 +12,7 @@ import {
   onImageError,
 } from "../../utils/helpers";
 import QuantityStepper from "../storefront/QuantityStepper";
+import EmptyState from "../EmptyState/EmptyState";
 import styles from "./CartDrawer.module.css";
 
 // Enquiry List drawer. NEBM customers build an Enquiry List and submit an enquiry —
@@ -111,33 +112,16 @@ const CartDrawer = ({ open, onClose }) => {
             {/* Enquiry List items */}
             <div className={styles.itemsContainer}>
               {cart.length === 0 ? (
-                <div className={styles.emptyState}>
-                  <motion.div
-                    className={styles.emptyStateInner}
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.4, ease: "easeOut" }}
-                  >
-                    <Iconify
-                      icon="mdi:clipboard-text-outline"
-                      className={styles.emptyIcon}
-                      width="80"
-                      height="80"
-                    />
-                    <h3 className={styles.emptyTitle}>
-                      Your Enquiry List is empty
-                    </h3>
-                    <p className={styles.emptyText}>
-                      You haven't added any products to enquire about yet.
-                    </p>
-                    <button
-                      className={styles.continueShoppingBtn}
-                      onClick={() => handleNavigate("/")}
-                    >
-                      Browse Products
-                    </button>
-                  </motion.div>
-                </div>
+                <EmptyState
+                  compact
+                  icon="mdi:clipboard-text-outline"
+                  title="Your Enquiry List is empty"
+                  description="Add building materials you're interested in and send us one enquiry."
+                  action={{
+                    label: "Browse Products",
+                    onClick: () => handleNavigate("/products"),
+                  }}
+                />
               ) : (
                 <AnimatePresence initial={false}>
                   {cart.map((item) => {

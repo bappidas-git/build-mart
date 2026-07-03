@@ -30,6 +30,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import { Icon } from "@iconify/react";
+import AdminEmptyState from "../../components/EmptyState/AdminEmptyState";
 import { motion, AnimatePresence } from "framer-motion";
 import Swal from "sweetalert2";
 import apiService from "../../services/api";
@@ -531,11 +532,12 @@ const AdminLeads = () => {
               </AnimatePresence>
               {filteredLeads.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={6} align="center" sx={{ py: 6 }}>
-                    <Icon icon="mdi:email-search-outline" style={{ fontSize: 48, opacity: 0.3 }} />
-                    <Typography color="text.secondary" sx={{ mt: 1 }}>
-                      No leads found
-                    </Typography>
+                  <TableCell colSpan={6} sx={{ py: 0, borderBottom: "none" }}>
+                    <AdminEmptyState
+                      icon="mdi:email-search-outline"
+                      title="No leads yet"
+                      description="New leads captured from the storefront will show up here."
+                    />
                   </TableCell>
                 </TableRow>
               )}

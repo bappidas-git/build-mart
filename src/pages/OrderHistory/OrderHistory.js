@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../hooks/useAuth";
 import apiService from "../../services/api";
 import { formatDate, PLACEHOLDER_IMG, onImageError } from "../../utils/helpers";
 import PriceBlock from "../../components/storefront/PriceBlock";
+import EmptyState from "../../components/EmptyState/EmptyState";
 import styles from "./OrderHistory.module.css";
 
 // NEBM customers submit ENQUIRIES — they never pay or buy — so this page is a
@@ -41,7 +42,6 @@ const getStatusInfo = (status) =>
   ENQUIRY_STATUS[status] || { label: status || "New", className: "statusNew" };
 
 const MyEnquiries = () => {
-  const navigate = useNavigate();
   const { isDarkMode } = useTheme();
   const { user, isAuthenticated, isLoading: authLoading, openAuthModal } = useAuth();
 
@@ -260,29 +260,14 @@ const MyEnquiries = () => {
           </motion.div>
         )}
 
-        {/* Empty State */}
+        {/* Empty State — the customer has never sent an enquiry */}
         {!loading && !fetchError && filteredEnquiries.length === 0 && enquiries.length === 0 && (
-          <motion.div
-            className={styles.emptyState}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-          >
-            <div className={styles.emptyIcon}>
-              <svg width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 2h6a2 2 0 012 2v0h1a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h1v0a2 2 0 012-2z" />
-                <path d="M9 2a2 2 0 00-2 2h10a2 2 0 00-2-2H9z" />
-                <line x1="8" y1="11" x2="16" y2="11" />
-                <line x1="8" y1="15" x2="13" y2="15" />
-              </svg>
-            </div>
-            <h3 className={styles.emptyTitle}>No enquiries yet</h3>
-            <p className={styles.emptySubtext}>
-              Browse our building materials and send us an enquiry.
-            </p>
-            <button className={styles.btnPrimary} onClick={() => navigate("/products")}>
-              Browse Products
-            </button>
-          </motion.div>
+          <EmptyState
+            icon="mdi:clipboard-text-outline"
+            title="No enquiries yet"
+            description="Browse our building materials and send us an enquiry."
+            action={{ label: "Browse Products", to: "/products" }}
+          />
         )}
 
         {/* No filter results */}
