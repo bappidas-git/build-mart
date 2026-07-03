@@ -181,34 +181,38 @@ const PriceBlock = ({
             Minimum order: {minQty} {pluralizeUnit(unitType, minQty)}
           </div>
         )}
-        <table className={styles.tierTable}>
-          <thead>
-            <tr>
-              <th scope="col">Quantity</th>
-              <th scope="col" className={styles.numCol}>
-                Price{unitType ? ` / ${unitType}` : ""}
-              </th>
-              <th scope="col" className={styles.numCol}>
-                Discount
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r, i) => (
-              <tr key={i} className={i === bestIdx ? styles.bestRow : undefined}>
-                <td>{r.label}</td>
-                <td className={styles.numCol}>{formatCurrency(r.price, currency)}</td>
-                <td className={styles.numCol}>
-                  {r.disc > 0 ? (
-                    <span className={styles.tierDiscount}>{r.disc}% off</span>
-                  ) : (
-                    <span className={styles.tierBase}>—</span>
-                  )}
-                </td>
+        {/* Scroll wrapper keeps the tier table from ever breaking the layout on
+            narrow phones — it scrolls horizontally within its own bounds. */}
+        <div className={styles.tierTableWrap}>
+          <table className={styles.tierTable}>
+            <thead>
+              <tr>
+                <th scope="col">Quantity</th>
+                <th scope="col" className={styles.numCol}>
+                  Price{unitType ? ` / ${unitType}` : ""}
+                </th>
+                <th scope="col" className={styles.numCol}>
+                  Discount
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {rows.map((r, i) => (
+                <tr key={i} className={i === bestIdx ? styles.bestRow : undefined}>
+                  <td>{r.label}</td>
+                  <td className={styles.numCol}>{formatCurrency(r.price, currency)}</td>
+                  <td className={styles.numCol}>
+                    {r.disc > 0 ? (
+                      <span className={styles.tierDiscount}>{r.disc}% off</span>
+                    ) : (
+                      <span className={styles.tierBase}>—</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }

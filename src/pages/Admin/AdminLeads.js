@@ -404,7 +404,7 @@ const AdminLeads = () => {
           overflow: "hidden",
         }}
       >
-        <TableContainer>
+        <TableContainer sx={{ overflowX: "auto" }}>
           <Table sx={{ minWidth: 860 }}>
             <TableHead>
               <TableRow>
@@ -506,12 +506,12 @@ const AdminLeads = () => {
                           sx={{ textTransform: "capitalize" }}
                         />
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="right" sx={{ whiteSpace: "nowrap" }}>
                         <Tooltip title="View Details">
                           <IconButton
                             size="small"
                             onClick={() => handleViewDetails(lead)}
-                            sx={{ color: "primary.main" }}
+                            sx={{ color: "primary.main", minWidth: 44, minHeight: 44 }}
                           >
                             <Icon icon="mdi:eye" />
                           </IconButton>
@@ -520,7 +520,7 @@ const AdminLeads = () => {
                           <IconButton
                             size="small"
                             onClick={() => handleDeleteLead(lead.id)}
-                            sx={{ color: "error.main" }}
+                            sx={{ color: "error.main", minWidth: 44, minHeight: 44 }}
                           >
                             <Icon icon="mdi:delete-outline" />
                           </IconButton>

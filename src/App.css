@@ -279,3 +279,22 @@ body.admin-area.dark .swal2-popup {
 body.admin-area.dark .swal2-html-container {
   color: #94a3b8;
 }
+
+/* =====================================================================
+   Reduced motion — global backstop
+   storefront-tokens.css already zeroes the --sf-transition* vars and all
+   framer-motion is gated via <MotionConfig reducedMotion="user"> in App.js.
+   This final net catches raw CSS keyframe animations (e.g. skeleton
+   shimmers) and any transition/animation that doesn't route through those
+   tokens, across BOTH the storefront and the admin panel.
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

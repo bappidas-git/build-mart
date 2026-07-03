@@ -379,7 +379,7 @@
 
 /* ========== RESPONSIVE: Tablet (2 columns) ========== */
 
-@media (max-width: 960px) {
+@media (max-width: 1024px) {
   .newsletterInner {
     flex-direction: column;
     text-align: center;
@@ -417,7 +417,7 @@
 
 /* ========== RESPONSIVE: Mobile (1 column) ========== */
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .newsletter {
     padding: 36px 0;
   }

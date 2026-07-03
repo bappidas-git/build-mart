@@ -52,7 +52,7 @@
 .dark .form { background: #1e293b; border-color: #334155; }
 .form h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 24px; }
 .formRow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
-@media (max-width: 576px) { .formRow { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 768px) { .formRow { grid-template-columns: minmax(0, 1fr); } }
 .formGroup { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; min-width: 0; }
 .formGroup label { font-size: 0.875rem; font-weight: 500; color: #475569; }
 .dark .formGroup label { color: #94a3b8; }

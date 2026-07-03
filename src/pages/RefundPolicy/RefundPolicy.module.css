@@ -26,7 +26,7 @@
 .stepCard p { font-size: 0.85rem; color: #64748b; }
 .dark .stepCard p { color: #94a3b8; }
 .twoCol { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-@media (max-width: 640px) { .twoCol { grid-template-columns: 1fr; } }
+@media (max-width: 768px) { .twoCol { grid-template-columns: 1fr; } }
 .section ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 .section li { display: flex; align-items: flex-start; gap: 8px; }
 .checkIcon { color: #10b981; font-weight: 700; flex-shrink: 0; }

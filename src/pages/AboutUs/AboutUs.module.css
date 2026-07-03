@@ -108,7 +108,7 @@
   gap: var(--sf-space-4);
   margin-bottom: var(--sf-section-y);
 }
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .highlights {
     grid-template-columns: 1fr;
   }

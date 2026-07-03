@@ -48,8 +48,14 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* lg default */
   gap: var(--sf-space-5);
+}
+
+@media (min-width: 1440px) {
+  .grid {
+    grid-template-columns: repeat(5, 1fr); /* xl */
+  }
 }
 
 @media (max-width: 1024px) {

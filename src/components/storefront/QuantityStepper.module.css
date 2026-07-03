@@ -48,7 +48,7 @@
   user-select: none;
 }
 
-/* small variant for dense surfaces (cart lines, bundles) */
+/* small variant for dense surfaces (cart lines, bundles) — mouse/desktop only */
 .sm .btn {
   min-width: 32px;
   min-height: 32px;
@@ -56,4 +56,16 @@
 .sm .value {
   min-width: 32px;
   font-size: var(--sf-text-sm);
+}
+
+/* On phones, even the compact variant honours the 44px touch target so the
+   enquiry-list / checkout steppers stay thumb-friendly. */
+@media (max-width: 768px) {
+  .sm .btn {
+    min-width: var(--sf-tap-target);
+    min-height: var(--sf-tap-target);
+  }
+  .sm .value {
+    min-width: 40px;
+  }
 }

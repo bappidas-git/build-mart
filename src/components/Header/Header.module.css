@@ -126,6 +126,8 @@
 .hamburger {
   color: var(--sf-color-text) !important;
   padding: 8px !important;
+  min-width: var(--sf-tap-target);   /* 44px touch target (glyph stays 24px) */
+  min-height: var(--sf-tap-target);
   flex-shrink: 0;
 }
 
@@ -236,6 +238,8 @@
 .actionIcon {
   color: var(--sf-color-text) !important;
   padding: 6px !important;
+  min-width: var(--sf-tap-target);   /* 44px touch target */
+  min-height: var(--sf-tap-target);
 }
 
 .actionIcon:hover {

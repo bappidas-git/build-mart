@@ -100,13 +100,26 @@
   font-weight: var(--sf-font-medium);
 }
 
+/* Horizontal-scroll shell — carries the border/rounding so the table inside can
+   overflow to a scroll on narrow screens instead of breaking the page. */
+.tierTableWrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-md);
+}
+
 .tierTable {
   width: 100%;
   border-collapse: collapse;
   font-size: var(--sf-text-sm);
-  border: 1px solid var(--sf-color-border);
-  border-radius: var(--sf-radius-md);
-  overflow: hidden;
+}
+
+/* Keep cells on one line; the wrapper scrolls if they can't all fit. */
+.tierTable th,
+.tierTable td {
+  white-space: nowrap;
 }
 
 .tierTable thead th {

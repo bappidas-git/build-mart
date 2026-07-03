@@ -119,8 +119,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: var(--sf-tap-target);   /* 44px touch target */
+  height: var(--sf-tap-target);
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -439,8 +439,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
-  height: 30px;
+  width: var(--sf-tap-target);   /* 44px touch target */
+  height: var(--sf-tap-target);
   border: none;
   border-radius: 8px;
   cursor: pointer;
