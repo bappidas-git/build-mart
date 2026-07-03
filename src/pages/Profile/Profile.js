@@ -5,14 +5,13 @@ import Swal from "sweetalert2";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../hooks/useAuth";
 import apiService from "../../services/api";
-import { formatDate, formatCurrency, getInitials, generateId, isValidPhone } from "../../utils/helpers";
+import { formatDate, getInitials, generateId, isValidPhone } from "../../utils/helpers";
 import styles from "./Profile.module.css";
 
 const TABS = [
   { id: "profile", label: "My Profile", icon: "person" },
   { id: "addresses", label: "My Addresses", icon: "location" },
-  { id: "orders", label: "My Orders", icon: "orders", link: "/orders" },
-  { id: "wallet", label: "Store Credit", icon: "wallet" },
+  { id: "orders", label: "My Enquiries", icon: "enquiries", link: "/orders" },
   { id: "wishlist", label: "My Wishlist", icon: "heart", link: "/wishlist" },
   { id: "password", label: "Change Password", icon: "lock" },
   { id: "logout", label: "Logout", icon: "logout" },
@@ -32,18 +31,11 @@ const TabIcon = ({ icon }) => {
         <circle cx="12" cy="10" r="3" />
       </svg>
     ),
-    wallet: (
+    enquiries: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
-        <path d="M18 12a2 2 0 0 0 0 4h4v-4z" />
-      </svg>
-    ),
-    orders: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-        <line x1="3" y1="6" x2="21" y2="6" />
-        <path d="M16 10a4 4 0 0 1-8 0" />
+        <path d="M9 2h6a2 2 0 0 1 2 2h1a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1a2 2 0 0 1 2-2z" />
+        <line x1="8" y1="12" x2="16" y2="12" />
+        <line x1="8" y1="16" x2="13" y2="16" />
       </svg>
     ),
     heart: (
@@ -76,11 +68,6 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState({ type: "", message: "" });
-
-  // Store-credit wallet
-  const [walletBalance, setWalletBalance] = useState(0);
-  const [walletTx, setWalletTx] = useState([]);
-  const [walletLoading, setWalletLoading] = useState(false);
 
   // Profile form state
   const [profileForm, setProfileForm] = useState({
@@ -149,31 +136,6 @@ const Profile = () => {
       return () => clearTimeout(timer);
     }
   }, [feedback]);
-
-  // Load wallet balance + ledger when the Store Credit tab is opened (fresh
-  // from the API, so a refund issued by the admin in another session shows up).
-  useEffect(() => {
-    if (activeTab !== "wallet" || !user?.id) return;
-    let active = true;
-    (async () => {
-      setWalletLoading(true);
-      try {
-        const [bal, tx] = await Promise.all([
-          apiService.wallet.getBalance(user.id),
-          apiService.wallet.getTransactions(user.id),
-        ]);
-        if (active) {
-          setWalletBalance(Number(bal) || 0);
-          setWalletTx(Array.isArray(tx) ? tx : []);
-        }
-      } catch (e) {
-        console.error("Load wallet error:", e);
-      } finally {
-        if (active) setWalletLoading(false);
-      }
-    })();
-    return () => { active = false; };
-  }, [activeTab, user]);
 
   if (!isAuthenticated || !user) {
     return null;
@@ -571,7 +533,7 @@ const Profile = () => {
       <div className={styles.sectionHeader}>
         <div>
           <h2 className={styles.sectionTitle}>My Addresses</h2>
-          <p className={styles.sectionSubtitle}>Manage your delivery addresses</p>
+          <p className={styles.sectionSubtitle}>Manage your addresses</p>
         </div>
         {!showAddressForm && (
           <button
@@ -706,7 +668,7 @@ const Profile = () => {
                 className={`${styles.formInput} ${styles.readOnly}`}
                 readOnly
               />
-              <span className={styles.fieldHint}>Currently shipping within India only</span>
+              <span className={styles.fieldHint}>India only</span>
             </div>
           </div>
 
@@ -754,7 +716,7 @@ const Profile = () => {
             </div>
             <p className={styles.emptyText}>No addresses saved yet</p>
             <p className={styles.emptySubtext}>
-              Add an address to make checkout faster
+              Add an address to save it for future enquiries
             </p>
           </div>
         ) : (
@@ -1000,114 +962,12 @@ const Profile = () => {
     </motion.div>
   );
 
-  const renderWalletSection = () => (
-    <motion.div
-      key="wallet"
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      transition={{ duration: 0.3 }}
-    >
-      <div className={styles.sectionHeader}>
-        <h2 className={styles.sectionTitle}>Store Credit</h2>
-        <p className={styles.sectionSubtitle}>
-          Your wallet balance and transaction history
-        </p>
-      </div>
-
-      <div className={styles.walletBalanceCard}>
-        <div className={styles.walletBalanceIcon}>
-          <TabIcon icon="wallet" />
-        </div>
-        <div>
-          <span className={styles.walletBalanceLabel}>Available Balance</span>
-          <span className={styles.walletBalanceValue}>{formatCurrency(walletBalance)}</span>
-        </div>
-        <p className={styles.walletBalanceHint}>
-          Apply your store credit at checkout toward any order.
-        </p>
-      </div>
-
-      <h3 className={styles.walletHistoryTitle}>Transaction History</h3>
-
-      {walletLoading ? (
-        <div className={styles.walletLoading}>
-          <div className={styles.spinner} />
-          <p>Loading your transactions…</p>
-        </div>
-      ) : walletTx.length === 0 ? (
-        <div className={styles.emptyState}>
-          <div className={styles.emptyIcon}>
-            <TabIcon icon="wallet" />
-          </div>
-          <p className={styles.emptyText}>No store-credit transactions yet</p>
-          <p className={styles.emptySubtext}>
-            Refunds issued to store credit, and credit you spend at checkout, will appear here.
-          </p>
-        </div>
-      ) : (
-        <div className={styles.walletTxList}>
-          {walletTx.map((t) => {
-            const isCredit = t.type === "credit";
-            return (
-              <div key={t.id} className={styles.walletTxRow}>
-                <div
-                  className={`${styles.walletTxBadge} ${
-                    isCredit ? styles.walletTxBadgeCredit : styles.walletTxBadgeDebit
-                  }`}
-                  aria-hidden
-                >
-                  {isCredit ? "+" : "−"}
-                </div>
-                <div className={styles.walletTxBody}>
-                  <span className={styles.walletTxReason}>
-                    {t.reason || (isCredit ? "Store credit added" : "Store credit used")}
-                  </span>
-                  <span className={styles.walletTxMeta}>
-                    {formatDate(t.createdAt, "medium")}
-                    {t.orderNumber && (
-                      <>
-                        {" · "}
-                        <button
-                          type="button"
-                          className={styles.walletTxLink}
-                          onClick={() => navigate("/orders")}
-                        >
-                          {t.orderNumber}
-                        </button>
-                      </>
-                    )}
-                  </span>
-                </div>
-                <div className={styles.walletTxAmountWrap}>
-                  <span
-                    className={isCredit ? styles.walletTxAmountCredit : styles.walletTxAmountDebit}
-                  >
-                    {isCredit ? "+" : "−"}
-                    {formatCurrency(t.amount)}
-                  </span>
-                  {t.balanceAfter != null && (
-                    <span className={styles.walletTxBalance}>
-                      Bal: {formatCurrency(t.balanceAfter)}
-                    </span>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </motion.div>
-  );
-
   const renderActiveSection = () => {
     switch (activeTab) {
       case "profile":
         return renderProfileSection();
       case "addresses":
         return renderAddressesSection();
-      case "wallet":
-        return renderWalletSection();
       case "password":
         return renderPasswordSection();
       default:
