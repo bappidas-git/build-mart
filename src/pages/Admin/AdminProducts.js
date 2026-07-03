@@ -5,11 +5,17 @@ import {
   Dialog, DialogTitle, DialogContent, DialogActions, TextField,
   FormControlLabel, Switch, Skeleton, Tooltip, InputAdornment,
   Select, MenuItem, FormControl, InputLabel, Grid, Divider,
+  ToggleButton, ToggleButtonGroup,
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import apiService from "../../services/api";
 import { orderCategoriesHierarchically } from "../../utils/categories";
+
+// Unit-of-measure options for the pricing block (matches the storefront
+// PriceBlock unitType suffix). The current value is prepended in the Select if a
+// legacy product carries a unit outside this list, so it's never silently lost.
+const UNIT_OPTIONS = ["piece", "box", "sheet", "bundle", "bag", "kg", "meter", "sq ft"];
 
 const emptyProduct = {
   name: "", slug: "", sku: "", shortDescription: "", description: "",
@@ -19,11 +25,33 @@ const emptyProduct = {
   variants: [],
   // specifications: key/value rows rendered on the storefront product spec table.
   specifications: [],
+  // Flexible pricing model (feeds storefront PriceBlock — prompt 15):
+  //   priceType  "exact" | "tiered" | "onEnquiry"
+  //   priceTiers [{ minQty, price }] quantity bulk-pricing ladder (tiered only)
+  //   cardPriceMode  how the CARD surfaces the price — PriceBlock reads
+  //     "exact" | "from" | "onEnquiry" (NOT card/details); we keep it consistent
+  //     with priceType and only offer a "hide on card → onEnquiry" override.
+  priceType: "exact",
+  unitType: "piece",
+  minQty: 1,
+  priceTiers: [],
+  showExactPrice: true,
+  showTieredPricing: true,
+  cardPriceMode: "exact",
   tags: [], featured: false, trending: false, hot: false, isActive: true,
   // special: additive "Special Products" badge (NOT an exclusive category) — feeds
   // the storefront Special Products collection.
   special: false,
   metaTitle: "", metaDescription: "",
+};
+
+// Resolve a card-display mode that is always valid for the given price type, so
+// the Select never renders an out-of-range value: exact→exact, tiered→from,
+// onEnquiry→onEnquiry, while preserving a deliberate "hide on card" (onEnquiry).
+const normalizeCardMode = (priceType, cardPriceMode) => {
+  if (priceType === "onEnquiry") return "onEnquiry";
+  if (cardPriceMode === "onEnquiry") return "onEnquiry";
+  return priceType === "tiered" ? "from" : "exact";
 };
 
 const slugify = (s) =>
@@ -75,6 +103,7 @@ const AdminProducts = () => {
       dimensions: { length: 0, width: 0, height: 0 },
       variants: [],
       specifications: [],
+      priceTiers: [],
     });
     setErrors({});
     setImageInput("");
@@ -85,6 +114,7 @@ const AdminProducts = () => {
   const openEdit = (p) => {
     setEditingProduct(p);
     const dims = p.dimensions || {};
+    const priceType = ["exact", "tiered", "onEnquiry"].includes(p.priceType) ? p.priceType : "exact";
     setForm({
       name: p.name, slug: p.slug, sku: p.sku || "", shortDescription: p.shortDescription || "",
       description: p.description || "", categoryId: p.categoryId ?? "", brand: p.brand || "",
@@ -108,6 +138,17 @@ const AdminProducts = () => {
       specifications: Array.isArray(p.specifications)
         ? p.specifications.map((s) => ({ label: s.label || "", value: s.value || "" }))
         : [],
+      // Pricing model — safe fallbacks; normalise cardPriceMode so the Select is
+      // never fed a value out of range for the product's priceType.
+      priceType,
+      unitType: p.unitType || "piece",
+      minQty: p.minQty ?? 1,
+      priceTiers: Array.isArray(p.priceTiers)
+        ? p.priceTiers.map((t) => ({ minQty: t.minQty ?? 1, price: t.price ?? 0 }))
+        : [],
+      showExactPrice: p.showExactPrice !== false,
+      showTieredPricing: p.showTieredPricing !== false,
+      cardPriceMode: normalizeCardMode(priceType, p.cardPriceMode),
       tags: p.tags || [], featured: !!p.featured,
       trending: !!p.trending, hot: !!p.hot, isActive: p.isActive !== false,
       special: !!p.special,
@@ -158,6 +199,39 @@ const AdminProducts = () => {
   const removeSpec = (idx) =>
     setForm((f) => ({ ...f, specifications: f.specifications.filter((_, i) => i !== idx) }));
 
+  // ── Pricing model ──────────────────────────────────────────────────────
+  // Switching price type resets cardPriceMode to the new type's NATURAL card
+  // display (exact→exact, tiered→from, onEnquiry→onEnquiry). We deliberately
+  // don't carry a previous "onEnquiry" card choice across the switch — coming
+  // from the onEnquiry type that value was forced, not a deliberate hide, so
+  // preserving it would leave a priced product silently hidden on the card. The
+  // admin can re-pick "Price on Enquiry" per type via the Card-display Select.
+  const setPriceType = (value) =>
+    setForm((f) => ({
+      ...f,
+      priceType: value,
+      cardPriceMode: value === "tiered" ? "from" : value === "onEnquiry" ? "onEnquiry" : "exact",
+    }));
+
+  // Price tiers mirror the specifications rows (index-keyed, no id — the
+  // storefront reads only {minQty, price}). New rows seed minQty one above the
+  // last so the ascending rule is satisfied by default.
+  const addTier = () =>
+    setForm((f) => {
+      const last = f.priceTiers[f.priceTiers.length - 1];
+      const nextMin = last ? clampNum(last.minQty, { int: true, fallback: 1 }) + 1 : 1;
+      return { ...f, priceTiers: [...f.priceTiers, { minQty: nextMin, price: 0 }] };
+    });
+
+  const updateTier = (idx, key, value) =>
+    setForm((f) => ({
+      ...f,
+      priceTiers: f.priceTiers.map((t, i) => (i === idx ? { ...t, [key]: value } : t)),
+    }));
+
+  const removeTier = (idx) =>
+    setForm((f) => ({ ...f, priceTiers: f.priceTiers.filter((_, i) => i !== idx) }));
+
   // Make a URL-safe slug that doesn't collide with another product's slug.
   const makeUniqueSlug = (base) => {
     let slug = slugify(base);
@@ -190,6 +264,13 @@ const AdminProducts = () => {
       .map((s) => ({ label: (s.label || "").trim(), value: (s.value || "").trim() }))
       .filter((s) => s.label || s.value);
 
+    // Coerce tier rows to numbers (fallback 0 for minQty so a blank fails the
+    // ≥ 1 check rather than silently becoming 1).
+    const cleanedTiers = form.priceTiers.map((t) => ({
+      minQty: clampNum(t.minQty, { int: true, fallback: 0 }),
+      price: clampNum(t.price),
+    }));
+
     // ── Validation ──────────────────────────────────────────────────────
     const nextErrors = {};
     if (!form.name.trim()) nextErrors.name = "Product name is required";
@@ -198,8 +279,32 @@ const AdminProducts = () => {
     if (!slug) nextErrors.slug = "A URL-safe slug is required";
 
     const price = clampNum(form.price);
-    if (cleanedVariants.length === 0 && !(price > 0)) {
+    // A selling price (or a variant) is only mandatory for exact pricing; tiered
+    // is priced by its ladder and onEnquiry shows no number at all.
+    if (form.priceType === "exact" && cleanedVariants.length === 0 && !(price > 0)) {
       nextErrors.price = "Enter a selling price greater than 0 (or add a variant)";
+    }
+
+    // Tiered pricing: ≥ 1 tier, each minQty a positive integer + price > 0, and
+    // minQty strictly ascending down the table with no duplicates (checked in
+    // entry order so an out-of-order row is rejected, not silently sorted away).
+    if (form.priceType === "tiered") {
+      if (cleanedTiers.length === 0) {
+        nextErrors.priceTiers = "Add at least one price tier for tiered pricing";
+      } else {
+        const tierRowErrors = {};
+        const seenMin = new Set();
+        let prevMin = -Infinity;
+        cleanedTiers.forEach((t, i) => {
+          if (!(t.minQty >= 1)) tierRowErrors[i] = "Min qty must be a whole number ≥ 1";
+          else if (!(t.price > 0)) tierRowErrors[i] = "Price must be greater than 0";
+          else if (seenMin.has(t.minQty)) tierRowErrors[i] = "Duplicate min qty";
+          else if (t.minQty <= prevMin) tierRowErrors[i] = "Min qty must increase down the table";
+          seenMin.add(t.minQty);
+          prevMin = t.minQty;
+        });
+        if (Object.keys(tierRowErrors).length) nextErrors.tierRows = tierRowErrors;
+      }
     }
 
     const variantRowErrors = {};
@@ -240,6 +345,19 @@ const AdminProducts = () => {
       price,
       comparePrice: clampNum(form.comparePrice),
       costPrice: clampNum(form.costPrice),
+      // Flexible pricing model — identical JSON shape for JSON Server & Laravel.
+      priceType: form.priceType,
+      unitType: (form.unitType || "piece").trim() || "piece",
+      minQty: clampNum(form.minQty, { int: true, fallback: 1 }) || 1,
+      priceTiers:
+        form.priceType === "tiered"
+          ? cleanedTiers
+              .map((t) => ({ minQty: clampNum(t.minQty, { int: true, fallback: 1 }) || 1, price: clampNum(t.price) }))
+              .sort((a, b) => a.minQty - b.minQty)
+          : [],
+      showExactPrice: form.priceType === "exact" ? !!form.showExactPrice : false,
+      showTieredPricing: form.priceType === "tiered" ? !!form.showTieredPricing : false,
+      cardPriceMode: normalizeCardMode(form.priceType, form.cardPriceMode),
       stock: clampNum(form.stock, { int: true }),
       lowStockThreshold: clampNum(form.lowStockThreshold, { int: true, fallback: 10 }),
       weight: clampNum(form.weight),
@@ -298,6 +416,21 @@ const AdminProducts = () => {
 
   const getCategoryName = (id) => categories.find((c) => String(c.id) === String(id))?.name || "—";
   const fc = (n) => `₹${Number(n || 0).toLocaleString("en-IN")}`;
+
+  // Lowest usable tier price for the table's "From ₹X" display (falls back to
+  // the product's base price when tiers are absent/invalid).
+  const tierMin = (p) => {
+    const prices = (Array.isArray(p.priceTiers) ? p.priceTiers : [])
+      .map((t) => Number(t.price))
+      .filter((n) => n > 0);
+    return prices.length ? Math.min(...prices) : p.price;
+  };
+
+  // Unit-of-measure options, including any legacy value not in the standard set.
+  const unitOptions =
+    !form.unitType || UNIT_OPTIONS.includes(form.unitType)
+      ? UNIT_OPTIONS
+      : [form.unitType, ...UNIT_OPTIONS];
 
   // Category options ordered as a tree (parent immediately followed by its
   // children, depth-first) with a depth per id, so the Select can visually nest
@@ -403,8 +536,23 @@ const AdminProducts = () => {
                       <TableCell><Typography variant="body2" sx={{ fontFamily: "monospace", fontSize: "0.8rem" }}>{p.sku || "—"}</Typography></TableCell>
                       <TableCell><Typography variant="body2">{getCategoryName(p.categoryId)}</Typography></TableCell>
                       <TableCell>
-                        <Typography variant="body2" fontWeight={500}>{fc(p.price)}</Typography>
-                        {p.comparePrice > p.price && <Typography variant="caption" color="text.secondary" sx={{ textDecoration: "line-through" }}>{fc(p.comparePrice)}</Typography>}
+                        {p.priceType === "onEnquiry" ? (
+                          <Chip
+                            label="On Enquiry" size="small" variant="outlined"
+                            icon={<Icon icon="mdi:message-question-outline" style={{ fontSize: 13 }} />}
+                            sx={{ height: 22, fontSize: "0.7rem" }}
+                          />
+                        ) : p.priceType === "tiered" ? (
+                          <Box>
+                            <Typography variant="body2" fontWeight={500}>From {fc(tierMin(p))}</Typography>
+                            <Chip label="Tiered" size="small" sx={{ height: 18, fontSize: "0.62rem", bgcolor: "#1885d8", color: "#fff" }} />
+                          </Box>
+                        ) : (
+                          <>
+                            <Typography variant="body2" fontWeight={500}>{fc(p.price)}</Typography>
+                            {p.comparePrice > p.price && <Typography variant="caption" color="text.secondary" sx={{ textDecoration: "line-through" }}>{fc(p.comparePrice)}</Typography>}
+                          </>
+                        )}
                       </TableCell>
                       <TableCell>
                         <Chip
@@ -548,23 +696,169 @@ const AdminProducts = () => {
               ))
             )}
 
-            {/* Pricing */}
-            {/* Pricing controls (priceType/tiers/unit/display flags) are added in prompt 27 */}
-            <Grid item xs={12}><Divider /><Typography variant="subtitle2" color="text.secondary" fontWeight={600} sx={{ mt: 1 }}>Pricing</Typography></Grid>
-            <Grid item xs={12} sm={4}>
+            {/* ── Pricing ──────────────────────────────────────────────────
+                Flexible model (feeds storefront PriceBlock — prompt 15):
+                exact · tiered · on-enquiry. Only the fields for the chosen
+                price type render, keeping the form uncluttered. */}
+            <Grid item xs={12}>
+              <Divider />
+              <Typography variant="subtitle2" color="text.secondary" fontWeight={600} sx={{ mt: 1 }}>
+                <Icon icon="mdi:cash-multiple" style={{ fontSize: 16, verticalAlign: "-2px", marginRight: 4 }} />
+                Pricing
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 0.5 }}>
+                Price type
+              </Typography>
+              <ToggleButtonGroup
+                value={form.priceType} exclusive size="small"
+                onChange={(_e, val) => val && setPriceType(val)}
+                sx={{ flexWrap: "wrap" }}
+              >
+                <ToggleButton value="exact">
+                  <Icon icon="mdi:cash" style={{ fontSize: 16, marginRight: 6 }} />Exact price
+                </ToggleButton>
+                <ToggleButton value="tiered">
+                  <Icon icon="mdi:table" style={{ fontSize: 16, marginRight: 6 }} />Tiered
+                </ToggleButton>
+                <ToggleButton value="onEnquiry">
+                  <Icon icon="mdi:message-question-outline" style={{ fontSize: 16, marginRight: 6 }} />On enquiry
+                </ToggleButton>
+              </ToggleButtonGroup>
+            </Grid>
+            <Grid item xs={6} md={3}>
+              <FormControl size="small" fullWidth>
+                <InputLabel>Unit</InputLabel>
+                <Select value={form.unitType} label="Unit" onChange={(e) => setField("unitType", e.target.value)}>
+                  {unitOptions.map((u) => (<MenuItem key={u} value={u}>{u}</MenuItem>))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={6} md={3}>
               <TextField
-                label="Selling Price (₹) *" type="number" value={form.price}
-                onChange={(e) => setField("price", clampNum(e.target.value))}
-                fullWidth size="small" inputProps={{ min: 0 }}
-                error={!!errors.price} helperText={errors.price}
+                label="Min order qty" type="number" value={form.minQty}
+                onChange={(e) => setField("minQty", clampNum(e.target.value, { int: true, fallback: 1 }))}
+                fullWidth size="small" inputProps={{ min: 1 }}
               />
             </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField label="Compare-at Price (₹)" type="number" value={form.comparePrice} onChange={(e) => setField("comparePrice", clampNum(e.target.value))} fullWidth size="small" inputProps={{ min: 0 }} helperText="Strikethrough price" />
-            </Grid>
-            <Grid item xs={12} sm={4}>
-              <TextField label="Cost Price (₹)" type="number" value={form.costPrice} onChange={(e) => setField("costPrice", clampNum(e.target.value))} fullWidth size="small" inputProps={{ min: 0 }} helperText="For margin calculation" />
-            </Grid>
+
+            {/* Exact → fixed price + margin fields + card/visibility toggles */}
+            {form.priceType === "exact" && (
+              <>
+                <Grid item xs={12} sm={4}>
+                  <TextField
+                    label="Selling Price (₹) *" type="number" value={form.price}
+                    onChange={(e) => setField("price", clampNum(e.target.value))}
+                    fullWidth size="small" inputProps={{ min: 0 }}
+                    error={!!errors.price} helperText={errors.price}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <TextField label="Compare-at Price (₹)" type="number" value={form.comparePrice} onChange={(e) => setField("comparePrice", clampNum(e.target.value))} fullWidth size="small" inputProps={{ min: 0 }} helperText="Strikethrough price" />
+                </Grid>
+                <Grid item xs={12} sm={4}>
+                  <TextField label="Cost Price (₹)" type="number" value={form.costPrice} onChange={(e) => setField("costPrice", clampNum(e.target.value))} fullWidth size="small" inputProps={{ min: 0 }} helperText="For margin calculation" />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControlLabel
+                    control={<Switch checked={form.showExactPrice} onChange={(e) => setField("showExactPrice", e.target.checked)} />}
+                    label="Show price on storefront"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl size="small" fullWidth>
+                    <InputLabel>Card price display</InputLabel>
+                    <Select value={form.cardPriceMode} label="Card price display" onChange={(e) => setField("cardPriceMode", e.target.value)}>
+                      <MenuItem value="exact">Show exact price on card</MenuItem>
+                      <MenuItem value="onEnquiry">Show “Price on Enquiry” on card</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </>
+            )}
+
+            {/* Tiered → editable quantity-vs-price ladder */}
+            {form.priceType === "tiered" && (
+              <>
+                <Grid item xs={12}>
+                  <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <Typography variant="body2" fontWeight={600}>
+                      <Icon icon="mdi:table" style={{ fontSize: 16, verticalAlign: "-2px", marginRight: 4, color: "#1885d8" }} />
+                      Quantity price tiers
+                    </Typography>
+                    <Button size="small" startIcon={<Icon icon="mdi:plus" />} onClick={addTier} sx={{ flexShrink: 0 }}>
+                      Add tier
+                    </Button>
+                  </Box>
+                </Grid>
+                {form.priceTiers.length === 0 ? (
+                  <Grid item xs={12}>
+                    <Box sx={{ p: 2, border: "1px dashed", borderColor: errors.priceTiers ? "error.main" : "divider", borderRadius: 1, textAlign: "center" }}>
+                      <Typography variant="caption" color={errors.priceTiers ? "error" : "text.secondary"}>
+                        {errors.priceTiers || "No tiers yet — add at least one quantity → price row."}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                ) : (
+                  form.priceTiers.map((t, idx) => (
+                    <Grid item xs={12} key={idx}>
+                      <Box sx={{ display: "flex", gap: 1, flexWrap: { xs: "wrap", md: "nowrap" }, alignItems: "flex-start" }}>
+                        <TextField
+                          label={`Min qty ${idx + 1}`} type="number" value={t.minQty}
+                          onChange={(e) => updateTier(idx, "minQty", clampNum(e.target.value, { int: true, fallback: 1 }))}
+                          size="small" sx={{ flex: 1, minWidth: 130 }} inputProps={{ min: 1 }}
+                          error={!!errors.tierRows?.[idx]} helperText={errors.tierRows?.[idx]}
+                        />
+                        <TextField
+                          label={`Price / ${form.unitType || "unit"} (₹)`} type="number" value={t.price}
+                          onChange={(e) => updateTier(idx, "price", clampNum(e.target.value))}
+                          size="small" sx={{ flex: 1, minWidth: 130 }} inputProps={{ min: 0 }}
+                        />
+                        <Tooltip title="Remove tier">
+                          <IconButton color="error" onClick={() => removeTier(idx)} sx={{ mt: 0.25 }}>
+                            <Icon icon="mdi:delete-outline" />
+                          </IconButton>
+                        </Tooltip>
+                      </Box>
+                    </Grid>
+                  ))
+                )}
+                <Grid item xs={12}>
+                  <Typography variant="caption" color="text.secondary">
+                    Higher quantities should cost less per unit — min quantities must increase down the table.
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControlLabel
+                    control={<Switch checked={form.showTieredPricing} onChange={(e) => setField("showTieredPricing", e.target.checked)} />}
+                    label="Show price table on storefront"
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl size="small" fullWidth>
+                    <InputLabel>Card price display</InputLabel>
+                    <Select value={form.cardPriceMode} label="Card price display" onChange={(e) => setField("cardPriceMode", e.target.value)}>
+                      <MenuItem value="from">Show “From ₹X” on card</MenuItem>
+                      <MenuItem value="onEnquiry">Show “Price on Enquiry” on card</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </>
+            )}
+
+            {/* On enquiry → no price shown; display toggles ignored */}
+            {form.priceType === "onEnquiry" && (
+              <Grid item xs={12}>
+                <Box sx={{ p: 2, border: "1px solid", borderColor: "divider", borderRadius: 1, bgcolor: "action.hover", display: "flex", gap: 1.5, alignItems: "center" }}>
+                  <Icon icon="mdi:message-question-outline" style={{ fontSize: 22, color: "#1885d8", flexShrink: 0 }} />
+                  <Typography variant="body2" color="text.secondary">
+                    The storefront will display <strong>“Price on Enquiry.”</strong> Price, tiers and display toggles are ignored for this product.
+                  </Typography>
+                </Box>
+              </Grid>
+            )}
 
             {/* Inventory */}
             <Grid item xs={12}><Divider /><Typography variant="subtitle2" color="text.secondary" fontWeight={600} sx={{ mt: 1 }}>Inventory & Shipping</Typography></Grid>
