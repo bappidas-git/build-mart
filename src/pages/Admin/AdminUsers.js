@@ -9,15 +9,27 @@ import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import apiService from "../../services/api";
 
+// Mirror the enquiry status hues used by the Enquiries manager so the chip in
+// this panel reads the same everywhere.
+const ENQUIRY_STATUS_COLOR = {
+  New: "info",
+  Contacted: "primary",
+  "In Discussion": "secondary",
+  "Quotation Sent": "warning",
+  Converted: "success",
+  Closed: "default",
+  Lost: "error",
+};
+
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
   const [detailOpen, setDetailOpen] = useState(false);
-  const [userOrders, setUserOrders] = useState([]);
-  const [ordersLoading, setOrdersLoading] = useState(false);
-  const [ordersError, setOrdersError] = useState(false);
+  const [userEnquiries, setUserEnquiries] = useState([]);
+  const [enquiriesLoading, setEnquiriesLoading] = useState(false);
+  const [enquiriesError, setEnquiriesError] = useState(false);
 
   useEffect(() => { loadUsers(); }, []);
 
@@ -36,18 +48,18 @@ const AdminUsers = () => {
   const openDetail = async (user) => {
     setSelectedUser(user);
     setDetailOpen(true);
-    // Clear the previous user's orders so the dialog never flashes stale data,
-    // and track failure separately — "couldn't load" must not read as "no orders".
-    setUserOrders([]);
-    setOrdersError(false);
-    setOrdersLoading(true);
+    // Clear the previous user's enquiries so the dialog never flashes stale data,
+    // and track failure separately — "couldn't load" must not read as "no enquiries".
+    setUserEnquiries([]);
+    setEnquiriesError(false);
+    setEnquiriesLoading(true);
     try {
-      const orders = await apiService.admin.getOrders({ userId: user.id });
-      setUserOrders(orders || []);
+      const enquiries = await apiService.admin.getEnquiries({ userId: user.id });
+      setUserEnquiries(enquiries || []);
     } catch {
-      setOrdersError(true);
+      setEnquiriesError(true);
     } finally {
-      setOrdersLoading(false);
+      setEnquiriesLoading(false);
     }
   };
 
@@ -72,7 +84,6 @@ const AdminUsers = () => {
   };
 
   const formatDate = (d) => d ? new Date(d).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }) : "—";
-  const formatCurrency = (n) => `₹${Number(n || 0).toLocaleString("en-IN")}`;
 
   const filtered = users.filter((u) => {
     const q = search.toLowerCase();
@@ -189,41 +200,37 @@ const AdminUsers = () => {
               </Box>
               <Divider sx={{ my: 2 }} />
               <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                Recent Orders{!ordersLoading && !ordersError ? ` (${userOrders.length})` : ""}
+                Recent Enquiries{!enquiriesLoading && !enquiriesError ? ` (${userEnquiries.length})` : ""}
               </Typography>
-              {ordersLoading ? (
+              {enquiriesLoading ? (
                 <Box>
                   <Skeleton height={36} />
                   <Skeleton height={36} />
                   <Skeleton height={36} />
                 </Box>
-              ) : ordersError ? (
+              ) : enquiriesError ? (
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1, py: 0.5 }}>
                   <Typography variant="body2" color="error.main">
-                    Couldn't load this user's orders.
+                    Couldn't load this user's enquiries.
                   </Typography>
                   <Button size="small" onClick={() => openDetail(selectedUser)}>Retry</Button>
                 </Box>
-              ) : userOrders.length === 0 ? (
-                <Typography variant="body2" color="text.secondary">No orders yet</Typography>
+              ) : userEnquiries.length === 0 ? (
+                <Typography variant="body2" color="text.secondary">No enquiries yet</Typography>
               ) : (
-                userOrders.slice(0, 5).map((order) => (
-                  <Box key={order.id} sx={{ display: "flex", justifyContent: "space-between", py: 1, borderBottom: "1px solid", borderColor: "divider" }}>
+                userEnquiries.slice(0, 5).map((enquiry) => (
+                  <Box key={enquiry.id} sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", py: 1, borderBottom: "1px solid", borderColor: "divider" }}>
                     <Box>
-                      <Typography variant="body2" fontWeight={500}>#{order.orderNumber}</Typography>
-                      <Typography variant="caption" color="text.secondary">{formatDate(order.createdAt)} · {order.items?.length || 0} items</Typography>
+                      <Typography variant="body2" fontWeight={500}>#{enquiry.enquiryNumber}</Typography>
+                      <Typography variant="caption" color="text.secondary">{formatDate(enquiry.createdAt)} · {enquiry.items?.length || 0} items</Typography>
                     </Box>
-                    <Box sx={{ textAlign: "right" }}>
-                      <Typography variant="body2" fontWeight={500}>{formatCurrency(order.total)}</Typography>
-                      <Chip label={order.fulfillmentStatus || order.paymentStatus} size="small" sx={{ fontSize: "0.7rem", height: 20, textTransform: "capitalize" }} />
-                    </Box>
+                    <Chip label={enquiry.status || "New"} size="small" color={ENQUIRY_STATUS_COLOR[enquiry.status] || "default"} sx={{ fontSize: "0.7rem", height: 20 }} />
                   </Box>
                 ))
               )}
-              {!ordersLoading && !ordersError && (
-                <Box sx={{ mt: 2, display: "flex", justifyContent: "space-between" }}>
-                  <Typography variant="body2" color="text.secondary">Total orders: <strong>{userOrders.length}</strong></Typography>
-                  <Typography variant="body2" color="text.secondary">Total spent: <strong>{formatCurrency(userOrders.reduce((s, o) => s + (o.total || 0), 0))}</strong></Typography>
+              {!enquiriesLoading && !enquiriesError && userEnquiries.length > 0 && (
+                <Box sx={{ mt: 2 }}>
+                  <Typography variant="body2" color="text.secondary">Total enquiries: <strong>{userEnquiries.length}</strong></Typography>
                 </Box>
               )}
             </DialogContent>

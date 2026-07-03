@@ -17,7 +17,6 @@ import {
   Card,
   CardContent,
   MenuItem,
-  InputAdornment,
   Skeleton,
   Chip,
   CircularProgress,
@@ -43,7 +42,8 @@ function TabPanel(props) {
 }
 
 // Supported currencies. Selecting one fills in the matching symbol (still
-// editable, for currencies/variants not listed here).
+// editable, for currencies/variants not listed here). North East Build Mart
+// prices in INR (₹), which is the default.
 const CURRENCIES = [
   { code: "INR", symbol: "₹", label: "Indian Rupee (₹)" },
   { code: "USD", symbol: "$", label: "US Dollar ($)" },
@@ -54,31 +54,49 @@ const CURRENCIES = [
   { code: "CAD", symbol: "C$", label: "Canadian Dollar (C$)" },
 ];
 
+// North East Build Mart contact facts — used to prefill an empty singleton so a
+// fresh install already reads the brand's real store details.
+const NEBM_STORE_DEFAULTS = {
+  name: "North East Build Mart",
+  tagline: "Deals in all kinds of building materials for interior and exterior use.",
+  email: "",
+  phone: "+91 86385 43526",
+  phoneSecondary: "+91 88762 89972",
+  address: "Lawkhuwa Road, Nagaon, Assam – 782002",
+  currency: "INR",
+  currencySymbol: "₹",
+};
+
+const CATEGORIES_TAB = 4;
+
 const AdminSettings = () => {
   const navigate = useNavigate();
-  
+
   const [activeTab, setActiveTab] = useState(0);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [categoryCount, setCategoryCount] = useState(null);
 
-  // General settings forms (backed by db.json `settings.store` + `settings.payment`)
-  const [storeForm, setStoreForm] = useState({
-    name: "",
-    tagline: "",
-    email: "",
-    phone: "",
-    address: "",
-    currency: "INR",
-    currencySymbol: "₹",
-    taxRate: 0,
-    taxIncluded: false,
+  // One form per settings section (backed by db.json `settings.{store,seo,social,notifications}`).
+  const [storeForm, setStoreForm] = useState({ ...NEBM_STORE_DEFAULTS });
+  const [seoForm, setSeoForm] = useState({
+    metaTitle: "",
+    metaDescription: "",
+    googleAnalyticsId: "",
+    facebookPixelId: "",
   });
-  const [paymentForm, setPaymentForm] = useState({
-    codEnabled: true,
-    codFee: 0,
-    codMinOrder: 0,
-    codMaxOrder: 0,
+  const [socialForm, setSocialForm] = useState({
+    facebook: "",
+    instagram: "",
+    twitter: "",
+    youtube: "",
+    whatsapp: "",
+  });
+  const [notifForm, setNotifForm] = useState({
+    adminNewOrderEmail: true,
+    adminEmail: "",
+    lowStockAlert: true,
+    lowStockEmail: "",
   });
 
   const [snackbar, setSnackbar] = useState({
@@ -99,23 +117,37 @@ const AdminSettings = () => {
         apiService.admin.getCategories().catch(() => []),
       ]);
       const store = settings?.store || {};
-      const payment = settings?.payment || {};
+      const seo = settings?.seo || {};
+      const social = settings?.social || {};
+      const notifications = settings?.notifications || {};
       setStoreForm({
-        name: store.name || "",
-        tagline: store.tagline || "",
-        email: store.email || "",
-        phone: store.phone || "",
-        address: store.address || "",
-        currency: store.currency || "INR",
-        currencySymbol: store.currencySymbol || "₹",
-        taxRate: store.taxRate ?? 0,
-        taxIncluded: !!store.taxIncluded,
+        name: store.name || NEBM_STORE_DEFAULTS.name,
+        tagline: store.tagline || NEBM_STORE_DEFAULTS.tagline,
+        email: store.email || NEBM_STORE_DEFAULTS.email,
+        phone: store.phone || NEBM_STORE_DEFAULTS.phone,
+        phoneSecondary: store.phoneSecondary || NEBM_STORE_DEFAULTS.phoneSecondary,
+        address: store.address || NEBM_STORE_DEFAULTS.address,
+        currency: store.currency || NEBM_STORE_DEFAULTS.currency,
+        currencySymbol: store.currencySymbol || NEBM_STORE_DEFAULTS.currencySymbol,
       });
-      setPaymentForm({
-        codEnabled: payment.codEnabled !== false,
-        codFee: payment.codFee ?? 0,
-        codMinOrder: payment.codMinOrder ?? 0,
-        codMaxOrder: payment.codMaxOrder ?? 0,
+      setSeoForm({
+        metaTitle: seo.metaTitle || "",
+        metaDescription: seo.metaDescription || "",
+        googleAnalyticsId: seo.googleAnalyticsId || "",
+        facebookPixelId: seo.facebookPixelId || "",
+      });
+      setSocialForm({
+        facebook: social.facebook || "",
+        instagram: social.instagram || "",
+        twitter: social.twitter || "",
+        youtube: social.youtube || "",
+        whatsapp: social.whatsapp || "",
+      });
+      setNotifForm({
+        adminNewOrderEmail: notifications.adminNewOrderEmail !== false,
+        adminEmail: notifications.adminEmail || "",
+        lowStockAlert: notifications.lowStockAlert !== false,
+        lowStockEmail: notifications.lowStockEmail || "",
       });
       setCategoryCount(Array.isArray(cats) ? cats.length : 0);
     } catch (error) {
@@ -130,6 +162,12 @@ const AdminSettings = () => {
 
   const handleStoreChange = (field, value) =>
     setStoreForm((prev) => ({ ...prev, [field]: value }));
+  const handleSeoChange = (field, value) =>
+    setSeoForm((prev) => ({ ...prev, [field]: value }));
+  const handleSocialChange = (field, value) =>
+    setSocialForm((prev) => ({ ...prev, [field]: value }));
+  const handleNotifChange = (field, value) =>
+    setNotifForm((prev) => ({ ...prev, [field]: value }));
 
   const handleCurrencyChange = (code) => {
     const found = CURRENCIES.find((c) => c.code === code);
@@ -140,43 +178,49 @@ const AdminSettings = () => {
     }));
   };
 
-  const handlePaymentChange = (field, value) =>
-    setPaymentForm((prev) => ({ ...prev, [field]: value }));
-
-  const handleSaveGeneral = async () => {
+  const handleSave = async () => {
     if (!storeForm.name.trim()) {
+      setActiveTab(0);
       setSnackbar({ open: true, message: "Store name is required", severity: "error" });
-      return;
-    }
-    const taxRate = Number(storeForm.taxRate);
-    if (Number.isNaN(taxRate) || taxRate < 0 || taxRate > 100) {
-      setSnackbar({ open: true, message: "Tax rate must be between 0 and 100", severity: "error" });
       return;
     }
 
     try {
       setSaving(true);
-      // Two sections, persisted in sequence. The mock branch re-reads settings
-      // between calls, so the payment write sees the freshly-saved store write.
+      // Four sections, persisted in sequence. The mock branch re-reads the
+      // settings singleton between calls, so each PATCH merges onto the
+      // previous save rather than clobbering it — never Promise.all these.
       await apiService.admin.updateSettings("store", {
         name: storeForm.name.trim(),
         tagline: storeForm.tagline.trim(),
         email: storeForm.email.trim(),
         phone: storeForm.phone.trim(),
+        phoneSecondary: storeForm.phoneSecondary.trim(),
         address: storeForm.address.trim(),
         currency: storeForm.currency,
         currencySymbol: storeForm.currencySymbol,
-        taxRate,
-        taxIncluded: storeForm.taxIncluded,
       });
-      await apiService.admin.updateSettings("payment", {
-        codEnabled: paymentForm.codEnabled,
-        codFee: Number(paymentForm.codFee) || 0,
-        codMinOrder: Number(paymentForm.codMinOrder) || 0,
-        codMaxOrder: Number(paymentForm.codMaxOrder) || 0,
+      await apiService.admin.updateSettings("seo", {
+        metaTitle: seoForm.metaTitle.trim(),
+        metaDescription: seoForm.metaDescription.trim(),
+        googleAnalyticsId: seoForm.googleAnalyticsId.trim(),
+        facebookPixelId: seoForm.facebookPixelId.trim(),
+      });
+      await apiService.admin.updateSettings("social", {
+        facebook: socialForm.facebook.trim(),
+        instagram: socialForm.instagram.trim(),
+        twitter: socialForm.twitter.trim(),
+        youtube: socialForm.youtube.trim(),
+        whatsapp: socialForm.whatsapp.trim(),
+      });
+      await apiService.admin.updateSettings("notifications", {
+        adminNewOrderEmail: notifForm.adminNewOrderEmail,
+        adminEmail: notifForm.adminEmail.trim(),
+        lowStockAlert: notifForm.lowStockAlert,
+        lowStockEmail: notifForm.lowStockEmail.trim(),
       });
       setSnackbar({ open: true, message: "Settings saved successfully", severity: "success" });
-      // Reload so the form reflects exactly what was persisted.
+      // Reload so the forms reflect exactly what was persisted.
       loadSettings();
     } catch (error) {
       console.error("Error saving settings:", error);
@@ -189,8 +233,6 @@ const AdminSettings = () => {
       setSaving(false);
     }
   };
-
-  const symbol = storeForm.currencySymbol || "₹";
 
   const sectionCardSx = { height: "100%" };
 
@@ -211,6 +253,17 @@ const AdminSettings = () => {
     </Grid>
   );
 
+  const renderCardSkeleton = () => (
+    <Card sx={sectionCardSx}>
+      <CardContent>
+        <Skeleton variant="text" width={180} height={32} sx={{ mb: 2 }} />
+        {[...Array(4)].map((_, j) => (
+          <Skeleton key={j} variant="rounded" height={48} sx={{ mb: 2 }} />
+        ))}
+      </CardContent>
+    </Card>
+  );
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -222,7 +275,7 @@ const AdminSettings = () => {
           Settings
         </Typography>
         <Typography color="text.secondary">
-          Store configuration that powers your storefront and checkout
+          Store configuration that powers your storefront and enquiries
         </Typography>
       </Box>
 
@@ -240,174 +293,215 @@ const AdminSettings = () => {
           }}
         >
           <Tab icon={<Icon icon="mdi:cog" style={{ fontSize: 20 }} />} iconPosition="start" label="General" />
+          <Tab icon={<Icon icon="mdi:magnify" style={{ fontSize: 20 }} />} iconPosition="start" label="SEO" />
+          <Tab icon={<Icon icon="mdi:share-variant" style={{ fontSize: 20 }} />} iconPosition="start" label="Social" />
+          <Tab icon={<Icon icon="mdi:bell-outline" style={{ fontSize: 20 }} />} iconPosition="start" label="Notifications" />
           <Tab icon={<Icon icon="mdi:folder-multiple" style={{ fontSize: 20 }} />} iconPosition="start" label="Categories" />
         </Tabs>
       </Paper>
 
-      {/* General Tab */}
+      {/* Save action bar — shown on every editable tab, hidden on the Categories redirect */}
+      {!loading && activeTab !== CATEGORIES_TAB && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: 2,
+            mb: 1,
+          }}
+        >
+          <Typography variant="body2" color="text.secondary">
+            These values are saved to your store settings and read by the storefront and enquiries.
+          </Typography>
+          <Button
+            variant="contained"
+            onClick={handleSave}
+            disabled={saving}
+            startIcon={saving ? <CircularProgress size={18} color="inherit" /> : <Icon icon="mdi:content-save" />}
+          >
+            {saving ? "Saving..." : "Save Changes"}
+          </Button>
+        </Box>
+      )}
+
+      {/* General Tab — Store Information + Currency */}
       <TabPanel value={activeTab} index={0}>
         {loading ? (
           renderGeneralSkeleton()
         ) : (
-          <>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                flexWrap: "wrap",
-                gap: 2,
-                mb: 3,
-              }}
-            >
-              <Typography variant="body2" color="text.secondary">
-                These values are saved to your store settings and read by the storefront and checkout.
-              </Typography>
-              <Button
-                variant="contained"
-                onClick={handleSaveGeneral}
-                disabled={saving}
-                startIcon={saving ? <CircularProgress size={18} color="inherit" /> : <Icon icon="mdi:content-save" />}
-              >
-                {saving ? "Saving..." : "Save Changes"}
-              </Button>
-            </Box>
-
-            <Grid container spacing={3}>
-              {/* Store Information */}
-              <Grid item xs={12} md={6}>
-                <Card sx={sectionCardSx}>
-                  <CardContent>
-                    <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-                      <Icon icon="mdi:store" style={{ fontSize: 24, marginRight: 8 }} />
-                      <Typography variant="h6">Store Information</Typography>
-                    </Box>
-                    <Divider sx={{ mb: 3 }} />
-                    <Grid container spacing={2}>
-                      <Grid item xs={12}>
-                        <TextField fullWidth size="small" label="Store Name" value={storeForm.name} onChange={(e) => handleStoreChange("name", e.target.value)} />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField fullWidth size="small" label="Tagline" value={storeForm.tagline} onChange={(e) => handleStoreChange("tagline", e.target.value)} />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField fullWidth size="small" label="Email" type="email" value={storeForm.email} onChange={(e) => handleStoreChange("email", e.target.value)} />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField fullWidth size="small" label="Phone" value={storeForm.phone} onChange={(e) => handleStoreChange("phone", e.target.value)} />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <TextField fullWidth size="small" label="Address" value={storeForm.address} onChange={(e) => handleStoreChange("address", e.target.value)} multiline rows={2} />
-                      </Grid>
+          <Grid container spacing={3}>
+            {/* Store Information */}
+            <Grid item xs={12} md={6}>
+              <Card sx={sectionCardSx}>
+                <CardContent>
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                    <Icon icon="mdi:store" style={{ fontSize: 24, marginRight: 8 }} />
+                    <Typography variant="h6">Store Information</Typography>
+                  </Box>
+                  <Divider sx={{ mb: 3 }} />
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <TextField fullWidth size="small" label="Store Name" value={storeForm.name} onChange={(e) => handleStoreChange("name", e.target.value)} />
                     </Grid>
-                  </CardContent>
-                </Card>
-              </Grid>
-
-              {/* Currency & Tax */}
-              <Grid item xs={12} md={6}>
-                <Card sx={sectionCardSx}>
-                  <CardContent>
-                    <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
-                      <Icon icon="mdi:cash-multiple" style={{ fontSize: 24, marginRight: 8 }} />
-                      <Typography variant="h6">Currency &amp; Tax</Typography>
-                    </Box>
-                    <Divider sx={{ mb: 3 }} />
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} sm={6}>
-                        <TextField select fullWidth size="small" label="Currency" value={storeForm.currency} onChange={(e) => handleCurrencyChange(e.target.value)}>
-                          {CURRENCIES.map((c) => (
-                            <MenuItem key={c.code} value={c.code}>{c.label}</MenuItem>
-                          ))}
-                        </TextField>
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField fullWidth size="small" label="Currency Symbol" value={storeForm.currencySymbol} onChange={(e) => handleStoreChange("currencySymbol", e.target.value)} />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <TextField
-                          fullWidth
-                          size="small"
-                          label="Tax Rate"
-                          type="number"
-                          value={storeForm.taxRate}
-                          onChange={(e) => handleStoreChange("taxRate", e.target.value)}
-                          InputProps={{ endAdornment: <InputAdornment position="end">%</InputAdornment> }}
-                          inputProps={{ min: 0, max: 100, step: 0.5 }}
-                          helperText="Applied to the order subtotal at checkout"
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={6}>
-                        <FormControlLabel
-                          sx={{ mt: 1 }}
-                          control={<Switch checked={storeForm.taxIncluded} onChange={(e) => handleStoreChange("taxIncluded", e.target.checked)} />}
-                          label="Prices include tax"
-                        />
-                      </Grid>
+                    <Grid item xs={12}>
+                      <TextField fullWidth size="small" label="Tagline" value={storeForm.tagline} onChange={(e) => handleStoreChange("tagline", e.target.value)} />
                     </Grid>
-                  </CardContent>
-                </Card>
-              </Grid>
-
-              {/* Cash on Delivery */}
-              <Grid item xs={12}>
-                <Card>
-                  <CardContent>
-                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 1, mb: 2 }}>
-                      <Box sx={{ display: "flex", alignItems: "center" }}>
-                        <Icon icon="mdi:cash-fast" style={{ fontSize: 24, marginRight: 8 }} />
-                        <Typography variant="h6">Cash on Delivery (COD)</Typography>
-                      </Box>
-                      <FormControlLabel
-                        control={<Switch checked={paymentForm.codEnabled} onChange={(e) => handlePaymentChange("codEnabled", e.target.checked)} />}
-                        label={paymentForm.codEnabled ? "Enabled" : "Disabled"}
-                      />
-                    </Box>
-                    <Divider sx={{ mb: 3 }} />
-                    <Grid container spacing={2}>
-                      <Grid item xs={12} sm={4}>
-                        <TextField
-                          fullWidth size="small" label="COD Fee" type="number"
-                          value={paymentForm.codFee}
-                          onChange={(e) => handlePaymentChange("codFee", e.target.value)}
-                          disabled={!paymentForm.codEnabled}
-                          InputProps={{ startAdornment: <InputAdornment position="start">{symbol}</InputAdornment> }}
-                          inputProps={{ min: 0 }}
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={4}>
-                        <TextField
-                          fullWidth size="small" label="Min Order" type="number"
-                          value={paymentForm.codMinOrder}
-                          onChange={(e) => handlePaymentChange("codMinOrder", e.target.value)}
-                          disabled={!paymentForm.codEnabled}
-                          InputProps={{ startAdornment: <InputAdornment position="start">{symbol}</InputAdornment> }}
-                          inputProps={{ min: 0 }}
-                          helperText="0 = no minimum"
-                        />
-                      </Grid>
-                      <Grid item xs={12} sm={4}>
-                        <TextField
-                          fullWidth size="small" label="Max Order" type="number"
-                          value={paymentForm.codMaxOrder}
-                          onChange={(e) => handlePaymentChange("codMaxOrder", e.target.value)}
-                          disabled={!paymentForm.codEnabled}
-                          InputProps={{ startAdornment: <InputAdornment position="start">{symbol}</InputAdornment> }}
-                          inputProps={{ min: 0 }}
-                          helperText="0 = no maximum"
-                        />
-                      </Grid>
+                    <Grid item xs={12}>
+                      <TextField fullWidth size="small" label="Email" type="email" value={storeForm.email} onChange={(e) => handleStoreChange("email", e.target.value)} />
                     </Grid>
-                  </CardContent>
-                </Card>
-              </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField fullWidth size="small" label="Phone" value={storeForm.phone} onChange={(e) => handleStoreChange("phone", e.target.value)} />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField fullWidth size="small" label="Phone (alternate)" value={storeForm.phoneSecondary} onChange={(e) => handleStoreChange("phoneSecondary", e.target.value)} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField fullWidth size="small" label="Address" value={storeForm.address} onChange={(e) => handleStoreChange("address", e.target.value)} multiline rows={2} />
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
             </Grid>
-          </>
+
+            {/* Currency */}
+            <Grid item xs={12} md={6}>
+              <Card sx={sectionCardSx}>
+                <CardContent>
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                    <Icon icon="mdi:currency-inr" style={{ fontSize: 24, marginRight: 8 }} />
+                    <Typography variant="h6">Currency</Typography>
+                  </Box>
+                  <Divider sx={{ mb: 3 }} />
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} sm={6}>
+                      <TextField select fullWidth size="small" label="Currency" value={storeForm.currency} onChange={(e) => handleCurrencyChange(e.target.value)}>
+                        {CURRENCIES.map((c) => (
+                          <MenuItem key={c.code} value={c.code}>{c.label}</MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField fullWidth size="small" label="Currency Symbol" value={storeForm.currencySymbol} onChange={(e) => handleStoreChange("currencySymbol", e.target.value)} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Typography variant="caption" color="text.secondary">
+                        The symbol shown across product prices and enquiry line items throughout the storefront and admin.
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        )}
+      </TabPanel>
+
+      {/* SEO Tab */}
+      <TabPanel value={activeTab} index={1}>
+        {loading ? (
+          renderCardSkeleton()
+        ) : (
+          <Card sx={sectionCardSx}>
+            <CardContent>
+              <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                <Icon icon="mdi:magnify" style={{ fontSize: 24, marginRight: 8 }} />
+                <Typography variant="h6">Search &amp; Analytics</Typography>
+              </Box>
+              <Divider sx={{ mb: 3 }} />
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField fullWidth size="small" label="Meta Title" value={seoForm.metaTitle} onChange={(e) => handleSeoChange("metaTitle", e.target.value)} helperText="Shown in browser tabs and search results" />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth size="small" label="Meta Description" value={seoForm.metaDescription} onChange={(e) => handleSeoChange("metaDescription", e.target.value)} multiline rows={3} helperText="A short summary search engines display under the title" />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField fullWidth size="small" label="Google Analytics ID" value={seoForm.googleAnalyticsId} onChange={(e) => handleSeoChange("googleAnalyticsId", e.target.value)} placeholder="G-XXXXXXXXXX" />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField fullWidth size="small" label="Facebook Pixel ID" value={seoForm.facebookPixelId} onChange={(e) => handleSeoChange("facebookPixelId", e.target.value)} />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        )}
+      </TabPanel>
+
+      {/* Social Tab */}
+      <TabPanel value={activeTab} index={2}>
+        {loading ? (
+          renderCardSkeleton()
+        ) : (
+          <Card sx={sectionCardSx}>
+            <CardContent>
+              <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                <Icon icon="mdi:share-variant" style={{ fontSize: 24, marginRight: 8 }} />
+                <Typography variant="h6">Social Profiles</Typography>
+              </Box>
+              <Divider sx={{ mb: 3 }} />
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField fullWidth size="small" label="Facebook" value={socialForm.facebook} onChange={(e) => handleSocialChange("facebook", e.target.value)} placeholder="https://facebook.com/…" />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField fullWidth size="small" label="Instagram" value={socialForm.instagram} onChange={(e) => handleSocialChange("instagram", e.target.value)} placeholder="https://instagram.com/…" />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField fullWidth size="small" label="Twitter / X" value={socialForm.twitter} onChange={(e) => handleSocialChange("twitter", e.target.value)} placeholder="https://x.com/…" />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField fullWidth size="small" label="YouTube" value={socialForm.youtube} onChange={(e) => handleSocialChange("youtube", e.target.value)} placeholder="https://youtube.com/@…" />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField fullWidth size="small" label="WhatsApp" value={socialForm.whatsapp} onChange={(e) => handleSocialChange("whatsapp", e.target.value)} placeholder="+91 86385 43526" />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        )}
+      </TabPanel>
+
+      {/* Notifications Tab */}
+      <TabPanel value={activeTab} index={3}>
+        {loading ? (
+          renderCardSkeleton()
+        ) : (
+          <Card sx={sectionCardSx}>
+            <CardContent>
+              <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                <Icon icon="mdi:bell-outline" style={{ fontSize: 24, marginRight: 8 }} />
+                <Typography variant="h6">Notifications</Typography>
+              </Box>
+              <Divider sx={{ mb: 3 }} />
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <TextField fullWidth size="small" label="Admin Email" type="email" value={notifForm.adminEmail} onChange={(e) => handleNotifChange("adminEmail", e.target.value)} helperText="Where operational alerts are sent" />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField fullWidth size="small" label="Low Stock Email" type="email" value={notifForm.lowStockEmail} onChange={(e) => handleNotifChange("lowStockEmail", e.target.value)} disabled={!notifForm.lowStockAlert} helperText="Recipient for low-stock alerts" />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={<Switch checked={notifForm.adminNewOrderEmail} onChange={(e) => handleNotifChange("adminNewOrderEmail", e.target.checked)} />}
+                    label="New enquiry email — notify the admin when a customer submits an enquiry"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <FormControlLabel
+                    control={<Switch checked={notifForm.lowStockAlert} onChange={(e) => handleNotifChange("lowStockAlert", e.target.checked)} />}
+                    label="Low stock alerts — email when a product runs low on inventory"
+                  />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
         )}
       </TabPanel>
 
       {/* Categories Tab — reconciled: one canonical manager lives at /admin/categories */}
-      <TabPanel value={activeTab} index={1}>
+      <TabPanel value={activeTab} index={4}>
         <Paper sx={{ p: { xs: 3, sm: 5 }, border: "1px solid", borderColor: "divider" }} elevation={0}>
           <Box sx={{ maxWidth: 520, mx: "auto", textAlign: "center" }}>
             <Box

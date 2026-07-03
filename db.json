@@ -5692,8 +5692,6 @@
       "favicon": "https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889689/icon_bvsukn.png"
     },
     "notifications": {
-      "orderConfirmationEmail": true,
-      "shippingUpdateEmail": true,
       "adminNewOrderEmail": true,
       "adminEmail": "info@northeastbuildmart.com",
       "lowStockAlert": true,
