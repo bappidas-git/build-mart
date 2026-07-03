@@ -49,7 +49,7 @@ import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminProducts from "./pages/Admin/AdminProducts";
 import AdminCategories from "./pages/Admin/AdminCategories";
-import AdminOrders from "./pages/Admin/AdminOrders";
+import AdminEnquiries from "./pages/Admin/AdminEnquiries";
 import AdminReturns from "./pages/Admin/AdminReturns";
 import AdminPayments from "./pages/Admin/AdminPayments";
 import AdminUsers from "./pages/Admin/AdminUsers";
@@ -90,7 +90,9 @@ function App() {
                         <Route path="dashboard" element={<AdminDashboard />} />
                         <Route path="products" element={<AdminProducts />} />
                         <Route path="categories" element={<AdminCategories />} />
-                        <Route path="orders" element={<AdminOrders />} />
+                        <Route path="enquiries" element={<AdminEnquiries />} />
+                        {/* Old bookmarks: /admin/orders → /admin/enquiries */}
+                        <Route path="orders" element={<Navigate to="/admin/enquiries" replace />} />
                         <Route path="returns" element={<AdminReturns />} />
                         <Route path="payments" element={<AdminPayments />} />
                         <Route path="users" element={<AdminUsers />} />
