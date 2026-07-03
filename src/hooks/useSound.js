@@ -15,9 +15,9 @@ export const useSound = (
   const play = useCallback(() => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
-      audioRef.current.play().catch((err) => {
-        console.log("Sound play failed:", err);
-      });
+      // Autoplay can be blocked until the user interacts with the page — that's
+      // expected, so swallow the rejection rather than logging noise.
+      audioRef.current.play().catch(() => {});
     }
   }, []);
 

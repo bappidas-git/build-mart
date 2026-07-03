@@ -9,7 +9,7 @@ const CookiePolicy = () => {
   const { isDarkMode } = useTheme();
 
   const cookieTypes = [
-    { type: "Essential", purpose: "Required for basic site functionality (cart, login, security)", duration: "Session / 1 year", required: true },
+    { type: "Essential", purpose: "Required for basic site functionality (enquiry list, login, security)", duration: "Session / 1 year", required: true },
     { type: "Functional", purpose: "Remember your preferences (language, theme, region)", duration: "1 year", required: false },
     { type: "Analytics", purpose: "Help us understand how visitors interact with our site", duration: "2 years", required: false },
     { type: "Marketing", purpose: "Used for targeted advertising and retargeting", duration: "90 days", required: false },
