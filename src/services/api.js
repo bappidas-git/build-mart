@@ -1154,68 +1154,78 @@ const apiService = {
   orders: {
     create: async (orderData) => {
       try {
-        // Seed the audit timeline with the placement event (Laravel does the
-        // same server-side), so Admin's order timeline starts at the source.
+        // Post-pivot (Prompt-05) the storefront's single create method writes
+        // ENQUIRIES — the `orders` collection no longer exists in db.json. Seed
+        // the audit timeline with the submission event (Laravel does the same
+        // server-side) so Admin → Enquiries starts its timeline at the source,
+        // attributing it to the contact who submitted it.
         const payload = IS_MOCK_API
           ? {
               ...orderData,
               statusHistory: [
-                { at: new Date().toISOString(), by: "Customer", action: "Order placed" },
+                {
+                  at: new Date().toISOString(),
+                  by: orderData?.contact?.name || "Customer",
+                  action: "Enquiry submitted",
+                },
               ],
             }
           : orderData;
-        const response = await api.post("/orders", payload);
-        // Mock-only side effects the Laravel backend performs server-side on
-        // the same call (see createPaymentForOrder / redeemCouponByCode):
-        // record the payment transaction, and advance the coupon's usedCount
-        // so Admin → Payments / Coupons reflect the order immediately.
-        // Best-effort — never block a saved order.
+        const response = await api.post("/enquiries", payload);
         if (IS_MOCK_API) {
           const saved = extractData(response);
-          await createPaymentForOrder(saved);
-          if (orderData?.couponCode) await redeemCouponByCode(orderData.couponCode);
-          // Debit the wallet for any store credit applied at checkout (guarded
-          // against overspend in writeWalletTransaction) and write the ledger entry.
-          if (Number(saved.storeCreditUsed) > 0) {
-            await debitWallet(saved.userId, {
-              amount: Number(saved.storeCreditUsed),
-              reason: `Applied to order ${saved.orderNumber || saved.id}`,
-              orderId: saved.id, orderNumber: saved.orderNumber,
-            });
+          // A pure enquiry (flagged `type: "enquiry"`) carries no payment/coupon/
+          // wallet fields, so the legacy monetary side effects stay DORMANT — a
+          // phantom payment row, coupon redemption or wallet debit against an
+          // enquiry would corrupt Admin → Payments / Coupons / Wallet. The guard
+          // (and the retained helpers, per this module's contract) exists only so
+          // a legacy non-enquiry order, were one ever created, still cascades.
+          if (saved.type !== "enquiry") {
+            await createPaymentForOrder(saved);
+            if (orderData?.couponCode) await redeemCouponByCode(orderData.couponCode);
+            if (Number(saved.storeCreditUsed) > 0) {
+              await debitWallet(saved.userId, {
+                amount: Number(saved.storeCreditUsed),
+                reason: `Applied to order ${saved.orderNumber || saved.id}`,
+                orderId: saved.id, orderNumber: saved.orderNumber,
+              });
+            }
           }
           return saved;
         }
         return extractData(response);
-      } catch (error) { console.error("Create order error:", error); throw error; }
+      } catch (error) { console.error("Create enquiry error:", error); throw error; }
     },
 
+    // Every enquiry a customer has submitted (drives My Enquiries — prompt 21).
     getByUserId: async (userId) => {
       try {
         if (IS_MOCK_API) {
-          const response = await api.get("/orders", { params: { userId } });
+          const response = await api.get("/enquiries", { params: { userId } });
           return response.data;
         }
-        const response = await api.get("/orders");
+        const response = await api.get("/enquiries");
         return extractData(response);
-      } catch (error) { console.error("Get orders error:", error); throw error; }
+      } catch (error) { console.error("Get enquiries error:", error); throw error; }
     },
 
     getById: async (id) => {
       try {
-        const response = await api.get(`/orders/${id}`);
+        const response = await api.get(`/enquiries/${id}`);
         return extractData(response);
-      } catch (error) { console.error("Get order error:", error); throw error; }
+      } catch (error) { console.error("Get enquiry error:", error); throw error; }
     },
 
-    getByOrderNumber: async (orderNumber) => {
+    // Look up an enquiry by its ENQ- reference (the success screen — prompt 20).
+    getByOrderNumber: async (enquiryNumber) => {
       try {
         if (IS_MOCK_API) {
-          const response = await api.get("/orders", { params: { orderNumber } });
+          const response = await api.get("/enquiries", { params: { enquiryNumber } });
           return Array.isArray(response.data) ? response.data[0] : response.data;
         }
-        const response = await api.get(`/orders/number/${orderNumber}`);
+        const response = await api.get(`/enquiries/number/${enquiryNumber}`);
         return extractData(response);
-      } catch (error) { console.error("Get order by number error:", error); throw error; }
+      } catch (error) { console.error("Get enquiry by number error:", error); throw error; }
     },
 
     // Customer-initiated cancellation. Allowed only before the parcel ships

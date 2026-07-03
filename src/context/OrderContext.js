@@ -50,23 +50,40 @@ export const OrderProvider = ({ children }) => {
   }, [user, loadUserOrders]);
 
   const createOrder = async (orderData) => {
+    // NEBM is an enquiry platform: an enquiry (flagged `type: "enquiry"`)
+    // captures contact + items + note and carries ONLY a workflow `status`
+    // (starts "New"). It must not seed the payment/fulfillment/shipping
+    // dimensions an e-commerce order needs — those fields are what make the mock
+    // API fire the payment/coupon/wallet side effects, so an enquiry that omits
+    // them stays side-effect-free. Legacy (non-enquiry) orders keep the full
+    // three-status shape the rest of the app reads.
+    const isEnquiry = orderData?.type === "enquiry";
     try {
       setIsLoading(true);
 
-      // Orders carry the three status dimensions the rest of the app (Admin,
-      // Order History, dashboards) reads — never a single legacy `status`.
-      const order = {
-        ...orderData,
-        userId: user?.id ?? null,
-        orderNumber: generateOrderNumber(),
-        paymentStatus: orderData.paymentStatus || "pending",
-        fulfillmentStatus: orderData.fulfillmentStatus || "unfulfilled",
-        shippingStatus: orderData.shippingStatus || "pending",
-        trackingNumber: orderData.trackingNumber ?? null,
-        shiprocketOrderId: orderData.shiprocketOrderId ?? null,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
+      const timestamp = new Date().toISOString();
+      const order = isEnquiry
+        ? {
+            ...orderData,
+            userId: user?.id ?? null,
+            enquiryNumber: generateEnquiryNumber(),
+            status: orderData.status || "New",
+            adminNotes: orderData.adminNotes || "",
+            createdAt: timestamp,
+            updatedAt: timestamp,
+          }
+        : {
+            ...orderData,
+            userId: user?.id ?? null,
+            orderNumber: generateOrderNumber(),
+            paymentStatus: orderData.paymentStatus || "pending",
+            fulfillmentStatus: orderData.fulfillmentStatus || "unfulfilled",
+            shippingStatus: orderData.shippingStatus || "pending",
+            trackingNumber: orderData.trackingNumber ?? null,
+            shiprocketOrderId: orderData.shiprocketOrderId ?? null,
+            createdAt: timestamp,
+            updatedAt: timestamp,
+          };
 
       // Save to API
       const savedOrder = await apiService.orders.create(order);
@@ -81,8 +98,10 @@ export const OrderProvider = ({ children }) => {
 
       Swal.fire({
         icon: "error",
-        title: "Order Failed",
-        text: "There was an error processing your order. Please try again.",
+        title: isEnquiry ? "Enquiry Failed" : "Order Failed",
+        text: isEnquiry
+          ? "There was an error submitting your enquiry. Please try again."
+          : "There was an error processing your order. Please try again.",
       });
 
       return { success: false, error: error.message };
@@ -99,6 +118,16 @@ export const OrderProvider = ({ children }) => {
     const timestamp = Date.now().toString(36).toUpperCase();
     const random = Math.random().toString(36).substring(2, 6).toUpperCase();
     return `ORD-${timestamp}-${random}`;
+  };
+
+  // Enquiry reference number. Mirrors generateOrderNumber's scheme but with an
+  // ENQ- prefix so an enquiry is recognisable at a glance in Admin → Enquiries
+  // and on the success screen (prompt 20). Orders and enquiries live in the same
+  // collection for now, so keeping the two prefixes distinct avoids collisions.
+  const generateEnquiryNumber = () => {
+    const timestamp = Date.now().toString(36).toUpperCase();
+    const random = Math.random().toString(36).substring(2, 6).toUpperCase();
+    return `ENQ-${timestamp}-${random}`;
   };
 
   const value = {

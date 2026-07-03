@@ -1,751 +1,380 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { Icon as Iconify } from "@iconify/react";
 import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../hooks/useCart";
 import { useAuth } from "../../hooks/useAuth";
 import { useOrder } from "../../context/OrderContext";
-import apiService from "../../services/api";
-import { formatCurrency } from "../../utils/helpers";
+import { productPath, PLACEHOLDER_IMG, onImageError } from "../../utils/helpers";
+import PriceBlock from "../../components/storefront/PriceBlock";
+import QuantityStepper from "../../components/storefront/QuantityStepper";
 import styles from "./Checkout.module.css";
 
-const STEPS = ["Cart", "Shipping", "Payment", "Review"];
+// =============================================================================
+// SubmitEnquiry — NEBM's single-step "Submit Enquiry" screen (route /checkout)
+// =============================================================================
+// NEBM is an e-commerce-STYLE enquiry platform, not a store: customers build an
+// Enquiry List (the repurposed cart) and send an enquiry — they never pay, ship
+// or check out to buy. So this page has NO payment / shipping / coupon / tax /
+// store-credit UI and renders NO subtotal or grand total. It shows an "Enquiry
+// Summary" (each item's quantity + honest price mode via PriceBlock) plus a
+// contact + note block, and posts a pure enquiry payload through
+// OrderContext.createOrder → apiService.orders.create. Because that payload omits
+// every money/payment/coupon/wallet field (and is flagged `type: "enquiry"`),
+// the mock createPaymentForOrder / redeemCouponByCode / debitWallet side effects
+// never fire. Guests can submit (userId: null); logged-in users get prefilled
+// contact and their enquiry linked to their userId.
 
-const PAYMENT_OPTIONS = [
-  { id: "card", label: "Credit / Debit Card", icon: "💳", desc: "Visa, Mastercard, RuPay" },
-  { id: "upi", label: "UPI", icon: "📱", desc: "Google Pay, PhonePe, Paytm" },
-  { id: "net_banking", label: "Net Banking", icon: "🏦", desc: "All major banks supported" },
-  { id: "wallet", label: "Wallet", icon: "👛", desc: "Paytm, PhonePe, Amazon Pay" },
-  { id: "cod", label: "Cash on Delivery", icon: "💵", desc: "Pay when you receive" },
-];
+const NEBM_PHONES = ["+91 86385 43526", "+91 88762 89972"];
 
-// Discount for an applied coupon at the current subtotal. Derived (never
-// stored), so qty changes can't leave a stale amount and re-applying a coupon
-// can't stack. `capped` flags when maxDiscount limited the raw value.
-const couponDiscountFor = (coupon, amount) => {
-  if (!coupon) return { discount: 0, capped: false };
-  const raw =
-    coupon.type === "percentage"
-      ? Math.round((amount * coupon.value) / 100)
-      : coupon.value;
-  const cap = coupon.maxDiscount || Infinity;
-  return { discount: Math.max(0, Math.min(raw, cap, amount)), capped: raw > cap };
-};
-
-const Checkout = () => {
+const SubmitEnquiry = () => {
   const { isDarkMode } = useTheme();
   const navigate = useNavigate();
-  const { cartItems, getCartTotal, getCartItemCount, updateQuantity, removeFromCart, clearCart } = useCart();
-  const { user, isAuthenticated, openAuthModal } = useAuth();
+  const { cartItems, getCartItemCount, updateQuantity, removeFromCart, clearCart } =
+    useCart();
+  const { user } = useAuth();
   const { createOrder } = useOrder();
 
-  const [step, setStep] = useState(0);
-  const [couponCode, setCouponCode] = useState("");
-  const [couponError, setCouponError] = useState("");
-  const [couponApplied, setCouponApplied] = useState(null);
-  const [shippingMethods, setShippingMethods] = useState([]);
-  const [selectedShipping, setSelectedShipping] = useState(null);
-  const [shippingError, setShippingError] = useState("");
-  const [storeSettings, setStoreSettings] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState("card");
+  // Contact + note (prompt 19). Name & phone required, email optional/valid.
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [note, setNote] = useState("");
+  const [errors, setErrors] = useState({});
   const [isProcessing, setIsProcessing] = useState(false);
-  const [orderPlaced, setOrderPlaced] = useState(null);
+  // Guards the empty state from flashing in the tick between clearCart and the
+  // navigate to the success page.
+  const [submitted, setSubmitted] = useState(false);
 
-  // Store-credit wallet
-  const [walletBalance, setWalletBalance] = useState(0);
-  const [applyStoreCredit, setApplyStoreCredit] = useState(false);
-  const [creditAmount, setCreditAmount] = useState(0); // amount the customer chose to apply
-
-  const [shippingAddress, setShippingAddress] = useState({
-    firstName: user?.firstName || "", lastName: user?.lastName || "",
-    phone: user?.phone || "", addressLine1: "", addressLine2: "",
-    city: "", state: "", postalCode: "", country: "India",
-  });
-  const [addressErrors, setAddressErrors] = useState({});
-  const [useExistingAddress, setUseExistingAddress] = useState(null);
-
+  // Prefill contact for signed-in users without clobbering edits or the guest
+  // path — only fill a field that is still empty (auth may hydrate after mount).
   useEffect(() => {
-    const loadShipping = async () => {
-      try {
-        // Storefront endpoint (active methods only) — never the admin-scoped
-        // method, which needs an admin token on the Laravel branch.
-        const methods = await apiService.shipping.getMethods();
-        const active = methods.filter((m) => m.isActive !== false);
-        setShippingMethods(active);
-        if (active.length > 0) setSelectedShipping(active[0]);
-      } catch (e) { console.error("Load shipping methods error:", e); }
-    };
-    const loadSettings = async () => {
-      try {
-        const settings = await apiService.settings.get();
-        setStoreSettings(settings);
-      } catch (e) { console.error("Load store settings error:", e); }
-    };
-    loadShipping();
-    loadSettings();
-  }, []);
-
-  // Load the signed-in customer's store-credit balance so it can be applied here.
-  useEffect(() => {
-    if (!user?.id) { setWalletBalance(0); return; }
-    let active = true;
-    (async () => {
-      try {
-        const balance = await apiService.wallet.getBalance(user.id);
-        if (active) setWalletBalance(Number(balance) || 0);
-      } catch (e) { console.error("Load wallet balance error:", e); }
-    })();
-    return () => { active = false; };
+    if (!user) return;
+    const fullName = [user.firstName, user.lastName].filter(Boolean).join(" ").trim();
+    setName((v) => v || fullName);
+    setPhone((v) => v || user.phone || "");
+    setEmail((v) => v || user.email || "");
   }, [user]);
 
-  useEffect(() => {
-    if (user) {
-      setShippingAddress((prev) => ({
-        ...prev,
-        firstName: prev.firstName || user.firstName || "",
-        lastName: prev.lastName || user.lastName || "",
-        phone: prev.phone || user.phone || "",
-      }));
-      if (user.addresses?.length > 0) {
-        const defaultAddr = user.addresses.find((a) => a.isDefault) || user.addresses[0];
-        setUseExistingAddress(defaultAddr);
-      }
-    }
-  }, [user]);
+  const clearError = (key) =>
+    setErrors((prev) => (prev[key] ? { ...prev, [key]: "" } : prev));
 
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [step]);
-
-  // ── Order math ────────────────────────────────────────────────────────────
-  // total = subtotal − discount + shipping + tax, with tax on the discounted
-  // subtotal. The same rounded figures are stored on the order so Confirmation,
-  // Order History and Admin all display exactly what was charged.
-  const subtotal = getCartTotal();
-  const { discount: couponDiscount, capped: couponCapped } = couponDiscountFor(couponApplied, subtotal);
-  const shippingCost = selectedShipping
-    ? selectedShipping.rateType === "free" || (selectedShipping.freeAbove && subtotal >= selectedShipping.freeAbove) ? 0 : selectedShipping.flatRate
-    : 0;
-  const taxRatePct = storeSettings?.store?.taxRate ?? 18;
-  const taxAmount = Math.round(Math.max(0, subtotal - couponDiscount) * (taxRatePct / 100));
-  const total = subtotal - couponDiscount + shippingCost + taxAmount;
-
-  // Store credit is applied LAST, against the grand total (it behaves like a
-  // prepaid gift card — after discounts, shipping and tax). The customer can
-  // apply up to their balance, capped by the order total; the remainder, if
-  // any, is collected via the chosen payment method. (See PR notes.)
-  const maxApplicableCredit = Math.min(walletBalance, total);
-  const storeCreditApplied = applyStoreCredit
-    ? Math.min(Math.max(0, Math.round(creditAmount)), maxApplicableCredit)
-    : 0;
-  const amountPayable = Math.max(0, total - storeCreditApplied);
-  const fullyCovered = storeCreditApplied > 0 && amountPayable === 0;
-
-  // COD availability comes from store settings, bounded by the amount actually
-  // collected on delivery (the payable remainder after store credit).
-  const paymentCfg = storeSettings?.payment;
-  const codEnabled = paymentCfg?.codEnabled !== false;
-  const codMinOrder = paymentCfg?.codMinOrder ?? 0;
-  const codMaxOrder = paymentCfg?.codMaxOrder ?? null;
-  const codAvailable = codEnabled && amountPayable > 0 &&
-    amountPayable >= codMinOrder && (codMaxOrder == null || amountPayable <= codMaxOrder);
-
-  // If totals shift (qty/coupon/shipping) and COD falls out of range, move the
-  // selection back to card rather than letting an invalid method be submitted.
-  useEffect(() => {
-    if (paymentMethod === "cod" && !codAvailable) setPaymentMethod("card");
-  }, [paymentMethod, codAvailable]);
-
-  // Keep the chosen credit amount within the current applicable maximum — e.g.
-  // when the cart total drops after removing an item or a coupon — so the input
-  // never displays (or submits) more than can actually be applied.
-  useEffect(() => {
-    if (applyStoreCredit && creditAmount > maxApplicableCredit) {
-      setCreditAmount(maxApplicableCredit);
-    }
-  }, [applyStoreCredit, creditAmount, maxApplicableCredit]);
-
-  // A coupon only stays applied while the cart still meets its minimum.
-  useEffect(() => {
-    if (couponApplied && subtotal < (couponApplied.minOrderAmount || 0)) {
-      setCouponApplied(null);
-      setCouponCode("");
-      setCouponError(
-        `${couponApplied.code} was removed — it needs a minimum order of ${formatCurrency(couponApplied.minOrderAmount)}.`
-      );
-    }
-  }, [subtotal, couponApplied]);
-
-  const applyCoupon = async () => {
-    setCouponError("");
-    if (!couponCode.trim()) { setCouponError("Enter a coupon code"); return; }
-    try {
-      const coupon = await apiService.coupons.validate(couponCode.trim(), subtotal);
-      setCouponApplied(coupon);
-    } catch (e) {
-      setCouponError(e.message || "Invalid coupon");
-      setCouponApplied(null);
-    }
-  };
-
-  const removeCoupon = () => {
-    setCouponCode("");
-    setCouponApplied(null);
-    setCouponError("");
-  };
-
-  const validateAddress = () => {
-    const addr = useExistingAddress || shippingAddress;
+  const validate = () => {
     const errs = {};
-    if (!addr.firstName?.trim()) errs.firstName = "Required";
-    if (!addr.lastName?.trim()) errs.lastName = "Required";
-    if (!addr.phone?.trim()) errs.phone = "Required";
-    if (!addr.addressLine1?.trim()) errs.addressLine1 = "Required";
-    if (!addr.city?.trim()) errs.city = "Required";
-    if (!addr.state?.trim()) errs.state = "Required";
-    if (!addr.postalCode?.trim()) errs.postalCode = "Required";
-    setAddressErrors(errs);
+    if (!name.trim()) errs.name = "Please enter your name";
+    if (!phone.trim()) errs.phone = "Please enter your phone number";
+    else if (!/^[+\d][\d\s-]{7,14}$/.test(phone.trim()))
+      errs.phone = "Enter a valid phone number";
+    if (email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+      errs.email = "Enter a valid email address";
+    setErrors(errs);
     return Object.keys(errs).length === 0;
   };
 
-  const handleNext = () => {
-    if (step === 0) {
-      if (cartItems.length === 0) return;
-      if (!isAuthenticated) { openAuthModal("login"); return; }
-      setStep(1);
-    } else if (step === 1) {
-      if (!validateAddress()) return;
-      if (!selectedShipping) { setShippingError("Please select a shipping method."); return; }
-      setShippingError("");
-      setStep(2);
-    } else if (step === 2) {
-      setStep(3);
-    } else {
-      placeOrder();
-    }
-  };
+  const handleSubmitEnquiry = async () => {
+    if (cartItems.length === 0) return;
+    if (!validate()) return;
 
-  const placeOrder = async () => {
     setIsProcessing(true);
     try {
-      const addr = useExistingAddress || shippingAddress;
-      const orderData = {
+      // Pure enquiry payload: contact, items, note, status — and nothing that
+      // implies money (no subtotal/discount/coupon/shipping/tax/total/
+      // storeCredit/payment/address). `type: "enquiry"` is the explicit flag the
+      // API layer branches on to skip the payment/coupon/wallet side effects.
+      const enquiryData = {
+        type: "enquiry",
         items: cartItems.map((item) => ({
-          productId: item.productId, variantId: item.variantId,
+          productId: item.productId,
+          variantId: item.variantId,
           name: `${item.name}${item.variantName ? ` - ${item.variantName}` : ""}`,
-          image: item.image, sku: item.sku || "", price: item.price,
-          quantity: item.quantity, subtotal: item.price * item.quantity,
+          image: item.image,
+          sku: item.sku || "",
+          quantity: item.quantity,
+          priceType: item.priceType || "onEnquiry",
+          unitType: item.unitType || null,
+          // Only an exact-priced item carries a number; tiered / on-enquiry
+          // items are quoted by our team, so no price is captured here.
+          price: item.priceType === "exact" ? item.price : null,
         })),
-        shippingAddress: addr,
-        billingAddress: addr,
-        subtotal,
-        discountAmount: couponDiscount,
-        couponCode: couponApplied?.code || null,
-        shippingAmount: shippingCost,
-        taxAmount,
-        total,
-        // Store credit applied at checkout, and what's left for the gateway.
-        storeCreditUsed: storeCreditApplied,
-        amountPayable,
-        // A fully store-credit order needs no further payment, so it is "paid"
-        // via store credit; otherwise the chosen method settles the remainder.
-        paymentMethod: fullyCovered ? "store_credit" : paymentMethod,
-        paymentStatus: fullyCovered ? "paid" : paymentMethod === "cod" ? "pending" : "paid",
-        fulfillmentStatus: "unfulfilled",
-        shippingStatus: "pending",
-        trackingNumber: null,
-        notes: "",
+        contact: { name: name.trim(), phone: phone.trim(), email: email.trim() },
+        notes: note.trim(),
+        status: "New",
       };
 
-      const result = await createOrder(orderData);
+      const result = await createOrder(enquiryData);
       if (result.success) {
-        setOrderPlaced(result.order);
+        setSubmitted(true);
         clearCart({ silent: true });
-        const orderNum = result.order.orderNumber || result.order.id;
-        navigate(`/order-confirmation/${orderNum}`);
+        const ref =
+          result.order.enquiryNumber ||
+          result.order.orderNumber ||
+          result.order.id;
+        navigate(`/order-confirmation/${ref}`);
       }
     } catch (e) {
-      console.error("Order error:", e);
+      console.error("Submit enquiry error:", e);
     } finally {
       setIsProcessing(false);
     }
   };
 
-  const handleAddressChange = (e) => {
-    const { name, value } = e.target;
-    setShippingAddress((prev) => ({ ...prev, [name]: value }));
-    if (addressErrors[name]) setAddressErrors((prev) => ({ ...prev, [name]: "" }));
-  };
-
-  if (cartItems.length === 0 && !orderPlaced) {
+  // ── Empty state ───────────────────────────────────────────────────────────
+  if (cartItems.length === 0 && !submitted) {
     return (
       <div className={`${styles.container} ${isDarkMode ? styles.dark : ""}`}>
         <div className={styles.emptyState}>
-          <div className={styles.emptyIcon}>&#128722;</div>
-          <h2>Your cart is empty</h2>
-          <p>Add some products to your cart to proceed with checkout.</p>
-          <Link to="/products" className={styles.primaryBtn}>Continue Shopping</Link>
+          <Iconify
+            icon="mdi:clipboard-text-outline"
+            className={styles.emptyIcon}
+            width="72"
+            height="72"
+            aria-hidden="true"
+          />
+          <h2>Your Enquiry List is empty</h2>
+          <p>Add products to your Enquiry List to send an enquiry.</p>
+          <Link to="/products" className={styles.browseBtn}>
+            Browse Products
+          </Link>
         </div>
       </div>
     );
   }
 
-  const reviewAddress = useExistingAddress || shippingAddress;
-  const selectedPaymentOption = PAYMENT_OPTIONS.find((pm) => pm.id === paymentMethod);
-
   return (
     <div className={`${styles.container} ${isDarkMode ? styles.dark : ""}`}>
-      <div className={styles.breadcrumb}><Link to="/">Home</Link> <span>/</span> <span>Checkout</span></div>
-
-      {/* Progress Steps */}
-      <div className={styles.stepIndicator}>
-        {STEPS.map((s, i) => (
-          <div key={i} className={`${styles.step} ${i <= step ? styles.activeStep : ""} ${i < step ? styles.completedStep : ""}`}>
-            <div className={styles.stepCircle}>{i < step ? "✓" : i + 1}</div>
-            <span className={styles.stepLabel}>{s}</span>
-            {i < STEPS.length - 1 && <div className={styles.stepLine} />}
-          </div>
-        ))}
+      <div className={styles.breadcrumb}>
+        <Link to="/">Home</Link> <span>/</span>{" "}
+        <Link to="/enquiry-list">Enquiry List</Link> <span>/</span>{" "}
+        <span>Submit Enquiry</span>
       </div>
 
-      <div className={styles.checkoutLayout}>
-        {/* Main Content */}
+      <motion.div
+        className={styles.pageHead}
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35 }}
+      >
+        <h1 className={styles.pageTitle}>Submit Enquiry</h1>
+        <p className={styles.pageSubtitle}>
+          Review your list and share your requirements — our team will get back
+          to you with a quote. No payment needed.
+        </p>
+      </motion.div>
+
+      <div className={styles.layout}>
+        {/* Main column */}
         <div className={styles.mainContent}>
-          <AnimatePresence mode="wait">
-            {/* Step 1: Cart Review */}
-            {step === 0 && (
-              <motion.div key="cart" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
-                <h2 className={styles.sectionTitle}>Review Your Cart ({getCartItemCount()} items)</h2>
-                <div className={styles.cartItems}>
-                  {cartItems.map((item) => (
-                    <div key={item.id} className={styles.cartItem}>
-                      <img src={item.image || `https://placehold.co/80x80/e2e8f0/475569?text=Product`} alt={item.name} className={styles.cartItemImage} />
-                      <div className={styles.cartItemInfo}>
-                        <h4>{item.name}</h4>
-                        {item.variantName && <p className={styles.variant}>{item.variantName}</p>}
-                        <p className={styles.itemPrice}>{formatCurrency(item.price)}</p>
-                      </div>
-                      <div className={styles.quantityControls}>
-                        <button onClick={() => updateQuantity(item.id, item.quantity - 1)} aria-label={`Decrease quantity of ${item.name}`}>-</button>
-                        <span>{item.quantity}</span>
-                        <button onClick={() => updateQuantity(item.id, item.quantity + 1)} aria-label={`Increase quantity of ${item.name}`}>+</button>
-                      </div>
-                      <div className={styles.itemSubtotal}>{formatCurrency(item.price * item.quantity)}</div>
-                      <button className={styles.removeBtn} onClick={() => removeFromCart(item.id)} aria-label={`Remove ${item.name} from cart`}>&times;</button>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Coupon */}
-                <div className={styles.couponSection}>
-                  <h3>Have a Coupon?</h3>
-                  {couponApplied ? (
-                    <div className={styles.couponApplied}>
-                      <span>
-                        &#10003; {couponApplied.code} applied (-{formatCurrency(couponDiscount)})
-                        {couponCapped && (
-                          <em className={styles.couponCapNote}> &middot; capped at max discount {formatCurrency(couponApplied.maxDiscount)}</em>
-                        )}
-                      </span>
-                      <button onClick={removeCoupon}>Remove</button>
-                    </div>
-                  ) : (
-                    <div className={styles.couponForm}>
-                      <input type="text" placeholder="Enter coupon code" value={couponCode} onChange={(e) => { setCouponCode(e.target.value.toUpperCase()); setCouponError(""); }} />
-                      <button onClick={applyCoupon}>Apply</button>
-                    </div>
-                  )}
-                  {couponError && <p className={styles.couponError}>{couponError}</p>}
-                </div>
-
-                {!isAuthenticated && (
-                  <div className={styles.loginPrompt}>
-                    <p>Please log in to continue with checkout.</p>
-                    <button
-                      type="button"
-                      className={styles.loginPromptBtn}
-                      onClick={() => openAuthModal("login")}
+          {/* Enquiry Summary */}
+          <section className={styles.card}>
+            <h2 className={styles.sectionTitle}>Enquiry Summary</h2>
+            <div className={styles.items}>
+              {cartItems.map((item) => {
+                const stockMax =
+                  typeof item.stock === "number" && item.stock > 0
+                    ? item.stock
+                    : Infinity;
+                const href = productPath(item);
+                return (
+                  <div key={item.id} className={styles.item}>
+                    <Link
+                      to={href}
+                      className={styles.itemImageLink}
+                      aria-label={item.name}
                     >
-                      Log In / Sign Up
-                    </button>
-                  </div>
-                )}
-              </motion.div>
-            )}
+                      <img
+                        src={item.image || PLACEHOLDER_IMG}
+                        alt={item.name}
+                        onError={onImageError}
+                        className={styles.itemImage}
+                      />
+                    </Link>
 
-            {/* Step 2: Shipping */}
-            {step === 1 && (
-              <motion.div key="shipping" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
-                <h2 className={styles.sectionTitle}>Shipping Address</h2>
-
-                {user?.addresses?.length > 0 && (
-                  <div className={styles.savedAddresses}>
-                    <h3>Saved Addresses</h3>
-                    {user.addresses.map((addr, i) => (
-                      <label key={i} className={`${styles.addressCard} ${useExistingAddress?.id === addr.id ? styles.selectedAddress : ""}`}>
-                        <input type="radio" name="savedAddress" checked={useExistingAddress?.id === addr.id}
-                          onChange={() => { setUseExistingAddress(addr); setAddressErrors({}); }} />
-                        <div>
-                          <strong>{addr.label || "Address"}</strong>
-                          <p>{addr.firstName} {addr.lastName}, {addr.addressLine1}, {addr.city}, {addr.state} - {addr.postalCode}</p>
-                          <p>{addr.phone}</p>
-                        </div>
-                      </label>
-                    ))}
-                    <button className={styles.newAddressBtn} onClick={() => setUseExistingAddress(null)}>+ Add New Address</button>
-                  </div>
-                )}
-
-                {!useExistingAddress && (
-                  <div className={styles.addressForm}>
-                    <div className={styles.formRow}>
-                      <div className={styles.formGroup}>
-                        <label>First Name *</label>
-                        <input type="text" name="firstName" value={shippingAddress.firstName} onChange={handleAddressChange} className={addressErrors.firstName ? styles.inputError : ""} />
-                        {addressErrors.firstName && <span className={styles.fieldError}>{addressErrors.firstName}</span>}
-                      </div>
-                      <div className={styles.formGroup}>
-                        <label>Last Name *</label>
-                        <input type="text" name="lastName" value={shippingAddress.lastName} onChange={handleAddressChange} className={addressErrors.lastName ? styles.inputError : ""} />
-                        {addressErrors.lastName && <span className={styles.fieldError}>{addressErrors.lastName}</span>}
-                      </div>
-                    </div>
-                    <div className={styles.formGroup}>
-                      <label>Phone *</label>
-                      <input type="tel" name="phone" value={shippingAddress.phone} onChange={handleAddressChange} placeholder="+91 9876543210" className={addressErrors.phone ? styles.inputError : ""} />
-                      {addressErrors.phone && <span className={styles.fieldError}>{addressErrors.phone}</span>}
-                    </div>
-                    <div className={styles.formGroup}>
-                      <label>Address Line 1 *</label>
-                      <input type="text" name="addressLine1" value={shippingAddress.addressLine1} onChange={handleAddressChange} placeholder="House/Flat No., Building, Street" className={addressErrors.addressLine1 ? styles.inputError : ""} />
-                      {addressErrors.addressLine1 && <span className={styles.fieldError}>{addressErrors.addressLine1}</span>}
-                    </div>
-                    <div className={styles.formGroup}>
-                      <label>Address Line 2</label>
-                      <input type="text" name="addressLine2" value={shippingAddress.addressLine2} onChange={handleAddressChange} placeholder="Landmark, Area (optional)" />
-                    </div>
-                    <div className={styles.formRow}>
-                      <div className={styles.formGroup}>
-                        <label>City *</label>
-                        <input type="text" name="city" value={shippingAddress.city} onChange={handleAddressChange} className={addressErrors.city ? styles.inputError : ""} />
-                        {addressErrors.city && <span className={styles.fieldError}>{addressErrors.city}</span>}
-                      </div>
-                      <div className={styles.formGroup}>
-                        <label>State *</label>
-                        <input type="text" name="state" value={shippingAddress.state} onChange={handleAddressChange} className={addressErrors.state ? styles.inputError : ""} />
-                        {addressErrors.state && <span className={styles.fieldError}>{addressErrors.state}</span>}
-                      </div>
-                    </div>
-                    <div className={styles.formRow}>
-                      <div className={styles.formGroup}>
-                        <label>Postal Code *</label>
-                        <input type="text" name="postalCode" value={shippingAddress.postalCode} onChange={handleAddressChange} className={addressErrors.postalCode ? styles.inputError : ""} />
-                        {addressErrors.postalCode && <span className={styles.fieldError}>{addressErrors.postalCode}</span>}
-                      </div>
-                      <div className={styles.formGroup}>
-                        <label>Country</label>
-                        <input type="text" value={shippingAddress.country} readOnly className={styles.readOnly} />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Shipping Method */}
-                <h3 className={styles.subTitle}>Shipping Method</h3>
-                <div className={styles.shippingMethods}>
-                  {shippingMethods.map((method) => {
-                    const isFree = method.rateType === "free" || (method.freeAbove && subtotal >= method.freeAbove);
-                    return (
-                      <label key={method.id} className={`${styles.shippingOption} ${selectedShipping?.id === method.id ? styles.selectedShipping : ""}`}>
-                        <input type="radio" name="shipping" checked={selectedShipping?.id === method.id} onChange={() => { setSelectedShipping(method); setShippingError(""); }} />
-                        <div>
-                          <strong>{method.name}</strong>
-                          <p>{method.description}</p>
-                        </div>
-                        <span className={styles.shippingPrice}>{isFree ? "FREE" : formatCurrency(method.flatRate)}</span>
-                      </label>
-                    );
-                  })}
-                  {shippingMethods.length === 0 && (
-                    <p className={styles.shippingEmpty}>No shipping methods available right now. Please try again later.</p>
-                  )}
-                </div>
-                {shippingError && <p className={styles.fieldError}>{shippingError}</p>}
-              </motion.div>
-            )}
-
-            {/* Step 3: Payment */}
-            {step === 2 && (
-              <motion.div key="payment" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
-                <h2 className={styles.sectionTitle}>Payment Method</h2>
-
-                {/* Store credit */}
-                {walletBalance > 0 && (
-                  <div className={styles.storeCreditSection}>
-                    <div className={styles.storeCreditHeader}>
-                      <div className={styles.storeCreditInfo}>
-                        <span className={styles.storeCreditWalletIcon} aria-hidden>👛</span>
-                        <div>
-                          <h3>Store Credit</h3>
-                          <p className={styles.storeCreditBalance}>
-                            Available balance: <strong>{formatCurrency(walletBalance)}</strong>
-                          </p>
-                        </div>
-                      </div>
-                      <label className={styles.storeCreditToggle}>
-                        <input
-                          type="checkbox"
-                          checked={applyStoreCredit}
-                          onChange={(e) => {
-                            const on = e.target.checked;
-                            setApplyStoreCredit(on);
-                            setCreditAmount(on ? maxApplicableCredit : 0);
-                          }}
+                    <div className={styles.itemInfo}>
+                      <Link to={href} className={styles.itemName}>
+                        {item.name}
+                      </Link>
+                      {item.variantName && (
+                        <p className={styles.variant}>{item.variantName}</p>
+                      )}
+                      {/* Honest price mode via the shared PriceBlock: exact
+                          ₹/unit, tiered "From ₹X" + Bulk-pricing chip (links to
+                          the product for the full table), or "Price on Enquiry".
+                          Card mode never fabricates a discount, and there is no
+                          line total. */}
+                      <div className={styles.itemPrice}>
+                        <PriceBlock
+                          product={item}
+                          price={item.price}
+                          comparePrice={item.comparePrice}
+                          currency={item.currency}
+                          mode="card"
+                          size="sm"
                         />
-                        <span>Apply to this order</span>
-                      </label>
-                    </div>
-
-                    {applyStoreCredit && (
-                      <div className={styles.storeCreditApply}>
-                        <div className={styles.storeCreditAmountRow}>
-                          <label>Amount to apply</label>
-                          <div className={styles.storeCreditInputWrap}>
-                            <span className={styles.storeCreditCurrency}>₹</span>
-                            <input
-                              type="number"
-                              min="0"
-                              max={maxApplicableCredit}
-                              value={creditAmount}
-                              onChange={(e) => {
-                                const n = Number(e.target.value);
-                                setCreditAmount(Number.isFinite(n) ? Math.max(0, n) : 0);
-                              }}
-                            />
-                            <button type="button" onClick={() => setCreditAmount(maxApplicableCredit)}>
-                              Use Max
-                            </button>
-                          </div>
-                        </div>
-                        <div className={styles.storeCreditSummaryRow}>
-                          <span>Store credit applied</span>
-                          <span className={styles.storeCreditApplied}>-{formatCurrency(storeCreditApplied)}</span>
-                        </div>
-                        <div className={styles.storeCreditSummaryRow}>
-                          <span>Remaining to pay</span>
-                          <span className={styles.storeCreditPayable}>{formatCurrency(amountPayable)}</span>
-                        </div>
                       </div>
-                    )}
+                    </div>
+
+                    <div className={styles.itemControls}>
+                      <QuantityStepper
+                        value={item.quantity}
+                        onChange={(q) => updateQuantity(item.id, q)}
+                        min={1}
+                        max={stockMax}
+                        size="sm"
+                      />
+                      <button
+                        type="button"
+                        className={styles.removeBtn}
+                        onClick={() => removeFromCart(item.id)}
+                        aria-label={`Remove ${item.name} from your Enquiry List`}
+                      >
+                        <Iconify
+                          icon="mdi:trash-can-outline"
+                          width="18"
+                          height="18"
+                          aria-hidden="true"
+                        />
+                      </button>
+                    </div>
                   </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Contact + note (prompt 19) */}
+          <section className={styles.card}>
+            <h2 className={styles.sectionTitle}>Your Details</h2>
+            <p className={styles.cardHint}>
+              Tell us who to contact about this enquiry.
+            </p>
+
+            <div className={styles.formRow}>
+              <div className={styles.formGroup}>
+                <label htmlFor="enq-name">Name *</label>
+                <input
+                  id="enq-name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    clearError("name");
+                  }}
+                  placeholder="Your full name"
+                  className={errors.name ? styles.inputError : ""}
+                />
+                {errors.name && (
+                  <span className={styles.fieldError}>{errors.name}</span>
                 )}
-
-                {fullyCovered && (
-                  <div className={styles.fullyCoveredNote}>
-                    <span aria-hidden>✓</span> Your store credit covers this order in full — no further payment needed.
-                  </div>
+              </div>
+              <div className={styles.formGroup}>
+                <label htmlFor="enq-phone">Phone *</label>
+                <input
+                  id="enq-phone"
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                    clearError("phone");
+                  }}
+                  placeholder="+91 98765 43210"
+                  className={errors.phone ? styles.inputError : ""}
+                />
+                {errors.phone && (
+                  <span className={styles.fieldError}>{errors.phone}</span>
                 )}
+              </div>
+            </div>
 
-                {!fullyCovered && (<>
-                <div className={styles.paymentMethods}>
-                  {PAYMENT_OPTIONS.map((pm) => {
-                    const isCod = pm.id === "cod";
-                    const isDisabled = isCod && !codAvailable;
-                    const codHint = !codEnabled
-                      ? "Currently unavailable"
-                      : `Available for orders ${codMinOrder > 0 ? `from ${formatCurrency(codMinOrder)} ` : ""}up to ${formatCurrency(codMaxOrder ?? 0)}`;
-                    return (
-                      <label key={pm.id} className={`${styles.paymentOption} ${paymentMethod === pm.id ? styles.selectedPayment : ""} ${isDisabled ? styles.disabledPayment : ""}`}>
-                        <input type="radio" name="payment" value={pm.id} checked={paymentMethod === pm.id} disabled={isDisabled} onChange={() => setPaymentMethod(pm.id)} />
-                        <span className={styles.paymentIcon}>{pm.icon}</span>
-                        <div>
-                          <strong>{pm.label}</strong>
-                          <p>{isDisabled ? codHint : pm.desc}</p>
-                        </div>
-                      </label>
-                    );
-                  })}
-                </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="enq-email">
+                Email <span className={styles.optional}>(optional)</span>
+              </label>
+              <input
+                id="enq-email"
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  clearError("email");
+                }}
+                placeholder="you@example.com"
+                className={errors.email ? styles.inputError : ""}
+              />
+              {errors.email && (
+                <span className={styles.fieldError}>{errors.email}</span>
+              )}
+            </div>
 
-                {paymentMethod === "card" && (
-                  <div className={styles.cardForm}>
-                    <div className={styles.formGroup}>
-                      <label>Card Number</label>
-                      <input type="text" placeholder="1234 5678 9012 3456" maxLength={19} />
-                    </div>
-                    <div className={styles.formRow}>
-                      <div className={styles.formGroup}><label>Expiry</label><input type="text" placeholder="MM/YY" maxLength={5} /></div>
-                      <div className={styles.formGroup}><label>CVV</label><input type="password" placeholder="***" maxLength={4} /></div>
-                    </div>
-                    <div className={styles.formGroup}><label>Name on Card</label><input type="text" placeholder="Full name" /></div>
-                  </div>
-                )}
+            <div className={styles.formGroup}>
+              <label htmlFor="enq-note">Message / Requirements</label>
+              <textarea
+                id="enq-note"
+                rows={4}
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                placeholder="Quantities, sizes, delivery location, timeline, or any specific requirements…"
+                className={styles.textarea}
+              />
+            </div>
+          </section>
+        </div>
 
-                {paymentMethod === "upi" && (
-                  <div className={styles.upiForm}>
-                    <div className={styles.formGroup}><label>UPI ID</label><input type="text" placeholder="name@upi" /></div>
-                  </div>
-                )}
+        {/* Sidebar */}
+        <aside className={styles.sidebar}>
+          <div className={styles.summaryCard}>
+            <div className={styles.summaryHead}>
+              <Iconify
+                icon="mdi:clipboard-list-outline"
+                width="22"
+                height="22"
+                aria-hidden="true"
+              />
+              <span>Items ({getCartItemCount()})</span>
+            </div>
+            <p className={styles.summaryNote}>
+              Submitting sends your list to our team for a quote — you won't be
+              charged.
+            </p>
 
-                {paymentMethod === "net_banking" && (
-                  <div className={styles.bankForm}>
-                    <div className={styles.formGroup}>
-                      <label>Select Bank</label>
-                      <select>
-                        <option>State Bank of India</option>
-                        <option>HDFC Bank</option>
-                        <option>ICICI Bank</option>
-                        <option>Axis Bank</option>
-                        <option>Kotak Mahindra Bank</option>
-                        <option>Punjab National Bank</option>
-                      </select>
-                    </div>
-                  </div>
-                )}
-
-                {paymentMethod === "cod" && (
-                  <div className={styles.codInfo}>
-                    <p>
-                      &#9432; Pay with cash when your order is delivered. Available for orders
-                      {codMinOrder > 0 ? ` from ${formatCurrency(codMinOrder)}` : ""}
-                      {codMaxOrder != null ? ` up to ${formatCurrency(codMaxOrder)}` : ""}.
-                    </p>
-                  </div>
-                )}
-                </>)}
-              </motion.div>
-            )}
-
-            {/* Step 4: Review & Confirm */}
-            {step === 3 && (
-              <motion.div key="review" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}>
-                <h2 className={styles.sectionTitle}>Review &amp; Confirm</h2>
-
-                <div className={styles.reviewItems}>
-                  {cartItems.map((item) => (
-                    <div key={item.id} className={styles.reviewItem}>
-                      <img src={item.image || `https://placehold.co/80x80/e2e8f0/475569?text=Product`} alt={item.name} className={styles.reviewItemImage} />
-                      <div className={styles.reviewItemInfo}>
-                        <h4>{item.name}</h4>
-                        {item.variantName && <p className={styles.variant}>{item.variantName}</p>}
-                        <p className={styles.reviewItemQty}>Qty: {item.quantity} &times; {formatCurrency(item.price)}</p>
-                      </div>
-                      <div className={styles.itemSubtotal}>{formatCurrency(item.price * item.quantity)}</div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className={styles.reviewGrid}>
-                  <div className={styles.reviewBlock}>
-                    <div className={styles.reviewBlockHeader}>
-                      <h3>Deliver To</h3>
-                      <button type="button" onClick={() => setStep(1)}>Edit</button>
-                    </div>
-                    <p className={styles.reviewName}>{reviewAddress.firstName} {reviewAddress.lastName}</p>
-                    <p>{reviewAddress.addressLine1}{reviewAddress.addressLine2 ? `, ${reviewAddress.addressLine2}` : ""}</p>
-                    <p>{reviewAddress.city}, {reviewAddress.state} - {reviewAddress.postalCode}</p>
-                    <p>{reviewAddress.country}</p>
-                    <p>{reviewAddress.phone}</p>
-                  </div>
-
-                  <div className={styles.reviewBlock}>
-                    <div className={styles.reviewBlockHeader}>
-                      <h3>Shipping Method</h3>
-                      <button type="button" onClick={() => setStep(1)}>Edit</button>
-                    </div>
-                    <p className={styles.reviewName}>{selectedShipping?.name}</p>
-                    <p>{selectedShipping?.description}</p>
-                    <p className={styles.reviewShippingCost}>{shippingCost === 0 ? "FREE" : formatCurrency(shippingCost)}</p>
-                  </div>
-
-                  <div className={styles.reviewBlock}>
-                    <div className={styles.reviewBlockHeader}>
-                      <h3>Payment</h3>
-                      <button type="button" onClick={() => setStep(2)}>Edit</button>
-                    </div>
-                    {fullyCovered ? (
-                      <>
-                        <p className={styles.reviewName}>👛 Store Credit</p>
-                        <p>Paid in full with store credit ({formatCurrency(storeCreditApplied)}).</p>
-                      </>
-                    ) : (
-                      <>
-                        <p className={styles.reviewName}>{selectedPaymentOption?.icon} {selectedPaymentOption?.label}</p>
-                        {storeCreditApplied > 0 && (
-                          <p>Store credit applied: -{formatCurrency(storeCreditApplied)}</p>
-                        )}
-                        {paymentMethod === "cod" ? (
-                          <p>Pay {formatCurrency(amountPayable)} in cash on delivery.</p>
-                        ) : (
-                          <p>You will be charged {formatCurrency(amountPayable)}.</p>
-                        )}
-                      </>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Navigation Buttons */}
-          <div className={styles.navButtons}>
-            {step > 0 && <button className={styles.backBtn} onClick={() => setStep(step - 1)} disabled={isProcessing}>&#8592; Back</button>}
             <button
+              type="button"
               className={styles.primaryBtn}
-              onClick={handleNext}
+              onClick={handleSubmitEnquiry}
               disabled={isProcessing || cartItems.length === 0}
             >
-              {isProcessing
-                ? "Processing..."
-                : step === 3
-                ? fullyCovered
-                  ? "Place Order"
-                  : `Place Order - ${formatCurrency(amountPayable)}`
-                : step === 0 && !isAuthenticated
-                ? "Login to Continue"
-                : "Continue"}
+              <Iconify
+                icon="mdi:clipboard-check-outline"
+                width="20"
+                height="20"
+                aria-hidden="true"
+              />
+              {isProcessing ? "Submitting…" : "Submit Enquiry"}
             </button>
-          </div>
-        </div>
 
-        {/* Order Summary Sidebar */}
-        <div className={styles.sidebar}>
-          <div className={styles.summaryCard}>
-            <h3>Order Summary</h3>
-            <div className={styles.summaryItems}>
-              {cartItems.slice(0, 3).map((item) => (
-                <div key={item.id} className={styles.summaryItem}>
-                  <span>{item.name} x{item.quantity}</span>
-                  <span>{formatCurrency(item.price * item.quantity)}</span>
-                </div>
+            <div className={styles.callUs}>
+              <span className={styles.callUsLabel}>Questions? Call us</span>
+              {NEBM_PHONES.map((num) => (
+                <a
+                  key={num}
+                  href={`tel:${num.replace(/\s/g, "")}`}
+                  className={styles.callUsPhone}
+                >
+                  <Iconify
+                    icon="mdi:phone-outline"
+                    width="16"
+                    height="16"
+                    aria-hidden="true"
+                  />
+                  {num}
+                </a>
               ))}
-              {cartItems.length > 3 && <p className={styles.moreItems}>+{cartItems.length - 3} more items</p>}
             </div>
-            <div className={styles.summaryDivider} />
-            <div className={styles.summaryRow}><span>Subtotal</span><span>{formatCurrency(subtotal)}</span></div>
-            {couponDiscount > 0 && <div className={`${styles.summaryRow} ${styles.discount}`}><span>Discount ({couponApplied.code})</span><span>-{formatCurrency(couponDiscount)}</span></div>}
-            <div className={styles.summaryRow}><span>Shipping</span><span>{shippingCost === 0 ? "FREE" : formatCurrency(shippingCost)}</span></div>
-            <div className={styles.summaryRow}><span>Tax ({taxRatePct}% GST)</span><span>{formatCurrency(taxAmount)}</span></div>
-            <div className={styles.summaryDivider} />
-            <div className={`${styles.summaryRow} ${styles.totalRow}`}><span>Total</span><span>{formatCurrency(total)}</span></div>
-            {storeCreditApplied > 0 && (
-              <>
-                <div className={`${styles.summaryRow} ${styles.discount}`}><span>Store Credit</span><span>-{formatCurrency(storeCreditApplied)}</span></div>
-                <div className={styles.summaryDivider} />
-                <div className={`${styles.summaryRow} ${styles.totalRow}`}><span>Amount Payable</span><span>{formatCurrency(amountPayable)}</span></div>
-              </>
-            )}
           </div>
-
-          <div className={styles.trustBadges}>
-            <span>🔒 Secure Payment</span>
-            <span>🚚 Fast Delivery</span>
-            <span>↩️ Easy Returns</span>
-          </div>
-        </div>
+        </aside>
       </div>
     </div>
   );
 };
 
-export default Checkout;
+export default SubmitEnquiry;

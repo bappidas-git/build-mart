@@ -29,7 +29,7 @@ import Home from "./pages/Home/Home";
 import Products from "./pages/Products/Products";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import EnquiryList from "./pages/EnquiryList/EnquiryList";
-import Checkout from "./pages/Checkout/Checkout";
+import SubmitEnquiry from "./pages/Checkout/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation/OrderConfirmation";
 import OrderHistory from "./pages/OrderHistory/OrderHistory";
 import Profile from "./pages/Profile/Profile";
@@ -112,7 +112,7 @@ function App() {
                                     redirects to the canonical slug URL. */}
                                 <Route path="/products/:slug" element={<ProductDetails />} />
                                 <Route path="/enquiry-list" element={<EnquiryList />} />
-                                <Route path="/checkout" element={<Checkout />} />
+                                <Route path="/checkout" element={<SubmitEnquiry />} />
                                 <Route path="/order-confirmation/:orderNumber" element={<OrderConfirmation />} />
                                 <Route path="/orders" element={<OrderHistory />} />
                                 <Route path="/profile" element={<Profile />} />
