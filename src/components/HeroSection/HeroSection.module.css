@@ -52,6 +52,103 @@
   gap: var(--sf-space-4);
 }
 
+/* ==========================================================================
+   Showcase split — default hero (no admin banner): brand content on one side,
+   an open-license building-materials photo on the other. Stacked & centred on
+   phones/tablets, two columns from the md breakpoint up.
+   ========================================================================== */
+.hasShowcase .inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(28px, 5vw, 56px);
+  justify-content: initial;
+  align-items: center;
+  text-align: center;
+}
+
+.media {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.mediaFrame {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+  border-radius: var(--sf-radius-xl);
+  overflow: hidden;
+  background: var(--sf-color-surface-2);
+  border: 1px solid var(--sf-color-border);
+  box-shadow: var(--sf-shadow-lg);
+  isolation: isolate;
+}
+
+.mediaImg {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+/* Small floating credibility chip over the photo — readable on any theme. */
+.mediaChip {
+  position: absolute;
+  left: var(--sf-space-4);
+  bottom: var(--sf-space-4);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sf-space-2);
+  padding: var(--sf-space-2) var(--sf-space-4);
+  border-radius: var(--sf-radius-pill);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--sf-color-primary-dark);
+  font-size: var(--sf-text-sm);
+  font-weight: var(--sf-font-semibold);
+  box-shadow: var(--sf-shadow-sm);
+  backdrop-filter: blur(6px);
+}
+
+.mediaChip svg {
+  color: var(--sf-color-primary);
+  flex-shrink: 0;
+}
+
+/* Two-column split from md up, with the brand copy left-aligned. */
+@media (min-width: 1024px) {
+  .hasShowcase .inner {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    text-align: left;
+  }
+
+  .hasShowcase .content {
+    align-items: flex-start;
+    max-width: 620px;
+  }
+
+  .hasShowcase .tagline {
+    max-width: none;
+  }
+
+  .hasShowcase .actions {
+    justify-content: flex-start;
+  }
+
+  /* Soft brand-tinted panel peeking behind the framed photo. */
+  .media::before {
+    content: "";
+    position: absolute;
+    inset: auto -18px -18px auto;
+    width: 46%;
+    height: 62%;
+    border-radius: var(--sf-radius-xl);
+    background: var(--sf-color-primary-soft);
+    z-index: 0;
+  }
+}
+
 .logo {
   height: clamp(48px, 8vw, 72px);
   width: auto;

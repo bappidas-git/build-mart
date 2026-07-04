@@ -256,20 +256,46 @@
 /* ── Contact CTA ───────────────────────────────────────────────────────────── */
 
 .contactCta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--sf-space-8);
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  align-items: stretch;
+  gap: var(--sf-space-10);
   padding: var(--sf-space-10) var(--sf-space-8);
   border-radius: var(--sf-radius-xl);
   background: var(--sf-color-surface);
   border: 1px solid var(--sf-color-border);
   box-shadow: var(--sf-shadow-sm);
+  overflow: hidden;
+}
+
+.contactMain {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--sf-space-5);
 }
 
 .contactBody {
   min-width: 0;
+}
+
+/* Finished-project photo (open-license) — fills its column on desktop and sits
+   below the copy on small screens. Decorative, so it carries empty alt text. */
+.contactMedia {
+  position: relative;
+  min-height: 220px;
+  border-radius: var(--sf-radius-lg);
+  overflow: hidden;
+  background: var(--sf-color-surface-2);
+}
+
+.contactMedia img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .contactTitle {
@@ -345,7 +371,13 @@ a.contactItem:hover {
 
 @media (max-width: 768px) {
   .contactCta {
+    grid-template-columns: 1fr;
+    gap: var(--sf-space-6);
     padding: var(--sf-space-6);
+  }
+
+  .contactMedia {
+    min-height: 180px;
   }
 
   .contactActions,

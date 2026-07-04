@@ -15,6 +15,7 @@ import {
   BRAND_ADDRESS,
   BRAND_PHONE_1,
   BRAND_PHONE_2,
+  PROJECT_IMAGE_URL,
 } from "../../utils/constants";
 import { onImageError } from "../../utils/helpers";
 import styles from "./Home.module.css";
@@ -300,35 +301,51 @@ const Home = () => {
       <section className={styles.section}>
         <div className={styles.container}>
           <div className={styles.contactCta}>
-            <div className={styles.contactBody}>
-              <h2 className={styles.contactTitle}>Have a project in mind?</h2>
-              <p className={styles.contactText}>
-                Visit our store or call us — we'll help you find the right
-                materials and share bulk pricing.
-              </p>
-              <div className={styles.contactRows}>
-                <span className={styles.contactItem}>
-                  <Icon icon="mdi:map-marker-outline" aria-hidden="true" />
-                  {BRAND_ADDRESS}
-                </span>
-                <a className={styles.contactItem} href={telHref(BRAND_PHONE_1)}>
-                  <Icon icon="mdi:phone-outline" aria-hidden="true" />
-                  {BRAND_PHONE_1}
-                </a>
-                <a className={styles.contactItem} href={telHref(BRAND_PHONE_2)}>
-                  <Icon icon="mdi:phone-outline" aria-hidden="true" />
-                  {BRAND_PHONE_2}
+            <div className={styles.contactMain}>
+              <div className={styles.contactBody}>
+                <h2 className={styles.contactTitle}>Have a project in mind?</h2>
+                <p className={styles.contactText}>
+                  Visit our store or call us — we'll help you find the right
+                  materials and share bulk pricing.
+                </p>
+                <div className={styles.contactRows}>
+                  <span className={styles.contactItem}>
+                    <Icon icon="mdi:map-marker-outline" aria-hidden="true" />
+                    {BRAND_ADDRESS}
+                  </span>
+                  <a
+                    className={styles.contactItem}
+                    href={telHref(BRAND_PHONE_1)}
+                  >
+                    <Icon icon="mdi:phone-outline" aria-hidden="true" />
+                    {BRAND_PHONE_1}
+                  </a>
+                  <a
+                    className={styles.contactItem}
+                    href={telHref(BRAND_PHONE_2)}
+                  >
+                    <Icon icon="mdi:phone-outline" aria-hidden="true" />
+                    {BRAND_PHONE_2}
+                  </a>
+                </div>
+              </div>
+              <div className={styles.contactActions}>
+                <a
+                  href={telHref(BRAND_PHONE_1)}
+                  className={styles.contactCallBtn}
+                >
+                  <Icon icon="mdi:phone" aria-hidden="true" />
+                  Call to Enquire
                 </a>
               </div>
             </div>
-            <div className={styles.contactActions}>
-              <a
-                href={telHref(BRAND_PHONE_1)}
-                className={styles.contactCallBtn}
-              >
-                <Icon icon="mdi:phone" aria-hidden="true" />
-                Call to Enquire
-              </a>
+            <div className={styles.contactMedia} aria-hidden="true">
+              <img
+                src={PROJECT_IMAGE_URL}
+                alt=""
+                loading="lazy"
+                onError={onImageError}
+              />
             </div>
           </div>
         </div>
