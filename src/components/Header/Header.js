@@ -142,8 +142,9 @@ const Header = () => {
 
   const handleEnquiryClick = () => setIsCartOpen(true);
   const handleSearchClick = () => setSearchModalOpen(true);
-  // The hamburger is the primary category entry on every breakpoint — it opens
-  // the slide-in category drawer (SidebarMenu).
+  // Opens the slide-in category drawer (SidebarMenu). A single trigger is shown
+  // per breakpoint — the mobile header hamburger, or the desktop/tablet
+  // "All Categories" nav button — so the menu is never duplicated on screen.
   const handleMenuButtonClick = () => setSidebarOpen(true);
 
   // Top nav = the admin-curated set (categories flagged "Show in main menu",
@@ -192,14 +193,20 @@ const Header = () => {
         {/* ===== MAIN HEADER ROW ===== */}
         <div className={styles.mainHeader}>
           <div className={styles.mainHeaderInner}>
-            {/* Hamburger — opens the category drawer on ALL breakpoints */}
-            <IconButton
-              onClick={handleMenuButtonClick}
-              className={styles.hamburger}
-              aria-label="Open menu"
-            >
-              <MenuIcon />
-            </IconButton>
+            {/* Hamburger — mobile only. It is the category-drawer entry on
+                phones, where the nav bar is a compact chip strip with no
+                "All Categories" button. On desktop/tablet that labelled nav
+                button is the single menu trigger, so an icon here would only
+                duplicate it (two stacked menus). */}
+            {isMobile && (
+              <IconButton
+                onClick={handleMenuButtonClick}
+                className={styles.hamburger}
+                aria-label="Open menu"
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
 
             {/* Logo — full wordmark on desktop/tablet, compact icon on mobile.
                 The main logo is designed to read on both light and dark headers. */}

@@ -122,7 +122,10 @@
   gap: var(--sf-space-4);
 }
 
-/* ---- Hamburger (all breakpoints) ---- */
+/* ---- Hamburger (mobile only) ----
+   On phones the nav bar is a chip strip with no "All Categories" button, so
+   this is the drawer entry. Desktop/tablet use the labelled nav button instead
+   (the JSX renders this only when isMobile), avoiding a duplicate menu. */
 .hamburger {
   color: var(--sf-color-text) !important;
   padding: 8px !important;
@@ -302,29 +305,37 @@
   gap: var(--sf-space-2);
 }
 
-/* ---- All Categories (opens the slide-in drawer) ---- */
+/* ---- All Categories (opens the slide-in drawer) ----
+   The single, primary category-menu trigger on desktop/tablet. Given a filled
+   brand treatment so it reads as a deliberate control that anchors the nav bar,
+   clearly distinct from the plain category links beside it. */
 .allCategoriesBtn {
   display: flex;
   align-items: center;
   gap: var(--sf-space-2);
-  height: 30px;
-  padding: 0 var(--sf-space-3);
+  height: 32px;
+  padding: 0 var(--sf-space-4);
   border: none;
-  background: transparent;
-  color: var(--sf-color-text);
+  background: var(--sf-gradient-primary);
+  color: var(--sf-color-primary-contrast);
   font-family: inherit;
   font-size: var(--sf-text-sm);
   font-weight: var(--sf-font-semibold);
   border-radius: var(--sf-radius-md);
   cursor: pointer;
-  transition: background var(--sf-transition-fast), color var(--sf-transition-fast);
+  transition: background var(--sf-transition-fast),
+    box-shadow var(--sf-transition-fast), transform var(--sf-transition-fast);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .allCategoriesBtn:hover {
-  background: var(--sf-color-primary-soft);
-  color: var(--sf-color-primary);
+  background: var(--sf-gradient-primary-hover);
+  box-shadow: var(--sf-shadow-sm);
+}
+
+.allCategoriesBtn:active {
+  transform: translateY(1px);
 }
 
 .navDivider {
