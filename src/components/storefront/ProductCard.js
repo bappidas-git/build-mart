@@ -4,6 +4,7 @@ import StarRating from "./StarRating";
 import PriceBlock from "./PriceBlock";
 import {
   getProductMinPrice,
+  isPriceOnEnquiry,
   buildCartItem,
   productPath,
   truncateText,
@@ -70,10 +71,12 @@ const ProductCard = ({
   // number to discount FROM. A tiered card shows "From ₹X" and an on-enquiry
   // card shows "Price on Enquiry" — neither has a comparable struck price — so
   // the chip is suppressed there, keeping the media badge consistent with the
-  // PriceBlock card price (prompt 15 §4.6). Legacy products with no priceType
-  // default to "exact", so the honest chip still shows exactly as before.
+  // PriceBlock card price (prompt 15 §4.6). isPriceOnEnquiry also covers a
+  // "Price on Enquiry" card override on an otherwise-exact product. Legacy
+  // products with no priceType default to "exact", so the honest chip still
+  // shows exactly as before.
   const showsExactPrice =
-    (product.priceType || "exact") === "exact" && product.showExactPrice !== false;
+    (product.priceType || "exact") === "exact" && !isPriceOnEnquiry(product);
   const showDiscountBadge = showBadges && discount > 0 && showsExactPrice;
 
   // The add prop was renamed onAddToCart → onAddToEnquiry in prompt 12; both are

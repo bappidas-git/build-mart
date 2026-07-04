@@ -56,6 +56,33 @@ export const getProductMaxDiscount = (product) => {
   return 0;
 };
 
+// Whether a product's price is withheld — surfaced ONLY as "Price on Enquiry",
+// with no number shown anywhere. This is the SINGLE source of truth so every
+// storefront surface agrees: the compact ProductCard, the product page's
+// PriceBlock, the gallery "% off" badge and the mobile sticky AddToCartBar. Any
+// one of these hides the price:
+//   • priceType === "onEnquiry"                  — the on-enquiry pricing model
+//   • cardPriceMode === "onEnquiry"              — the merchant's "Show 'Price on
+//       Enquiry'" display choice (honored EVERYWHERE now, not just the card, so
+//       a customer never sees "Price on Enquiry" on a card and the real price a
+//       click later on the product page)
+//   • an exact product with showExactPrice === false — the number is hidden
+//   • a tiered product with no usable price tiers    — nothing to advertise
+export const isPriceOnEnquiry = (product) => {
+  if (!product) return false;
+  const priceType = product.priceType || "exact";
+  if (priceType === "onEnquiry") return true;
+  if (product.cardPriceMode === "onEnquiry") return true;
+  if (priceType === "tiered") {
+    const usable = (Array.isArray(product.priceTiers) ? product.priceTiers : []).filter(
+      (t) => Number.isFinite(Number(t?.minQty)) && Number(t?.price) > 0
+    );
+    return usable.length === 0;
+  }
+  // exact
+  return product.showExactPrice === false;
+};
+
 // Pick the variant whose price matches the displayed (minimum) price, i.e. the
 // cheapest variant. Returns null for products without variants. Used so a
 // card's quick "Add to Cart" enqueues exactly the variant whose price is shown.
