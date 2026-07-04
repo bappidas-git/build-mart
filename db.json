@@ -97,6 +97,19 @@
       "createdAt": "2025-06-01T10:00:00.000Z",
       "updatedAt": "2026-06-14T14:22:33.376Z",
       "storeCredit": 2918
+    },
+    {
+      "firstName": "Shubendu",
+      "lastName": "Das",
+      "email": "shubendu@assamdigital.com",
+      "phone": "+916901608721",
+      "password": "Shuben123456",
+      "avatar": null,
+      "addresses": [],
+      "isActive": true,
+      "createdAt": "2026-07-04T18:07:28.972Z",
+      "updatedAt": "2026-07-04T18:07:28.972Z",
+      "id": 4
     }
   ],
   "admins": [
@@ -735,7 +748,7 @@
       "stock": 53,
       "lowStockThreshold": 10,
       "weight": 5,
-      "dimensions": {},
+      "dimensions": null,
       "variants": [],
       "tags": [
         "wpc",
@@ -754,32 +767,20 @@
       "metaTitle": "WPC Louver Panel 3D Charcoal — Greenpanel | North East Build Mart",
       "metaDescription": "Weatherproof 3D WPC louver panel for feature walls and facades. Enquire for the best project rate at North East Build Mart, Nagaon.",
       "createdAt": "2026-01-02T00:00:00.000Z",
-      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "updatedAt": "2026-07-04T18:54:51.667Z",
       "frequentlyBoughtTogetherIds": [],
       "relatedProductIds": [
         2
       ],
-      "priceType": "tiered",
+      "priceType": "exact",
       "unitType": "piece",
       "minQty": 1,
-      "priceTiers": [
-        {
-          "minQty": 1,
-          "price": 340
-        },
-        {
-          "minQty": 5,
-          "price": 320
-        },
-        {
-          "minQty": 20,
-          "price": 299
-        }
-      ],
-      "showExactPrice": false,
-      "showTieredPricing": true,
-      "cardPriceMode": "from",
-      "special": true
+      "priceTiers": [],
+      "showExactPrice": true,
+      "showTieredPricing": false,
+      "cardPriceMode": "exact",
+      "special": true,
+      "specifications": []
     },
     {
       "id": 2,
@@ -4919,7 +4920,64 @@
       "special": false
     }
   ],
-  "cart": [],
+  "cart": [
+    {
+      "productId": 53,
+      "variantId": null,
+      "variantName": null,
+      "name": "Table-Top Wash Basin Ceramic",
+      "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Table-Top+Wash+Basin+Ceramic",
+      "price": 2600,
+      "comparePrice": 3100,
+      "currency": "INR",
+      "quantity": 5,
+      "stock": 269,
+      "userId": 4,
+      "id": 1
+    },
+    {
+      "productId": 39,
+      "variantId": null,
+      "variantName": null,
+      "name": "UPVC Plumbing Pipe 1-inch (3m)",
+      "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=UPVC+Plumbing+Pipe+1-inch+(3m)",
+      "price": 320,
+      "comparePrice": 0,
+      "currency": "INR",
+      "quantity": 1,
+      "stock": 87,
+      "userId": 4,
+      "id": 2
+    },
+    {
+      "productId": 49,
+      "variantId": null,
+      "variantName": null,
+      "name": "Overhead Rain Shower 8-inch SS",
+      "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Overhead+Rain+Shower+8-inch+SS",
+      "price": 2400,
+      "comparePrice": 2900,
+      "currency": "INR",
+      "quantity": 1,
+      "stock": 217,
+      "userId": 4,
+      "id": 3
+    },
+    {
+      "productId": 3,
+      "variantId": null,
+      "variantName": null,
+      "name": "Multiwall Polycarbonate Sheet 6mm",
+      "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Multiwall+Polycarbonate+Sheet+6mm",
+      "price": 1450,
+      "comparePrice": 1750,
+      "currency": "INR",
+      "quantity": 2,
+      "stock": 79,
+      "userId": 4,
+      "id": 4
+    }
+  ],
   "enquiries": [
     {
       "id": 1,
@@ -5351,6 +5409,75 @@
       ],
       "createdAt": "2026-06-14T14:22:33.199Z",
       "updatedAt": "2026-06-20T06:24:29.131Z"
+    },
+    {
+      "type": "enquiry",
+      "items": [
+        {
+          "productId": 53,
+          "variantId": null,
+          "name": "Table-Top Wash Basin Ceramic",
+          "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Table-Top+Wash+Basin+Ceramic",
+          "sku": "",
+          "quantity": 5,
+          "priceType": "onEnquiry",
+          "unitType": null,
+          "price": null
+        },
+        {
+          "productId": 49,
+          "variantId": null,
+          "name": "Overhead Rain Shower 8-inch SS",
+          "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Overhead+Rain+Shower+8-inch+SS",
+          "sku": "",
+          "quantity": 1,
+          "priceType": "onEnquiry",
+          "unitType": null,
+          "price": null
+        },
+        {
+          "productId": 39,
+          "variantId": null,
+          "name": "UPVC Plumbing Pipe 1-inch (3m)",
+          "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=UPVC+Plumbing+Pipe+1-inch+(3m)",
+          "sku": "",
+          "quantity": 1,
+          "priceType": "onEnquiry",
+          "unitType": null,
+          "price": null
+        },
+        {
+          "productId": 3,
+          "variantId": null,
+          "name": "Multiwall Polycarbonate Sheet 6mm",
+          "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Multiwall+Polycarbonate+Sheet+6mm",
+          "sku": "",
+          "quantity": 2,
+          "priceType": "onEnquiry",
+          "unitType": null,
+          "price": null
+        }
+      ],
+      "contact": {
+        "name": "Shubendu Das",
+        "phone": "+916901608721",
+        "email": "shubendu@assamdigital.com"
+      },
+      "notes": "testing",
+      "status": "New",
+      "userId": 4,
+      "enquiryNumber": "ENQ-MR6OE3Q1-PRBK",
+      "adminNotes": "",
+      "createdAt": "2026-07-04T18:08:19.033Z",
+      "updatedAt": "2026-07-04T18:08:19.033Z",
+      "statusHistory": [
+        {
+          "at": "2026-07-04T18:08:19.034Z",
+          "by": "Shubendu Das",
+          "action": "Enquiry submitted"
+        }
+      ],
+      "id": 12
     }
   ],
   "returns": [],
@@ -5613,6 +5740,44 @@
       "addedAt": "2026-06-14T13:57:59.358Z",
       "userId": 3,
       "id": 3
+    },
+    {
+      "productId": 1,
+      "slug": "wpc-louver-panel-3d-charcoal",
+      "name": "WPC Louver Panel 3D Charcoal",
+      "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=WPC+Louver+Panel+3D+Charcoal",
+      "brand": "Greenpanel",
+      "price": 340,
+      "comparePrice": 420,
+      "rating": 4.2,
+      "totalReviews": 13,
+      "shortDescription": "Weatherproof 3D WPC louver panel for feature walls and facades.",
+      "variants": [],
+      "stock": 53,
+      "trending": true,
+      "hot": false,
+      "addedAt": "2026-07-04T20:21:05.382Z",
+      "userId": 4,
+      "id": 4
+    },
+    {
+      "productId": 2,
+      "slug": "wpc-fluted-wall-panel-teak-finish",
+      "name": "WPC Fluted Wall Panel Teak Finish",
+      "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=WPC+Fluted+Wall+Panel+Teak+Finish",
+      "brand": "CenturyPly",
+      "price": 520,
+      "comparePrice": 650,
+      "rating": 4.3,
+      "totalReviews": 20,
+      "shortDescription": "Fluted WPC wall panel in a warm teak finish for interior cladding.",
+      "variants": [],
+      "stock": 66,
+      "trending": false,
+      "hot": false,
+      "addedAt": "2026-07-04T20:21:06.941Z",
+      "userId": 4,
+      "id": 5
     }
   ],
   "leads": [
@@ -5675,6 +5840,21 @@
       "updatedAt": "2026-06-13T15:55:02.925Z",
       "notes": "Need to Cancel this order. ",
       "id": 4
+    },
+    {
+      "type": "newsletter",
+      "name": null,
+      "email": "shubendu@assamdigital.com",
+      "phone": null,
+      "orderNumber": null,
+      "category": null,
+      "subject": null,
+      "message": null,
+      "status": "subscribed",
+      "createdAt": "2026-07-04T20:12:50.926Z",
+      "updatedAt": "2026-07-04T20:12:50.929Z",
+      "notes": "",
+      "id": 5
     }
   ],
   "settings": {
