@@ -8,6 +8,7 @@ import {
   BRAND_TAGLINE,
   BRAND_PHONE_1,
   LOGO_URL,
+  HERO_IMAGE_URL,
 } from "../../utils/constants";
 import styles from "./HeroSection.module.css";
 
@@ -16,9 +17,15 @@ import styles from "./HeroSection.module.css";
 // =============================================================================
 // A single, clean brand hero (NOT a multi-banner deal carousel): the NEBM logo,
 // business name, tagline and two CTAs — "Explore Products" and a contact/enquire
-// action. No countdown, no "% off", no promo cards. We still support an optional
-// admin-managed hero background image via banners.getAll() (first entry with an
-// `image`); absent that, the branded blue gradient stands on its own.
+// action. No countdown, no "% off", no promo cards.
+//
+// Two visual modes:
+//   • Admin banner present → full-bleed background image with a legibility scrim
+//     and centred content (banners.getAll(), first entry with an `image`).
+//   • No admin banner → a two-column "showcase" split: brand content on one side
+//     and a default open-license building-materials photo (HERO_IMAGE_URL) on the
+//     other. If that photo fails to load we fall back to the centred brand block
+//     over the branded blue gradient — nothing ever shows a broken image.
 // =============================================================================
 
 // Strip formatting so "+91 86385 43526" becomes a valid tel: target.
@@ -27,6 +34,9 @@ const telHref = (phone) => `tel:${String(phone).replace(/[^\d+]/g, "")}`;
 const HeroSection = () => {
   const { isDarkMode } = useTheme();
   const [heroImage, setHeroImage] = useState(null);
+  // The default side photo hides itself if it 404s / the CDN is unreachable, so
+  // the layout collapses back to the centred brand block instead of a broken img.
+  const [showcaseFailed, setShowcaseFailed] = useState(false);
 
   // Optional admin hero image — degrade silently to the branded default when
   // the banners endpoint is empty/absent (dual-mode safe, same guard pattern).
@@ -48,9 +58,15 @@ const HeroSection = () => {
     };
   }, []);
 
+  // Split showcase only when there's no admin background image AND the default
+  // photo hasn't failed. Otherwise the hero renders as a single centred column.
+  const showShowcase = !heroImage && !showcaseFailed;
+
   return (
     <section
-      className={`${styles.hero} ${heroImage ? styles.hasImage : ""}`}
+      className={`${styles.hero} ${heroImage ? styles.hasImage : ""} ${
+        showShowcase ? styles.hasShowcase : ""
+      }`}
       data-theme={isDarkMode ? "dark" : "light"}
     >
       {heroImage && (
@@ -107,6 +123,41 @@ const HeroSection = () => {
             </a>
           </div>
         </motion.div>
+
+        {showShowcase && (
+          <motion.div
+            className={styles.media}
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+          >
+            <div className={styles.mediaFrame}>
+              <img
+                src={HERO_IMAGE_URL}
+                alt="Steel rods, hardware and building materials at a construction site"
+                className={styles.mediaImg}
+                loading="eager"
+                onError={() => setShowcaseFailed(true)}
+              />
+              <span className={styles.mediaChip}>
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+                Interior &amp; exterior materials
+              </span>
+            </div>
+          </motion.div>
+        )}
       </div>
     </section>
   );
