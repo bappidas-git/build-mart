@@ -122,7 +122,8 @@
   gap: var(--sf-space-4);
 }
 
-/* ---- Hamburger (all breakpoints) ---- */
+/* ---- Hamburger (mobile only; tablet/desktop use the nav bar's
+   "All Categories" button instead) ---- */
 .hamburger {
   color: var(--sf-color-text) !important;
   padding: 8px !important;
