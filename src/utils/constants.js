@@ -37,10 +37,15 @@ export const LOGO_ICON_URL =
 //     browser downscales it for tablets/phones (background-size: cover).
 //   • PROJECT_IMAGE_URL illustrates the "Have a project in mind?" contact band
 //     and degrades gracefully via an onError guard.
+//   • TRUST_IMAGE_URL is the parallax backdrop of the "Why Choose us" band. A
+//     dark scrim sits over it (see Home.module.css) so the heading and cards
+//     stay legible; if it 404s the band falls back to a solid surface colour.
 export const HERO_IMAGE_URL =
   "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=80";
 export const PROJECT_IMAGE_URL =
   "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1100&q=80";
+export const TRUST_IMAGE_URL =
+  "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1920&q=80";
 
 // Routes
 export const ROUTES = {
