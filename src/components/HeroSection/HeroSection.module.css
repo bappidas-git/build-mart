@@ -1,8 +1,13 @@
 /* ==========================================================================
-   HeroSection — NEBM brand hero (single, clean, premium)
+   HeroSection — NEBM hero CAROUSEL
+   --------------------------------------------------------------------------
+   Slide 1 = clean brand hero. Slides 2+ = category showcases (background photo
+   + copy + a cluster of category thumbnails). The whole band is data-driven and
+   fully responsive; a branded gradient is the always-present fallback base so a
+   failed background image never shows a bare scrim.
    ========================================================================== */
 
-.hero {
+.carousel {
   position: relative;
   overflow: hidden;
   isolation: isolate;
@@ -15,25 +20,64 @@
     var(--sf-color-bg);
 }
 
-/* The hero background image (default open-license photo or admin banner) sits
-   behind the content with a legibility scrim. `cover` + centred keeps it
-   filling the band at every breakpoint; the browser downscales for phones. */
-.heroImage {
+/* The stage the track slides within. Horizontal overflow is clipped; vertical
+   scrolling is left to the page (we own only horizontal swipes). */
+.viewport {
+  position: relative;
+  overflow: hidden;
+  touch-action: pan-y;
+  cursor: grab;
+}
+
+.viewport:active {
+  cursor: grabbing;
+}
+
+/* All slides live side-by-side in this flex row; a single transform shifts the
+   row by one viewport per step. No slide is ever mounted/unmounted, so there
+   are no framer AnimatePresence "exit ghosts" (a dev-only StrictMode artifact
+   in this app). The row's border box stays one viewport wide, so translating by
+   `-index * 100%` lands exactly on slide `index`. */
+.track {
+  display: flex;
+  will-change: transform;
+}
+
+/* Each slide is exactly one viewport wide and never shrinks; align-items:stretch
+   on the flex row gives every slide the tallest slide's height. The min-height
+   is the floor so short slides never collapse the band.
+   `min-width: 0` is essential: without it a flex item defaults to `min-width:
+   auto`, letting wide content (the showcase copy + thumbnail row) push the slide
+   past its 100% basis — which would desync the `-index * 100%` track transform.
+   `overflow: hidden` clips any slide's content to its own bounds. */
+.slide {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 0;
+  min-height: clamp(480px, 58vw, 560px);
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Slide 1 — brand hero
+   ========================================================================== */
+
+.brand {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.brandImage {
   position: absolute;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   background-size: cover;
   background-position: center;
 }
 
-/* Give the photographic hero more vertical presence than the bare gradient,
-   scaled down on smaller screens so phones never get an over-tall band. */
-.hasImage .inner {
-  min-height: clamp(360px, 56vw, 520px);
-  align-items: center;
-}
-
-.hasImage .heroImage::after {
+.hasImage .brandImage::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -44,20 +88,18 @@
   );
 }
 
-.inner {
+.brandInner {
+  position: relative;
+  z-index: 1;
   max-width: var(--sf-container-max);
+  width: 100%;
   margin: 0 auto;
-  padding: clamp(48px, 9vw, 96px) var(--sf-space-5);
-  display: flex;
-  justify-content: center;
-  text-align: center;
-}
-
-.content {
-  max-width: 720px;
+  padding: clamp(40px, 8vw, 88px) var(--sf-space-5);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   gap: var(--sf-space-4);
 }
 
@@ -97,6 +139,10 @@
   gap: var(--sf-space-3);
   margin-top: var(--sf-space-3);
 }
+
+/* ==========================================================================
+   Shared CTAs (brand + showcase)
+   ========================================================================== */
 
 .primaryCta,
 .secondaryCta {
@@ -157,15 +203,363 @@
   backdrop-filter: blur(4px);
 }
 
+/* ==========================================================================
+   Slides 2+ — category showcase
+   ========================================================================== */
+
+.showcase {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Full-bleed background photo with a scrim + a brand-blue tint on the left so
+   the copy stays legible and the slide reads as NEBM, not a stock photo. */
+.showcaseImage {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.showcaseImage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+      100deg,
+      rgba(8, 30, 54, 0.86) 0%,
+      rgba(8, 30, 54, 0.62) 46%,
+      rgba(8, 30, 54, 0.32) 100%
+    ),
+    linear-gradient(180deg, rgba(8, 30, 54, 0.1), rgba(8, 30, 54, 0.55));
+}
+
+.showcaseInner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  max-width: var(--sf-container-max);
+  margin: 0 auto;
+  padding: clamp(36px, 6vw, 72px) var(--sf-space-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(24px, 5vw, 64px);
+}
+
+.showcaseCopy {
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sf-space-4);
+  color: #ffffff;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: var(--sf-radius-pill);
+  background: var(--sf-color-accent);
+  color: #1a202c;
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.showcaseTitle {
+  margin: 0;
+  font-size: clamp(1.9rem, 4.4vw, 3rem);
+  font-weight: var(--sf-font-bold);
+  line-height: var(--sf-leading-tight);
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.showcaseSubtitle {
+  margin: 0;
+  font-size: clamp(1rem, 2.1vw, 1.2rem);
+  line-height: var(--sf-leading-normal);
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 480px;
+}
+
+/* The cluster of category thumbnails — the "related product images". */
+.gallery {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--sf-space-4);
+  flex-shrink: 0;
+}
+
+.galleryItem {
+  display: block;
+}
+
+/* Slight vertical stagger on desktop gives the cluster a curated, layered feel. */
+.galleryItem:nth-child(2) {
+  transform: translateY(clamp(12px, 2vw, 26px));
+}
+
+.galleryCard {
+  position: relative;
+  display: block;
+  width: clamp(120px, 14vw, 168px);
+  aspect-ratio: 3 / 4;
+  border-radius: var(--sf-radius-lg);
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: var(--sf-shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: var(--sf-color-surface-2);
+  transition: transform var(--sf-transition), box-shadow var(--sf-transition);
+}
+
+.galleryCard:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--sf-shadow-lg), 0 0 0 3px var(--sf-color-accent);
+}
+
+.galleryImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--sf-transition-slow);
+}
+
+.galleryCard:hover .galleryImg {
+  transform: scale(1.06);
+}
+
+.galleryLabel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 22px 12px 10px;
+  font-size: var(--sf-text-sm);
+  font-weight: var(--sf-font-semibold);
+  color: #ffffff;
+  text-align: center;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(8, 30, 54, 0.82)
+  );
+}
+
+/* ==========================================================================
+   Controls — arrows + dots
+   ========================================================================== */
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: var(--sf-radius-pill);
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: var(--sf-shadow-sm);
+  cursor: pointer;
+  transition: background var(--sf-transition-fast),
+    transform var(--sf-transition-fast);
+}
+
+.arrow:hover {
+  background: var(--sf-color-primary);
+}
+
+.arrow:focus-visible {
+  outline: none;
+  box-shadow: var(--sf-shadow-focus);
+}
+
+.arrowPrev {
+  left: clamp(8px, 2vw, 20px);
+}
+
+.arrowNext {
+  right: clamp(8px, 2vw, 20px);
+}
+
+.dots {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  bottom: clamp(12px, 2.5vw, 22px);
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--sf-space-2);
+  padding: 8px 12px;
+  border-radius: var(--sf-radius-pill);
+  background: rgba(8, 30, 54, 0.32);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: none;
+  border-radius: var(--sf-radius-pill);
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: width var(--sf-transition), background var(--sf-transition);
+}
+
+.dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.dotActive {
+  width: 26px;
+  background: #ffffff;
+}
+
+.dot:focus-visible {
+  outline: none;
+  box-shadow: var(--sf-shadow-focus);
+}
+
+/* Visually-hidden live region for screen-reader slide announcements. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+/* Tablet and below — stack the showcase copy above a centered thumbnail row. */
+@media (max-width: 1024px) {
+  .showcaseInner {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--sf-space-6);
+  }
+
+  .showcaseCopy {
+    align-items: center;
+    max-width: 620px;
+  }
+
+  .showcaseSubtitle {
+    max-width: 560px;
+  }
+
+  .gallery {
+    justify-content: center;
+  }
+
+  /* Drop the stagger when the cluster is centred under the copy. */
+  .galleryItem:nth-child(2) {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .slide {
+    min-height: 540px;
+  }
+
+  /* Keep the arrows from crowding the copy on small screens. */
+  .arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  /* Let the three thumbnails share the row width so they always fit — even on
+     very narrow phones — instead of a fixed width that would overflow. */
+  .gallery {
+    width: 100%;
+    max-width: 440px;
+  }
+
+  .galleryItem {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .galleryCard {
+    width: 100%;
+    max-width: 140px;
+    margin: 0 auto;
+  }
+}
+
 @media (max-width: 480px) {
+  .slide {
+    min-height: 560px;
+  }
+
   .actions {
     width: 100%;
     flex-direction: column;
   }
 
-  .primaryCta,
-  .secondaryCta {
+  .actions .primaryCta,
+  .actions .secondaryCta {
     justify-content: center;
     width: 100%;
+  }
+
+  /* Nudge the arrows to the edges so they don't overlap the thumbnails. */
+  .arrowPrev {
+    left: 6px;
+  }
+  .arrowNext {
+    right: 6px;
+  }
+
+  .gallery {
+    gap: var(--sf-space-3);
+  }
+
+  .galleryLabel {
+    font-size: var(--sf-text-xs);
+    padding: 18px 8px 8px;
+  }
+}
+
+/* Respect reduced-motion: no hover lift/zoom transforms (autoplay + the slide
+   transition are already disabled in JS / by the global token overrides). */
+@media (prefers-reduced-motion: reduce) {
+  .galleryCard:hover,
+  .galleryCard:hover .galleryImg,
+  .primaryCta:hover,
+  .secondaryCta:hover,
+  .arrow:hover,
+  .dot {
+    transform: none;
   }
 }
