@@ -128,6 +128,16 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
     if (onOpenAuth) onOpenAuth();
   };
 
+  // Account-gated destination: signed-in users go to their profile, guests are
+  // sent to the login modal instead of being bounced off the /profile redirect.
+  const handleProfileClick = () => {
+    if (user) {
+      handleNavigate("/profile");
+    } else {
+      handleSignIn();
+    }
+  };
+
   const handleLogout = () => {
     onClose();
     logout();
@@ -508,7 +518,7 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
 
                 <motion.button
                   className={styles.row}
-                  onClick={() => handleNavigate("/profile")}
+                  onClick={handleProfileClick}
                   {...nextRow()}
                 >
                   <span className={`${styles.rowIcon} ${styles.toneNeutral}`}>

@@ -34,7 +34,7 @@ const BottomNav = () => {
   // Shared enquiry-list state — setIsCartOpen(true) opens the CartDrawer mounted
   // in the Header; getCartItemCount() is the enquiry-list item count.
   const { getCartItemCount, setIsCartOpen } = useCart();
-  const { openAuthModal } = useAuth();
+  const { isAuthenticated, openAuthModal } = useAuth();
   const [searchOpen, setSearchOpen] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [visible, setVisible] = useState(true);
@@ -84,7 +84,13 @@ const BottomNav = () => {
         setIsCartOpen(true);
         break;
       case "account":
-        navigate("/profile");
+        // Guests can't view a profile — send them to the login modal instead
+        // of the /profile route, which would just bounce them back home.
+        if (isAuthenticated) {
+          navigate("/profile");
+        } else {
+          openAuthModal("login");
+        }
         break;
       default:
         break;
