@@ -15,13 +15,22 @@
     var(--sf-color-bg);
 }
 
-/* Optional admin hero image sits behind the content with a legibility scrim. */
+/* The hero background image (default open-license photo or admin banner) sits
+   behind the content with a legibility scrim. `cover` + centred keeps it
+   filling the band at every breakpoint; the browser downscales for phones. */
 .heroImage {
   position: absolute;
   inset: 0;
   z-index: -1;
   background-size: cover;
   background-position: center;
+}
+
+/* Give the photographic hero more vertical presence than the bare gradient,
+   scaled down on smaller screens so phones never get an over-tall band. */
+.hasImage .inner {
+  min-height: clamp(360px, 56vw, 520px);
+  align-items: center;
 }
 
 .hasImage .heroImage::after {
