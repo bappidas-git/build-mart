@@ -47,6 +47,113 @@ export const PROJECT_IMAGE_URL =
 export const TRUST_IMAGE_URL =
   "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1920&q=80";
 
+// Small helper so every hero-slide image string is built the same way (and the
+// requested width is easy to tune per slot: wide for a full-bleed background,
+// small for a thumbnail).
+const unsplash = (id, w) =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
+
+// =============================================================================
+// HERO_SLIDES — the storefront hero carousel (slide 2 onwards)
+// =============================================================================
+// The hero is a carousel: slide 1 is always the NEBM *brand* hero (logo, name,
+// tagline, CTAs — rendered by HeroSection from the brand constants above, NOT
+// listed here). Slides 2+ are these honest CATEGORY showcases.
+//
+// ETHICS BOUNDARY (see tokens.js / STOREFRONT_UX_GUIDELINES.md): NEBM is an
+// ENQUIRY platform. These slides are store-owner-attested *category capability*
+// copy only — real categories we stock. There are deliberately NO "% off",
+// countdowns, fake stock/urgency or deal-timing signals here; every CTA leads
+// to a real category listing (or the enquiry flow), never a fabricated deal.
+//
+// Each slide's `image` is a full-bleed, scrimmed background and `gallery` is a
+// small cluster of category thumbnails (image + label) shown alongside the copy
+// — the "related product images" of the layout. Every image is an open-license
+// Unsplash photo; a broken/offline URL degrades to the branded gradient
+// (background) or is hidden via onError (thumbnails), so the slide never shows a
+// bare scrim or a broken-image icon. Slide count and copy are data-driven —
+// re-skin a client by editing this list, not the component.
+export const HERO_SLIDES = [
+  {
+    id: "finishes",
+    eyebrow: "Interior & Exterior",
+    title: "Finishes Built to Last",
+    subtitle:
+      "WPC louvers, designer tiles and roofing sheets — the surfaces that define a space.",
+    cta: { label: "Explore Tiles", to: "/products?category=tiles" },
+    image: unsplash("photo-1600566752355-35792bedcfea", 1600),
+    gallery: [
+      {
+        label: "Tiles",
+        to: "/products?category=tiles",
+        image: unsplash("photo-1600566752355-35792bedcfea", 400),
+      },
+      {
+        label: "WPC Louvers",
+        to: "/products?category=wpc-louvers",
+        image: unsplash("photo-1600607687920-4e2a09cf159d", 400),
+      },
+      {
+        label: "Poly Sheets",
+        to: "/products?category=polycarbonate-sheets",
+        image: unsplash("photo-1558618666-fcd25c85cd64", 400),
+      },
+    ],
+  },
+  {
+    id: "bath",
+    eyebrow: "Kitchen & Bath",
+    title: "Fittings That Fit Right",
+    subtitle:
+      "Bath fittings, plumbing and hardware from the brands builders and contractors rely on.",
+    cta: { label: "Browse Bath Fittings", to: "/products?category=bath-fittings" },
+    image: unsplash("photo-1584622650111-993a426fbf0a", 1600),
+    gallery: [
+      {
+        label: "Bath Fittings",
+        to: "/products?category=bath-fittings",
+        image: unsplash("photo-1584622650111-993a426fbf0a", 400),
+      },
+      {
+        label: "Plumbing",
+        to: "/products?category=plumbing",
+        image: unsplash("photo-1581092160562-40aa08e78837", 400),
+      },
+      {
+        label: "Hardware",
+        to: "/products?category=hardware",
+        image: unsplash("photo-1600607687920-4e2a09cf159d", 400),
+      },
+    ],
+  },
+  {
+    id: "bulk",
+    eyebrow: "Bulk & Project Supply",
+    title: "Priced for Your Project",
+    subtitle:
+      "Cement, steel and waterproofing at project scale — send an enquiry for a tailored bulk quote.",
+    cta: { label: "Get a Bulk Quote", to: "/products?category=cement" },
+    image: unsplash("photo-1503387762-592deb58ef4e", 1600),
+    gallery: [
+      {
+        label: "Cement",
+        to: "/products?category=cement",
+        image: unsplash("photo-1607400201889-565b1ee75f8e", 400),
+      },
+      {
+        label: "Steel Rods",
+        to: "/products?category=steel-rods",
+        image: unsplash("photo-1621905251189-08b45d6a269e", 400),
+      },
+      {
+        label: "Waterproofing",
+        to: "/products?category=waterproofing-products",
+        image: unsplash("photo-1589939705384-5185137a7f0f", 400),
+      },
+    ],
+  },
+];
+
 // Routes
 export const ROUTES = {
   HOME: "/",
