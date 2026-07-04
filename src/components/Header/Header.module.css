@@ -342,6 +342,7 @@
   flex: 1;
   overflow-x: auto;
   scrollbar-width: none;
+  -webkit-overflow-scrolling: touch; /* momentum scroll on touch devices */
 }
 
 .navLinks::-webkit-scrollbar {
@@ -483,6 +484,37 @@
 
   .actionIcon svg {
     font-size: 22px;
+  }
+
+  /* ---- Category strip (mobile) ----
+     The admin-curated main menu also renders on phones as a compact,
+     horizontally-scrollable chip strip. "All Categories" and Special Products
+     are dropped here (the hamburger drawer and bottom nav cover them) so the
+     narrow bar is all tappable categories. */
+  .navBarMobile {
+    height: 44px;
+  }
+
+  .navBarMobile .navBarInner {
+    padding: 0 var(--sf-space-3);
+    gap: 0;
+  }
+
+  .navBarMobile .navLinks {
+    gap: var(--sf-space-2);
+    /* Trailing space so the last chip clears the edge while scrolling. */
+    padding-right: var(--sf-space-2);
+  }
+
+  .navBarMobile .navLink {
+    height: 32px;
+    padding: 0 var(--sf-space-3);
+    font-size: var(--sf-text-xs);
+    color: var(--sf-color-text);
+    background: var(--sf-color-surface-2);
+    border: 1px solid var(--sf-color-border);
+    border-radius: var(--sf-radius-pill);
+    flex-shrink: 0; /* keep chips full-width; let the strip scroll instead */
   }
 }
 

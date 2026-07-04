@@ -149,8 +149,10 @@ const Header = () => {
   // Top nav = the admin-curated set (categories flagged "Show in main menu",
   // ordered by their menu order). No hardcoded list — the admin decides which
   // categories appear and in what order. The bar scrolls horizontally when there
-  // are more than fit (see CSS). The full catalogue lives in the hamburger drawer.
-  const menuCategories = isMobile ? [] : getMainMenuCategories(categories);
+  // are more than fit (see CSS), so it renders on EVERY breakpoint — desktop,
+  // tablet and mobile — otherwise the admin's Main-Menu toggle would silently do
+  // nothing on phones. The full catalogue still lives in the hamburger drawer.
+  const menuCategories = getMainMenuCategories(categories);
 
   const telHref = `tel:${SUPPORT_PHONE.replace(/\s+/g, "")}`;
 
@@ -351,22 +353,35 @@ const Header = () => {
           </div>
         </div>
 
-        {/* ===== NAVIGATION BAR (desktop/tablet) ===== */}
-        {!isMobile && (
-          <nav className={styles.navBar}>
+        {/* ===== NAVIGATION BAR (all breakpoints) =====
+            Renders on desktop, tablet AND mobile so the admin-curated main menu
+            is honoured everywhere. On mobile it collapses to just the scrollable
+            category strip — the "All Categories" entry and Special Products link
+            are already reachable via the hamburger drawer and the bottom nav, so
+            they'd only crowd the narrow bar. The strip is hidden on mobile only
+            when nothing is curated, to avoid an empty row. */}
+        {(!isMobile || menuCategories.length > 0) && (
+          <nav
+            className={`${styles.navBar} ${isMobile ? styles.navBarMobile : ""}`}
+          >
             <div className={styles.navBarInner}>
-              {/* All Categories — opens the same slide-in drawer as the hamburger */}
-              <button
-                type="button"
-                className={styles.allCategoriesBtn}
-                onClick={handleMenuButtonClick}
-                aria-label="All categories"
-              >
-                <MenuIcon fontSize="small" />
-                <span>All Categories</span>
-              </button>
+              {/* All Categories — opens the same slide-in drawer as the hamburger
+                  (desktop/tablet only; mobile uses the hamburger / bottom nav) */}
+              {!isMobile && (
+                <>
+                  <button
+                    type="button"
+                    className={styles.allCategoriesBtn}
+                    onClick={handleMenuButtonClick}
+                    aria-label="All categories"
+                  >
+                    <MenuIcon fontSize="small" />
+                    <span>All Categories</span>
+                  </button>
 
-              <span className={styles.navDivider} aria-hidden="true" />
+                  <span className={styles.navDivider} aria-hidden="true" />
+                </>
+              )}
 
               {/* Category links (admin-curated main menu) */}
               <div className={styles.navLinks}>
@@ -381,8 +396,9 @@ const Header = () => {
                 ))}
               </div>
 
-              {/* Special Products — hidden when the admin disables that page */}
-              {dealsEnabled && (
+              {/* Special Products — desktop/tablet only, hidden when the admin
+                  disables that page */}
+              {!isMobile && dealsEnabled && (
                 <Link to="/special-offers" className={styles.specialLink}>
                   <LocalOfferOutlined fontSize="small" />
                   <span>Special Products</span>
@@ -394,10 +410,19 @@ const Header = () => {
       </header>
 
       {/* Spacer to push content below the fixed header.
-          Desktop = topBar(36)+main(64)+nav(40); tablet = main(64)+nav(40); mobile = main(56). */}
+          Desktop = topBar(36)+main(64)+nav(40); tablet = main(64)+nav(40);
+          mobile = main(56) + nav(44) when a curated menu exists, else main(56). */}
       <div
         className={styles.headerSpacer}
-        style={{ height: isMobile ? 60 : isTablet ? 104 : 140 }}
+        style={{
+          height: isMobile
+            ? menuCategories.length > 0
+              ? 100
+              : 60
+            : isTablet
+            ? 104
+            : 140,
+        }}
       />
 
       {/* ===== USER DROPDOWN MENU ===== */}
