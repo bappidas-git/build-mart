@@ -16,6 +16,7 @@ import {
   BRAND_PHONE_1,
   BRAND_PHONE_2,
   PROJECT_IMAGE_URL,
+  TRUST_IMAGE_URL,
 } from "../../utils/constants";
 import { onImageError } from "../../utils/helpers";
 import styles from "./Home.module.css";
@@ -266,8 +267,11 @@ const Home = () => {
         </section>
       )}
 
-      {/* 5. Why Choose NEBM */}
-      <section className={`${styles.section} ${styles.trustSection}`}>
+      {/* 5. Why Choose NEBM — parallax building-materials backdrop behind a scrim */}
+      <section
+        className={`${styles.section} ${styles.trustSection}`}
+        style={{ backgroundImage: `url(${TRUST_IMAGE_URL})` }}
+      >
         <div className={styles.container}>
           <SectionHeader
             title={`Why Choose ${APP_NAME}`}
