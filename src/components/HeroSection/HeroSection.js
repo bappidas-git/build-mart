@@ -8,6 +8,7 @@ import {
   BRAND_TAGLINE,
   BRAND_PHONE_1,
   LOGO_URL,
+  HERO_IMAGE_URL,
 } from "../../utils/constants";
 import styles from "./HeroSection.module.css";
 
@@ -16,9 +17,15 @@ import styles from "./HeroSection.module.css";
 // =============================================================================
 // A single, clean brand hero (NOT a multi-banner deal carousel): the NEBM logo,
 // business name, tagline and two CTAs — "Explore Products" and a contact/enquire
-// action. No countdown, no "% off", no promo cards. We still support an optional
-// admin-managed hero background image via banners.getAll() (first entry with an
-// `image`); absent that, the branded blue gradient stands on its own.
+// action. No countdown, no "% off", no promo cards.
+//
+// The hero renders over a full-bleed background image (a legibility scrim keeps
+// the brand copy readable) with a three-tier, always-safe source:
+//   1. An admin-managed banner (banners.getAll(), first entry with an `image`).
+//   2. Else a default open-license building-materials photo (HERO_IMAGE_URL).
+//   3. Else — if the chosen image can't load (404 / offline CDN) — the branded
+//      blue gradient stands on its own. The image is preloaded, so a broken URL
+//      degrades to the gradient instead of a bare dark scrim.
 // =============================================================================
 
 // Strip formatting so "+91 86385 43526" becomes a valid tel: target.
@@ -28,21 +35,40 @@ const HeroSection = () => {
   const { isDarkMode } = useTheme();
   const [heroImage, setHeroImage] = useState(null);
 
-  // Optional admin hero image — degrade silently to the branded default when
-  // the banners endpoint is empty/absent (dual-mode safe, same guard pattern).
+  // Resolve the hero background: admin banner first, else the default
+  // open-license photo. Each candidate is preloaded, so a broken/offline URL
+  // degrades to the next option (and ultimately the branded gradient) rather
+  // than flashing a bare dark scrim over no image.
   useEffect(() => {
     let active = true;
+
+    // Resolve to `src` once it loads, or to null if it errors / is empty.
+    const preload = (src) =>
+      new Promise((resolve) => {
+        if (!src) return resolve(null);
+        const img = new Image();
+        img.onload = () => resolve(src);
+        img.onerror = () => resolve(null);
+        img.src = src;
+      });
+
     (async () => {
+      let adminSrc = null;
       try {
         const data = await apiService.banners.getAll();
         const banner = Array.isArray(data)
           ? data.find((b) => b && b.image)
           : null;
-        if (active && banner) setHeroImage(banner.image);
+        if (banner) adminSrc = banner.image;
       } catch {
-        // no admin banner — the branded gradient is the default hero
+        // no admin banner configured — fall through to the default photo
       }
+
+      const resolved =
+        (await preload(adminSrc)) || (await preload(HERO_IMAGE_URL));
+      if (active && resolved) setHeroImage(resolved);
     })();
+
     return () => {
       active = false;
     };

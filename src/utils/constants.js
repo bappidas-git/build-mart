@@ -26,12 +26,19 @@ export const LOGO_URL =
 export const LOGO_ICON_URL =
   "https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889689/icon_bvsukn.png";
 
-// Storefront photography — open-license image (Unsplash License: free for
-// commercial use, no attribution required). PROJECT_IMAGE_URL illustrates the
-// "Have a project in mind?" contact band and degrades gracefully if the
-// network/CDN is unavailable (onError guard). The hero itself stays a clean
-// branded gradient (an admin banner can still override it as a full-bleed
-// background via apiService.banners.getAll).
+// Storefront photography — open-license images (Unsplash License: free for
+// commercial use, no attribution required). They give the homepage real
+// building-materials context instead of a bare gradient.
+//   • HERO_IMAGE_URL is only a DEFAULT full-bleed hero background: an
+//     admin-managed banner (apiService.banners.getAll) still overrides it when
+//     one is configured, and the image is preloaded so a 404 / offline CDN
+//     degrades to the branded blue gradient — the hero never shows a bare
+//     scrim or a broken image. Sized wide for crisp desktop rendering; the
+//     browser downscales it for tablets/phones (background-size: cover).
+//   • PROJECT_IMAGE_URL illustrates the "Have a project in mind?" contact band
+//     and degrades gracefully via an onError guard.
+export const HERO_IMAGE_URL =
+  "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1920&q=80";
 export const PROJECT_IMAGE_URL =
   "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1100&q=80";
 
