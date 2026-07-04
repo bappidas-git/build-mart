@@ -18,6 +18,7 @@ import styles from "./AddToCartBar.module.css";
 //   anchorRef    ref      element whose visibility toggles the bar (the buy box)
 //   price        number   current selected price (real)
 //   comparePrice number   optional
+//   onEnquiry    boolean  the price is withheld — show "Price on Enquiry", no number
 //   currency     string
 //   image,name   string   small product thumbnail/label
 //   disabled     boolean  out of stock
@@ -28,6 +29,7 @@ const AddToCartBar = ({
   anchorRef,
   price = 0,
   comparePrice = 0,
+  onEnquiry = false,
   currency = "INR",
   image,
   name,
@@ -60,7 +62,7 @@ const AddToCartBar = ({
     setTimeout(() => setAdded(false), 1400);
   };
 
-  const hasCompare = comparePrice > price && price > 0;
+  const hasCompare = !onEnquiry && comparePrice > price && price > 0;
 
   return (
     <div
@@ -79,11 +81,17 @@ const AddToCartBar = ({
         <div className={styles.priceWrap}>
           {name && <span className={styles.name}>{name}</span>}
           <span className={styles.priceRow}>
-            <span className={styles.price}>{formatCurrency(price, currency)}</span>
-            {hasCompare && (
-              <span className={styles.compare}>
-                {formatCurrency(comparePrice, currency)}
-              </span>
+            {onEnquiry ? (
+              <span className={styles.price}>Price on Enquiry</span>
+            ) : (
+              <>
+                <span className={styles.price}>{formatCurrency(price, currency)}</span>
+                {hasCompare && (
+                  <span className={styles.compare}>
+                    {formatCurrency(comparePrice, currency)}
+                  </span>
+                )}
+              </>
             )}
           </span>
         </div>

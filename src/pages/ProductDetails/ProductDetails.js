@@ -6,6 +6,7 @@ import { useCart } from "../../hooks/useCart";
 import { useWishlist } from "../../context/WishlistContext";
 import apiService from "../../services/api";
 import { categoryParam } from "../../utils/categories";
+import { isPriceOnEnquiry } from "../../utils/helpers";
 import { STOREFRONT_CONFIG } from "../../theme/tokens";
 import {
   ProductGallery,
@@ -224,8 +225,12 @@ const ProductDetails = () => {
 
   const currentPrice = selectedVariant ? selectedVariant.price : product?.price || 0;
   const comparePrice = product?.comparePrice || 0;
+  // When the merchant withholds the price ("Price on Enquiry"), no number leaks
+  // anywhere on the page — the gallery "% off" badge and the mobile sticky bar
+  // are suppressed too, so the PDP matches the "Price on Enquiry" the card shows.
+  const priceHidden = isPriceOnEnquiry(product);
   const discount =
-    comparePrice > currentPrice
+    !priceHidden && comparePrice > currentPrice
       ? Math.round(((comparePrice - currentPrice) / comparePrice) * 100)
       : 0;
   const currentSku = selectedVariant?.sku || product?.sku || "";
@@ -649,6 +654,7 @@ const ProductDetails = () => {
         anchorRef={buyBoxRef}
         price={currentPrice}
         comparePrice={comparePrice}
+        onEnquiry={priceHidden}
         currency="INR"
         image={product.images?.[0] || product.image}
         name={selectedVariant?.name || product.name}

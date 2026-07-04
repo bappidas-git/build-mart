@@ -26,10 +26,12 @@ import styles from "./PriceBlock.module.css";
 // numbers ((compare − price) or (baseTier − tier)); an author can never type a
 // fake "% off".
 //
-// cardPriceMode (per-product CARD override; ignored in details) accepted values:
-//   "exact"     → force the compact fixed price
-//   "from"      → force the compact "From ₹X" (tiered) presentation
-//   "onEnquiry" → force "Price on Enquiry" on the card even if a number exists
+// cardPriceMode (per-product display override) accepted values:
+//   "exact"     → force the compact fixed price (card only)
+//   "from"      → force the compact "From ₹X" (tiered) presentation (card only)
+//   "onEnquiry" → withhold the price as "Price on Enquiry" — applied on the card
+//                 AND in details, so the number is never exposed on the product
+//                 page after a card promised "Price on Enquiry"
 //   unset       → the natural presentation for `priceType`
 //
 // Props:
@@ -109,9 +111,13 @@ const PriceBlock = ({
   // ---- Resolve which of the three displays to render -----------------------
   const resolveDisplay = () => {
     let type = priceType;
-    // On a CARD only, an explicit cardPriceMode overrides the natural display.
+    // "Price on Enquiry" is a WITHHOLD-the-price intent, not a card cosmetic —
+    // honor it in BOTH the compact card and the full details view so the price
+    // is never exposed on the product page after a card promised "on enquiry".
+    if (cardPriceMode === "onEnquiry") return "onEnquiry";
+    // The remaining card overrides only restyle the compact card's price; they
+    // never apply in details (which always shows the natural full presentation).
     if (mode === "card" && cardPriceMode) {
-      if (cardPriceMode === "onEnquiry") return "onEnquiry";
       if (cardPriceMode === "from") type = "tiered";
       else if (cardPriceMode === "exact") type = "exact";
     }
