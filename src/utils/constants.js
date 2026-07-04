@@ -152,6 +152,87 @@ export const HERO_SLIDES = [
       },
     ],
   },
+  {
+    id: "doors",
+    eyebrow: "Doors & Entryways",
+    title: "Doors That Make an Entrance",
+    subtitle:
+      "Steel, WPC and designer doors — secure, weather-ready and built to hold up in the North East.",
+    cta: { label: "Explore Doors", to: "/products?category=doors" },
+    image: unsplash("photo-1600585154340-be6161a56a0c", 1600),
+    gallery: [
+      {
+        label: "Steel Doors",
+        to: "/products?category=steel-doors",
+        image: unsplash("photo-1600585154340-be6161a56a0c", 400),
+      },
+      {
+        label: "WPC Doors",
+        to: "/products?category=wpc-doors",
+        image: unsplash("photo-1600607687920-4e2a09cf159d", 400),
+      },
+      {
+        label: "Designer Doors",
+        to: "/products?category=designer-doors",
+        image: unsplash("photo-1600566752355-35792bedcfea", 400),
+      },
+    ],
+  },
+  {
+    id: "roofing",
+    eyebrow: "Roofing & Cladding",
+    title: "Cover Every Span",
+    subtitle:
+      "Polycarbonate, FRP and WPC louver panels — daylight, shade and clean lines for any elevation.",
+    cta: {
+      label: "Explore Roofing Sheets",
+      to: "/products?category=polycarbonate-sheets",
+    },
+    image: unsplash("photo-1558618666-fcd25c85cd64", 1600),
+    gallery: [
+      {
+        label: "Poly Sheets",
+        to: "/products?category=polycarbonate-sheets",
+        image: unsplash("photo-1558618666-fcd25c85cd64", 400),
+      },
+      {
+        label: "FRP Sheets",
+        to: "/products?category=frp-sheets",
+        image: unsplash("photo-1589939705384-5185137a7f0f", 400),
+      },
+      {
+        label: "WPC Louvers",
+        to: "/products?category=wpc-louvers",
+        image: unsplash("photo-1600607687920-4e2a09cf159d", 400),
+      },
+    ],
+  },
+  {
+    id: "special",
+    eyebrow: "Curated Picks",
+    title: "Special Products, Hand-Picked",
+    subtitle:
+      "A curated edit of standout building materials from across our catalogue — available all year round, not limited-time deals.",
+    cta: { label: "See Special Products", to: "/special-offers" },
+    image: unsplash("photo-1600566752355-35792bedcfea", 1600),
+    gallery: [
+      {
+        label: "Designer Tiles",
+        to: "/products?category=tiles",
+        image: unsplash("photo-1600566752355-35792bedcfea", 400),
+      },
+      {
+        label: "Bath Fittings",
+        to: "/products?category=bath-fittings",
+        image: unsplash("photo-1584622650111-993a426fbf0a", 400),
+      },
+      {
+        label: "WPC Louvers",
+        to: "/products?category=wpc-louvers",
+        image: unsplash("photo-1600607687920-4e2a09cf159d", 400),
+      },
+    ],
+  },
 ];
 
 // Routes
