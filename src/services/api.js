@@ -77,6 +77,42 @@ export const extractMeta = (response) => {
 };
 
 /**
+ * Extract a LIST payload and GUARANTEE an array back.
+ *
+ * Every storefront catalog surface (products grid, category nav, search…)
+ * expects an array. When the API is unreachable or misconfigured the request
+ * can still resolve 200 with a NON-array body — most often an HTML fallback
+ * page. Two real cases produce exactly this:
+ *   • dev: a stray React dev server squats on the API port (3001) and answers
+ *     every path with index.html, so /categories and /products return HTML;
+ *   • prod: a hosted build with no REACT_APP_API_URL points at a dead host.
+ * Left unchecked, that HTML string flows into `.map`/`.filter` and either
+ * crashes the page or renders a SILENTLY-empty catalog with no clue why — the
+ * blank category bar / empty product grid this guard exists to explain.
+ *
+ * So: normalise anything non-array to `[]` (the UI's natural empty state, so it
+ * can never crash on garbage) and log ONE loud, actionable diagnostic naming
+ * the most likely cause. The happy path (a real array) is returned untouched.
+ */
+export const extractList = (response, resource = "resource") => {
+  const data = extractData(response);
+  if (Array.isArray(data)) return data;
+  const looksLikeHtml =
+    typeof data === "string" && /^\s*<(?:!doctype|html)/i.test(data);
+  console.error(
+    `[API] Expected a JSON array from "${resource}" but received ` +
+      `${looksLikeHtml ? "an HTML page" : typeof data}. ` +
+      `Is the API reachable at ${BASE_URL}? ` +
+      (looksLikeHtml
+        ? "That port is serving a web page instead of the API — e.g. json-server " +
+          "isn't running on it (a stray dev server may have taken the port), or a " +
+          "hosted build is pointing at the wrong host."
+        : "The response was not a list.")
+  );
+  return [];
+};
+
+/**
  * Strip credentials from a user record (or array of them) before it reaches the
  * client. JSON Server hands back the raw row including the plaintext password,
  * so any admin surface that lists/reads users must sanitise here. Accepts a
@@ -889,7 +925,7 @@ const apiService = {
     getAll: async (params = {}) => {
       try {
         const response = await api.get("/products", { params });
-        return extractData(response);
+        return extractList(response, "products");
       } catch (error) { console.error("Get products error:", error); throw error; }
     },
 
@@ -915,10 +951,10 @@ const apiService = {
       try {
         if (IS_MOCK_API) {
           const response = await api.get("/products", { params: { featured: true } });
-          return response.data.slice(0, limit);
+          return extractList(response, "products").slice(0, limit);
         }
         const response = await api.get("/products/featured", { params: { limit } });
-        return extractData(response);
+        return extractList(response, "products");
       } catch (error) { console.error("Get featured products error:", error); throw error; }
     },
 
@@ -931,10 +967,10 @@ const apiService = {
       try {
         if (IS_MOCK_API) {
           const response = await api.get("/products", { params: { special: true } });
-          return response.data.slice(0, limit);
+          return extractList(response, "products").slice(0, limit);
         }
         const response = await api.get("/products/special", { params: { limit } });
-        return extractData(response);
+        return extractList(response, "products");
       } catch (error) { console.error("Get special products error:", error); throw error; }
     },
 
@@ -942,10 +978,10 @@ const apiService = {
       try {
         if (IS_MOCK_API) {
           const response = await api.get("/products", { params: { trending: true } });
-          return response.data.slice(0, limit);
+          return extractList(response, "products").slice(0, limit);
         }
         const response = await api.get("/products/trending", { params: { limit } });
-        return extractData(response);
+        return extractList(response, "products");
       } catch (error) { console.error("Get trending products error:", error); throw error; }
     },
 
@@ -953,10 +989,10 @@ const apiService = {
       try {
         if (IS_MOCK_API) {
           const response = await api.get("/products", { params: { categoryId } });
-          return response.data;
+          return extractList(response, "products");
         }
         const response = await api.get(`/products/category/${categoryId}`);
-        return extractData(response);
+        return extractList(response, "products");
       } catch (error) { console.error("Get products by category error:", error); throw error; }
     },
 
@@ -964,10 +1000,10 @@ const apiService = {
       try {
         if (IS_MOCK_API) {
           const response = await api.get("/products", { params: { q: query } });
-          return response.data;
+          return extractList(response, "products");
         }
         const response = await api.get("/products", { params: { search: query } });
-        return extractData(response);
+        return extractList(response, "products");
       } catch (error) { console.error("Search products error:", error); throw error; }
     },
 
@@ -1063,9 +1099,7 @@ const apiService = {
     getAll: async () => {
       try {
         const response = await api.get("/categories");
-        const data = extractData(response);
-        if (!Array.isArray(data)) return data;
-        return data
+        return extractList(response, "categories")
           .filter((c) => c.isActive !== false)
           .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
       } catch (error) { console.error("Get categories error:", error); throw error; }
