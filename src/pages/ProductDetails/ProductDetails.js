@@ -58,6 +58,10 @@ const Skeleton = () => (
 );
 
 // ─── Not Found State ────────────────────────────────────────────────────────
+// Only shown when the catalog is reachable and the product genuinely does not
+// exist (or was removed). A transient load failure must NOT land here — see
+// <LoadError/> — or the shopper is wrongly told a real product "has been
+// removed" when the backend was merely unreachable for a moment.
 const NotFound = () => (
   <div className={styles.notFound}>
     <div className={styles.notFoundIcon}>404</div>
@@ -66,6 +70,36 @@ const NotFound = () => (
     <Link to="/products" className={styles.notFoundLink}>
       Browse Products
     </Link>
+  </div>
+);
+
+// ─── Load Error State (retryable) ───────────────────────────────────────────
+// Shown when the product COULDN'T be loaded — the API was unreachable, timed
+// out, or returned a server error. The product may well exist, so this offers a
+// "Try again" retry (re-runs the fetch) instead of the definitive "not found",
+// and never leaks the false "does not exist or has been removed" copy.
+const LoadError = ({ onRetry }) => (
+  <div className={styles.notFound}>
+    <div className={styles.errorIcon} aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+        <line x1="12" y1="9" x2="12" y2="13" />
+        <line x1="12" y1="17" x2="12.01" y2="17" />
+      </svg>
+    </div>
+    <h2>We couldn't load this product</h2>
+    <p>
+      Something went wrong while loading this page. Please check your connection
+      and try again.
+    </p>
+    <div className={styles.errorActions}>
+      <button type="button" onClick={onRetry} className={styles.retryBtn}>
+        Try Again
+      </button>
+      <Link to="/products" className={styles.notFoundLinkGhost}>
+        Browse Products
+      </Link>
+    </div>
   </div>
 );
 
@@ -84,6 +118,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [loadError, setLoadError] = useState(false);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [activeTab, setActiveTab] = useState("description");
@@ -100,20 +135,48 @@ const ProductDetails = () => {
     try {
       setLoading(true);
       setNotFound(false);
+      setLoadError(false);
 
       const isLegacyId = /^\d+$/.test(String(slug));
-      let data = isLegacyId
-        ? await apiService.products.getById(slug)
-        : await apiService.products.getBySlug(slug);
+
+      // Resolve the product by its URL form, then by the alternate form so old
+      // numeric links still resolve. Crucially, tell apart the two failure
+      // modes: a genuine "no such product" (the API answered, e.g. an empty
+      // match or a 404) vs. a LOAD FAILURE (unreachable API, timeout, 5xx).
+      // Conflating them is the bug behind the misleading "Product Not Found —
+      // has been removed" screen when the backend is simply down.
+      let hardError = false; // a network/timeout/5xx failure — retryable, not a 404
+      const attempt = async (fn) => {
+        try {
+          return await fn();
+        } catch (err) {
+          // Only a definitive 404 means "reachable, but no such product".
+          // Anything else — no response (network/CORS), timeout, or a 5xx —
+          // is a load failure the shopper should be able to retry.
+          if (!(err.response && err.response.status === 404)) hardError = true;
+          return null;
+        }
+      };
+
+      let data = await attempt(() =>
+        isLegacyId
+          ? apiService.products.getById(slug)
+          : apiService.products.getBySlug(slug)
+      );
 
       if (!data) {
-        data = isLegacyId
-          ? await apiService.products.getBySlug(slug).catch(() => null)
-          : await apiService.products.getById(slug).catch(() => null);
+        data = await attempt(() =>
+          isLegacyId
+            ? apiService.products.getBySlug(slug)
+            : apiService.products.getById(slug)
+        );
       }
 
       if (!data) {
-        setNotFound(true);
+        // A load failure must offer a retry, not falsely claim the product was
+        // removed; only a clean, reachable miss is a true 404.
+        if (hardError) setLoadError(true);
+        else setNotFound(true);
         return;
       }
 
@@ -160,8 +223,10 @@ const ProductDetails = () => {
           .catch(() => {});
       }
     } catch (error) {
+      // An unexpected throw here is a load failure, not evidence the product
+      // was removed — surface the retryable error state.
       console.error("Error fetching product:", error);
-      setNotFound(true);
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -308,6 +373,10 @@ const ProductDetails = () => {
 
   // ── Render ─────────────────────────────────────────────────────────────
   if (loading) return <Skeleton />;
+  // A load failure (unreachable API / timeout / 5xx) is retryable and must take
+  // precedence over the "not found" copy, so a transient outage never reads as
+  // "this product has been removed".
+  if (loadError) return <LoadError onRetry={fetchProduct} />;
   if (notFound || !product) return <NotFound />;
 
   const wishlisted = isInWishlist(product.id);
