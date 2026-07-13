@@ -4,8 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Icon as Iconify } from "@iconify/react";
 import { useCart } from "../../hooks/useCart";
 import { useTheme } from "../../context/ThemeContext";
+import { useCurrency } from "../../context/SettingsContext";
 import {
-  formatCurrency,
   truncateText,
   productPath,
   PLACEHOLDER_IMG,
@@ -24,6 +24,7 @@ import styles from "./CartDrawer.module.css";
 const CartDrawer = ({ open, onClose }) => {
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
+  const { formatPrice } = useCurrency();
   // getCartTotal is intentionally NOT read here — an enquiry has no monetary total.
   const { cartItems, updateQuantity, removeFromCart, getCartItemCount } =
     useCart();
@@ -180,11 +181,11 @@ const CartDrawer = ({ open, onClose }) => {
                               is computed and no cart subtotal is shown. */}
                           <div className={styles.itemPricing}>
                             <span className={styles.itemPrice}>
-                              {formatCurrency(item.price)}
+                              {formatPrice(item.price)}
                             </span>
                             {hasDiscount && (
                               <span className={styles.itemComparePrice}>
-                                {formatCurrency(item.comparePrice)}
+                                {formatPrice(item.comparePrice)}
                               </span>
                             )}
                           </div>

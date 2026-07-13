@@ -327,7 +327,6 @@ const Wishlist = () => {
                         product={item}
                         price={priceInfo.sellingPrice}
                         comparePrice={item.comparePrice}
-                        currency="INR"
                         mode="card"
                         size="md"
                       />

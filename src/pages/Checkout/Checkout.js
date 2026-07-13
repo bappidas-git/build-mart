@@ -217,7 +217,6 @@ const SubmitEnquiry = () => {
                           product={item}
                           price={item.price}
                           comparePrice={item.comparePrice}
-                          currency={item.currency}
                           mode="card"
                           size="sm"
                         />

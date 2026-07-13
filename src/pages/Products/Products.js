@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../../context/ThemeContext";
 import { useCart } from "../../hooks/useCart";
 import { useWishlist } from "../../context/WishlistContext";
+import { useCurrency } from "../../context/SettingsContext";
 import apiService from "../../services/api";
 import {
   categoryParam,
@@ -53,14 +54,24 @@ const normalizeSort = (raw) => {
 };
 
 // Building-material price bands (wide spread: a cement bag vs. a designer door).
-// They stay generic \u20b9 ranges \u2014 the substantive requirement is honest onEnquiry
-// handling (see getFilterPrice), not the exact band edges.
+// The band edges are deliberately generic \u2014 the substantive requirement is honest
+// onEnquiry handling (see getFilterPrice), not the exact bounds \u2014 so the label
+// symbol simply follows the active store currency (built at render via
+// priceRangeLabel) rather than being pinned to \u20b9.
 const PRICE_RANGES = [
-  { label: "Under \u20b9500", min: 0, max: 500 },
-  { label: "\u20b9500 \u2013 \u20b92,000", min: 500, max: 2000 },
-  { label: "\u20b92,000 \u2013 \u20b910,000", min: 2000, max: 10000 },
-  { label: "Above \u20b910,000", min: 10000, max: Infinity },
+  { min: 0, max: 500 },
+  { min: 500, max: 2000 },
+  { min: 2000, max: 10000 },
+  { min: 10000, max: Infinity },
 ];
+
+// "Under $500" / "$500 \u2013 $2,000" / "Above $10,000", in the store currency symbol.
+const priceRangeLabel = (range, symbol) => {
+  const money = (n) => `${symbol}${n.toLocaleString("en-US")}`;
+  if (range.min === 0) return `Under ${money(range.max)}`;
+  if (range.max === Infinity) return `Above ${money(range.min)}`;
+  return `${money(range.min)} \u2013 ${money(range.max)}`;
+};
 
 const RATING_OPTIONS = [4, 3, 2, 1];
 const DISCOUNT_OPTIONS = [50, 30, 20, 10];
@@ -222,6 +233,7 @@ const Products = () => {
   const { isDarkMode } = useTheme();
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
+  const { currencySymbol } = useCurrency();
 
   // ---- Data state ---
   const [allProducts, setAllProducts] = useState([]);
@@ -889,15 +901,18 @@ const Products = () => {
           </button>
         </div>
         <div className={styles.quickRanges}>
-          {PRICE_RANGES.map((range) => (
-            <button
-              key={range.label}
-              className={styles.quickRangeBtn}
-              onClick={() => handlePriceRangeClick(range)}
-            >
-              {range.label}
-            </button>
-          ))}
+          {PRICE_RANGES.map((range) => {
+            const label = priceRangeLabel(range, currencySymbol);
+            return (
+              <button
+                key={`${range.min}-${range.max}`}
+                className={styles.quickRangeBtn}
+                onClick={() => handlePriceRangeClick(range)}
+              >
+                {label}
+              </button>
+            );
+          })}
         </div>
         {priceBoundActive && hasOnEnquiryItems && (
           <p className={styles.priceNote}>

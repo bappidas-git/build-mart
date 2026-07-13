@@ -1,5 +1,6 @@
 import React from "react";
 import { formatCurrency } from "../../utils/helpers";
+import { useCurrency } from "../../context/SettingsContext";
 import {
   hasStructuredAttributes,
   getAttributeNames,
@@ -34,15 +35,17 @@ import styles from "./VariantSelector.module.css";
 //   value          object  the selected variant (controlled)
 //   onChange       fn      (variant) => void
 //   productStock   number  product-level stock fallback
-//   currency       string  default "INR"
+//
+// The per-variant price renders in the STORE currency (SettingsContext), so it
+// tracks the admin's Settings → General choice like every other price.
 // =============================================================================
 const VariantSelector = ({
   variants = [],
   value,
   onChange,
   productStock,
-  currency = "INR",
 }) => {
+  const { currency } = useCurrency();
   if (!Array.isArray(variants) || variants.length === 0) return null;
 
   const structured = hasStructuredAttributes(variants);

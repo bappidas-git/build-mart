@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { formatCurrency } from "../../utils/helpers";
 import { PLACEHOLDER_IMG, onImageError } from "../../utils/helpers";
+import { useCurrency } from "../../context/SettingsContext";
 import styles from "./AddToCartBar.module.css";
 
 // =============================================================================
@@ -19,7 +20,6 @@ import styles from "./AddToCartBar.module.css";
 //   price        number   current selected price (real)
 //   comparePrice number   optional
 //   onEnquiry    boolean  the price is withheld — show "Price on Enquiry", no number
-//   currency     string
 //   image,name   string   small product thumbnail/label
 //   disabled     boolean  out of stock
 //   ctaLabel     string   accessible label + tooltip (default "Add to Enquiry List")
@@ -30,13 +30,13 @@ const AddToCartBar = ({
   price = 0,
   comparePrice = 0,
   onEnquiry = false,
-  currency = "INR",
   image,
   name,
   disabled = false,
   ctaLabel = "Add to Enquiry List",
   onAddToCart,
 }) => {
+  const { currency } = useCurrency();
   const [showBar, setShowBar] = useState(false);
   const [added, setAdded] = useState(false);
 

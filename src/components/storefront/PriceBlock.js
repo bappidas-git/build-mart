@@ -1,5 +1,6 @@
 import React from "react";
 import { formatCurrency, getProductMinPrice } from "../../utils/helpers";
+import { useCurrency } from "../../context/SettingsContext";
 import styles from "./PriceBlock.module.css";
 
 // =============================================================================
@@ -41,7 +42,9 @@ import styles from "./PriceBlock.module.css";
 //   mode          "card" | "details"  compact vs full (default "card")
 //   price         number   current/selling price — overrides product (PDP variant)
 //   comparePrice  number   original price — overrides product
-//   currency      string   ISO code (default "INR")
+//   currency      string   ISO code override. Omit it (the norm) and the block
+//                          uses the STORE currency from SettingsContext, so the
+//                          symbol tracks the admin's Settings → General choice.
 //   size          "sm"|"md"|"lg"  visual scale (default "lg")
 //   showSavings   boolean  show the "You save ₹X" line (default true on lg)
 //   taxNote       string   optional transparency note (never shown on onEnquiry)
@@ -71,11 +74,15 @@ const PriceBlock = ({
   mode = "card",
   price = 0,
   comparePrice = 0,
-  currency = "INR",
+  currency = null,
   size = "lg",
   showSavings,
   taxNote,
 }) => {
+  // The store currency is the default for EVERY price; an explicit `currency`
+  // prop still wins for the rare caller that needs to force one.
+  const { currency: storeCurrency } = useCurrency();
+  const activeCurrency = currency || storeCurrency;
   const p = product || {};
   const priceType = p.priceType || "exact";
   const unitType = p.unitType || null;
@@ -148,7 +155,7 @@ const PriceBlock = ({
           <div className={styles.row}>
             <span className={styles.price}>
               <span className={styles.from}>From </span>
-              {formatCurrency(minTierPrice, currency)}
+              {formatCurrency(minTierPrice, activeCurrency)}
               {unitSuffix}
             </span>
             {mode === "card" && <span className={styles.bulkChip}>Bulk pricing</span>}
@@ -206,7 +213,7 @@ const PriceBlock = ({
               {rows.map((r, i) => (
                 <tr key={i} className={i === bestIdx ? styles.bestRow : undefined}>
                   <td>{r.label}</td>
-                  <td className={styles.numCol}>{formatCurrency(r.price, currency)}</td>
+                  <td className={styles.numCol}>{formatCurrency(r.price, activeCurrency)}</td>
                   <td className={styles.numCol}>
                     {r.disc > 0 ? (
                       <span className={styles.tierDiscount}>{r.disc}% off</span>
@@ -239,13 +246,13 @@ const PriceBlock = ({
     <div className={`${styles.block} ${styles[size]}`}>
       <div className={styles.row}>
         <span className={styles.price}>
-          {formatCurrency(current, currency)}
+          {formatCurrency(current, activeCurrency)}
           {unitSuffix}
         </span>
         {hasDiscount && !compact && (
           <>
             <span className={styles.compare}>
-              {formatCurrency(compare, currency)}
+              {formatCurrency(compare, activeCurrency)}
             </span>
             <span className={styles.discount}>{discount}% off</span>
           </>
@@ -253,7 +260,7 @@ const PriceBlock = ({
       </div>
       {hasDiscount && wantSavings && (
         <div className={styles.savings}>
-          You save {formatCurrency(savings, currency)}
+          You save {formatCurrency(savings, activeCurrency)}
         </div>
       )}
       {taxNote && <div className={styles.taxNote}>{taxNote}</div>}

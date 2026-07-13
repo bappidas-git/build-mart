@@ -9,6 +9,7 @@ import {
   PLACEHOLDER_IMG,
   onImageError,
 } from "../../utils/helpers";
+import { useCurrency } from "../../context/SettingsContext";
 import styles from "./FrequentlyBoughtTogether.module.css";
 
 // =============================================================================
@@ -23,14 +24,15 @@ import styles from "./FrequentlyBoughtTogether.module.css";
 //   anchor       object  the product being viewed (always included, locked)
 //   companions   array   real companion products (selectable)
 //   onAddToCart  fn      (cartItem) => void — called once per selected item
-//   currency     string
+//
+// Prices render in the STORE currency (SettingsContext).
 // =============================================================================
 const FrequentlyBoughtTogether = ({
   anchor,
   companions = [],
   onAddToCart,
-  currency = "INR",
 }) => {
+  const { currency } = useCurrency();
   const items = useMemo(
     () => (Array.isArray(companions) ? companions.filter(Boolean) : []),
     [companions]

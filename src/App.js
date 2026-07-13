@@ -17,6 +17,7 @@ import { OrderProvider } from "./context/OrderContext";
 import { AdminProvider } from "./context/AdminContext";
 import { WishlistProvider } from "./context/WishlistContext";
 import { DealsConfigProvider } from "./context/DealsConfigContext";
+import { SettingsProvider } from "./context/SettingsContext";
 
 // Layout Components
 import Header from "./components/Header/Header";
@@ -73,6 +74,7 @@ function App() {
         complementing the CSS-token zeroing in storefront-tokens.css. */}
     <MotionConfig reducedMotion="user">
     <ThemeContextProvider>
+      <SettingsProvider>
       <AuthProvider>
         <AdminProvider>
           <WishlistProvider>
@@ -150,6 +152,7 @@ function App() {
           </WishlistProvider>
         </AdminProvider>
       </AuthProvider>
+      </SettingsProvider>
     </ThemeContextProvider>
     </MotionConfig>
     </ErrorBoundary>

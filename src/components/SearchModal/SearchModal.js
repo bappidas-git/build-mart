@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../../context/ThemeContext";
+import { useCurrency } from "../../context/SettingsContext";
 import apiService from "../../services/api";
-import { formatCurrency, getProductMinPrice, productPath } from "../../utils/helpers";
+import { getProductMinPrice, productPath } from "../../utils/helpers";
 import styles from "./SearchModal.module.css";
 
 // ---------------------------------------------------------------------------
@@ -304,6 +305,7 @@ const StarRating = ({ rating = 0, idKey }) => {
 const SearchModal = ({ open, onClose }) => {
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
+  const { formatPrice } = useCurrency();
   const inputRef = useRef(null);
   const debounceTimerRef = useRef(null);
   const activeCategoryRef = useRef("All");
@@ -611,7 +613,7 @@ const SearchModal = ({ open, onClose }) => {
                                 <span className={styles.productCategory}>{product._catName}</span>
                               )}
                               <span className={styles.productPrice}>
-                                {formatCurrency(getPrice(product))}
+                                {formatPrice(getPrice(product))}
                               </span>
                               <div className={styles.productMeta}>
                                 <StarRating rating={product.rating} idKey={product.id} />
