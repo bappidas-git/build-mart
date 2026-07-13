@@ -12,12 +12,10 @@ import ProductCard from "../../components/storefront/ProductCard";
 import {
   APP_NAME,
   WHY_CHOOSE_US,
-  BRAND_ADDRESS,
-  BRAND_PHONE_1,
-  BRAND_PHONE_2,
   PROJECT_IMAGE_URL,
   TRUST_IMAGE_URL,
 } from "../../utils/constants";
+import { useStoreContact } from "../../context/SettingsContext";
 import { onImageError } from "../../utils/helpers";
 import styles from "./Home.module.css";
 
@@ -35,9 +33,6 @@ const getRecentlyViewed = () => {
     return [];
   }
 };
-
-// Strip formatting so "+91 86385 43526" becomes a valid tel: target.
-const telHref = (phone) => `tel:${String(phone).replace(/[^\d+]/g, "")}`;
 
 const SectionHeader = ({ title, subtitle, kicker, linkText, linkTo }) => (
   <div className={styles.sectionHeader}>
@@ -61,6 +56,8 @@ const SectionHeader = ({ title, subtitle, kicker, linkText, linkTo }) => (
 const Home = () => {
   const { addToCart } = useCart();
   const { toggleWishlist, isInWishlist } = useWishlist();
+  // Contact CTA reads the store phone/address from admin Settings → General.
+  const { address, phones, phone, telHref } = useStoreContact();
 
   const [categories, setCategories] = useState([]);
   const [featuredProducts, setFeaturedProducts] = useState([]);
@@ -385,27 +382,23 @@ const Home = () => {
                 <div className={styles.contactRows}>
                   <span className={styles.contactItem}>
                     <Icon icon="mdi:map-marker-outline" aria-hidden="true" />
-                    {BRAND_ADDRESS}
+                    {address}
                   </span>
-                  <a
-                    className={styles.contactItem}
-                    href={telHref(BRAND_PHONE_1)}
-                  >
-                    <Icon icon="mdi:phone-outline" aria-hidden="true" />
-                    {BRAND_PHONE_1}
-                  </a>
-                  <a
-                    className={styles.contactItem}
-                    href={telHref(BRAND_PHONE_2)}
-                  >
-                    <Icon icon="mdi:phone-outline" aria-hidden="true" />
-                    {BRAND_PHONE_2}
-                  </a>
+                  {phones.map((num) => (
+                    <a
+                      key={num}
+                      className={styles.contactItem}
+                      href={telHref(num)}
+                    >
+                      <Icon icon="mdi:phone-outline" aria-hidden="true" />
+                      {num}
+                    </a>
+                  ))}
                 </div>
               </div>
               <div className={styles.contactActions}>
                 <a
-                  href={telHref(BRAND_PHONE_1)}
+                  href={telHref(phone)}
                   className={styles.contactCallBtn}
                 >
                   <Icon icon="mdi:phone" aria-hidden="true" />

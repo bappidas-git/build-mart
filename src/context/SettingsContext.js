@@ -8,6 +8,12 @@ import React, {
 } from "react";
 import apiService from "../services/api";
 import { formatCurrency } from "../utils/helpers";
+import {
+  BRAND_ADDRESS,
+  BRAND_PHONE_1,
+  BRAND_PHONE_2,
+  SUPPORT_EMAIL,
+} from "../utils/constants";
 
 // =============================================================================
 // SettingsContext
@@ -32,6 +38,20 @@ import { formatCurrency } from "../utils/helpers";
 const DEFAULT_CURRENCY = "INR";
 const DEFAULT_SYMBOL = "₹";
 
+// Contact fallbacks — the brand details, used only while settings are loading or
+// if the fetch fails, so no contact surface ever renders blank.
+const DEFAULT_PHONE = BRAND_PHONE_1;
+const DEFAULT_PHONE_SECONDARY = BRAND_PHONE_2;
+const DEFAULT_ADDRESS = BRAND_ADDRESS;
+const DEFAULT_EMAIL = SUPPORT_EMAIL;
+
+// Strip everything except digits and a leading "+" so a formatted number like
+// "+91 86385 43526" becomes a dialable tel: target. Single definition so every
+// contact surface (header, footer, home, about, support, checkout, enquiry
+// confirmation) builds the same href instead of redefining this locally.
+export const telHref = (phone) =>
+  `tel:${String(phone || "").replace(/[^\d+]/g, "")}`;
+
 const SettingsContext = createContext({
   store: {},
   currency: DEFAULT_CURRENCY,
@@ -47,6 +67,25 @@ export const useSettings = () => useContext(SettingsContext);
 export const useCurrency = () => {
   const { currency, currencySymbol, formatPrice } = useContext(SettingsContext);
   return { currency, currencySymbol, formatPrice };
+};
+
+// Focused hook for the store's contact details — the phone number(s) and address
+// the admin edits on Settings → General. Every storefront contact surface (the
+// header top bar, footer, the home & about contact strips, the support page, the
+// checkout "call us" line and the enquiry confirmation) must render these so a
+// change in admin reaches the site; before this they each hardcoded the brand's
+// phone/address. Values fall back to the brand constants while settings load.
+// `phones` is the de-duplicated list of present numbers, ready to `.map` over.
+export const useStoreContact = () => {
+  const { store } = useContext(SettingsContext);
+  const phone = store.phone || DEFAULT_PHONE;
+  const phoneSecondary = store.phoneSecondary || DEFAULT_PHONE_SECONDARY;
+  const address = store.address || DEFAULT_ADDRESS;
+  const email = store.email || DEFAULT_EMAIL;
+  const phones = [phone, phoneSecondary].filter(
+    (p, i, all) => p && all.indexOf(p) === i
+  );
+  return { phone, phoneSecondary, phones, address, email, telHref };
 };
 
 export const SettingsProvider = ({ children }) => {

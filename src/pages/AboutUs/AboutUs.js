@@ -3,13 +3,8 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
 import { useTheme } from "../../context/ThemeContext";
-import {
-  BRAND_TAGLINE,
-  BRAND_ADDRESS,
-  BRAND_PHONE_1,
-  BRAND_PHONE_2,
-  LOGO_URL,
-} from "../../utils/constants";
+import { useStoreContact } from "../../context/SettingsContext";
+import { BRAND_TAGLINE, LOGO_URL } from "../../utils/constants";
 import styles from "./AboutUs.module.css";
 
 // North East Build Mart — the business name is embedded verbatim so this page
@@ -77,11 +72,10 @@ const WHY_NEBM = [
   },
 ];
 
-// Strip spaces so a formatted phone still yields a valid tel: URI.
-const telHref = (phone) => `tel:${phone.replace(/\s+/g, "")}`;
-
 const AboutUs = () => {
   const { isDarkMode } = useTheme();
+  // Contact strip reads the store phone/address from admin Settings → General.
+  const { address, phones, telHref } = useStoreContact();
 
   return (
     <div className={`${styles.container} ${isDarkMode ? styles.dark : ""}`}>
@@ -211,16 +205,14 @@ const AboutUs = () => {
         <div className={styles.contactStrip}>
           <span className={styles.contactItem}>
             <Icon icon="mdi:map-marker-outline" aria-hidden="true" />
-            {BRAND_ADDRESS}
+            {address}
           </span>
-          <a className={styles.contactItem} href={telHref(BRAND_PHONE_1)}>
-            <Icon icon="mdi:phone-outline" aria-hidden="true" />
-            {BRAND_PHONE_1}
-          </a>
-          <a className={styles.contactItem} href={telHref(BRAND_PHONE_2)}>
-            <Icon icon="mdi:phone-outline" aria-hidden="true" />
-            {BRAND_PHONE_2}
-          </a>
+          {phones.map((num) => (
+            <a key={num} className={styles.contactItem} href={telHref(num)}>
+              <Icon icon="mdi:phone-outline" aria-hidden="true" />
+              {num}
+            </a>
+          ))}
         </div>
       </motion.section>
     </div>

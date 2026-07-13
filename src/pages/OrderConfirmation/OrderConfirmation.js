@@ -3,15 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Icon as Iconify } from "@iconify/react";
 import { useTheme } from "../../context/ThemeContext";
-import { useCurrency } from "../../context/SettingsContext";
+import { useCurrency, useStoreContact } from "../../context/SettingsContext";
 import apiService from "../../services/api";
 import { formatDate } from "../../utils/helpers";
 import styles from "./OrderConfirmation.module.css";
-
-// North East Build Mart contact numbers — the team reaches out on these after
-// an enquiry lands. Both render as tappable tel: links.
-const PHONE_NUMBERS = ["+91 86385 43526", "+91 88762 89972"];
-const telHref = (num) => `tel:${num.replace(/[^\d+]/g, "")}`;
 
 const EnquiryConfirmation = () => {
   // Preferred route carries :enquiryNumber; the legacy /order-confirmation path
@@ -21,6 +16,8 @@ const EnquiryConfirmation = () => {
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
   const { formatPrice } = useCurrency();
+  // The team reaches out on the store phone(s) from admin Settings → General.
+  const { phones, telHref } = useStoreContact();
 
   const [enquiry, setEnquiry] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -349,13 +346,14 @@ const EnquiryConfirmation = () => {
                     />
                     <span>
                       We'll contact you on{" "}
-                      <a className={styles.telLink} href={telHref(PHONE_NUMBERS[0])}>
-                        {PHONE_NUMBERS[0]}
-                      </a>{" "}
-                      /{" "}
-                      <a className={styles.telLink} href={telHref(PHONE_NUMBERS[1])}>
-                        {PHONE_NUMBERS[1]}
-                      </a>
+                      {phones.map((num, i) => (
+                        <React.Fragment key={num}>
+                          {i > 0 && " / "}
+                          <a className={styles.telLink} href={telHref(num)}>
+                            {num}
+                          </a>
+                        </React.Fragment>
+                      ))}
                       .
                     </span>
                   </li>

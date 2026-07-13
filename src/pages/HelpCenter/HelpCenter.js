@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTheme } from "../../context/ThemeContext";
-import { FAQ_ITEMS, SUPPORT_EMAIL, SUPPORT_PHONE } from "../../utils/constants";
+import { useStoreContact } from "../../context/SettingsContext";
+import { FAQ_ITEMS } from "../../utils/constants";
 import styles from "./HelpCenter.module.css";
 
 const HelpCenter = () => {
   const { isDarkMode } = useTheme();
+  // Support email and phone follow admin Settings → General.
+  const { email: supportEmail, phone: supportPhone, telHref } = useStoreContact();
   const [openFaq, setOpenFaq] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -88,13 +91,13 @@ const HelpCenter = () => {
         <h3>Still need help?</h3>
         <p>Our support team is available Mon-Sat, 9am-8pm IST</p>
         <div className={styles.contactMeta}>
-          <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
+          <a href={`mailto:${supportEmail}`}>{supportEmail}</a>
           <span aria-hidden="true">•</span>
-          <a href={`tel:${SUPPORT_PHONE.replace(/\s/g, "")}`}>{SUPPORT_PHONE}</a>
+          <a href={telHref(supportPhone)}>{supportPhone}</a>
         </div>
         <div className={styles.contactActions}>
           <Link to="/support" className={styles.primaryBtn}>Contact Support</Link>
-          <a href={`mailto:${SUPPORT_EMAIL}`} className={styles.secondaryBtn}>Email Us</a>
+          <a href={`mailto:${supportEmail}`} className={styles.secondaryBtn}>Email Us</a>
         </div>
       </div>
     </div>

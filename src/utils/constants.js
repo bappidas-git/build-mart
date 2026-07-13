@@ -10,10 +10,12 @@ export const APP_DESCRIPTION =
 export const BRAND_TAGLINE =
   "Deals in all kinds of building materials for interior and exterior use.";
 
-// NEBM store contact — single source for the storefront brand/contact surfaces
-// (homepage hero + contact CTA). The Footer/Contact/Support pages carry their
-// own SUPPORT_* values today and are consolidated onto these by their own
-// prompts (23/24); until then these are the canonical NEBM details.
+// NEBM store contact — FALLBACK values only. The live phone/address shown across
+// the storefront come from admin Settings → General via SettingsContext's
+// `useStoreContact()` hook; these constants are just what that hook falls back to
+// while settings load or if the fetch fails, so no contact surface renders blank.
+// Do NOT import these directly into a display component — use `useStoreContact()`
+// so an admin edit reaches the site (see PR: storefront contact from Settings).
 export const BRAND_ADDRESS = "Lawkhuwa Road, Nagaon, Assam – 782002";
 export const BRAND_PHONE_1 = "+91 86385 43526";
 export const BRAND_PHONE_2 = "+91 88762 89972";
@@ -348,11 +350,11 @@ export const SOCIAL_LINKS = {
   WHATSAPP: "",
 };
 
-// Store contact — NEBM. Single source so the Header top bar, Help Center and
-// Support/legal pages all stay in sync with the brand details above.
+// Store contact — NEBM. SUPPORT_EMAIL is the fallback the storefront uses when
+// admin Settings has no store email yet (legal pages still read it directly).
+// The phone/address that used to live here (SUPPORT_PHONE/SUPPORT_ADDRESS) are
+// now served live from Settings via `useStoreContact()` — see BRAND_* above.
 export const SUPPORT_EMAIL = "info@northeastbuildmart.com";
-export const SUPPORT_PHONE = BRAND_PHONE_1;
-export const SUPPORT_ADDRESS = BRAND_ADDRESS;
 export const SUPPORT_HOURS = "Mon – Sat: 9:00 AM – 8:00 PM IST";
 
 // Date the legal/policy pages were last reviewed. Single source so the Privacy,
