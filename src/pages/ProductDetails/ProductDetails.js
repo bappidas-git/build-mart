@@ -369,7 +369,6 @@ const ProductDetails = () => {
               mode="details"
               price={currentPrice}
               comparePrice={comparePrice}
-              currency="INR"
               size="lg"
               taxNote="Indicative price — enquire for the best project rate"
             />
@@ -391,7 +390,6 @@ const ProductDetails = () => {
                 value={selectedVariant}
                 onChange={setSelectedVariant}
                 productStock={product.stock}
-                currency="INR"
               />
             )}
 
@@ -655,7 +653,6 @@ const ProductDetails = () => {
         price={currentPrice}
         comparePrice={comparePrice}
         onEnquiry={priceHidden}
-        currency="INR"
         image={product.images?.[0] || product.image}
         name={selectedVariant?.name || product.name}
         disabled={isOutOfStock}

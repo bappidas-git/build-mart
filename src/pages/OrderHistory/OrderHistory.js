@@ -431,7 +431,6 @@ const MyEnquiries = () => {
                                       <PriceBlock
                                         product={item}
                                         price={item.price}
-                                        currency={item.currency || "INR"}
                                         mode="card"
                                         size="sm"
                                       />

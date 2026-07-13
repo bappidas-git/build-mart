@@ -3,8 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Icon as Iconify } from "@iconify/react";
 import { useTheme } from "../../context/ThemeContext";
+import { useCurrency } from "../../context/SettingsContext";
 import apiService from "../../services/api";
-import { formatCurrency, formatDate } from "../../utils/helpers";
+import { formatDate } from "../../utils/helpers";
 import styles from "./OrderConfirmation.module.css";
 
 // North East Build Mart contact numbers — the team reaches out on these after
@@ -19,6 +20,7 @@ const EnquiryConfirmation = () => {
   const refParam = enquiryNumber || orderNumber;
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
+  const { formatPrice } = useCurrency();
 
   const [enquiry, setEnquiry] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -106,7 +108,7 @@ const EnquiryConfirmation = () => {
     if (item.priceType === "exact" && item.price != null) {
       return (
         <span className={styles.itemPrice}>
-          {formatCurrency(item.price, item.currency)}
+          {formatPrice(item.price)}
           {item.unitType ? (
             <span className={styles.itemUnit}> / {item.unitType}</span>
           ) : null}
