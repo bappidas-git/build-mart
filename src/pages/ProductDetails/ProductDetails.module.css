@@ -499,6 +499,87 @@
   font-weight: var(--sf-font-semibold);
 }
 
+/* ── Load error (retryable) ──────────────────────────────────────────────── */
+/* Reuses the centered .notFound shell; adds a warning glyph and a two-action
+   row (primary "Try Again" + ghost "Browse Products") that stacks full-width
+   on narrow screens so both taps stay comfortable on mobile. */
+.errorIcon {
+  display: flex;
+  justify-content: center;
+  color: var(--sf-color-warning);
+}
+
+.errorActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sf-space-3);
+  margin-top: var(--sf-space-6);
+}
+
+.retryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: var(--sf-space-3) var(--sf-space-6);
+  border: none;
+  border-radius: var(--sf-radius-md);
+  background: var(--sf-gradient-primary);
+  color: var(--sf-color-primary-contrast);
+  font-size: var(--sf-text-base);
+  font-weight: var(--sf-font-semibold);
+  cursor: pointer;
+  transition: filter var(--sf-transition-fast), transform var(--sf-transition-fast);
+}
+
+.retryBtn:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+.retryBtn:focus-visible {
+  outline: none;
+  box-shadow: var(--sf-shadow-focus);
+}
+
+.notFoundLinkGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: var(--sf-space-3) var(--sf-space-6);
+  border: 1.5px solid var(--sf-color-border-strong);
+  border-radius: var(--sf-radius-md);
+  background: var(--sf-color-surface);
+  color: var(--sf-color-text);
+  text-decoration: none;
+  font-weight: var(--sf-font-semibold);
+  transition: border-color var(--sf-transition-fast), color var(--sf-transition-fast);
+}
+
+.notFoundLinkGhost:hover {
+  border-color: var(--sf-color-primary);
+  color: var(--sf-color-primary);
+}
+
+.notFoundLinkGhost:focus-visible {
+  outline: none;
+  box-shadow: var(--sf-shadow-focus);
+}
+
+/* On phones, stack the two actions full-width so neither is a cramped tap
+   target. */
+@media (max-width: 480px) {
+  .errorActions {
+    flex-direction: column;
+  }
+  .retryBtn,
+  .notFoundLinkGhost {
+    width: 100%;
+  }
+}
+
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 /* Below md the whole PDP stacks into a single column (gallery → info → tabs). */
 @media (max-width: 1024px) {
