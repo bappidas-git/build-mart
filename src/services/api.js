@@ -1564,6 +1564,30 @@ const apiService = {
   },
 
   // ===========================================================================
+  // Hero carousel (Storefront)
+  // ===========================================================================
+  // Public read of the admin-managed hero configuration (master toggle, autoplay
+  // and the ordered list of slides — brand / showcase, image or video). The
+  // homepage HeroSection normalizes this via utils/heroConfig; a missing record
+  // falls back to the shipped defaults so the hero never renders empty.
+  hero: {
+    getConfig: async () => {
+      try {
+        if (IS_MOCK_API) {
+          const response = await api.get("/heroConfig");
+          return response.data || {};
+        }
+        const response = await api.get("/hero/config");
+        return extractData(response);
+      } catch (error) {
+        console.error("Get hero config error:", error);
+        // Return empty — normalizeHeroConfig backfills the shipped defaults.
+        return {};
+      }
+    },
+  },
+
+  // ===========================================================================
   // Leads / Support
   // ===========================================================================
   leads: {
@@ -2615,6 +2639,34 @@ const apiService = {
         const response = await api.put("/admin/deals/config", payload);
         return extractData(response);
       } catch (error) { console.error("Admin update deals config error:", error); throw error; }
+    },
+
+    // --- Hero carousel config ---
+    // The "Hero Section" settings tab reads and writes the single heroConfig
+    // record (a json-server singleton in mock mode). The whole object is replaced
+    // on save (mirrors how settings / dealsConfig are persisted), so the editor
+    // always holds and sends the complete config — every slide, in order.
+    getHeroConfig: async () => {
+      try {
+        if (IS_MOCK_API) {
+          const response = await api.get("/heroConfig");
+          return response.data || {};
+        }
+        const response = await api.get("/admin/hero/config");
+        return extractData(response);
+      } catch (error) { console.error("Admin get hero config error:", error); throw error; }
+    },
+
+    updateHeroConfig: async (data) => {
+      try {
+        const payload = { ...data, updatedAt: new Date().toISOString() };
+        if (IS_MOCK_API) {
+          const response = await api.put("/heroConfig", payload);
+          return response.data;
+        }
+        const response = await api.put("/admin/hero/config", payload);
+        return extractData(response);
+      } catch (error) { console.error("Admin update hero config error:", error); throw error; }
     },
   },
 };
