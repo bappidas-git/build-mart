@@ -104,9 +104,31 @@ server.delete("/:resource/:id", (req, res, next) => {
 // All other routes keep json-server's default behaviour.
 server.use(router);
 
-server.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  console.log(`\n  JSON Server (safe-delete) is running on http://localhost:${PORT}`);
-  // eslint-disable-next-line no-console
-  console.log(`  Database: ${DB_FILE}\n`);
-});
+server
+  .listen(PORT, () => {
+    // eslint-disable-next-line no-console
+    console.log(`\n  JSON Server (safe-delete) is running on http://localhost:${PORT}`);
+    // eslint-disable-next-line no-console
+    console.log(`  Database: ${DB_FILE}\n`);
+  })
+  .on("error", (err) => {
+    // The mock API port is already taken. The overwhelmingly common cause is a
+    // JSON Server left running from a previous session — which is HARMLESS: that
+    // process is still serving /products & /categories, so the storefront's
+    // catalog keeps working. Exit cleanly (0) with a clear note instead of
+    // crashing with a stack trace, so `npm start` (which runs this alongside the
+    // React dev server via concurrently) isn't torn down by a benign collision.
+    // If something OTHER than JSON Server holds the port, extractList() in
+    // src/services/api.js still logs a loud, actionable diagnostic on the client.
+    if (err.code === "EADDRINUSE") {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `\n  Port ${PORT} is already in use — assuming a JSON Server is already ` +
+          `running there, so the mock API is still available.\n` +
+          `  If the catalog still looks empty, check what owns ${PORT}: it must ` +
+          `serve JSON (open http://localhost:${PORT}/products), not a web page.\n`
+      );
+      process.exit(0);
+    }
+    throw err;
+  });
