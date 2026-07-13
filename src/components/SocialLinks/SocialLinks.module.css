@@ -1,0 +1,93 @@
+/* ============================================
+   SocialLinks — shared social-icon strip
+   Used by the footer and the hamburger menu. The two variants differ only in
+   palette; layout and touch sizing are shared so both stay in step on every
+   device.
+   ============================================ */
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.link {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.link:active {
+  transform: scale(0.94);
+}
+
+/* -------- Footer variant (always on the dark footer surface) -------- */
+.footer {
+  margin-top: 20px;
+}
+
+.footer .link {
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+}
+
+.footer .link:hover {
+  /* --footer-blue is defined on the footer wrapper and inherits down here. */
+  background: var(--footer-blue, #1885d8);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.footer .link:focus-visible {
+  outline: 2px solid var(--footer-blue, #1885d8);
+  outline-offset: 2px;
+}
+
+/* -------- Sidebar variant (inherits the drawer's theme tokens) -------- */
+.sidebar {
+  padding: 2px 12px 6px;
+  gap: 12px;
+}
+
+.sidebar .link {
+  background: var(--sm-chip-bg, rgba(0, 0, 0, 0.06));
+  color: var(--sm-chip-fg, #56607a);
+}
+
+.sidebar .link:hover {
+  background: var(--sm-accent-soft, rgba(24, 133, 216, 0.12));
+  color: var(--sm-accent, #1885d8);
+  transform: translateY(-2px);
+}
+
+.sidebar .link:focus-visible {
+  outline: 2px solid var(--sm-accent, #1885d8);
+  outline-offset: 2px;
+}
+
+/* Comfortable 44px touch targets on phones/tablets. */
+@media (max-width: 768px) {
+  .link {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link {
+    transition: none;
+  }
+
+  .link:hover,
+  .link:active {
+    transform: none;
+  }
+}

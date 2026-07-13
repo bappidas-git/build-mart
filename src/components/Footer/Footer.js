@@ -5,6 +5,7 @@ import { useStoreContact } from "../../context/SettingsContext";
 import apiService from "../../services/api";
 import { APP_NAME, LOGO_URL, BRAND_TAGLINE } from "../../utils/constants";
 import { isEmailValid } from "../../utils/helpers";
+import SocialLinks from "../SocialLinks/SocialLinks";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
@@ -161,6 +162,10 @@ const Footer = () => {
                 height={48}
               />
               <p className={styles.aboutText}>{BRAND_TAGLINE}</p>
+              {/* Social profiles from admin Settings → Social. Renders nothing
+                  until at least one link is set, so the column never shows an
+                  empty icon row. */}
+              <SocialLinks variant="footer" />
             </div>
 
             {/* Column 2: Quick Links */}

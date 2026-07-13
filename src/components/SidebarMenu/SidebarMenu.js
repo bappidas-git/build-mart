@@ -20,9 +20,11 @@ import {
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../hooks/useAuth";
 import { useDealsConfig } from "../../context/DealsConfigContext";
+import { useSocialLinks } from "../../context/SettingsContext";
 import apiService from "../../services/api";
 import { categoryParam } from "../../utils/categories";
 import { APP_NAME, LOGO_ICON_URL } from "../../utils/constants";
+import SocialLinks from "../SocialLinks/SocialLinks";
 import styles from "./SidebarMenu.module.css";
 
 // Each NEBM top-level category maps to a fitting Iconify (Material Design Icons)
@@ -67,6 +69,9 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
   const { user, logout } = useAuth();
   // Drop the Special Products quick link when the admin disables the page.
   const { enabled: dealsEnabled } = useDealsConfig();
+  // Social profiles from admin Settings → Social; the section hides itself when
+  // the admin hasn't set any link.
+  const socialLinks = useSocialLinks();
   const quickLinks = useMemo(
     () => (dealsEnabled ? QUICK_LINKS : QUICK_LINKS.filter((l) => l.to !== "/special-offers")),
     [dealsEnabled]
@@ -582,6 +587,18 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
                   </span>
                 </motion.button>
               </div>
+
+              {/* Connect with us — social profiles from admin Settings → Social.
+                  Hidden entirely (label, divider and all) when none are set. */}
+              {socialLinks.length > 0 && (
+                <>
+                  <div className={styles.divider} />
+                  <div className={styles.section}>
+                    <div className={styles.sectionLabel}>Connect with us</div>
+                    <SocialLinks variant="sidebar" />
+                  </div>
+                </>
+              )}
 
               {/* Footer */}
               <div className={styles.footer}>
