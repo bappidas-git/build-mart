@@ -64,7 +64,7 @@ stray API calls anywhere in `src/`. This is what makes the swap-base-URL guarant
 
 | Var | Dev (today) | Production (Laravel) |
 | --- | --- | --- |
-| `REACT_APP_API_URL` | `http://localhost:3001` | `https://…/api/v1` |
+| `REACT_APP_API_URL` | `http://localhost:4000` | `https://…/api/v1` |
 | `REACT_APP_USE_MOCK_API` | `true` | `false` |
 
 - `src/services/baseURL.js` sets `BASE_URL = REACT_APP_API_URL` and `IS_MOCK_API = false` once

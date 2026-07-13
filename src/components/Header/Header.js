@@ -103,11 +103,23 @@ const Header = () => {
       }
     };
     fetchCategories();
-    const onFocus = () => fetchCategories();
-    window.addEventListener("focus", onFocus);
+    // Refetch when the tab regains focus/visibility or connectivity returns. This
+    // both (a) reflects admin category edits without a hard reload and (b) lets
+    // the menu recover on its own if the very first load failed because the API
+    // wasn't reachable yet — the recurring "empty main menu" symptom. Applies on
+    // every breakpoint (the nav bar renders on desktop, tablet and mobile).
+    const refetch = () => fetchCategories();
+    const onVisibility = () => {
+      if (!document.hidden) fetchCategories();
+    };
+    window.addEventListener("focus", refetch);
+    window.addEventListener("online", refetch);
+    document.addEventListener("visibilitychange", onVisibility);
     return () => {
       active = false;
-      window.removeEventListener("focus", onFocus);
+      window.removeEventListener("focus", refetch);
+      window.removeEventListener("online", refetch);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 
