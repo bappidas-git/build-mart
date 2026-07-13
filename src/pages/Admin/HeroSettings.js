@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import {
   Box,
   Paper,
@@ -23,7 +23,9 @@ import {
   Skeleton,
   CircularProgress,
   Stack,
+  useMediaQuery,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
 import apiService from "../../services/api";
@@ -105,12 +107,31 @@ const MediaThumb = ({ media, width = 72, height = 48 }) => {
   );
 };
 
+// The saved payload — what actually gets persisted and compared for the
+// "unsaved changes" indicator (id/order-independent of local React keys).
+const serializeConfig = (c) =>
+  JSON.stringify({ enabled: c.enabled, autoplayMs: c.autoplayMs, slides: c.slides });
+
 const HeroSettings = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [config, setConfig] = useState(() => normalizeHeroConfig(null));
   const [expanded, setExpanded] = useState(null);
   const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
+  // Which visibility switch is mid-save ("hero" | slide.id | null), so we can
+  // disable just that one control while its instant save is in flight.
+  const [toggleBusy, setToggleBusy] = useState(null);
+
+  // Snapshot of the last-persisted config. Anything the admin edits AFTER this
+  // (copy, media, CTAs, slide order…) is "unsaved" until they press Save; the
+  // visibility switches persist themselves, so they never leave the panel dirty.
+  // Computed inline (not memoised) so it re-reads the ref on every render — a
+  // memo keyed on `config` would miss the ref update a self-saving toggle makes.
+  const savedJsonRef = useRef("");
+  const dirty = !loading && serializeConfig(config) !== savedJsonRef.current;
 
   const notify = (message, severity = "success") =>
     setSnackbar({ open: true, message, severity });
@@ -119,7 +140,9 @@ const HeroSettings = () => {
     try {
       setLoading(true);
       const raw = await apiService.admin.getHeroConfig();
-      setConfig(normalizeHeroConfig(raw));
+      const normalized = normalizeHeroConfig(raw);
+      setConfig(normalized);
+      savedJsonRef.current = serializeConfig(normalized);
     } catch (error) {
       console.error("Error loading hero config:", error);
       notify("Failed to load hero settings", "error");
@@ -131,6 +154,92 @@ const HeroSettings = () => {
   useEffect(() => {
     load();
   }, [load]);
+
+  // Single writer for the heroConfig record. Persists exactly what will be
+  // compared against for the dirty state, so a successful write always clears
+  // "unsaved changes".
+  const persist = useCallback(async (cfg) => {
+    await apiService.admin.updateHeroConfig({
+      enabled: cfg.enabled,
+      autoplayMs: cfg.autoplayMs,
+      slides: cfg.slides,
+    });
+    savedJsonRef.current = serializeConfig(cfg);
+  }, []);
+
+  // Publish a visibility-only change immediately, WITHOUT flushing any unsaved
+  // content edits. We derive the payload from the last-saved baseline (the
+  // snapshot in savedJsonRef) and mutate just the one flag, so a half-typed
+  // headline never goes live because someone hid a different slide. Local state
+  // updates optimistically for instant feedback; pending edits stay pending
+  // (the "Unsaved changes" indicator and Save button still reflect them).
+  const persistVisibility = useCallback(async (mutateSaved) => {
+    const base = savedJsonRef.current ? JSON.parse(savedJsonRef.current) : null;
+    const nextSaved = mutateSaved(base);
+    await persist(nextSaved);
+  }, [persist]);
+
+  // Master show/hide — saves instantly (optimistic, with rollback) so the hero
+  // appears/disappears on the storefront right away, matching what a switch
+  // implies.
+  const handleToggleHero = async (enabled) => {
+    setConfig((c) => ({ ...c, enabled })); // optimistic, keeps pending edits
+    setToggleBusy("hero");
+    try {
+      await persistVisibility((base) => ({
+        ...(base || { autoplayMs: config.autoplayMs, slides: config.slides }),
+        enabled,
+      }));
+      notify(enabled ? "Hero is now live on the storefront" : "Hero hidden from the storefront");
+    } catch (error) {
+      console.error("Toggle hero error:", error);
+      setConfig((c) => ({ ...c, enabled: !enabled })); // roll back
+      notify("Couldn't update the hero — please try again", "error");
+    } finally {
+      setToggleBusy(null);
+    }
+  };
+
+  // Per-slide show/hide — same instant, surgical behaviour as the master toggle.
+  const handleToggleSlide = async (index, enabled) => {
+    const slide = config.slides[index];
+    setConfig((c) => ({
+      ...c,
+      slides: c.slides.map((s, i) => (i === index ? { ...s, enabled } : s)),
+    })); // optimistic
+    setToggleBusy(slide.id);
+    try {
+      await persistVisibility((base) => {
+        const savedHasSlide =
+          base && base.slides.some((s) => String(s.id) === String(slide.id));
+        // A never-saved slide isn't in the baseline yet, so there's nothing to
+        // surgically patch — publish the current slide set so the toggle sticks.
+        if (!savedHasSlide) {
+          return {
+            enabled: config.enabled,
+            autoplayMs: config.autoplayMs,
+            slides: config.slides.map((s, i) => (i === index ? { ...s, enabled } : s)),
+          };
+        }
+        return {
+          ...base,
+          slides: base.slides.map((s) =>
+            String(s.id) === String(slide.id) ? { ...s, enabled } : s
+          ),
+        };
+      });
+      notify(enabled ? "Slide shown on the storefront" : "Slide hidden from the storefront");
+    } catch (error) {
+      console.error("Toggle slide error:", error);
+      setConfig((c) => ({
+        ...c,
+        slides: c.slides.map((s, i) => (i === index ? { ...s, enabled: !enabled } : s)),
+      })); // roll back
+      notify("Couldn't update the slide — please try again", "error");
+    } finally {
+      setToggleBusy(null);
+    }
+  };
 
   // --- Immutable update helpers ---------------------------------------------
   const patchConfig = (patch) => setConfig((c) => ({ ...c, ...patch }));
@@ -253,13 +362,8 @@ const HeroSettings = () => {
   const handleSave = async () => {
     try {
       setSaving(true);
-      await apiService.admin.updateHeroConfig({
-        enabled: config.enabled,
-        autoplayMs: config.autoplayMs,
-        slides: config.slides,
-      });
+      await persist(config);
       notify("Hero section saved successfully");
-      load();
     } catch (error) {
       console.error("Error saving hero config:", error);
       notify(error.response?.data?.message || error.message || "Failed to save hero settings", "error");
@@ -271,30 +375,59 @@ const HeroSettings = () => {
   const autoplaySeconds = Math.round((config.autoplayMs || 6000) / 1000);
 
   // --- Render helpers (plain functions so text fields keep focus) ------------
-  const renderSaveBar = (position) => (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        flexWrap: "wrap",
-        gap: 2,
-        ...(position === "bottom" ? { mt: 3 } : { mb: 2 }),
-      }}
-    >
-      <Typography variant="body2" color="text.secondary">
-        Changes go live on the storefront hero as soon as you save.
-      </Typography>
-      <Button
-        variant="contained"
-        onClick={handleSave}
-        disabled={saving || loading}
-        startIcon={saving ? <CircularProgress size={18} color="inherit" /> : <Icon icon="mdi:content-save" />}
+  const renderSaveBar = (position) => {
+    const isTop = position === "top";
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: { xs: "stretch", sm: "center" },
+          flexDirection: { xs: "column", sm: "row" },
+          flexWrap: "wrap",
+          gap: { xs: 1.25, sm: 2 },
+          ...(isTop
+            ? {
+                // Keep Save reachable while scrolling a long list of slides.
+                position: "sticky",
+                top: 0,
+                zIndex: 5,
+                py: 1.5,
+                mb: 2,
+                bgcolor: "background.default",
+                borderBottom: "1px solid",
+                borderColor: dirty ? "warning.main" : "transparent",
+                transition: "border-color 0.2s ease",
+              }
+            : { mt: 3 }),
+        }}
       >
-        {saving ? "Saving..." : "Save Hero Section"}
-      </Button>
-    </Box>
-  );
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+          <Typography variant="body2" color="text.secondary">
+            Visibility toggles apply instantly. Content edits go live when you save.
+          </Typography>
+          {dirty && (
+            <Chip
+              size="small"
+              color="warning"
+              variant="outlined"
+              icon={<Icon icon="mdi:circle-medium" />}
+              label="Unsaved changes"
+            />
+          )}
+        </Box>
+        <Button
+          variant="contained"
+          onClick={handleSave}
+          disabled={saving || loading || !dirty}
+          fullWidth={isMobile}
+          startIcon={saving ? <CircularProgress size={18} color="inherit" /> : <Icon icon="mdi:content-save" />}
+        >
+          {saving ? "Saving..." : dirty ? "Save Hero Section" : "All changes saved"}
+        </Button>
+      </Box>
+    );
+  };
 
   const renderGallery = (slide, index) => (
     <Box>
@@ -374,7 +507,7 @@ const HeroSettings = () => {
         }}
       >
         <AccordionSummary expandIcon={<Icon icon="mdi:chevron-down" />}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, width: "100%", pr: 1 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0.75, sm: 1.5 }, width: "100%", pr: { xs: 0, sm: 1 } }}>
             {/* Reorder */}
             <Box sx={{ display: "flex", flexDirection: "column" }} onClick={(e) => e.stopPropagation()}>
               <IconButton size="small" disabled={index === 0} onClick={() => moveSlide(index, -1)} aria-label="Move up" sx={{ p: 0.25 }}>
@@ -385,7 +518,8 @@ const HeroSettings = () => {
               </IconButton>
             </Box>
 
-            <MediaThumb media={slide.media} />
+            {/* Thumbnail is dropped on phones to give the title/chips room. */}
+            {!isMobile && <MediaThumb media={slide.media} />}
 
             <Box sx={{ flex: 1, minWidth: 0 }}>
               <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, flexWrap: "wrap" }}>
@@ -396,6 +530,14 @@ const HeroSettings = () => {
                   variant="outlined"
                   sx={{ height: 20, fontSize: "0.68rem" }}
                 />
+                {!slide.enabled && (
+                  <Chip
+                    size="small"
+                    icon={<Icon icon="mdi:eye-off-outline" />}
+                    label="Hidden"
+                    sx={{ height: 20, fontSize: "0.68rem" }}
+                  />
+                )}
                 {slide.eyebrow && (
                   <Chip size="small" label={slide.eyebrow} sx={{ height: 20, fontSize: "0.68rem", bgcolor: slide.eyebrowColor || undefined, color: slide.eyebrowColor ? "#fff" : undefined }} />
                 )}
@@ -409,9 +551,15 @@ const HeroSettings = () => {
             </Box>
 
             {/* Quick actions */}
-            <Box sx={{ display: "flex", alignItems: "center" }} onClick={(e) => e.stopPropagation()}>
+            <Box sx={{ display: "flex", alignItems: "center", flexShrink: 0 }} onClick={(e) => e.stopPropagation()}>
               <Tooltip title={slide.enabled ? "Visible — click to hide" : "Hidden — click to show"}>
-                <Switch size="small" checked={slide.enabled} onChange={(e) => patchSlide(index, { enabled: e.target.checked })} />
+                <Switch
+                  size="small"
+                  checked={slide.enabled}
+                  onChange={(e) => handleToggleSlide(index, e.target.checked)}
+                  disabled={toggleBusy === slide.id}
+                  inputProps={{ "aria-label": `${slide.enabled ? "Hide" : "Show"} ${slide.title || "slide"}` }}
+                />
               </Tooltip>
               <Tooltip title="Duplicate">
                 <IconButton size="small" onClick={() => duplicateSlide(index)}>
@@ -621,10 +769,29 @@ const HeroSettings = () => {
           <Divider sx={{ mb: 2.5 }} />
           <Grid container spacing={2.5} alignItems="center">
             <Grid item xs={12} sm={5}>
-              <FormControlLabel
-                control={<Switch checked={config.enabled} onChange={(e) => patchConfig({ enabled: e.target.checked })} />}
-                label="Show the hero on the storefront"
-              />
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
+                <FormControlLabel
+                  sx={{ mr: 0.5 }}
+                  control={
+                    <Switch
+                      checked={config.enabled}
+                      onChange={(e) => handleToggleHero(e.target.checked)}
+                      disabled={toggleBusy === "hero" || loading}
+                    />
+                  }
+                  label="Show the hero on the storefront"
+                />
+                <Chip
+                  size="small"
+                  color={config.enabled ? "success" : "default"}
+                  variant={config.enabled ? "filled" : "outlined"}
+                  icon={<Icon icon={config.enabled ? "mdi:check-circle" : "mdi:eye-off-outline"} />}
+                  label={config.enabled ? "Live" : "Hidden"}
+                />
+              </Box>
+              <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 0.25, ml: 0.25 }}>
+                Applied to the storefront instantly.
+              </Typography>
             </Grid>
             <Grid item xs={12} sm={4}>
               <TextField
