@@ -33,6 +33,7 @@ import {
   normalizeHeroConfig,
   makeBlankSlide,
   makeBlankGalleryItem,
+  genSlideId,
   resolveVideoSource,
   DEFAULT_HERO_CONFIG,
   HERO_SLIDE_TYPES,
@@ -167,13 +168,15 @@ const HeroSettings = () => {
     savedJsonRef.current = serializeConfig(cfg);
   }, []);
 
-  // Publish a visibility-only change immediately, WITHOUT flushing any unsaved
-  // content edits. We derive the payload from the last-saved baseline (the
-  // snapshot in savedJsonRef) and mutate just the one flag, so a half-typed
-  // headline never goes live because someone hid a different slide. Local state
-  // updates optimistically for instant feedback; pending edits stay pending
-  // (the "Unsaved changes" indicator and Save button still reflect them).
-  const persistVisibility = useCallback(async (mutateSaved) => {
+  // Publish a self-saving change immediately, WITHOUT flushing any unsaved
+  // content edits. Used by the visibility toggles AND the Duplicate action: we
+  // derive the payload from the last-saved baseline (the snapshot in
+  // savedJsonRef) and mutate only what the action touches, so a half-typed
+  // headline never goes live because someone hid — or duplicated — a different
+  // slide. Local state updates optimistically for instant feedback; unrelated
+  // pending edits stay pending (the "Unsaved changes" chip / Save button still
+  // reflect them).
+  const persistFromSaved = useCallback(async (mutateSaved) => {
     const base = savedJsonRef.current ? JSON.parse(savedJsonRef.current) : null;
     const nextSaved = mutateSaved(base);
     await persist(nextSaved);
@@ -186,7 +189,7 @@ const HeroSettings = () => {
     setConfig((c) => ({ ...c, enabled })); // optimistic, keeps pending edits
     setToggleBusy("hero");
     try {
-      await persistVisibility((base) => ({
+      await persistFromSaved((base) => ({
         ...(base || { autoplayMs: config.autoplayMs, slides: config.slides }),
         enabled,
       }));
@@ -209,7 +212,7 @@ const HeroSettings = () => {
     })); // optimistic
     setToggleBusy(slide.id);
     try {
-      await persistVisibility((base) => {
+      await persistFromSaved((base) => {
         const savedHasSlide =
           base && base.slides.some((s) => String(s.id) === String(slide.id));
         // A never-saved slide isn't in the baseline yet, so there's nothing to
@@ -273,18 +276,62 @@ const HeroSettings = () => {
     notify(`${type === "brand" ? "Brand" : "Showcase"} slide added`);
   };
 
-  const duplicateSlide = (index) =>
-    setConfig((c) => {
-      const original = c.slides[index];
-      const copy = {
-        ...JSON.parse(JSON.stringify(original)),
-        id: makeBlankSlide().id,
-        title: original.title ? `${original.title} (copy)` : "",
-      };
-      const slides = [...c.slides];
-      slides.splice(index + 1, 0, copy);
-      return { ...c, slides };
-    });
+  // Duplicate a slide and PUBLISH it instantly (optimistic, with rollback), the
+  // same self-saving behaviour as the visibility toggles. Previously this only
+  // mutated local state, so the copy sat "unsaved" until the admin remembered to
+  // press Save — and a subsequent instant-saving toggle, which writes from the
+  // saved baseline, could silently drop the still-unsaved copy entirely. Making
+  // Duplicate persist itself means the new slide reaches the storefront right
+  // away (on its next focus/refresh), matching what clicking "Duplicate" implies.
+  const duplicateSlide = async (index) => {
+    const original = config.slides[index];
+    if (!original) return;
+    const copy = {
+      ...JSON.parse(JSON.stringify(original)),
+      id: genSlideId(),
+      title: original.title ? `${original.title} (copy)` : "",
+    };
+
+    // Insert the copy right after the original for instant on-screen feedback.
+    const insertAfterId = (slides) => {
+      const at = slides.findIndex((s) => String(s.id) === String(original.id));
+      const next = [...slides];
+      next.splice((at < 0 ? index : at) + 1, 0, copy);
+      return next;
+    };
+
+    setConfig((c) => ({ ...c, slides: insertAfterId(c.slides) })); // optimistic
+    setToggleBusy(copy.id);
+    try {
+      await persistFromSaved((base) => {
+        const savedHasOriginal =
+          base && base.slides.some((s) => String(s.id) === String(original.id));
+        // If the original itself hasn't been saved yet there's no baseline slot
+        // to insert after — publish the current slide set (with the copy) so the
+        // duplicate sticks. Mirrors the per-slide toggle's never-saved fallback.
+        if (!base || !savedHasOriginal) {
+          return {
+            enabled: config.enabled,
+            autoplayMs: config.autoplayMs,
+            slides: insertAfterId(config.slides),
+          };
+        }
+        // Surgically drop the copy into the saved baseline so unrelated pending
+        // content edits in other slides stay pending, not pushed live.
+        return { ...base, slides: insertAfterId(base.slides) };
+      });
+      notify("Slide duplicated");
+    } catch (error) {
+      console.error("Duplicate slide error:", error);
+      setConfig((c) => ({
+        ...c,
+        slides: c.slides.filter((s) => String(s.id) !== String(copy.id)),
+      })); // roll back the optimistic copy
+      notify("Couldn't duplicate the slide — please try again", "error");
+    } finally {
+      setToggleBusy(null);
+    }
+  };
 
   const removeSlide = async (index) => {
     const slide = config.slides[index];
@@ -562,9 +609,18 @@ const HeroSettings = () => {
                 />
               </Tooltip>
               <Tooltip title="Duplicate">
-                <IconButton size="small" onClick={() => duplicateSlide(index)}>
-                  <Icon icon="mdi:content-copy" />
-                </IconButton>
+                {/* span wrapper keeps the tooltip working while the button is
+                    briefly disabled during its instant save. */}
+                <span style={{ display: "inline-flex" }}>
+                  <IconButton
+                    size="small"
+                    onClick={() => duplicateSlide(index)}
+                    disabled={!!toggleBusy}
+                    aria-label={`Duplicate ${slide.title || "slide"}`}
+                  >
+                    <Icon icon="mdi:content-copy" />
+                  </IconButton>
+                </span>
               </Tooltip>
               <Tooltip title="Delete">
                 <IconButton size="small" color="error" onClick={() => removeSlide(index)}>
