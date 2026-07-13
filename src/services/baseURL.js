@@ -11,8 +11,16 @@
 // That's it. No other code changes required.
 // =============================================================================
 
-// Development / Mock API URL (JSON Server)
-export const MOCK_API_URL = "http://localhost:3001";
+// Development / Mock API URL (JSON Server).
+//
+// Port 4000, NOT 3001, and on purpose: Create React App's dev server wants 3000
+// and, if that is taken by a stale dev server, silently drifts to the next free
+// port (3001, 3002…). Were the mock API on 3001, that drift would put the React
+// app on the API port and every /categories & /products call would return
+// index.html instead of JSON — a silently-empty catalog. 4000 is outside that
+// sequential drift range. Keep in sync with .env (REACT_APP_API_URL) and
+// server.js (JSON_SERVER_PORT default).
+export const MOCK_API_URL = "http://localhost:4000";
 
 // Determine which URL to use
 const getBaseURL = () => {

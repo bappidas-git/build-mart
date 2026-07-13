@@ -182,6 +182,58 @@
   }
 }
 
+/* ── Catalog-unreachable panel (Shop-by-Category) ─────────────────────────────
+   Shown when the API can't be reached, instead of a silently-empty grid. Sized
+   to fill the category grid area on every breakpoint. */
+.catalogError {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--sf-space-2);
+  padding: var(--sf-space-8) var(--sf-space-4);
+  border: 1px dashed var(--sf-color-border);
+  border-radius: var(--sf-radius-lg);
+  background: var(--sf-color-surface-2);
+}
+
+.catalogErrorIcon {
+  color: var(--sf-color-secondary);
+  margin-bottom: var(--sf-space-1);
+}
+
+.catalogErrorTitle {
+  font-size: var(--sf-text-lg);
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text);
+  margin: 0;
+}
+
+.catalogErrorText {
+  font-size: var(--sf-text-sm);
+  color: var(--sf-color-text-muted);
+  max-width: 42ch;
+  margin: 0;
+}
+
+.catalogErrorBtn {
+  margin-top: var(--sf-space-3);
+  padding: var(--sf-space-3) var(--sf-space-6);
+  border: none;
+  border-radius: var(--sf-radius-md);
+  background: var(--sf-color-primary);
+  color: #fff;
+  font-weight: var(--sf-font-bold);
+  font-size: var(--sf-text-sm);
+  cursor: pointer;
+  transition: background var(--sf-transition), transform var(--sf-transition);
+}
+
+.catalogErrorBtn:hover {
+  background: var(--sf-color-primary-dark, var(--sf-color-primary));
+  transform: translateY(-1px);
+}
+
 /* ── Special Products band (gold accent, used sparingly) ───────────────────── */
 
 .specialSection {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Icon } from "@iconify/react";
@@ -67,45 +67,77 @@ const Home = () => {
   const [specialProducts, setSpecialProducts] = useState([]);
   const [recentlyViewed, setRecentlyViewed] = useState([]);
   const [loading, setLoading] = useState(true);
+  // Distinguishes "the catalog couldn't load" (API unreachable — e.g. the mock
+  // server isn't running) from "the catalog is genuinely empty". Drives the
+  // retryable panel in the Shop-by-Category section instead of a silent blank.
+  const [catalogError, setCatalogError] = useState(false);
 
   // ── Data fetching (dual-mode via apiService + extractData) ─────────────────
 
+  // Retryable — the error panel's "Try Again" button and the focus/online
+  // auto-recovery below both call this.
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    setCatalogError(false);
+    try {
+      // allSettled (not all) so one failing band never blanks the others, and so
+      // we can tell an unreachable API (rejected) apart from an empty-but-live
+      // catalog (fulfilled with []).
+      const [catsRes, featuredRes, specialRes] = await Promise.allSettled([
+        apiService.categories.getAll(),
+        apiService.products.getFeatured(8),
+        // Special Products band shares ONE data source with the /special-offers
+        // collection page: the dual-mode getSpecial (products flagged
+        // `special: true`).
+        apiService.products.getSpecial(8),
+      ]);
+
+      const valueOr = (res) =>
+        res.status === "fulfilled" && Array.isArray(res.value) ? res.value : [];
+
+      // Top-level NEBM categories only (no hardcoded list).
+      setCategories(
+        valueOr(catsRes).filter((c) => !c.parentId && c.isActive !== false)
+      );
+      setFeaturedProducts(valueOr(featuredRes).slice(0, 8));
+      setSpecialProducts(valueOr(specialRes).slice(0, 8));
+
+      // Treat the catalog as failed only when the API is genuinely unreachable:
+      // the categories fetch rejected (a connection error throws; a reachable-but-
+      // empty catalog resolves fulfilled with []). This is the "no main-menu
+      // categories, no product cards" symptom made visible and recoverable.
+      setCatalogError(catsRes.status === "rejected");
+    } catch (err) {
+      console.error("Error fetching home data:", err);
+      setCatalogError(true);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // Keep the latest error state readable from the (stable) recovery listeners
+  // without re-subscribing on every fetch.
+  const catalogErrorRef = useRef(false);
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const [cats, featured, special] = await Promise.all([
-          apiService.categories.getAll().catch(() => []),
-          apiService.products.getFeatured(8).catch(() => []),
-          // Special Products band shares ONE data source with the /special-offers
-          // collection page: the dual-mode getSpecial (products flagged
-          // `special: true`). Guarded so a failed call → empty band.
-          apiService.products.getSpecial(8).catch(() => []),
-        ]);
+    catalogErrorRef.current = catalogError;
+  }, [catalogError]);
 
-        // Top-level NEBM categories only (no hardcoded list).
-        const topLevel = (Array.isArray(cats) ? cats : []).filter(
-          (c) => !c.parentId && c.isActive !== false
-        );
-        setCategories(topLevel);
-
-        setFeaturedProducts(
-          Array.isArray(featured) ? featured.slice(0, 8) : []
-        );
-
-        setSpecialProducts(
-          Array.isArray(special) ? special.slice(0, 8) : []
-        );
-      } catch (err) {
-        console.error("Error fetching home data:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+  useEffect(() => {
     fetchData();
     setRecentlyViewed(getRecentlyViewed());
-  }, []);
+    // Self-healing: if the catalog failed to load (e.g. the mock API wasn't up
+    // yet), refetch when the tab regains focus or connectivity returns, so the
+    // storefront recovers on its own once the backend is reachable — no reload.
+    const recover = () => {
+      if (catalogErrorRef.current) fetchData();
+    };
+    window.addEventListener("focus", recover);
+    window.addEventListener("online", recover);
+    return () => {
+      window.removeEventListener("focus", recover);
+      window.removeEventListener("online", recover);
+    };
+  }, [fetchData]);
 
   // ── Enquiry-list quick-add ─────────────────────────────────────────────────
   // The shared ProductCard passes a fully-built cart line (buildCartItem), so a
@@ -196,43 +228,81 @@ const Home = () => {
             linkText="All Products"
             linkTo="/products"
           />
-          <div className={styles.categoryGrid}>
-            {loading
-              ? Array.from({ length: 12 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className={`${styles.categoryCard} ${styles.skeleton}`}
-                  />
-                ))
-              : categories.map((cat, i) => (
-                  <motion.div
-                    key={cat.id || i}
-                    initial={{ opacity: 0, scale: 0.92 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: Math.min(i, 8) * 0.05 }}
-                    whileHover={{ y: -4 }}
-                  >
-                    <Link
-                      to={`/products?category=${categoryParam(cat)}`}
-                      className={styles.categoryCard}
+          {catalogError && !loading ? (
+            /* API unreachable — never masquerade as "no categories"; offer a
+               retry. The focus/online listeners also recover this automatically
+               once the backend is reachable. */
+            <div className={styles.catalogError} role="alert">
+              <svg
+                className={styles.catalogErrorIcon}
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+              <h3 className={styles.catalogErrorTitle}>
+                Couldn&rsquo;t load the catalogue
+              </h3>
+              <p className={styles.catalogErrorText}>
+                We couldn&rsquo;t reach the store right now. Please check your
+                connection and try again.
+              </p>
+              <button
+                type="button"
+                className={styles.catalogErrorBtn}
+                onClick={fetchData}
+              >
+                Try Again
+              </button>
+            </div>
+          ) : (
+            <div className={styles.categoryGrid}>
+              {loading
+                ? Array.from({ length: 12 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className={`${styles.categoryCard} ${styles.skeleton}`}
+                    />
+                  ))
+                : categories.map((cat, i) => (
+                    <motion.div
+                      key={cat.id || i}
+                      initial={{ opacity: 0, scale: 0.92 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: Math.min(i, 8) * 0.05 }}
+                      whileHover={{ y: -4 }}
                     >
-                      {cat.image && (
-                        <img
-                          src={cat.image}
-                          alt={cat.name}
-                          className={styles.categoryImage}
-                          loading="lazy"
-                          onError={onImageError}
-                        />
-                      )}
-                      <div className={styles.categoryOverlay}>
-                        <h3 className={styles.categoryName}>{cat.name}</h3>
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-          </div>
+                      <Link
+                        to={`/products?category=${categoryParam(cat)}`}
+                        className={styles.categoryCard}
+                      >
+                        {cat.image && (
+                          <img
+                            src={cat.image}
+                            alt={cat.name}
+                            className={styles.categoryImage}
+                            loading="lazy"
+                            onError={onImageError}
+                          />
+                        )}
+                        <div className={styles.categoryOverlay}>
+                          <h3 className={styles.categoryName}>{cat.name}</h3>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  ))}
+            </div>
+          )}
         </div>
       </section>
 

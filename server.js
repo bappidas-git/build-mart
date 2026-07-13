@@ -2,7 +2,7 @@
 // Development mock backend — JSON Server with a SAFE, non-cascading DELETE
 // =============================================================================
 //
-// This replaces the bare `json-server --watch db.json --port 3001` command.
+// This replaces the bare `json-server --watch db.json --port 4000` command.
 // Everything json-server normally does (GET/POST/PUT/PATCH, filtering, sorting,
 // pagination, relationships, /db, static ./public) is preserved — only the
 // DELETE handler is made safe.
@@ -47,7 +47,14 @@ const jsonServer = require("json-server");
 const DB_FILE = process.env.JSON_SERVER_DB
   ? path.resolve(process.env.JSON_SERVER_DB)
   : path.join(__dirname, "db.json");
-const PORT = process.env.JSON_SERVER_PORT || 3001;
+// Default port is 4000, NOT 3001. Create React App's dev server wants 3000 and,
+// when that is taken by a stale dev server, silently drifts to the next free
+// port (3001, 3002…). If the mock API sat on 3001 that drift could put the React
+// app ON the API port — every /categories & /products request would then return
+// index.html instead of JSON and the storefront would render a silently-empty
+// catalog. 4000 is outside that sequential drift range. Keep in sync with .env
+// (REACT_APP_API_URL) and src/services/baseURL.js (MOCK_API_URL).
+const PORT = process.env.JSON_SERVER_PORT || 4000;
 
 const server = jsonServer.create();
 const router = jsonServer.router(DB_FILE);

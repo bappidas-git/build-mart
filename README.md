@@ -129,13 +129,22 @@ npm run dev
 ```
 Runs, concurrently:
 - **CRA storefront + admin** on <http://localhost:3000>
-- **JSON Server** (mock API) on <http://localhost:3001>
+- **JSON Server** (mock API) on <http://localhost:4000>
+
+> **Why the mock API is on 4000, not 3001.** CRA's dev server wants port 3000
+> and, if that port is already held by a stale dev server, silently drifts to
+> the next free one (3001, 3002…). With the mock API on 3001 that drift would put
+> the React app on the API port, so `/categories` and `/products` would return
+> `index.html` instead of JSON and the storefront would render a **silently-empty
+> catalog** (no main-menu categories, no product cards). Port 4000 is outside
+> that sequential drift range, so the collision can't happen. If the catalog ever
+> looks empty locally, confirm JSON Server is up: open <http://localhost:4000/products>.
 
 ### Individual scripts
 | Script | What it does |
 | --- | --- |
 | `npm start` | CRA dev server only, <http://localhost:3000> |
-| `npm run server` | `node server.js` → JSON Server on <http://localhost:3001> |
+| `npm run server` | `node server.js` → JSON Server on <http://localhost:4000> |
 | `npm run dev` | both of the above via `concurrently` |
 | `npm run build` | production build into `build/` |
 
@@ -145,8 +154,8 @@ Runs, concurrently:
   is overridden to be **safe and non-cascading**: it removes only the addressed
   row and never cascade-deletes dependents (category referential integrity is
   enforced in the API layer, not by the database).
-- Browse the mock data directly at `http://localhost:3001/<collection>`, e.g.
-  `http://localhost:3001/products`, `/categories`, `/enquiries`.
+- Browse the mock data directly at `http://localhost:4000/<collection>`, e.g.
+  `http://localhost:4000/products`, `/categories`, `/enquiries`.
 
 ### Seed logins
 - **Customer:** `user@example.com` / `password123`

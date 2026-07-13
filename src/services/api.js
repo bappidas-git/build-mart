@@ -83,7 +83,7 @@ export const extractMeta = (response) => {
  * expects an array. When the API is unreachable or misconfigured the request
  * can still resolve 200 with a NON-array body — most often an HTML fallback
  * page. Two real cases produce exactly this:
- *   • dev: a stray React dev server squats on the API port (3001) and answers
+ *   • dev: a stray React dev server squats on the API port (4000) and answers
  *     every path with index.html, so /categories and /products return HTML;
  *   • prod: a hosted build with no REACT_APP_API_URL points at a dead host.
  * Left unchecked, that HTML string flows into `.map`/`.filter` and either
