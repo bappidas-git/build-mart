@@ -359,8 +359,10 @@
   display: block;
 }
 
-/* Slight vertical stagger on desktop gives the cluster a curated, layered feel. */
-.galleryItem:nth-child(2) {
+/* Slight vertical stagger on desktop gives the cluster a curated, layered feel.
+   Every even card drops down while odd cards stay up, so the row keeps an
+   up-down-up-down rhythm no matter how many thumbnails an admin adds. */
+.galleryItem:nth-child(even) {
   transform: translateY(clamp(12px, 2vw, 26px));
 }
 
@@ -538,7 +540,7 @@
   }
 
   /* Drop the stagger when the cluster is centred under the copy. */
-  .galleryItem:nth-child(2) {
+  .galleryItem:nth-child(even) {
     transform: none;
   }
 }
