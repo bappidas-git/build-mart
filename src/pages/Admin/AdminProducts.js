@@ -171,6 +171,20 @@ const AdminProducts = () => {
   const setDimension = (key, value) =>
     setForm((f) => ({ ...f, dimensions: { ...f.dimensions, [key]: value } }));
 
+  // ── Numeric inputs ─────────────────────────────────────────────────────
+  // Numeric <input>s keep the RAW typed string in state while focused, then
+  // normalise to a clean non-negative number on blur. Coercing to a Number on
+  // every keystroke (the previous behaviour) made the fields impossible to edit:
+  // clearing one snapped it straight back to "0", and because the old number was
+  // never really cleared, freshly typed digits concatenated onto it (e.g. editing
+  // 340 produced 34044). That hit hardest on touch devices with no easy
+  // select-all — the "price won't change" bug. handleSave clamps every field
+  // again before the payload, so the raw string is only ever transient.
+  // setField/setDimension share a (key, value) signature, so one pair of helpers
+  // serves both; tier & variant rows (index-keyed) inline the same idea.
+  const rawChange = (setter, key) => (e) => setter(key, e.target.value);
+  const normBlur = (setter, key, opts) => (e) => setter(key, clampNum(e.target.value, opts));
+
   // ── Variants ───────────────────────────────────────────────────────────
   const addVariant = () =>
     setForm((f) => ({
@@ -748,7 +762,8 @@ const AdminProducts = () => {
             <Grid item xs={6} md={3}>
               <TextField
                 label="Min order qty" type="number" value={form.minQty}
-                onChange={(e) => setField("minQty", clampNum(e.target.value, { int: true, fallback: 1 }))}
+                onChange={rawChange(setField, "minQty")}
+                onBlur={normBlur(setField, "minQty", { int: true, fallback: 1 })}
                 fullWidth size="small" inputProps={{ min: 1 }}
               />
             </Grid>
@@ -759,16 +774,17 @@ const AdminProducts = () => {
                 <Grid item xs={12} sm={4}>
                   <TextField
                     label="Selling Price (₹) *" type="number" value={form.price}
-                    onChange={(e) => setField("price", clampNum(e.target.value))}
+                    onChange={rawChange(setField, "price")}
+                    onBlur={normBlur(setField, "price")}
                     fullWidth size="small" inputProps={{ min: 0 }}
                     error={!!errors.price} helperText={errors.price}
                   />
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <TextField label="Compare-at Price (₹)" type="number" value={form.comparePrice} onChange={(e) => setField("comparePrice", clampNum(e.target.value))} fullWidth size="small" inputProps={{ min: 0 }} helperText="Strikethrough price" />
+                  <TextField label="Compare-at Price (₹)" type="number" value={form.comparePrice} onChange={rawChange(setField, "comparePrice")} onBlur={normBlur(setField, "comparePrice")} fullWidth size="small" inputProps={{ min: 0 }} helperText="Strikethrough price" />
                 </Grid>
                 <Grid item xs={12} sm={4}>
-                  <TextField label="Cost Price (₹)" type="number" value={form.costPrice} onChange={(e) => setField("costPrice", clampNum(e.target.value))} fullWidth size="small" inputProps={{ min: 0 }} helperText="For margin calculation" />
+                  <TextField label="Cost Price (₹)" type="number" value={form.costPrice} onChange={rawChange(setField, "costPrice")} onBlur={normBlur(setField, "costPrice")} fullWidth size="small" inputProps={{ min: 0 }} helperText="For margin calculation" />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <FormControlLabel
@@ -816,13 +832,15 @@ const AdminProducts = () => {
                       <Box sx={{ display: "flex", gap: 1, flexWrap: { xs: "wrap", md: "nowrap" }, alignItems: "flex-start" }}>
                         <TextField
                           label={`Min qty ${idx + 1}`} type="number" value={t.minQty}
-                          onChange={(e) => updateTier(idx, "minQty", clampNum(e.target.value, { int: true, fallback: 1 }))}
+                          onChange={(e) => updateTier(idx, "minQty", e.target.value)}
+                          onBlur={(e) => updateTier(idx, "minQty", clampNum(e.target.value, { int: true, fallback: 1 }))}
                           size="small" sx={{ flex: 1, minWidth: 130 }} inputProps={{ min: 1 }}
                           error={!!errors.tierRows?.[idx]} helperText={errors.tierRows?.[idx]}
                         />
                         <TextField
                           label={`Price / ${form.unitType || "unit"} (₹)`} type="number" value={t.price}
-                          onChange={(e) => updateTier(idx, "price", clampNum(e.target.value))}
+                          onChange={(e) => updateTier(idx, "price", e.target.value)}
+                          onBlur={(e) => updateTier(idx, "price", clampNum(e.target.value))}
                           size="small" sx={{ flex: 1, minWidth: 130 }} inputProps={{ min: 0 }}
                         />
                         <Tooltip title="Remove tier">
@@ -872,22 +890,22 @@ const AdminProducts = () => {
             {/* Inventory */}
             <Grid item xs={12}><Divider /><Typography variant="subtitle2" color="text.secondary" fontWeight={600} sx={{ mt: 1 }}>Inventory & Dimensions</Typography></Grid>
             <Grid item xs={12} sm={4}>
-              <TextField label="Stock Quantity" type="number" value={form.stock} onChange={(e) => setField("stock", clampNum(e.target.value, { int: true }))} fullWidth size="small" inputProps={{ min: 0 }} />
+              <TextField label="Stock Quantity" type="number" value={form.stock} onChange={rawChange(setField, "stock")} onBlur={normBlur(setField, "stock", { int: true })} fullWidth size="small" inputProps={{ min: 0 }} />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <TextField label="Low Stock Threshold" type="number" value={form.lowStockThreshold} onChange={(e) => setField("lowStockThreshold", clampNum(e.target.value, { int: true, fallback: 10 }))} fullWidth size="small" inputProps={{ min: 0 }} />
+              <TextField label="Low Stock Threshold" type="number" value={form.lowStockThreshold} onChange={rawChange(setField, "lowStockThreshold")} onBlur={normBlur(setField, "lowStockThreshold", { int: true, fallback: 10 })} fullWidth size="small" inputProps={{ min: 0 }} />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <TextField label="Weight (kg)" type="number" value={form.weight} onChange={(e) => setField("weight", clampNum(e.target.value))} fullWidth size="small" inputProps={{ min: 0 }} />
+              <TextField label="Weight (kg)" type="number" value={form.weight} onChange={rawChange(setField, "weight")} onBlur={normBlur(setField, "weight")} fullWidth size="small" inputProps={{ min: 0 }} />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <TextField label="Length (cm)" type="number" value={form.dimensions.length} onChange={(e) => setDimension("length", clampNum(e.target.value))} fullWidth size="small" inputProps={{ min: 0 }} />
+              <TextField label="Length (cm)" type="number" value={form.dimensions.length} onChange={rawChange(setDimension, "length")} onBlur={normBlur(setDimension, "length")} fullWidth size="small" inputProps={{ min: 0 }} />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <TextField label="Width (cm)" type="number" value={form.dimensions.width} onChange={(e) => setDimension("width", clampNum(e.target.value))} fullWidth size="small" inputProps={{ min: 0 }} />
+              <TextField label="Width (cm)" type="number" value={form.dimensions.width} onChange={rawChange(setDimension, "width")} onBlur={normBlur(setDimension, "width")} fullWidth size="small" inputProps={{ min: 0 }} />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <TextField label="Height (cm)" type="number" value={form.dimensions.height} onChange={(e) => setDimension("height", clampNum(e.target.value))} fullWidth size="small" inputProps={{ min: 0 }} />
+              <TextField label="Height (cm)" type="number" value={form.dimensions.height} onChange={rawChange(setDimension, "height")} onBlur={normBlur(setDimension, "height")} fullWidth size="small" inputProps={{ min: 0 }} />
             </Grid>
 
             {/* Variants */}
@@ -924,12 +942,14 @@ const AdminProducts = () => {
                     />
                     <TextField
                       label="Price (₹)" type="number" value={v.price}
-                      onChange={(e) => updateVariant(idx, "price", clampNum(e.target.value))}
+                      onChange={(e) => updateVariant(idx, "price", e.target.value)}
+                      onBlur={(e) => updateVariant(idx, "price", clampNum(e.target.value))}
                       size="small" sx={{ flex: 1, minWidth: 100 }} inputProps={{ min: 0 }}
                     />
                     <TextField
                       label="Stock" type="number" value={v.stock}
-                      onChange={(e) => updateVariant(idx, "stock", clampNum(e.target.value, { int: true }))}
+                      onChange={(e) => updateVariant(idx, "stock", e.target.value)}
+                      onBlur={(e) => updateVariant(idx, "stock", clampNum(e.target.value, { int: true }))}
                       size="small" sx={{ flex: 1, minWidth: 90 }} inputProps={{ min: 0 }}
                     />
                     <TextField
