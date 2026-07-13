@@ -24,6 +24,7 @@ import {
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
 import apiService from "../../services/api";
+import HeroSettings from "./HeroSettings";
 
 // Tab Panel component
 function TabPanel(props) {
@@ -67,7 +68,10 @@ const NEBM_STORE_DEFAULTS = {
   currencySymbol: "₹",
 };
 
-const CATEGORIES_TAB = 4;
+// Tab indices. The Hero Section and Categories tabs are self-contained (each
+// owns its own save), so the shared "Save Changes" bar is hidden on both.
+const HERO_TAB = 1;
+const CATEGORIES_TAB = 5;
 
 const AdminSettings = () => {
   const navigate = useNavigate();
@@ -293,6 +297,7 @@ const AdminSettings = () => {
           }}
         >
           <Tab icon={<Icon icon="mdi:cog" style={{ fontSize: 20 }} />} iconPosition="start" label="General" />
+          <Tab icon={<Icon icon="mdi:view-carousel-outline" style={{ fontSize: 20 }} />} iconPosition="start" label="Hero Section" />
           <Tab icon={<Icon icon="mdi:magnify" style={{ fontSize: 20 }} />} iconPosition="start" label="SEO" />
           <Tab icon={<Icon icon="mdi:share-variant" style={{ fontSize: 20 }} />} iconPosition="start" label="Social" />
           <Tab icon={<Icon icon="mdi:bell-outline" style={{ fontSize: 20 }} />} iconPosition="start" label="Notifications" />
@@ -300,8 +305,9 @@ const AdminSettings = () => {
         </Tabs>
       </Paper>
 
-      {/* Save action bar — shown on every editable tab, hidden on the Categories redirect */}
-      {!loading && activeTab !== CATEGORIES_TAB && (
+      {/* Save action bar — shown on the store/SEO/social/notifications tabs. The
+          Hero Section and Categories tabs manage their own saving. */}
+      {!loading && activeTab !== CATEGORIES_TAB && activeTab !== HERO_TAB && (
         <Box
           sx={{
             display: "flex",
@@ -398,8 +404,13 @@ const AdminSettings = () => {
         )}
       </TabPanel>
 
-      {/* SEO Tab */}
+      {/* Hero Section Tab — self-contained editor with its own save */}
       <TabPanel value={activeTab} index={1}>
+        <HeroSettings />
+      </TabPanel>
+
+      {/* SEO Tab */}
+      <TabPanel value={activeTab} index={2}>
         {loading ? (
           renderCardSkeleton()
         ) : (
@@ -430,7 +441,7 @@ const AdminSettings = () => {
       </TabPanel>
 
       {/* Social Tab */}
-      <TabPanel value={activeTab} index={2}>
+      <TabPanel value={activeTab} index={3}>
         {loading ? (
           renderCardSkeleton()
         ) : (
@@ -464,7 +475,7 @@ const AdminSettings = () => {
       </TabPanel>
 
       {/* Notifications Tab */}
-      <TabPanel value={activeTab} index={3}>
+      <TabPanel value={activeTab} index={4}>
         {loading ? (
           renderCardSkeleton()
         ) : (
@@ -501,7 +512,7 @@ const AdminSettings = () => {
       </TabPanel>
 
       {/* Categories Tab — reconciled: one canonical manager lives at /admin/categories */}
-      <TabPanel value={activeTab} index={4}>
+      <TabPanel value={activeTab} index={5}>
         <Paper sx={{ p: { xs: 3, sm: 5 }, border: "1px solid", borderColor: "divider" }} elevation={0}>
           <Box sx={{ maxWidth: 520, mx: "auto", textAlign: "center" }}>
             <Box

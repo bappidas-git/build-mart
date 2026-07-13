@@ -2,63 +2,111 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import { Link } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import apiService from "../../services/api";
+import { APP_NAME } from "../../utils/constants";
 import {
-  APP_NAME,
-  BRAND_TAGLINE,
-  BRAND_PHONE_1,
-  LOGO_URL,
-  HERO_IMAGE_URL,
-  HERO_SLIDES,
-} from "../../utils/constants";
+  normalizeHeroConfig,
+  resolveVideoSource,
+  isExternalLink,
+} from "../../utils/heroConfig";
 import { onImageError } from "../../utils/helpers";
 import styles from "./HeroSection.module.css";
 
 // =============================================================================
-// HeroSection — NEBM brand hero, now a CAROUSEL
+// HeroSection — NEBM brand hero CAROUSEL, now FULLY admin-driven
 // =============================================================================
-// Slide 1 is always the clean NEBM *brand* hero (logo, name, tagline and two
-// CTAs — "Explore Products" and "Enquire Now"). Slides 2+ are honest category
-// showcases from HERO_SLIDES (see constants.js): a headline, sub-copy, a CTA to
-// a real category, and a cluster of category thumbnails. There is NO countdown,
-// no "% off", no fake stock/urgency — NEBM is an enquiry platform.
+// Every slide — its order, copy, media (image OR video), badge, CTAs and
+// thumbnail cluster — comes from the admin-managed `heroConfig` singleton
+// (Settings → Hero Section, persisted to db.json). The component only renders;
+// it owns no slide content. See utils/heroConfig.js for the shape/normalizer and
+// pages/Admin/HeroSettings.js for the editor.
 //
-// Slide 1's background is a three-tier, always-safe source:
-//   1. An admin-managed banner (banners.getAll(), first entry with an `image`).
-//   2. Else a default open-license building-materials photo (HERO_IMAGE_URL).
-//   3. Else — if the chosen image can't load — the branded blue gradient stands
-//      on its own (the image is preloaded, so a broken URL degrades gracefully).
+// Two slide kinds:
+//   • brand    — logo + title + tagline + up to two CTAs (centered hero).
+//   • showcase — badge/eyebrow + title + subtitle + up to two CTAs + an optional
+//                cluster of thumbnail cards, over a full-bleed image or video.
+//
+// Backgrounds degrade gracefully: a broken image, an empty media slot or a
+// reduced-motion video all fall back to the branded scrim/gradient so a slide
+// never shows a bare or broken background.
 //
 // IMPLEMENTATION — a persistent sliding TRACK, not an AnimatePresence swap.
 // All slides stay mounted side-by-side in a flex row and a single transform
 // shifts the row. This is deliberate: framer-motion `AnimatePresence` leaves
-// "exit ghost" nodes mounted under React 18 StrictMode in dev (see the
-// project memory note), which would stack slides on `npm run dev`. A mount-free
-// track sidesteps that entirely and works identically in dev and production.
+// "exit ghost" nodes mounted under React 18 StrictMode in dev (see the project
+// memory note), which would stack slides on `npm run dev`. A mount-free track
+// sidesteps that entirely and works identically in dev and production.
 //
 // Carousel behaviour: auto-advance (paused on hover / focus / drag and disabled
 // entirely under prefers-reduced-motion), prev/next arrows, dot indicators,
 // pointer/touch swipe, arrow-key navigation, and ARIA carousel semantics.
 // =============================================================================
 
-const AUTOPLAY_MS = 6000;
 const SWIPE_THRESHOLD = 50; // px of horizontal travel that counts as a swipe
 
-// Strip formatting so "+91 86385 43526" becomes a valid tel: target.
-const telHref = (phone) => `tel:${String(phone).replace(/[^\d+]/g, "")}`;
+// Will this slide's media actually paint a background? Drives the `hasImage`
+// contrast treatment on the brand slide and mirrors what MediaLayer renders.
+const mediaWillRender = (media, reducedMotion) => {
+  if (!media || !media.url) return false;
+  if (media.type === "video") {
+    return reducedMotion ? !!media.poster : !!resolveVideoSource(media.url).src;
+  }
+  return true;
+};
+
+// Pick a legible text colour (black/white) for a coloured badge background.
+const pickBadgeText = (hex) => {
+  const m = /^#?([0-9a-f]{6})$/i.exec((hex || "").trim());
+  if (!m) return null;
+  const n = parseInt(m[1], 16);
+  const r = (n >> 16) & 255;
+  const g = (n >> 8) & 255;
+  const b = n & 255;
+  // Rec. 601 luma — light backgrounds get dark text and vice-versa.
+  return 0.299 * r + 0.587 * g + 0.114 * b > 150 ? "#1a202c" : "#ffffff";
+};
 
 const HeroSection = () => {
   const { isDarkMode } = useTheme();
-  const [heroImage, setHeroImage] = useState(null);
 
-  // Slide 1 is the brand hero (rendered inline); the rest come from config.
+  // Render the shipped defaults instantly (normalizeHeroConfig backfills them),
+  // then reconcile with the admin-saved config once it loads — so the hero never
+  // flashes empty, and edits appear on the next focus/refresh.
+  const [config, setConfig] = useState(() => normalizeHeroConfig(null));
+
+  const load = useCallback(async () => {
+    try {
+      const raw = await apiService.hero.getConfig();
+      setConfig(normalizeHeroConfig(raw));
+    } catch {
+      // Keep the last-known (or default) config rather than breaking the page.
+    }
+  }, []);
+
+  useEffect(() => {
+    load();
+    // Refetch when the tab regains focus so admin edits appear without a reload.
+    const onFocus = () => load();
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
+  }, [load]);
+
+  // Only enabled slides are shown; a disabled carousel (or zero enabled slides)
+  // hides the whole band.
   const slides = useMemo(
-    () => [{ id: "brand", brand: true }, ...(HERO_SLIDES || [])],
-    []
+    () => (config.enabled ? config.slides.filter((s) => s.enabled !== false) : []),
+    [config]
   );
   const total = slides.length;
+  const autoplayMs = config.autoplayMs;
 
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+
+  // Clamp the active index whenever the slide count shrinks (admin removed /
+  // disabled slides, or the fetched config is shorter than the defaults).
+  useEffect(() => {
+    setIndex((i) => (total === 0 ? 0 : Math.min(i, total - 1)));
+  }, [total]);
 
   // The track is translated in PIXELS (index * slideWidth), not a percentage.
   // A CSS transition on a *percentage* transform fails to resolve in some
@@ -79,7 +127,7 @@ const HeroSection = () => {
     }
     window.addEventListener("resize", measure);
     return () => window.removeEventListener("resize", measure);
-  }, []);
+  }, [total]);
 
   // Honour prefers-reduced-motion: no autoplay, and an instant (non-sliding)
   // transition instead of the spring.
@@ -94,58 +142,22 @@ const HeroSection = () => {
   }, []);
 
   const goTo = useCallback(
-    (n) => setIndex(((n % total) + total) % total),
+    (n) => setIndex((total ? ((n % total) + total) % total : 0)),
     [total]
   );
   const paginate = useCallback(
-    (dir) => setIndex((i) => (((i + dir) % total) + total) % total),
+    (dir) => setIndex((i) => (total ? (((i + dir) % total) + total) % total : 0)),
     [total]
   );
-
-  // Resolve the brand slide's background: admin banner first, else the default
-  // open-license photo. Each candidate is preloaded, so a broken/offline URL
-  // degrades to the next option (and ultimately the branded gradient).
-  useEffect(() => {
-    let active = true;
-    const preload = (src) =>
-      new Promise((resolve) => {
-        if (!src) return resolve(null);
-        const img = new Image();
-        img.onload = () => resolve(src);
-        img.onerror = () => resolve(null);
-        img.src = src;
-      });
-
-    (async () => {
-      let adminSrc = null;
-      try {
-        const data = await apiService.banners.getAll();
-        const banner = Array.isArray(data)
-          ? data.find((b) => b && b.image)
-          : null;
-        if (banner) adminSrc = banner.image;
-      } catch {
-        // no admin banner configured — fall through to the default photo
-      }
-
-      const resolved =
-        (await preload(adminSrc)) || (await preload(HERO_IMAGE_URL));
-      if (active && resolved) setHeroImage(resolved);
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, []);
 
   // Auto-advance. Restarts whenever the active slide changes so each slide gets
   // its full dwell time. Disabled while paused, under reduced-motion, or when
   // there is only one slide.
   useEffect(() => {
     if (paused || reducedMotion || total <= 1) return undefined;
-    const id = window.setInterval(() => paginate(1), AUTOPLAY_MS);
+    const id = window.setInterval(() => paginate(1), autoplayMs);
     return () => window.clearInterval(id);
-  }, [paused, reducedMotion, total, index, paginate]);
+  }, [paused, reducedMotion, total, index, paginate, autoplayMs]);
 
   // Pause autoplay whenever the tab is hidden (background tabs shouldn't churn).
   useEffect(() => {
@@ -201,7 +213,10 @@ const HeroSection = () => {
     }
   };
 
-  const active = slides[index];
+  // Nothing to show (carousel disabled or every slide hidden) — render no band.
+  if (total === 0) return null;
+
+  const active = slides[Math.min(index, total - 1)];
 
   return (
     <section
@@ -247,10 +262,18 @@ const HeroSection = () => {
               aria-label={`${i + 1} of ${total}`}
               aria-hidden={i !== index}
             >
-              {slide.brand ? (
-                <BrandSlide heroImage={heroImage} />
+              {slide.type === "brand" ? (
+                <BrandSlide
+                  slide={slide}
+                  reducedMotion={reducedMotion}
+                  swipedRef={swipedRef}
+                />
               ) : (
-                <ShowcaseSlide slide={slide} swipedRef={swipedRef} />
+                <ShowcaseSlide
+                  slide={slide}
+                  reducedMotion={reducedMotion}
+                  swipedRef={swipedRef}
+                />
               )}
             </div>
           ))}
@@ -316,124 +339,218 @@ const HeroSection = () => {
 
       {/* Screen-reader live announcement of the current slide. */}
       <p className={styles.srOnly} aria-live="polite">
-        Slide {index + 1} of {total}: {active.brand ? APP_NAME : active.title}
+        Slide {index + 1} of {total}: {active.title || APP_NAME}
       </p>
     </section>
   );
 };
 
-// ── Slide 1: the NEBM brand hero ──────────────────────────────────────────────
-const BrandSlide = ({ heroImage }) => (
-  <div className={`${styles.brand} ${heroImage ? styles.hasImage : ""}`}>
-    {heroImage && (
+// ── Background media layer (image, direct video file, or embed) ───────────────
+// Rendered inside the slide's positioned background element (which carries the
+// scrim ::after). Falls back to nothing (letting the scrim/gradient show) when
+// there's no renderable media or reduced-motion suppresses a video.
+const MediaLayer = ({ media, reducedMotion, className }) => {
+  const type = media?.type === "video" ? "video" : "image";
+  const url = media?.url || "";
+  const poster = media?.poster || "";
+
+  if (type === "image") {
+    return (
       <div
-        className={styles.brandImage}
-        style={{ backgroundImage: `url(${heroImage})` }}
+        className={className}
+        style={url ? { backgroundImage: `url(${url})` } : undefined}
         aria-hidden="true"
       />
-    )}
-    <div className={styles.brandInner}>
-      <img src={LOGO_URL} alt={APP_NAME} className={styles.logo} draggable={false} />
-      <h1 className={styles.title}>{APP_NAME}</h1>
-      <p className={styles.tagline}>{BRAND_TAGLINE}</p>
+    );
+  }
 
-      <div className={styles.actions}>
-        <Link to="/products" className={styles.primaryCta} draggable={false}>
-          Explore Products
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </Link>
-        <a href={telHref(BRAND_PHONE_1)} className={styles.secondaryCta}>
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0122 16.92z" />
-          </svg>
-          Enquire Now
-        </a>
+  // Video — under reduced motion show the poster still (if any), never autoplay.
+  const video = resolveVideoSource(url);
+  if (reducedMotion || video.kind === "none") {
+    return (
+      <div
+        className={className}
+        style={poster ? { backgroundImage: `url(${poster})` } : undefined}
+        aria-hidden="true"
+      />
+    );
+  }
+
+  if (video.kind === "embed") {
+    return (
+      <div className={className} aria-hidden="true">
+        <iframe
+          className={styles.mediaFrame}
+          src={video.src}
+          title="Slide background video"
+          frameBorder="0"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          tabIndex={-1}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className={className} aria-hidden="true">
+      <video
+        className={styles.mediaVideo}
+        src={video.src}
+        poster={poster || undefined}
+        autoPlay
+        muted
+        loop
+        playsInline
+        tabIndex={-1}
+      />
+    </div>
+  );
+};
+
+// ── A single CTA — internal <Link> or external <a> (http/tel/mailto) ──────────
+const SlideCta = ({ cta, variant, swipedRef }) => {
+  if (!cta || !cta.label || !cta.to) return null;
+  const cls = variant === "secondary" ? styles.secondaryCta : styles.primaryCta;
+  const swallowIfSwiping = (e) => {
+    if (swipedRef?.current) e.preventDefault();
+  };
+
+  const inner = (
+    <>
+      {variant === "secondary" && /^tel:/i.test(cta.to) && (
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0122 16.92z" />
+        </svg>
+      )}
+      {cta.label}
+      {variant === "primary" && (
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      )}
+    </>
+  );
+
+  if (isExternalLink(cta.to)) {
+    return (
+      <a href={cta.to} className={cls} onClick={swallowIfSwiping}>
+        {inner}
+      </a>
+    );
+  }
+  return (
+    <Link to={cta.to} className={cls} onClick={swallowIfSwiping} draggable={false}>
+      {inner}
+    </Link>
+  );
+};
+
+// ── Eyebrow / badge (offers, new launch, daily deals…) ────────────────────────
+const Badge = ({ text, color }) => {
+  if (!text) return null;
+  const style = color
+    ? { background: color, color: pickBadgeText(color) || undefined }
+    : undefined;
+  return (
+    <span className={styles.eyebrow} style={style}>
+      {text}
+    </span>
+  );
+};
+
+// ── Brand slide ───────────────────────────────────────────────────────────────
+const BrandSlide = ({ slide, reducedMotion, swipedRef }) => {
+  const hasBg = mediaWillRender(slide.media, reducedMotion);
+  return (
+    <div className={`${styles.brand} ${hasBg ? styles.hasImage : ""}`}>
+      <MediaLayer
+        media={slide.media}
+        reducedMotion={reducedMotion}
+        className={styles.brandImage}
+      />
+      <div className={styles.brandInner}>
+        {slide.logo && (
+          <img
+            src={slide.logo}
+            alt={slide.title || APP_NAME}
+            className={styles.logo}
+            draggable={false}
+            onError={onImageError}
+          />
+        )}
+        <Badge text={slide.eyebrow} color={slide.eyebrowColor} />
+        {slide.title && <h1 className={styles.title}>{slide.title}</h1>}
+        {slide.subtitle && <p className={styles.tagline}>{slide.subtitle}</p>}
+
+        <div className={styles.actions}>
+          <SlideCta cta={slide.primaryCta} variant="primary" swipedRef={swipedRef} />
+          <SlideCta cta={slide.secondaryCta} variant="secondary" swipedRef={swipedRef} />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
-// ── Slides 2+: honest category showcase ───────────────────────────────────────
+// ── Showcase slide ────────────────────────────────────────────────────────────
 // `swipedRef` guards against the pointer-up that ends a swipe also activating a
 // link/CTA underneath it.
-const ShowcaseSlide = ({ slide, swipedRef }) => {
+const ShowcaseSlide = ({ slide, reducedMotion, swipedRef }) => {
   const swallowIfSwiping = (e) => {
     if (swipedRef.current) e.preventDefault();
   };
+  const hasGallery = Array.isArray(slide.gallery) && slide.gallery.length > 0;
 
   return (
     <div className={styles.showcase}>
-      <div
+      <MediaLayer
+        media={slide.media}
+        reducedMotion={reducedMotion}
         className={styles.showcaseImage}
-        style={{ backgroundImage: `url(${slide.image})` }}
-        aria-hidden="true"
       />
-      <div className={styles.showcaseInner}>
+      <div
+        className={`${styles.showcaseInner} ${
+          slide.align === "center" ? styles.alignCenter : ""
+        } ${!hasGallery ? styles.noGallery : ""}`}
+      >
         <div className={styles.showcaseCopy}>
-          {slide.eyebrow && (
-            <span className={styles.eyebrow}>{slide.eyebrow}</span>
-          )}
-          <h2 className={styles.showcaseTitle}>{slide.title}</h2>
+          <Badge text={slide.eyebrow} color={slide.eyebrowColor} />
+          {slide.title && <h2 className={styles.showcaseTitle}>{slide.title}</h2>}
           {slide.subtitle && (
             <p className={styles.showcaseSubtitle}>{slide.subtitle}</p>
           )}
-          {slide.cta && (
-            <Link
-              to={slide.cta.to}
-              className={styles.primaryCta}
-              onClick={swallowIfSwiping}
-              draggable={false}
-            >
-              {slide.cta.label}
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </Link>
+          {(slide.primaryCta?.label || slide.secondaryCta?.label) && (
+            <div className={styles.showcaseActions}>
+              <SlideCta cta={slide.primaryCta} variant="primary" swipedRef={swipedRef} />
+              <SlideCta cta={slide.secondaryCta} variant="secondary" swipedRef={swipedRef} />
+            </div>
           )}
         </div>
 
-        {Array.isArray(slide.gallery) && slide.gallery.length > 0 && (
+        {hasGallery && (
           <ul className={styles.gallery}>
-            {slide.gallery.map((item, i) => (
-              <li key={item.label || i} className={styles.galleryItem}>
-                <Link
-                  to={item.to}
-                  className={styles.galleryCard}
-                  onClick={swallowIfSwiping}
-                  draggable={false}
-                >
+            {slide.gallery.map((item, i) => {
+              const card = (
+                <>
                   <img
                     src={item.image}
                     alt={item.label}
@@ -441,10 +558,38 @@ const ShowcaseSlide = ({ slide, swipedRef }) => {
                     draggable={false}
                     onError={onImageError}
                   />
-                  <span className={styles.galleryLabel}>{item.label}</span>
-                </Link>
-              </li>
-            ))}
+                  {item.label && (
+                    <span className={styles.galleryLabel}>{item.label}</span>
+                  )}
+                </>
+              );
+              return (
+                <li key={item.label || i} className={styles.galleryItem}>
+                  {item.to ? (
+                    isExternalLink(item.to) ? (
+                      <a
+                        href={item.to}
+                        className={styles.galleryCard}
+                        onClick={swallowIfSwiping}
+                      >
+                        {card}
+                      </a>
+                    ) : (
+                      <Link
+                        to={item.to}
+                        className={styles.galleryCard}
+                        onClick={swallowIfSwiping}
+                        draggable={false}
+                      >
+                        {card}
+                      </Link>
+                    )
+                  ) : (
+                    <div className={styles.galleryCard}>{card}</div>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>

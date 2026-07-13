@@ -237,6 +237,26 @@
     linear-gradient(180deg, rgba(8, 30, 54, 0.1), rgba(8, 30, 54, 0.55));
 }
 
+/* ==========================================================================
+   Background video / embed layer (image OR video slides)
+   --------------------------------------------------------------------------
+   A <video> file or a YouTube/Vimeo <iframe> fills the same positioned box as a
+   background image (.brandImage / .showcaseImage). Both sit UNDER the scrim
+   (::after, the box's last child, always paints on top). pointer-events: none is
+   essential — the carousel's swipe/click handlers live on the viewport, so the
+   media must never swallow pointer/touch events (an <iframe> otherwise would).
+   ========================================================================== */
+.mediaVideo,
+.mediaFrame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+  pointer-events: none;
+}
+
 .showcaseInner {
   position: relative;
   z-index: 1;
@@ -287,6 +307,42 @@
   line-height: var(--sf-leading-normal);
   color: rgba(255, 255, 255, 0.9);
   max-width: 480px;
+}
+
+/* Row of CTAs on a showcase slide (primary + optional secondary). */
+.showcaseActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sf-space-3);
+  margin-top: var(--sf-space-2);
+}
+
+/* A showcase slide's secondary CTA must stay legible over the dark scrim, the
+   same treatment the brand hero gives it over an image. */
+.showcase .secondaryCta {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+/* Admin-chosen centered layout, and the natural centering when a slide has no
+   thumbnail cluster to sit beside the copy. */
+.showcaseInner.alignCenter,
+.showcaseInner.noGallery {
+  justify-content: center;
+}
+
+.alignCenter .showcaseCopy,
+.noGallery .showcaseCopy {
+  align-items: center;
+  text-align: center;
+  max-width: 640px;
+}
+
+.alignCenter .showcaseActions,
+.noGallery .showcaseActions {
+  justify-content: center;
 }
 
 /* The cluster of category thumbnails — the "related product images". */
