@@ -5,9 +5,10 @@ import { useCart } from "../../hooks/useCart";
 import { useAuth } from "../../hooks/useAuth";
 import { useWishlist } from "../../context/WishlistContext";
 import { useDealsConfig } from "../../context/DealsConfigContext";
+import { useStoreContact } from "../../context/SettingsContext";
 import apiService from "../../services/api";
 import { categoryParam, getMainMenuCategories } from "../../utils/categories";
-import { LOGO_URL, LOGO_ICON_URL, SUPPORT_PHONE } from "../../utils/constants";
+import { LOGO_URL, LOGO_ICON_URL } from "../../utils/constants";
 import CartDrawer from "../CartDrawer/CartDrawer";
 import SidebarMenu from "../SidebarMenu/SidebarMenu";
 import AuthModal from "../AuthModal/AuthModal";
@@ -73,6 +74,8 @@ const Header = () => {
   const { getWishlistCount } = useWishlist();
   // The "Special Products" entry is hidden when the admin turns that page off.
   const { enabled: dealsEnabled } = useDealsConfig();
+  // Top-bar phone follows admin Settings → General (not a hardcoded constant).
+  const { phone: storePhone, telHref: storeTelHref } = useStoreContact();
   const isMobile = useMediaQuery("(max-width:768px)");
   const isTablet = useMediaQuery("(max-width:1024px)");
 
@@ -167,7 +170,7 @@ const Header = () => {
   // nothing on phones. The full catalogue still lives in the hamburger drawer.
   const menuCategories = getMainMenuCategories(categories);
 
-  const telHref = `tel:${SUPPORT_PHONE.replace(/\s+/g, "")}`;
+  const telHref = storeTelHref(storePhone);
 
   return (
     <>
@@ -182,7 +185,7 @@ const Header = () => {
               <div className={styles.topBarRight}>
                 <a href={telHref} className={styles.topBarLink}>
                   <PhoneIcon className={styles.topBarIcon} />
-                  <span>{SUPPORT_PHONE}</span>
+                  <span>{storePhone}</span>
                 </a>
                 <span className={styles.topBarDivider}>|</span>
                 <Link to="/support" className={styles.topBarLink}>Help</Link>

@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Icon as Iconify } from "@iconify/react";
 import { useTheme } from "../../context/ThemeContext";
+import { useStoreContact } from "../../context/SettingsContext";
 import { useCart } from "../../hooks/useCart";
 import { useAuth } from "../../hooks/useAuth";
 import { useOrder } from "../../context/OrderContext";
@@ -32,10 +33,10 @@ import styles from "./Checkout.module.css";
 // never fire. Guests can submit (userId: null); logged-in users get prefilled
 // contact and their enquiry linked to their userId.
 
-const NEBM_PHONES = ["+91 86385 43526", "+91 88762 89972"];
-
 const SubmitEnquiry = () => {
   const { isDarkMode } = useTheme();
+  // "Call us" numbers come from admin Settings → General, not a hardcoded list.
+  const { phones, telHref } = useStoreContact();
   const navigate = useNavigate();
   const { cartItems, getCartItemCount, updateQuantity, removeFromCart, clearCart } =
     useCart();
@@ -363,10 +364,10 @@ const SubmitEnquiry = () => {
 
             <div className={styles.callUs}>
               <span className={styles.callUsLabel}>Questions? Call us</span>
-              {NEBM_PHONES.map((num) => (
+              {phones.map((num) => (
                 <a
                   key={num}
-                  href={`tel:${num.replace(/\s/g, "")}`}
+                  href={telHref(num)}
                   className={styles.callUsPhone}
                 >
                   <Iconify

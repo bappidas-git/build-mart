@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
+import { useStoreContact } from "../../context/SettingsContext";
 import apiService from "../../services/api";
-import {
-  APP_NAME,
-  LOGO_URL,
-  BRAND_TAGLINE,
-  BRAND_ADDRESS,
-  BRAND_PHONE_1,
-  BRAND_PHONE_2,
-} from "../../utils/constants";
+import { APP_NAME, LOGO_URL, BRAND_TAGLINE } from "../../utils/constants";
 import { isEmailValid } from "../../utils/helpers";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
   const { isDarkMode } = useTheme();
+  // Contact details come from admin Settings → General, not hardcoded brand
+  // constants, so an admin edit to the phone/address shows up here on every page.
+  const { address, phones, telHref } = useStoreContact();
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [subscribeStatus, setSubscribeStatus] = useState("idle"); // idle | success | error
@@ -205,24 +202,18 @@ const Footer = () => {
                   <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" className={styles.contactIcon}>
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z" />
                   </svg>
-                  <span>{BRAND_ADDRESS}</span>
+                  <span>{address}</span>
                 </li>
-                <li className={styles.contactItem}>
-                  <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" className={styles.contactIcon}>
-                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-                  </svg>
-                  <a href={`tel:${BRAND_PHONE_1.replace(/\s/g, "")}`} className={styles.contactLink}>
-                    {BRAND_PHONE_1}
-                  </a>
-                </li>
-                <li className={styles.contactItem}>
-                  <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" className={styles.contactIcon}>
-                    <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-                  </svg>
-                  <a href={`tel:${BRAND_PHONE_2.replace(/\s/g, "")}`} className={styles.contactLink}>
-                    {BRAND_PHONE_2}
-                  </a>
-                </li>
+                {phones.map((phone) => (
+                  <li key={phone} className={styles.contactItem}>
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" className={styles.contactIcon}>
+                      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                    </svg>
+                    <a href={telHref(phone)} className={styles.contactLink}>
+                      {phone}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

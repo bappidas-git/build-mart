@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../context/AuthContext";
+import { useStoreContact } from "../../context/SettingsContext";
 import apiService from "../../services/api";
-import { BRAND_ADDRESS, BRAND_PHONE_1, BRAND_PHONE_2 } from "../../utils/constants";
 import { isEmailValid, isValidPhone } from "../../utils/helpers";
 import styles from "./Support.module.css";
 
@@ -22,18 +22,17 @@ const IconPhone = () => (
   </svg>
 );
 
-// Strip spaces so the tel: href is dialable. Keeps the "+" for the country code.
-const telHref = (phone) => `tel:${phone.replace(/\s/g, "")}`;
-
-// Keyless Google Maps embed centered on the Lawkhuwa Road / Nagaon area. No API
-// key required (output=embed); the outer card clips it so a blocked iframe can't
-// break the layout.
-const MAP_SRC =
-  "https://maps.google.com/maps?q=Lawkhuwa%20Road%2C%20Nagaon%2C%20Assam%20782002&z=14&output=embed";
+// Keyless Google Maps embed centered on the store address. No API key required
+// (output=embed); the outer card clips it so a blocked iframe can't break the
+// layout. Built from the admin-managed address so the map follows Settings too.
+const mapSrc = (address) =>
+  `https://maps.google.com/maps?q=${encodeURIComponent(address)}&z=14&output=embed`;
 
 const Contact = () => {
   const { isDarkMode } = useTheme();
   const { user } = useAuth();
+  // Address and phone(s) come from admin Settings → General, not brand constants.
+  const { address, phones, telHref } = useStoreContact();
   const [formData, setFormData] = useState({
     name: "", email: "", phone: "",
     category: "general", subject: "", message: "",
@@ -118,22 +117,23 @@ const Contact = () => {
           <div className={styles.infoCard}>
             <div className={styles.infoIcon}><IconPin /></div>
             <h3>Visit Us</h3>
-            <p>{BRAND_ADDRESS}</p>
+            <p>{address}</p>
             <span>North East Build Mart</span>
           </div>
           <div className={styles.infoCard}>
             <div className={styles.infoIcon}><IconPhone /></div>
             <h3>Call Us</h3>
             <div className={styles.phoneList}>
-              <a href={telHref(BRAND_PHONE_1)} className={styles.phoneLink}>{BRAND_PHONE_1}</a>
-              <a href={telHref(BRAND_PHONE_2)} className={styles.phoneLink}>{BRAND_PHONE_2}</a>
+              {phones.map((num) => (
+                <a key={num} href={telHref(num)} className={styles.phoneLink}>{num}</a>
+              ))}
             </div>
             <span>Mon – Sat, 9 AM – 8 PM</span>
           </div>
           <div className={styles.mapCard}>
             <iframe
-              title="North East Build Mart location — Lawkhuwa Road, Nagaon, Assam"
-              src={MAP_SRC}
+              title={`North East Build Mart location — ${address}`}
+              src={mapSrc(address)}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
