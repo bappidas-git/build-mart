@@ -52,8 +52,35 @@ const DEFAULT_EMAIL = SUPPORT_EMAIL;
 export const telHref = (phone) =>
   `tel:${String(phone || "").replace(/[^\d+]/g, "")}`;
 
+// Order the social icons render in, with the human label used for accessibility.
+// Keys mirror the admin Settings → Social fields and db.json `settings.social`.
+const SOCIAL_LINKS = [
+  { key: "facebook", label: "Facebook" },
+  { key: "instagram", label: "Instagram" },
+  { key: "twitter", label: "Twitter / X" },
+  { key: "youtube", label: "YouTube" },
+  { key: "whatsapp", label: "WhatsApp" },
+];
+
+// Turn a raw admin value into a safe, absolute href. Most fields are already
+// full URLs; we only need to (a) make a scheme-less entry absolute so a bare
+// "facebook.com/…" never resolves as an in-app route, and (b) accept a plain
+// phone number for WhatsApp and turn it into a wa.me link — the WhatsApp field's
+// placeholder is a phone number, so admins may type one there.
+const normalizeSocialHref = (key, raw) => {
+  const value = String(raw || "").trim();
+  if (!value) return "";
+  if (/^https?:\/\//i.test(value)) return value;
+  if (key === "whatsapp") {
+    const digits = value.replace(/[^\d]/g, "");
+    return digits ? `https://wa.me/${digits}` : "";
+  }
+  return `https://${value.replace(/^\/+/, "")}`;
+};
+
 const SettingsContext = createContext({
   store: {},
+  social: {},
   currency: DEFAULT_CURRENCY,
   currencySymbol: DEFAULT_SYMBOL,
   formatPrice: (amount) => formatCurrency(amount, DEFAULT_CURRENCY),
@@ -88,15 +115,32 @@ export const useStoreContact = () => {
   return { phone, phoneSecondary, phones, address, email, telHref };
 };
 
+// Focused hook for the store's social profiles — the links the admin enters on
+// Settings → Social. Returns only the platforms that actually have a link set,
+// each as `{ key, label, href }` ready to render, so the footer and the
+// hamburger menu show the same icons and an unset profile simply doesn't appear.
+export const useSocialLinks = () => {
+  const { social } = useContext(SettingsContext);
+  return SOCIAL_LINKS.map(({ key, label }) => ({
+    key,
+    label,
+    href: normalizeSocialHref(key, social[key]),
+  })).filter((item) => item.href);
+};
+
 export const SettingsProvider = ({ children }) => {
   const [store, setStore] = useState({});
+  const [social, setSocial] = useState({});
   const [loading, setLoading] = useState(true);
   const mountedRef = useRef(true);
 
   const load = useCallback(async () => {
     try {
       const settings = await apiService.settings.get();
-      if (mountedRef.current) setStore(settings?.store || {});
+      if (mountedRef.current) {
+        setStore(settings?.store || {});
+        setSocial(settings?.social || {});
+      }
     } catch (error) {
       console.error("Failed to load store settings:", error);
       // Leave the last-known (or default) store in place rather than breaking
@@ -126,6 +170,7 @@ export const SettingsProvider = ({ children }) => {
 
   const value = {
     store,
+    social,
     currency,
     currencySymbol,
     formatPrice,
