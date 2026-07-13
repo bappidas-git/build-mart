@@ -125,11 +125,19 @@ npm install
 
 ### Run everything (recommended)
 ```bash
-npm run dev
+npm start
 ```
-Runs, concurrently:
+`npm start` (and its alias `npm run dev`) runs, concurrently:
 - **CRA storefront + admin** on <http://localhost:3000>
 - **JSON Server** (mock API) on <http://localhost:4000>
+
+> **Both servers start together, on purpose.** The storefront reads its whole
+> catalogue (categories, products) from the mock API on :4000. `npm start` used
+> to launch only the React app, so anyone starting the app that way got a
+> **silently-empty catalog** — no main-menu categories, no product cards —
+> because nothing was serving :4000. `npm start` now boots the API alongside the
+> app so this can't happen. Use `npm run start:web` for the React app on its own
+> (e.g. when pointing at a remote/Laravel API).
 
 > **Why the mock API is on 4000, not 3001.** CRA's dev server wants port 3000
 > and, if that port is already held by a stale dev server, silently drifts to
@@ -143,9 +151,10 @@ Runs, concurrently:
 ### Individual scripts
 | Script | What it does |
 | --- | --- |
-| `npm start` | CRA dev server only, <http://localhost:3000> |
-| `npm run server` | `node server.js` → JSON Server on <http://localhost:4000> |
-| `npm run dev` | both of the above via `concurrently` |
+| `npm start` | **CRA + JSON Server together** via `concurrently` — storefront/admin on <http://localhost:3000>, mock API on <http://localhost:4000> |
+| `npm run dev` | alias for `npm start` (both servers) |
+| `npm run start:web` | CRA dev server **only**, <http://localhost:3000> (use when pointing at a remote/Laravel API) |
+| `npm run server` | `node server.js` → JSON Server **only**, on <http://localhost:4000> |
 | `npm run build` | production build into `build/` |
 
 ### The mock API (JSON Server)
