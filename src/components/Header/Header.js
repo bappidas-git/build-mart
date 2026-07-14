@@ -36,7 +36,7 @@ import {
   Logout as LogoutIcon,
   Login as LoginIcon,
   PersonAdd,
-  LocalOfferOutlined,
+  AutoAwesomeRounded,
   RequestQuoteOutlined,
   Brightness4,
   Brightness7,
@@ -171,6 +171,26 @@ const Header = () => {
   const menuCategories = getMainMenuCategories(categories);
 
   const telHref = storeTelHref(storePhone);
+
+  // The Special Products CTA — the storefront's one deliberate gold accent
+  // control. It now renders on EVERY breakpoint (the admin's Special Products
+  // toggle should reach phone users too, not just desktop). Built once and
+  // placed either at the right end of the desktop/tablet nav or as the leading,
+  // pinned chip on the mobile strip.
+  const specialCta = dealsEnabled ? (
+    <Link
+      to="/special-offers"
+      className={`${styles.specialCta} ${isMobile ? styles.specialCtaMobile : ""}`}
+      aria-label="Special Products — our curated picks"
+    >
+      <AutoAwesomeRounded className={styles.specialCtaIcon} />
+      <span className={styles.specialCtaText}>Special Products</span>
+    </Link>
+  ) : null;
+
+  // The nav bar now also appears on mobile when only the Special Products CTA is
+  // present (no curated categories), so the CTA is never hidden on phones.
+  const showNavBar = !isMobile || menuCategories.length > 0 || dealsEnabled;
 
   return (
     <>
@@ -377,12 +397,12 @@ const Header = () => {
 
         {/* ===== NAVIGATION BAR (all breakpoints) =====
             Renders on desktop, tablet AND mobile so the admin-curated main menu
-            is honoured everywhere. On mobile it collapses to just the scrollable
-            category strip — the "All Categories" entry and Special Products link
-            are already reachable via the hamburger drawer and the bottom nav, so
-            they'd only crowd the narrow bar. The strip is hidden on mobile only
-            when nothing is curated, to avoid an empty row. */}
-        {(!isMobile || menuCategories.length > 0) && (
+            is honoured everywhere. On mobile the "All Categories" entry is
+            dropped (the hamburger drawer and bottom nav cover it), but the
+            Special Products CTA now leads the strip so it's reachable directly.
+            The bar is hidden on mobile only when there is nothing to show —
+            neither curated categories nor the Special Products CTA. */}
+        {showNavBar && (
           <nav
             className={`${styles.navBar} ${isMobile ? styles.navBarMobile : ""}`}
           >
@@ -405,6 +425,10 @@ const Header = () => {
                 </>
               )}
 
+              {/* Mobile: the Special Products CTA leads the strip, pinned so it
+                  stays visible while the category chips scroll past it. */}
+              {isMobile && specialCta}
+
               {/* Category links (admin-curated main menu) */}
               <div className={styles.navLinks}>
                 {menuCategories.map((cat) => (
@@ -418,14 +442,9 @@ const Header = () => {
                 ))}
               </div>
 
-              {/* Special Products — desktop/tablet only, hidden when the admin
-                  disables that page */}
-              {!isMobile && dealsEnabled && (
-                <Link to="/special-offers" className={styles.specialLink}>
-                  <LocalOfferOutlined fontSize="small" />
-                  <span>Special Products</span>
-                </Link>
-              )}
+              {/* Desktop/tablet: the CTA anchors the right end of the nav bar.
+                  Hidden when the admin disables the Special Products page. */}
+              {!isMobile && specialCta}
             </div>
           </nav>
         )}
@@ -433,12 +452,13 @@ const Header = () => {
 
       {/* Spacer to push content below the fixed header.
           Desktop = topBar(36)+main(64)+nav(40); tablet = main(64)+nav(40);
-          mobile = main(56) + nav(44) when a curated menu exists, else main(56). */}
+          mobile = main(56) + nav(44) when the strip shows (curated menu OR the
+          Special Products CTA), else main(56). */}
       <div
         className={styles.headerSpacer}
         style={{
           height: isMobile
-            ? menuCategories.length > 0
+            ? menuCategories.length > 0 || dealsEnabled
               ? 100
               : 60
             : isTablet
