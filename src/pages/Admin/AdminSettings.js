@@ -81,6 +81,14 @@ const AdminSettings = () => {
   const [saving, setSaving] = useState(false);
   const [categoryCount, setCategoryCount] = useState(null);
 
+  // Special Products CTA — the prominent gold button in the storefront header.
+  // Its config lives in the standalone `dealsConfig` singleton (not the settings
+  // record), so we keep the raw loaded config here and flip only headerCtaEnabled.
+  // This switch self-saves (optimistic, with rollback) like the storefront
+  // visibility toggles, so it never depends on the shared "Save Changes" bar.
+  const [dealsConfig, setDealsConfig] = useState(null);
+  const [ctaSaving, setCtaSaving] = useState(false);
+
   // One form per settings section (backed by db.json `settings.{store,seo,social,notifications}`).
   const [storeForm, setStoreForm] = useState({ ...NEBM_STORE_DEFAULTS });
   const [seoForm, setSeoForm] = useState({
@@ -116,9 +124,10 @@ const AdminSettings = () => {
   const loadSettings = async () => {
     try {
       setLoading(true);
-      const [settings, cats] = await Promise.all([
+      const [settings, cats, deals] = await Promise.all([
         apiService.admin.getSettings(),
         apiService.admin.getCategories().catch(() => []),
+        apiService.admin.getDealsConfig().catch(() => ({})),
       ]);
       const store = settings?.store || {};
       const seo = settings?.seo || {};
@@ -154,6 +163,7 @@ const AdminSettings = () => {
         lowStockEmail: notifications.lowStockEmail || "",
       });
       setCategoryCount(Array.isArray(cats) ? cats.length : 0);
+      setDealsConfig(deals && typeof deals === "object" ? deals : {});
     } catch (error) {
       console.error("Error loading settings:", error);
       setSnackbar({ open: true, message: "Failed to load settings", severity: "error" });
@@ -235,6 +245,40 @@ const AdminSettings = () => {
       });
     } finally {
       setSaving(false);
+    }
+  };
+
+  // Toggle the storefront header's Special Products CTA. Optimistic with
+  // rollback, and it persists on its own (independent of the "Save Changes"
+  // bar) so a single click reaches the storefront — the whole dealsConfig is
+  // PUT back with only headerCtaEnabled changed, leaving every other deals
+  // setting untouched.
+  const handleToggleSpecialCta = async (nextEnabled) => {
+    const prev = dealsConfig || {};
+    setCtaSaving(true);
+    setDealsConfig({ ...prev, headerCtaEnabled: nextEnabled }); // optimistic
+    try {
+      await apiService.admin.updateDealsConfig({
+        ...prev,
+        headerCtaEnabled: nextEnabled,
+      });
+      setSnackbar({
+        open: true,
+        message: nextEnabled
+          ? "Special Products CTA is now shown in the header"
+          : "Special Products CTA hidden from the header",
+        severity: "success",
+      });
+    } catch (error) {
+      console.error("Error saving Special Products CTA setting:", error);
+      setDealsConfig(prev); // roll back
+      setSnackbar({
+        open: true,
+        message: error.response?.data?.message || error.message || "Failed to update the CTA",
+        severity: "error",
+      });
+    } finally {
+      setCtaSaving(false);
     }
   };
 
@@ -397,6 +441,39 @@ const AdminSettings = () => {
                       </Typography>
                     </Grid>
                   </Grid>
+                </CardContent>
+              </Card>
+            </Grid>
+
+            {/* Special Products CTA — dedicated switch for the prominent gold
+                button in the storefront header. Self-saving (optimistic), so it
+                does not depend on the "Save Changes" bar and does not touch any
+                other setting. */}
+            <Grid item xs={12}>
+              <Card sx={sectionCardSx}>
+                <CardContent>
+                  <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+                    <Icon icon="mdi:star-four-points-outline" style={{ fontSize: 24, marginRight: 8 }} />
+                    <Typography variant="h6">Special Products CTA</Typography>
+                    {ctaSaving && <CircularProgress size={16} sx={{ ml: 1.5 }} />}
+                  </Box>
+                  <Divider sx={{ mb: 2 }} />
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={(dealsConfig?.headerCtaEnabled ?? true) !== false}
+                        onChange={(e) => handleToggleSpecialCta(e.target.checked)}
+                        disabled={ctaSaving || dealsConfig === null}
+                        inputProps={{ "aria-label": "Toggle the Special Products header button" }}
+                      />
+                    }
+                    label="Show the Special Products button in the header navigation"
+                  />
+                  <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 1 }}>
+                    A highlighted gold button on the right of the main menu that links to your
+                    Special Products page. Appears on desktop, tablet and mobile. Saved instantly —
+                    turn it off to hide the button everywhere without changing anything else.
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>

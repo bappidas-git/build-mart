@@ -7,6 +7,11 @@
 // `GET/PUT /deals/config` on Laravel) and is the SINGLE SOURCE OF TRUTH for:
 //
 //   • enabled            — master show/hide for the whole page + its nav entry.
+//   • headerCtaEnabled   — show/hide ONLY the prominent gold "Special Products"
+//                          call-to-action in the header navigation. It is a
+//                          dedicated, independent switch: the admin can promote
+//                          or demote that header CTA without touching the rest
+//                          of the Special Products surface (page, sidebar link).
 //   • hero               — editable banner copy (tag / title / subtitle).
 //   • timer              — the countdown window (see resolveCountdownTarget).
 //   • featuredCouponIds  — which coupons appear in "Active Coupons", IN ORDER.
@@ -45,6 +50,10 @@ export const DEFAULT_DEALS_TIMER = {
 
 export const DEFAULT_DEALS_CONFIG = {
   enabled: true,
+  // The header's gold "Special Products" CTA defaults to ON — it is the
+  // storefront's one deliberate call-to-action. The admin can hide it from
+  // Settings without disabling the rest of the Special Products feature.
+  headerCtaEnabled: true,
   hero: { ...DEFAULT_DEALS_HERO },
   timer: { ...DEFAULT_DEALS_TIMER },
   featuredCouponIds: [],
@@ -79,6 +88,9 @@ export const normalizeDealsConfig = (raw) => {
     ...cfg,
     // `enabled` defaults to true unless explicitly set to false.
     enabled: cfg.enabled !== false,
+    // Header CTA also defaults to true unless explicitly set to false, so an
+    // older db.json / partial API response still surfaces the CTA.
+    headerCtaEnabled: cfg.headerCtaEnabled !== false,
     hero: {
       tag: hero.tag ?? DEFAULT_DEALS_HERO.tag,
       title: hero.title ?? DEFAULT_DEALS_HERO.title,

@@ -72,8 +72,10 @@ const Header = () => {
   // header's icon/label/semantics change to "Enquiry List" — the data is untouched.
   const { getCartItemCount, isCartOpen, setIsCartOpen } = useCart();
   const { getWishlistCount } = useWishlist();
-  // The "Special Products" entry is hidden when the admin turns that page off.
-  const { enabled: dealsEnabled } = useDealsConfig();
+  // The header's gold "Special Products" CTA has its own dedicated admin switch
+  // (Settings → General → Special Products CTA), independent of the master
+  // Special Products page toggle — so it can be promoted or hidden on its own.
+  const { headerCtaEnabled } = useDealsConfig();
   // Top-bar phone follows admin Settings → General (not a hardcoded constant).
   const { phone: storePhone, telHref: storeTelHref } = useStoreContact();
   const isMobile = useMediaQuery("(max-width:768px)");
@@ -174,10 +176,10 @@ const Header = () => {
 
   // The Special Products CTA — the storefront's one deliberate gold accent
   // control. It now renders on EVERY breakpoint (the admin's Special Products
-  // toggle should reach phone users too, not just desktop). Built once and
+  // CTA toggle should reach phone users too, not just desktop). Built once and
   // placed either at the right end of the desktop/tablet nav or as the leading,
   // pinned chip on the mobile strip.
-  const specialCta = dealsEnabled ? (
+  const specialCta = headerCtaEnabled ? (
     <Link
       to="/special-offers"
       className={`${styles.specialCta} ${isMobile ? styles.specialCtaMobile : ""}`}
@@ -190,7 +192,7 @@ const Header = () => {
 
   // The nav bar now also appears on mobile when only the Special Products CTA is
   // present (no curated categories), so the CTA is never hidden on phones.
-  const showNavBar = !isMobile || menuCategories.length > 0 || dealsEnabled;
+  const showNavBar = !isMobile || menuCategories.length > 0 || headerCtaEnabled;
 
   return (
     <>
@@ -458,7 +460,7 @@ const Header = () => {
         className={styles.headerSpacer}
         style={{
           height: isMobile
-            ? menuCategories.length > 0 || dealsEnabled
+            ? menuCategories.length > 0 || headerCtaEnabled
               ? 100
               : 60
             : isTablet
