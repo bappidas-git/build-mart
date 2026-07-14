@@ -173,7 +173,7 @@
 .filterContentMobile {}
 
 .filterSection {
-  padding: 14px 0;
+  padding: 4px 0;
   border-bottom: 1px solid var(--border-light);
 }
 
@@ -181,21 +181,77 @@
   border-bottom: none;
 }
 
+/* Collapsible section header — a full-width button that toggles its body. */
+.filterSectionHeader {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-primary);
+  text-align: left;
+  border-radius: var(--radius-sm);
+  transition: color 0.15s;
+}
+
+.filterSectionHeader:hover .filterTitle {
+  color: var(--accent);
+}
+
+.filterSectionHeader:focus-visible {
+  outline: none;
+  box-shadow: var(--sf-shadow-focus);
+}
+
 .filterTitle {
   font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.3px;
-  margin: 0 0 10px;
+  margin: 0;
   color: var(--text-primary);
+  transition: color 0.15s;
+}
+
+.sectionChevron {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transform: rotate(-90deg);
+  transition: transform 0.22s ease;
+}
+
+.sectionChevronOpen {
+  transform: rotate(0deg);
+}
+
+.filterSectionBody {
+  padding: 0 2px 12px;
+  animation: filterSectionReveal 0.2s ease;
+}
+
+@keyframes filterSectionReveal {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sectionChevron { transition: none; }
+  .filterSectionBody { animation: none; }
 }
 
 .filterList {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  max-height: 180px;
+  gap: 2px;
+  max-height: 200px;
   overflow-y: auto;
+  /* room for the hover/checked pill background so it isn't clipped by the scroll */
+  margin: 0 -6px;
+  padding: 2px 6px;
 }
 
 .filterList::-webkit-scrollbar {
@@ -212,16 +268,27 @@
 .radioLabel {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   cursor: pointer;
   font-size: 13px;
-  padding: 3px 0;
+  padding: 7px 8px;
+  border-radius: var(--radius-sm);
   color: var(--text-primary);
+  transition: background 0.15s, color 0.15s;
 }
 
 .checkboxLabel:hover,
 .radioLabel:hover {
+  background: var(--accent-bg);
   color: var(--accent);
+}
+
+/* Selected row — subtle tint + accent text so the active facets read at a glance */
+.checkboxLabelChecked,
+.radioLabelChecked {
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 600;
 }
 
 .checkbox,
@@ -233,6 +300,12 @@
   flex-shrink: 0;
 }
 
+.checkbox:focus-visible,
+.radio:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
 .checkboxText {
   flex: 1;
   line-height: 1.3;
@@ -240,27 +313,54 @@
 
 .filterCount {
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
   flex-shrink: 0;
+  min-width: 20px;
+  text-align: center;
+  padding: 3px 7px;
+  border-radius: var(--radius-pill);
+  background: var(--border-light);
+}
+
+.checkboxLabelChecked .filterCount {
+  background: var(--accent);
+  color: var(--sf-color-primary-contrast);
 }
 
 /* Price Range */
 .priceInputRow {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 10px;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .priceInput {
-  width: 70px;
-  padding: 6px 8px;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  padding: 8px 10px;
   border: 1px solid var(--input-border);
   border-radius: var(--radius-sm);
   font-size: 13px;
   background: var(--input-bg);
   color: var(--text-primary);
   outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+/* Strip the number spinner so the two inputs sit flush and narrow */
+.priceInput::-webkit-outer-spin-button,
+.priceInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.priceInput {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .priceInput:focus {
@@ -280,11 +380,13 @@
 
 .priceSeparator {
   color: var(--text-muted);
-  font-size: 12px;
+  font-size: 13px;
+  flex-shrink: 0;
 }
 
 .priceGoBtn {
-  padding: 6px 14px;
+  flex-shrink: 0;
+  padding: 8px 16px;
   background: var(--btn-primary-bg);
   color: var(--btn-primary-text);
   border: none;
@@ -292,31 +394,60 @@
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+  transition: background 0.15s;
 }
 
 .priceGoBtn:hover {
   background: var(--btn-primary-hover);
 }
 
+.priceGoBtn:focus-visible {
+  outline: none;
+  box-shadow: var(--sf-shadow-focus);
+}
+
+/* Quick price bands — selectable pill chips (were plain underline links) */
 .quickRanges {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .quickRangeBtn {
-  background: none;
-  border: none;
-  color: var(--link-color);
-  font-size: 13px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
   cursor: pointer;
-  text-align: left;
-  padding: 3px 0;
+  text-align: center;
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  transition: all 0.15s;
 }
 
 .quickRangeBtn:hover {
-  color: var(--link-hover);
-  text-decoration: underline;
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.quickRangeBtn:focus-visible {
+  outline: none;
+  box-shadow: var(--sf-shadow-focus);
+}
+
+.quickRangeBtnActive {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--sf-color-primary-contrast);
+  font-weight: 600;
+}
+
+.quickRangeBtnActive:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: var(--sf-color-primary-contrast);
 }
 
 /* Rating */
@@ -404,6 +535,104 @@
 .clearAllBtn:hover {
   background: rgba(204, 12, 57, 0.06);
   border-color: var(--discount-text);
+}
+
+.clearAllBtn:focus-visible {
+  outline: none;
+  box-shadow: var(--sf-shadow-focus);
+}
+
+/* ==========================================================================
+   Active-filter chips
+   ========================================================================== */
+.activeFilters {
+  padding: 4px 0 12px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.activeFiltersTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.activeFiltersLabel {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--text-muted);
+}
+
+.activeFiltersClear {
+  background: none;
+  border: none;
+  color: var(--link-color);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+}
+
+.activeFiltersClear:hover {
+  color: var(--link-hover);
+  text-decoration: underline;
+}
+
+.activeFiltersClear:focus-visible {
+  outline: none;
+  box-shadow: var(--sf-shadow-focus);
+}
+
+.activeFilterChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.activeFilterChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 5px 8px 5px 11px;
+  background: var(--accent-bg);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.activeFilterChip:hover {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.activeFilterChip:focus-visible {
+  outline: none;
+  box-shadow: var(--sf-shadow-focus);
+}
+
+.activeFilterChipLabel {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 150px;
+}
+
+.activeFilterChip svg {
+  flex-shrink: 0;
+  opacity: 0.75;
+}
+
+.activeFilterChip:hover svg {
+  opacity: 1;
 }
 
 /* ==========================================================================
@@ -974,6 +1203,44 @@
   .pageBtn {
     min-width: var(--sf-tap-target);
     min-height: var(--sf-tap-target);
+  }
+
+  /* --- Filter panel on mobile (rendered inside the bottom sheet only) --- */
+  /* Let the whole sheet body scroll as one surface instead of trapping each
+     facet in its own tiny 200px scroller (awkward nested scrolling on touch). */
+  .filterList {
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  /* Comfortable ≥44px touch targets for every filter control (WCAG 2.5.5). */
+  .filterSectionHeader {
+    padding: 14px 4px;
+  }
+
+  .checkboxLabel,
+  .radioLabel {
+    padding: 11px 8px;
+  }
+
+  .quickRangeBtn {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .priceInput {
+    padding: 11px 12px;
+    /* iOS zooms the page when a focused input's font is < 16px — pin to 16. */
+    font-size: 16px;
+  }
+
+  .priceGoBtn {
+    padding: 11px 18px;
+  }
+
+  .activeFilterChip {
+    padding: 8px 10px 8px 13px;
+    font-size: 13px;
   }
 }
 
