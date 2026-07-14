@@ -379,26 +379,95 @@
   color: var(--sf-color-primary);
 }
 
-/* ---- Special Products link (gold accent, sparingly) ---- */
-.specialLink {
-  display: flex;
+/* ---- Special Products CTA (the one deliberate gold accent control) ----
+   A filled gold pill that stands out from the neutral category links and from
+   the blue "All Categories" button, reading as the storefront's single
+   "discover our curated picks" call-to-action. Dark ink on gold keeps text
+   contrast comfortably AA in both light and dark mode — the button carries its
+   own background, so it is mode-independent. Anchored to the right end of the
+   desktop/tablet nav via margin-left:auto. */
+.specialCta {
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: var(--sf-space-1);
-  height: 30px;
-  padding: 0 var(--sf-space-3);
+  gap: var(--sf-space-2);
+  height: 32px;
+  padding: 0 var(--sf-space-4);
   margin-left: auto;
-  border-radius: var(--sf-radius-md);
+  border-radius: var(--sf-radius-pill);
+  background: var(--sf-gradient-secondary);
+  color: var(--sf-color-on-secondary);
   font-size: var(--sf-text-sm);
-  font-weight: var(--sf-font-semibold);
-  color: var(--sf-color-secondary);
+  font-weight: var(--sf-font-bold);
   text-decoration: none;
   white-space: nowrap;
-  transition: background var(--sf-transition-fast);
+  flex-shrink: 0;
+  overflow: hidden; /* clip the shine sweep to the pill */
+  box-shadow: 0 2px 8px rgba(244, 135, 31, 0.3);
+  transition: transform var(--sf-transition-fast),
+    box-shadow var(--sf-transition-fast), background var(--sf-transition-fast);
+}
+
+.specialCta:hover {
+  background: var(--sf-gradient-secondary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(244, 135, 31, 0.42);
+}
+
+.specialCta:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(244, 135, 31, 0.3);
+}
+
+.specialCtaIcon {
+  font-size: 18px !important;
   flex-shrink: 0;
 }
 
-.specialLink:hover {
-  background: rgba(250, 156, 76, 0.12);
+.specialCtaText {
+  line-height: 1;
+}
+
+/* Slow, periodic shine sweep — draws the eye without being noisy. Disabled for
+   users who prefer reduced motion (see accessibility section). */
+.specialCta::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%
+  );
+  transform: skewX(-18deg);
+  animation: specialCtaShine 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes specialCtaShine {
+  0%,
+  55% {
+    left: -60%;
+  }
+  85%,
+  100% {
+    left: 130%;
+  }
+}
+
+/* Mobile variant: the CTA leads the scrollable chip strip. It drops the
+   auto-right margin, gains a trailing gap before the first category chip, and
+   uses the compact chip type scale. */
+.specialCtaMobile {
+  height: 32px;
+  margin-left: 0;
+  margin-right: var(--sf-space-2);
+  padding: 0 var(--sf-space-3);
+  font-size: var(--sf-text-xs);
 }
 
 /* ==========================================================================
@@ -554,10 +623,21 @@
 
 .allCategoriesBtn:focus-visible,
 .navLink:focus-visible,
-.specialLink:focus-visible,
+.specialCta:focus-visible,
 .searchBar:focus-visible {
   outline: 2px solid var(--sf-color-primary);
   outline-offset: 2px;
+}
+
+/* Honour reduced-motion: keep the CTA, drop the animated shine sweep. */
+@media (prefers-reduced-motion: reduce) {
+  .specialCta::after {
+    animation: none;
+    opacity: 0;
+  }
+  .specialCta:hover {
+    transform: none;
+  }
 }
 
 /* ==========================================================================

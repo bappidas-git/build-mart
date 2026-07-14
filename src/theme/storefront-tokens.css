@@ -35,6 +35,11 @@
   --sf-color-accent: #fa9c4c;
   --sf-gradient-primary: linear-gradient(135deg, #1885d8 0%, #1069b0 100%);
   --sf-gradient-primary-hover: linear-gradient(135deg, #1069b0 0%, #1885d8 100%);
+  /* Gold accent gradient for the single deliberate "special" control. It carries
+     its own background, so the same values read correctly in light and dark. */
+  --sf-gradient-secondary: linear-gradient(135deg, #fbae66 0%, #f4871f 100%);
+  --sf-gradient-secondary-hover: linear-gradient(135deg, #f4871f 0%, #fbae66 100%);
+  --sf-color-on-secondary: #241704; /* dark ink for text/icons on gold (AA+) */
 
   /* ---- Surfaces & text -------------------------------------------------- */
   --sf-color-bg: #f4f7fb;
@@ -153,6 +158,9 @@ body.dark {
   --sf-color-accent: #fa9c4c;
   --sf-gradient-primary: linear-gradient(135deg, #4ea3e3 0%, #1885d8 100%);
   --sf-gradient-primary-hover: linear-gradient(135deg, #1885d8 0%, #4ea3e3 100%);
+  --sf-gradient-secondary: linear-gradient(135deg, #fbae66 0%, #f4871f 100%);
+  --sf-gradient-secondary-hover: linear-gradient(135deg, #f4871f 0%, #fbae66 100%);
+  --sf-color-on-secondary: #241704;
 
   --sf-color-bg: #0b1a2e;
   --sf-color-surface: #122238;
