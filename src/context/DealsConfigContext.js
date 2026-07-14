@@ -13,15 +13,17 @@ import { normalizeDealsConfig, DEFAULT_DEALS_CONFIG } from "../utils/dealsConfig
 // DealsConfigContext
 // =============================================================================
 // Single shared source for the admin-managed Special Offers configuration on the
-// storefront. The nav (Header / SidebarMenu / Footer) reads `enabled` to show or
-// hide the "Today's Deals" entry, and the Special Offers page reads the full
-// `config`. Like the category menu, it refetches when the tab regains focus so
-// changes the admin makes appear without a hard reload.
+// storefront. The nav (SidebarMenu / Footer) reads `enabled` to show or hide the
+// "Special Products" entry, the Header reads `headerCtaEnabled` for its dedicated
+// gold CTA, and the Special Offers page reads the full `config`. Like the
+// category menu, it refetches when the tab regains focus so changes the admin
+// makes appear without a hard reload.
 // =============================================================================
 
 const DealsConfigContext = createContext({
   config: DEFAULT_DEALS_CONFIG,
   enabled: true,
+  headerCtaEnabled: true,
   loading: true,
   refresh: () => {},
 });
@@ -60,6 +62,8 @@ export const DealsConfigProvider = ({ children }) => {
   const value = {
     config,
     enabled: config.enabled !== false,
+    // Dedicated switch for the header's Special Products CTA — read by Header.
+    headerCtaEnabled: config.headerCtaEnabled !== false,
     loading,
     refresh: load,
   };
