@@ -224,6 +224,17 @@ const ChevronRight = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 6 15 12 9 18" /></svg>
 );
 
+// Chevron used by the collapsible filter-section headers. `className` lets the
+// caller rotate it (open ↔ closed) via a CSS transition.
+const ChevronDown = ({ className }) => (
+  <svg className={className} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><polyline points="6 9 12 15 18 9" /></svg>
+);
+
+// Small × used inside the removable active-filter chips.
+const ChipCloseIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+);
+
 // ---------------------------------------------------------------------------
 // Main Component
 // ---------------------------------------------------------------------------
@@ -244,6 +255,15 @@ const Products = () => {
   // ---- UI state ----
   const [viewMode, setViewMode] = useState("grid"); // grid | list
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  // Collapsed filter sections (accordion). Keyed by section id; a truthy value
+  // means collapsed. Default {} → every section starts expanded, so first paint
+  // shows exactly what it always did — the accordion is purely additive. State
+  // is shared by the desktop sidebar and the mobile sheet (both call
+  // renderFilters), so a section a shopper collapses stays collapsed on both.
+  const [collapsedSections, setCollapsedSections] = useState({});
+  const toggleSection = useCallback((id) => {
+    setCollapsedSections((prev) => ({ ...prev, [id]: !prev[id] }));
+  }, []);
 
   // ---- Refs ----
   const mainRef = useRef(null); // top of results region, for page-change scroll
@@ -702,6 +722,15 @@ const Products = () => {
     syncUrlParams({ min_price: minStr, max_price: maxStr, page: 1 });
   }, [minPrice, maxPrice, syncUrlParams]);
 
+  // Clear just the price bound (used by its active-filter chip and the quick-range
+  // "active" toggle) — leaves every other filter untouched, unlike Clear All.
+  const clearPrice = useCallback(() => {
+    setMinPrice("");
+    setMaxPrice("");
+    setCurrentPage(1);
+    syncUrlParams({ min_price: "", max_price: "", page: 1 });
+  }, [syncUrlParams]);
+
   const handleSortChange = useCallback(
     (value) => {
       setSortBy(value);
@@ -799,6 +828,60 @@ const Products = () => {
     [categories]
   );
 
+  // ---- Active-filter chips ----
+  // A flat, removable summary of every constraint currently narrowing the result
+  // set. Each chip carries the SAME per-facet handler the control itself uses, so
+  // removing a chip is identical to un-ticking that filter (no new code paths).
+  // Sort is deliberately excluded — it's an ordering, not a filter.
+  const activeFilterChips = useMemo(() => {
+    const chips = [];
+    selectedCategories.forEach((token) => {
+      chips.push({
+        key: `cat-${token}`,
+        label: getCategoryName(token),
+        onRemove: () => handleCategoryToggle(token),
+      });
+    });
+
+    const money = (n) => `${currencySymbol}${Number(n).toLocaleString("en-US")}`;
+    const hasMin = minPrice !== "" && Number(minPrice) > 0;
+    const hasMax = maxPrice !== "" && Number(maxPrice) > 0;
+    if (hasMin || hasMax) {
+      const label = hasMin && hasMax
+        ? `${money(minPrice)} – ${money(maxPrice)}`
+        : hasMin
+        ? `Above ${money(minPrice)}`
+        : `Under ${money(maxPrice)}`;
+      chips.push({ key: "price", label, onRemove: clearPrice });
+    }
+
+    if (specialOnly) {
+      chips.push({ key: "special", label: "Special Products", onRemove: handleSpecialToggle });
+    }
+    selectedUnitTypes.forEach((u) => {
+      chips.push({ key: `unit-${u}`, label: unitTypeLabel(u), onRemove: () => handleUnitTypeToggle(u) });
+    });
+    if (minRating > 0) {
+      chips.push({ key: "rating", label: `${minRating}★ & up`, onRemove: () => handleRatingChange(0) });
+    }
+    if (minDiscount > 0) {
+      chips.push({ key: "discount", label: `${minDiscount}% off`, onRemove: () => handleDiscountChange(0) });
+    }
+    if (inStockOnly) {
+      chips.push({ key: "instock", label: "In Stock", onRemove: handleInStockToggle });
+    }
+    selectedBrands.forEach((b) => {
+      chips.push({ key: `brand-${b}`, label: b, onRemove: () => handleBrandToggle(b) });
+    });
+    return chips;
+  }, [
+    selectedCategories, minPrice, maxPrice, specialOnly, selectedUnitTypes,
+    minRating, minDiscount, inStockOnly, selectedBrands, currencySymbol,
+    getCategoryName, handleCategoryToggle, clearPrice, handleSpecialToggle,
+    handleUnitTypeToggle, handleRatingChange, handleDiscountChange,
+    handleInStockToggle, handleBrandToggle,
+  ]);
+
   // ---- Breadcrumb ----
   const breadcrumbItems = useMemo(() => {
     const items = [
@@ -828,206 +911,295 @@ const Products = () => {
   }, [safePage, totalPages]);
 
   // ---- Filter Sidebar JSX (reused for desktop + mobile) ----
-  const renderFilters = (isMobile = false) => (
-    <div className={`${styles.filterContent} ${isMobile ? styles.filterContentMobile : ""}`}>
-      {/* Categories */}
-      <div className={styles.filterSection}>
-        <h4 className={styles.filterTitle}>Categories</h4>
-        <div className={styles.filterList}>
-          {orderedCategories.ordered.map((cat) => (
-            <label
-              key={cat.id || cat.slug}
-              className={styles.checkboxLabel}
-              style={orderedCategories.depthOf(cat.id) ? { paddingLeft: orderedCategories.depthOf(cat.id) * 16 } : undefined}
-            >
-              <input
-                type="checkbox"
-                checked={selectedCategories.some(
-                  (t) => t === cat.slug || String(t) === String(cat.id)
-                )}
-                onChange={() => handleCategoryToggle(categoryParam(cat))}
-                className={styles.checkbox}
-              />
-              <span className={styles.checkboxText}>{cat.name}</span>
-              <span className={styles.filterCount}>
-                ({categoryCounts.get(String(cat.id)) || 0})
-              </span>
-            </label>
-          ))}
-        </div>
-      </div>
-
-      {/* Special Products — additive curated facet (a badge, not a category) */}
-      {hasSpecialItems && (
+  // A collapsible section shell. `section()` is a plain JSX-returning helper (NOT
+  // a nested component), so React reconciles the controlled price inputs by
+  // position across renders and focus is never lost while typing. The panel id is
+  // suffixed per surface (d/m) so the desktop sidebar and the mobile sheet — both
+  // mounted at once — never share a duplicate id.
+  const renderFilters = (isMobile = false) => {
+    const suffix = isMobile ? "m" : "d";
+    const section = (id, title, children) => {
+      const expanded = !collapsedSections[id];
+      const panelId = `filter-panel-${id}-${suffix}`;
+      return (
         <div className={styles.filterSection}>
-          <h4 className={styles.filterTitle}>Collections</h4>
+          <button
+            type="button"
+            className={styles.filterSectionHeader}
+            onClick={() => toggleSection(id)}
+            aria-expanded={expanded}
+            aria-controls={panelId}
+          >
+            <span className={styles.filterTitle}>{title}</span>
+            <ChevronDown
+              className={`${styles.sectionChevron} ${expanded ? styles.sectionChevronOpen : ""}`}
+            />
+          </button>
+          {expanded && (
+            <div id={panelId} className={styles.filterSectionBody}>
+              {children}
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    return (
+      <div className={`${styles.filterContent} ${isMobile ? styles.filterContentMobile : ""}`}>
+        {/* Active-filter chips — removable summary of every applied constraint */}
+        {activeFilterChips.length > 0 && (
+          <div className={styles.activeFilters}>
+            <div className={styles.activeFiltersTop}>
+              <span className={styles.activeFiltersLabel}>Active filters</span>
+              <button
+                type="button"
+                className={styles.activeFiltersClear}
+                onClick={clearAllFilters}
+              >
+                Clear all
+              </button>
+            </div>
+            <div className={styles.activeFilterChips}>
+              {activeFilterChips.map((chip) => (
+                <button
+                  key={chip.key}
+                  type="button"
+                  className={styles.activeFilterChip}
+                  onClick={chip.onRemove}
+                  aria-label={`Remove filter: ${chip.label}`}
+                >
+                  <span className={styles.activeFilterChipLabel}>{chip.label}</span>
+                  <ChipCloseIcon />
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Categories */}
+        {section(
+          "categories",
+          "Categories",
+          <div className={styles.filterList}>
+            {orderedCategories.ordered.map((cat) => {
+              const checked = selectedCategories.some(
+                (t) => t === cat.slug || String(t) === String(cat.id)
+              );
+              return (
+                <label
+                  key={cat.id || cat.slug}
+                  className={`${styles.checkboxLabel} ${checked ? styles.checkboxLabelChecked : ""}`}
+                  style={orderedCategories.depthOf(cat.id) ? { paddingLeft: orderedCategories.depthOf(cat.id) * 16 } : undefined}
+                >
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={() => handleCategoryToggle(categoryParam(cat))}
+                    className={styles.checkbox}
+                  />
+                  <span className={styles.checkboxText}>{cat.name}</span>
+                  <span className={styles.filterCount}>
+                    {categoryCounts.get(String(cat.id)) || 0}
+                  </span>
+                </label>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Special Products — additive curated facet (a badge, not a category) */}
+        {hasSpecialItems &&
+          section(
+            "collections",
+            "Collections",
+            <label className={styles.toggleLabel}>
+              <span className={styles.checkboxText}>Special Products</span>
+              <button
+                className={`${styles.toggle} ${specialOnly ? styles.toggleOn : ""}`}
+                onClick={handleSpecialToggle}
+                type="button"
+                role="switch"
+                aria-checked={specialOnly}
+                aria-label="Show only Special Products"
+              >
+                <span className={styles.toggleThumb} />
+              </button>
+            </label>
+          )}
+
+        {/* Price Range */}
+        {section(
+          "price",
+          "Price Range",
+          <>
+            <div className={styles.priceInputRow}>
+              <input
+                type="number"
+                inputMode="numeric"
+                min="0"
+                placeholder="Min"
+                value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)}
+                className={styles.priceInput}
+                aria-label="Minimum price"
+              />
+              <span className={styles.priceSeparator}>–</span>
+              <input
+                type="number"
+                inputMode="numeric"
+                min="0"
+                placeholder="Max"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(e.target.value)}
+                className={styles.priceInput}
+                aria-label="Maximum price"
+              />
+              <button className={styles.priceGoBtn} onClick={handlePriceApply} type="button">
+                Go
+              </button>
+            </div>
+            <div className={styles.quickRanges}>
+              {PRICE_RANGES.map((range) => {
+                const rMax = range.max === Infinity ? "" : String(range.max);
+                const isActive = minPrice === String(range.min) && maxPrice === rMax;
+                return (
+                  <button
+                    key={`${range.min}-${range.max}`}
+                    className={`${styles.quickRangeBtn} ${isActive ? styles.quickRangeBtnActive : ""}`}
+                    onClick={() => (isActive ? clearPrice() : handlePriceRangeClick(range))}
+                    type="button"
+                    aria-pressed={isActive}
+                  >
+                    {priceRangeLabel(range, currencySymbol)}
+                  </button>
+                );
+              })}
+            </div>
+            {priceBoundActive && hasOnEnquiryItems && (
+              <p className={styles.priceNote}>
+                Price-on-Enquiry items are hidden while a price range is applied.
+              </p>
+            )}
+          </>
+        )}
+
+        {/* Rating */}
+        {section(
+          "rating",
+          "Customer Rating",
+          <div className={styles.filterList}>
+            {RATING_OPTIONS.map((r) => (
+              <label key={r} className={`${styles.radioLabel} ${minRating === r ? styles.radioLabelChecked : ""}`}>
+                <input
+                  type="radio"
+                  name={`rating-${suffix}`}
+                  checked={minRating === r}
+                  onChange={() => handleRatingChange(r)}
+                  onClick={() => { if (minRating === r) handleRatingChange(0); }}
+                  className={styles.radio}
+                />
+                <span className={styles.ratingOption}>
+                  <RatingStars value={r} /> <span className={styles.ratingPlus}>{r}+ & up</span>
+                </span>
+              </label>
+            ))}
+          </div>
+        )}
+
+        {/* Discount */}
+        {section(
+          "discount",
+          "Discount",
+          <div className={styles.filterList}>
+            {DISCOUNT_OPTIONS.map((d) => (
+              <label key={d} className={`${styles.radioLabel} ${minDiscount === d ? styles.radioLabelChecked : ""}`}>
+                <input
+                  type="radio"
+                  name={`discount-${suffix}`}
+                  checked={minDiscount === d}
+                  onChange={() => handleDiscountChange(d)}
+                  onClick={() => { if (minDiscount === d) handleDiscountChange(0); }}
+                  className={styles.radio}
+                />
+                <span className={styles.checkboxText}>{d}% or more</span>
+              </label>
+            ))}
+          </div>
+        )}
+
+        {/* Availability */}
+        {section(
+          "availability",
+          "Availability",
           <label className={styles.toggleLabel}>
-            <span className={styles.checkboxText}>Special Products</span>
+            <span className={styles.checkboxText}>In Stock Only</span>
             <button
-              className={`${styles.toggle} ${specialOnly ? styles.toggleOn : ""}`}
-              onClick={handleSpecialToggle}
+              className={`${styles.toggle} ${inStockOnly ? styles.toggleOn : ""}`}
+              onClick={handleInStockToggle}
               type="button"
               role="switch"
-              aria-checked={specialOnly}
-              aria-label="Show only Special Products"
+              aria-checked={inStockOnly}
             >
               <span className={styles.toggleThumb} />
             </button>
           </label>
-        </div>
-      )}
+        )}
 
-      {/* Price Range */}
-      <div className={styles.filterSection}>
-        <h4 className={styles.filterTitle}>Price Range</h4>
-        <div className={styles.priceInputRow}>
-          <input
-            type="number"
-            placeholder="Min"
-            value={minPrice}
-            onChange={(e) => setMinPrice(e.target.value)}
-            className={styles.priceInput}
-          />
-          <span className={styles.priceSeparator}>to</span>
-          <input
-            type="number"
-            placeholder="Max"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(e.target.value)}
-            className={styles.priceInput}
-          />
-          <button className={styles.priceGoBtn} onClick={handlePriceApply}>
-            Go
+        {/* Brand */}
+        {availableBrands.length > 0 &&
+          section(
+            "brand",
+            "Brand",
+            <div className={styles.filterList}>
+              {availableBrands.map((brand) => {
+                const checked = selectedBrands.includes(brand);
+                return (
+                  <label key={brand} className={`${styles.checkboxLabel} ${checked ? styles.checkboxLabelChecked : ""}`}>
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => handleBrandToggle(brand)}
+                      className={styles.checkbox}
+                    />
+                    <span className={styles.checkboxText}>{brand}</span>
+                  </label>
+                );
+              })}
+            </div>
+          )}
+
+        {/* Unit type — lightweight building-material attribute facet */}
+        {availableUnitTypes.length > 0 &&
+          section(
+            "unit",
+            "Unit Type",
+            <div className={styles.filterList}>
+              {availableUnitTypes.map((unit) => {
+                const checked = selectedUnitTypes.includes(unit);
+                return (
+                  <label key={unit} className={`${styles.checkboxLabel} ${checked ? styles.checkboxLabelChecked : ""}`}>
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => handleUnitTypeToggle(unit)}
+                      className={styles.checkbox}
+                    />
+                    <span className={styles.checkboxText}>{unitTypeLabel(unit)}</span>
+                  </label>
+                );
+              })}
+            </div>
+          )}
+
+        {/* Clear All */}
+        {hasActiveFilters && (
+          <button className={styles.clearAllBtn} onClick={clearAllFilters} type="button">
+            Clear All Filters
           </button>
-        </div>
-        <div className={styles.quickRanges}>
-          {PRICE_RANGES.map((range) => {
-            const label = priceRangeLabel(range, currencySymbol);
-            return (
-              <button
-                key={`${range.min}-${range.max}`}
-                className={styles.quickRangeBtn}
-                onClick={() => handlePriceRangeClick(range)}
-              >
-                {label}
-              </button>
-            );
-          })}
-        </div>
-        {priceBoundActive && hasOnEnquiryItems && (
-          <p className={styles.priceNote}>
-            Price-on-Enquiry items are hidden while a price range is applied.
-          </p>
         )}
       </div>
-
-      {/* Rating */}
-      <div className={styles.filterSection}>
-        <h4 className={styles.filterTitle}>Customer Rating</h4>
-        <div className={styles.filterList}>
-          {RATING_OPTIONS.map((r) => (
-            <label key={r} className={styles.radioLabel}>
-              <input
-                type="radio"
-                name="rating"
-                checked={minRating === r}
-                onChange={() => handleRatingChange(r)}
-                onClick={() => { if (minRating === r) handleRatingChange(0); }}
-                className={styles.radio}
-              />
-              <span className={styles.ratingOption}>
-                <RatingStars value={r} /> <span className={styles.ratingPlus}>{r}+ & up</span>
-              </span>
-            </label>
-          ))}
-        </div>
-      </div>
-
-      {/* Discount */}
-      <div className={styles.filterSection}>
-        <h4 className={styles.filterTitle}>Discount</h4>
-        <div className={styles.filterList}>
-          {DISCOUNT_OPTIONS.map((d) => (
-            <label key={d} className={styles.radioLabel}>
-              <input
-                type="radio"
-                name="discount"
-                checked={minDiscount === d}
-                onChange={() => handleDiscountChange(d)}
-                onClick={() => { if (minDiscount === d) handleDiscountChange(0); }}
-                className={styles.radio}
-              />
-              <span className={styles.checkboxText}>{d}% or more</span>
-            </label>
-          ))}
-        </div>
-      </div>
-
-      {/* Availability */}
-      <div className={styles.filterSection}>
-        <h4 className={styles.filterTitle}>Availability</h4>
-        <label className={styles.toggleLabel}>
-          <span className={styles.checkboxText}>In Stock Only</span>
-          <button
-            className={`${styles.toggle} ${inStockOnly ? styles.toggleOn : ""}`}
-            onClick={handleInStockToggle}
-            type="button"
-            role="switch"
-            aria-checked={inStockOnly}
-          >
-            <span className={styles.toggleThumb} />
-          </button>
-        </label>
-      </div>
-
-      {/* Brand */}
-      {availableBrands.length > 0 && (
-        <div className={styles.filterSection}>
-          <h4 className={styles.filterTitle}>Brand</h4>
-          <div className={styles.filterList}>
-            {availableBrands.map((brand) => (
-              <label key={brand} className={styles.checkboxLabel}>
-                <input
-                  type="checkbox"
-                  checked={selectedBrands.includes(brand)}
-                  onChange={() => handleBrandToggle(brand)}
-                  className={styles.checkbox}
-                />
-                <span className={styles.checkboxText}>{brand}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Unit type — lightweight building-material attribute facet */}
-      {availableUnitTypes.length > 0 && (
-        <div className={styles.filterSection}>
-          <h4 className={styles.filterTitle}>Unit Type</h4>
-          <div className={styles.filterList}>
-            {availableUnitTypes.map((unit) => (
-              <label key={unit} className={styles.checkboxLabel}>
-                <input
-                  type="checkbox"
-                  checked={selectedUnitTypes.includes(unit)}
-                  onChange={() => handleUnitTypeToggle(unit)}
-                  className={styles.checkbox}
-                />
-                <span className={styles.checkboxText}>{unitTypeLabel(unit)}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Clear All */}
-      {hasActiveFilters && (
-        <button className={styles.clearAllBtn} onClick={clearAllFilters}>
-          Clear All Filters
-        </button>
-      )}
-    </div>
-  );
+    );
+  };
 
   // ---- Product card ----
   // Delegates to the ONE canonical storefront ProductCard (single source of
