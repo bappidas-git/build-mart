@@ -11,6 +11,9 @@
 # production
 /build
 
+# user-uploaded files (resumes) — never commit applicant documents
+/public/uploads
+
 # misc
 .DS_Store
 .env.local

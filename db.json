@@ -5992,5 +5992,3177 @@
       }
     ],
     "updatedAt": "2026-07-13T00:00:00.000Z"
+  },
+  "careerDepartments": [
+    {
+      "id": 1,
+      "name": "Sales & Business Development",
+      "slug": "sales",
+      "icon": "mdi:handshake-outline",
+      "description": "Counter sales, field sales and dealer relationships.",
+      "isActive": true,
+      "sortOrder": 1,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z"
+    },
+    {
+      "id": 2,
+      "name": "Store Operations",
+      "slug": "store-operations",
+      "icon": "mdi:storefront-outline",
+      "description": "Running the store floor, stock and displays.",
+      "isActive": true,
+      "sortOrder": 2,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z"
+    },
+    {
+      "id": 3,
+      "name": "Logistics & Delivery",
+      "slug": "logistics",
+      "icon": "mdi:truck-outline",
+      "description": "Warehouse, dispatch and last-mile delivery.",
+      "isActive": true,
+      "sortOrder": 3,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z"
+    },
+    {
+      "id": 4,
+      "name": "Accounts & Finance",
+      "slug": "accounts",
+      "icon": "mdi:calculator-variant-outline",
+      "description": "Billing, GST, ledgers and payments.",
+      "isActive": true,
+      "sortOrder": 4,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z"
+    },
+    {
+      "id": 5,
+      "name": "Marketing",
+      "slug": "marketing",
+      "icon": "mdi:bullhorn-outline",
+      "description": "Digital marketing, catalogue and brand.",
+      "isActive": true,
+      "sortOrder": 5,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z"
+    },
+    {
+      "id": 6,
+      "name": "Customer Support",
+      "slug": "customer-support",
+      "icon": "mdi:headset",
+      "description": "Enquiry handling and after-sales care.",
+      "isActive": true,
+      "sortOrder": 6,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z"
+    }
+  ],
+  "careerJobs": [
+    {
+      "status": "open",
+      "featured": true,
+      "urgent": false,
+      "showSalary": true,
+      "salaryPeriod": "month",
+      "workMode": "onsite",
+      "employmentType": "full_time",
+      "location": "Nagaon, Assam",
+      "openings": 2,
+      "scheduledAt": null,
+      "isActive": true,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z",
+      "id": 1,
+      "title": "Senior Sales Executive — Building Materials",
+      "slug": "senior-sales-executive-building-materials",
+      "departmentId": 1,
+      "experienceMin": 2,
+      "experienceMax": 5,
+      "salaryMin": 18000,
+      "salaryMax": 28000,
+      "postedAt": "2026-07-10T00:00:00.000Z",
+      "lastDateToApply": "2026-08-31",
+      "summary": "Own the counter and field sales cycle for tiles, doors, cement and more — from first enquiry to closed order.",
+      "description": "North East Build Mart is one of the fastest-growing building-materials suppliers in Assam, serving builders, contractors and homeowners across the North East.\n\nAs a Senior Sales Executive you will be the face of the store: understanding what a customer is building, recommending the right materials, preparing quotations and following enquiries through to a closed order. You will work closely with the store operations and logistics teams so every promise made at the counter is kept at delivery.\n\nThis role suits someone who knows building materials (or learns products fast), enjoys talking to contractors and site engineers, and is motivated by targets with honest incentives.",
+      "skills": [
+        "B2B & counter sales",
+        "Building-materials product knowledge",
+        "Quotation preparation",
+        "Negotiation",
+        "Assamese & Hindi fluency",
+        "Basic Excel"
+      ],
+      "responsibilities": [
+        "Handle walk-in customers and inbound enquiries; convert them into orders",
+        "Prepare and follow up quotations for contractors, builders and dealers",
+        "Maintain relationships with repeat buyers and site engineers",
+        "Coordinate with logistics for delivery commitments and with accounts for payments",
+        "Meet monthly sales targets and report the pipeline to the store manager"
+      ],
+      "qualifications": [
+        "Graduate in any discipline (12th pass with strong sales record also considered)",
+        "2–5 years of sales experience — building materials, hardware or cement preferred",
+        "Fluent in Assamese and Hindi; working English",
+        "Comfortable with WhatsApp, email and basic spreadsheets"
+      ],
+      "benefits": [
+        "Fixed salary + monthly sales incentives",
+        "Yearly bonus",
+        "Product & brand training",
+        "Mobile allowance",
+        "Growth path to Sales Manager"
+      ],
+      "applicationForm": {
+        "fields": [
+          {
+            "id": "std_fullName",
+            "key": "fullName",
+            "type": "text",
+            "label": "Full Name",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "Your full name",
+            "helpText": "",
+            "options": [],
+            "maxLength": 80,
+            "showIf": null
+          },
+          {
+            "id": "std_email",
+            "key": "email",
+            "type": "email",
+            "label": "Email Address",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "you@example.com",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_phone",
+            "key": "phone",
+            "type": "phone",
+            "label": "Mobile Number",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "+91 XXXXX XXXXX",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_altPhone",
+            "key": "altPhone",
+            "type": "phone",
+            "label": "Alternate Mobile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "Optional second number",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_city",
+            "key": "city",
+            "type": "text",
+            "label": "Current City",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. Nagaon",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_state",
+            "key": "state",
+            "type": "text",
+            "label": "State",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. Assam",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_country",
+            "key": "country",
+            "type": "text",
+            "label": "Country",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. India",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentCompany",
+            "key": "currentCompany",
+            "type": "text",
+            "label": "Current Company",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Where do you work now?",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentDesignation",
+            "key": "currentDesignation",
+            "type": "text",
+            "label": "Current Designation",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Your current role",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_experienceYears",
+            "key": "experienceYears",
+            "type": "number",
+            "label": "Years of Experience",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. 3",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentSalary",
+            "key": "currentSalary",
+            "type": "text",
+            "label": "Current Salary (Monthly)",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. ₹18,000",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_expectedSalary",
+            "key": "expectedSalary",
+            "type": "text",
+            "label": "Expected Salary (Monthly)",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. ₹22,000",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_noticePeriod",
+            "key": "noticePeriod",
+            "type": "select",
+            "label": "Notice Period",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [
+              "Immediate",
+              "Up to 15 days",
+              "1 month",
+              "2 months",
+              "3+ months"
+            ],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_portfolioUrl",
+            "key": "portfolioUrl",
+            "type": "url",
+            "label": "Portfolio URL",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_linkedinUrl",
+            "key": "linkedinUrl",
+            "type": "url",
+            "label": "LinkedIn Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://linkedin.com/in/…",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_githubUrl",
+            "key": "githubUrl",
+            "type": "url",
+            "label": "GitHub Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://github.com/…",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_coverLetter",
+            "key": "coverLetter",
+            "type": "textarea",
+            "label": "Cover Letter",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Tell us why you're a great fit for this role…",
+            "helpText": "",
+            "options": [],
+            "maxLength": 2000,
+            "showIf": null
+          },
+          {
+            "id": "std_resume",
+            "key": "resume",
+            "type": "file",
+            "label": "Resume / CV",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "",
+            "helpText": "PDF, DOC or DOCX — up to 10 MB",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "cf_1",
+            "key": "languages",
+            "type": "multiselect",
+            "label": "Languages you can sell in",
+            "standard": false,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "Select every language you're comfortable using with customers.",
+            "options": [
+              "Assamese",
+              "Hindi",
+              "Bengali",
+              "English",
+              "Bodo"
+            ],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "cf_2",
+            "key": "twoWheeler",
+            "type": "radio",
+            "label": "Do you have a two-wheeler for field visits?",
+            "standard": false,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [
+              "Yes",
+              "No"
+            ],
+            "maxLength": null,
+            "showIf": null
+          }
+        ]
+      },
+      "sortOrder": 1
+    },
+    {
+      "status": "open",
+      "featured": false,
+      "urgent": true,
+      "showSalary": true,
+      "salaryPeriod": "month",
+      "workMode": "onsite",
+      "employmentType": "full_time",
+      "location": "Nagaon, Assam",
+      "openings": 1,
+      "scheduledAt": null,
+      "isActive": true,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z",
+      "id": 2,
+      "title": "Store & Inventory Supervisor",
+      "slug": "store-inventory-supervisor",
+      "departmentId": 2,
+      "experienceMin": 1,
+      "experienceMax": 4,
+      "salaryMin": 15000,
+      "salaryMax": 22000,
+      "postedAt": "2026-07-14T00:00:00.000Z",
+      "lastDateToApply": "2026-08-20",
+      "summary": "Keep the store floor, godown and stock records in perfect sync — the backbone of everything we promise customers.",
+      "description": "The Store & Inventory Supervisor owns stock accuracy at North East Build Mart. You will receive incoming material, maintain bin locations, run cycle counts and make sure the catalogue quantities customers see are the quantities we actually hold.\n\nYou will supervise 3–4 store helpers, coordinate loading/unloading, and flag fast-moving or dead stock to purchasing. Accuracy, discipline and physical presence on the floor matter more here than paperwork.",
+      "skills": [
+        "Inventory management",
+        "Stock reconciliation",
+        "Team supervision",
+        "Basic computer entry",
+        "Material handling safety"
+      ],
+      "responsibilities": [
+        "Receive, inspect and rack incoming material against purchase orders",
+        "Maintain accurate stock records and bin locations; run weekly cycle counts",
+        "Supervise store helpers and daily loading/unloading operations",
+        "Flag damaged, slow-moving and out-of-stock items to purchasing",
+        "Keep the floor and godown clean, safe and audit-ready"
+      ],
+      "qualifications": [
+        "12th pass or graduate",
+        "1–4 years in store keeping / inventory (building materials or FMCG preferred)",
+        "Comfortable with data entry in Excel or inventory software",
+        "Physically comfortable in a warehouse environment"
+      ],
+      "benefits": [
+        "Fixed salary",
+        "Overtime pay",
+        "ESI/PF as applicable",
+        "Festival bonus"
+      ],
+      "applicationForm": {
+        "fields": [
+          {
+            "id": "std_fullName",
+            "key": "fullName",
+            "type": "text",
+            "label": "Full Name",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "Your full name",
+            "helpText": "",
+            "options": [],
+            "maxLength": 80,
+            "showIf": null
+          },
+          {
+            "id": "std_email",
+            "key": "email",
+            "type": "email",
+            "label": "Email Address",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "you@example.com",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_phone",
+            "key": "phone",
+            "type": "phone",
+            "label": "Mobile Number",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "+91 XXXXX XXXXX",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_altPhone",
+            "key": "altPhone",
+            "type": "phone",
+            "label": "Alternate Mobile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "Optional second number",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_city",
+            "key": "city",
+            "type": "text",
+            "label": "Current City",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. Nagaon",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_state",
+            "key": "state",
+            "type": "text",
+            "label": "State",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. Assam",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_country",
+            "key": "country",
+            "type": "text",
+            "label": "Country",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. India",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentCompany",
+            "key": "currentCompany",
+            "type": "text",
+            "label": "Current Company",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Where do you work now?",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentDesignation",
+            "key": "currentDesignation",
+            "type": "text",
+            "label": "Current Designation",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Your current role",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_experienceYears",
+            "key": "experienceYears",
+            "type": "number",
+            "label": "Years of Experience",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. 3",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentSalary",
+            "key": "currentSalary",
+            "type": "text",
+            "label": "Current Salary (Monthly)",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. ₹18,000",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_expectedSalary",
+            "key": "expectedSalary",
+            "type": "text",
+            "label": "Expected Salary (Monthly)",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. ₹22,000",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_noticePeriod",
+            "key": "noticePeriod",
+            "type": "select",
+            "label": "Notice Period",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [
+              "Immediate",
+              "Up to 15 days",
+              "1 month",
+              "2 months",
+              "3+ months"
+            ],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_portfolioUrl",
+            "key": "portfolioUrl",
+            "type": "url",
+            "label": "Portfolio URL",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_linkedinUrl",
+            "key": "linkedinUrl",
+            "type": "url",
+            "label": "LinkedIn Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://linkedin.com/in/…",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_githubUrl",
+            "key": "githubUrl",
+            "type": "url",
+            "label": "GitHub Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://github.com/…",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_coverLetter",
+            "key": "coverLetter",
+            "type": "textarea",
+            "label": "Cover Letter",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "Tell us why you're a great fit for this role…",
+            "helpText": "",
+            "options": [],
+            "maxLength": 2000,
+            "showIf": null
+          },
+          {
+            "id": "std_resume",
+            "key": "resume",
+            "type": "file",
+            "label": "Resume / CV",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "",
+            "helpText": "PDF, DOC or DOCX — up to 10 MB",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "cf_3",
+            "key": "softwareUsed",
+            "type": "text",
+            "label": "Inventory software you have used",
+            "standard": false,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. Tally, Busy, Excel only",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          }
+        ]
+      },
+      "sortOrder": 2
+    },
+    {
+      "status": "open",
+      "featured": false,
+      "urgent": false,
+      "showSalary": true,
+      "salaryPeriod": "month",
+      "workMode": "onsite",
+      "employmentType": "full_time",
+      "location": "Nagaon, Assam",
+      "openings": 1,
+      "scheduledAt": null,
+      "isActive": true,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z",
+      "id": 3,
+      "title": "Delivery & Dispatch Coordinator",
+      "slug": "delivery-dispatch-coordinator",
+      "departmentId": 3,
+      "experienceMin": 1,
+      "experienceMax": 3,
+      "salaryMin": 14000,
+      "salaryMax": 19000,
+      "postedAt": "2026-07-05T00:00:00.000Z",
+      "lastDateToApply": "2026-08-10",
+      "summary": "Plan daily delivery runs, brief drivers and keep customers informed until the material lands on site.",
+      "description": "Every order at North East Build Mart ends with a truck reaching a site on time. The Delivery & Dispatch Coordinator plans daily routes, assigns vehicles and drivers, prepares challans and keeps customers updated on ETAs.\n\nYou are the link between the store, the driver and the customer — when a site call comes in asking \"where is my cement?\", you have the answer.",
+      "skills": [
+        "Route planning",
+        "Vehicle coordination",
+        "Customer communication",
+        "Challan / delivery documentation",
+        "Problem solving under pressure"
+      ],
+      "responsibilities": [
+        "Plan and sequence daily delivery routes for owned and hired vehicles",
+        "Prepare delivery challans and gate passes; reconcile returns",
+        "Track every delivery and proactively update customers on ETAs",
+        "Handle on-road issues — breakdowns, site access, unloading delays",
+        "Maintain the vehicle log, fuel records and driver duty roster"
+      ],
+      "qualifications": [
+        "12th pass or graduate",
+        "1–3 years in dispatch/logistics coordination",
+        "Knows Nagaon and surrounding district roads well",
+        "Comfortable on phone calls for most of the day"
+      ],
+      "benefits": [
+        "Fixed salary",
+        "Mobile allowance",
+        "Overtime pay",
+        "Festival bonus"
+      ],
+      "applicationForm": {
+        "fields": [
+          {
+            "id": "std_fullName",
+            "key": "fullName",
+            "type": "text",
+            "label": "Full Name",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "Your full name",
+            "helpText": "",
+            "options": [],
+            "maxLength": 80,
+            "showIf": null
+          },
+          {
+            "id": "std_email",
+            "key": "email",
+            "type": "email",
+            "label": "Email Address",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "you@example.com",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_phone",
+            "key": "phone",
+            "type": "phone",
+            "label": "Mobile Number",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "+91 XXXXX XXXXX",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_altPhone",
+            "key": "altPhone",
+            "type": "phone",
+            "label": "Alternate Mobile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "Optional second number",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_city",
+            "key": "city",
+            "type": "text",
+            "label": "Current City",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. Nagaon",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_state",
+            "key": "state",
+            "type": "text",
+            "label": "State",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. Assam",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_country",
+            "key": "country",
+            "type": "text",
+            "label": "Country",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. India",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentCompany",
+            "key": "currentCompany",
+            "type": "text",
+            "label": "Current Company",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Where do you work now?",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentDesignation",
+            "key": "currentDesignation",
+            "type": "text",
+            "label": "Current Designation",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Your current role",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_experienceYears",
+            "key": "experienceYears",
+            "type": "number",
+            "label": "Years of Experience",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. 3",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentSalary",
+            "key": "currentSalary",
+            "type": "text",
+            "label": "Current Salary (Monthly)",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. ₹18,000",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_expectedSalary",
+            "key": "expectedSalary",
+            "type": "text",
+            "label": "Expected Salary (Monthly)",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. ₹22,000",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_noticePeriod",
+            "key": "noticePeriod",
+            "type": "select",
+            "label": "Notice Period",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [
+              "Immediate",
+              "Up to 15 days",
+              "1 month",
+              "2 months",
+              "3+ months"
+            ],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_portfolioUrl",
+            "key": "portfolioUrl",
+            "type": "url",
+            "label": "Portfolio URL",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_linkedinUrl",
+            "key": "linkedinUrl",
+            "type": "url",
+            "label": "LinkedIn Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://linkedin.com/in/…",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_githubUrl",
+            "key": "githubUrl",
+            "type": "url",
+            "label": "GitHub Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://github.com/…",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_coverLetter",
+            "key": "coverLetter",
+            "type": "textarea",
+            "label": "Cover Letter",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "Tell us why you're a great fit for this role…",
+            "helpText": "",
+            "options": [],
+            "maxLength": 2000,
+            "showIf": null
+          },
+          {
+            "id": "std_resume",
+            "key": "resume",
+            "type": "file",
+            "label": "Resume / CV",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "",
+            "helpText": "PDF, DOC or DOCX — up to 10 MB",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "cf_4",
+            "key": "license",
+            "type": "select",
+            "label": "Driving license held",
+            "standard": false,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [
+              "None",
+              "Two-wheeler (MCWG)",
+              "LMV",
+              "LMV + Commercial"
+            ],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "cf_5",
+            "key": "knowsArea",
+            "type": "radio",
+            "label": "Familiar with Nagaon district routes?",
+            "standard": false,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [
+              "Yes, very familiar",
+              "Somewhat",
+              "No, but willing to learn"
+            ],
+            "maxLength": null,
+            "showIf": null
+          }
+        ]
+      },
+      "sortOrder": 3
+    },
+    {
+      "status": "open",
+      "featured": false,
+      "urgent": false,
+      "showSalary": true,
+      "salaryPeriod": "month",
+      "workMode": "onsite",
+      "employmentType": "full_time",
+      "location": "Nagaon, Assam",
+      "openings": 1,
+      "scheduledAt": null,
+      "isActive": true,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z",
+      "id": 4,
+      "title": "Accounts Executive (Tally + GST)",
+      "slug": "accounts-executive-tally-gst",
+      "departmentId": 4,
+      "experienceMin": 2,
+      "experienceMax": 6,
+      "salaryMin": 16000,
+      "salaryMax": 25000,
+      "postedAt": "2026-07-12T00:00:00.000Z",
+      "lastDateToApply": "2026-09-15",
+      "summary": "Run day-to-day billing, ledgers and GST filings for a high-volume building-materials trade.",
+      "description": "North East Build Mart processes hundreds of invoices a month across cement, steel, tiles and hardware. The Accounts Executive owns daily billing, ledger maintenance, bank reconciliation and GST compliance, working directly with the proprietor and our CA.\n\nAccuracy and punctuality on filings are non-negotiable; in return you get a stable, respected seat at the centre of the business.",
+      "skills": [
+        "Tally Prime",
+        "GST returns (GSTR-1, GSTR-3B)",
+        "TDS basics",
+        "Bank reconciliation",
+        "MS Excel",
+        "E-way bills"
+      ],
+      "responsibilities": [
+        "Generate sales invoices, credit notes and e-way bills",
+        "Maintain purchase, sales and expense ledgers in Tally Prime",
+        "Prepare monthly GST workings and coordinate filings with the CA",
+        "Reconcile bank statements, customer advances and supplier payments",
+        "Chase receivables with a clear, polite follow-up system"
+      ],
+      "qualifications": [
+        "B.Com or equivalent",
+        "2–6 years hands-on Tally + GST experience (trading business preferred)",
+        "Strong Excel (VLOOKUP, pivot tables)",
+        "High attention to detail and confidentiality"
+      ],
+      "benefits": [
+        "Fixed salary",
+        "Yearly increment cycle",
+        "GST/Tally upskilling support",
+        "Festival bonus"
+      ],
+      "applicationForm": {
+        "fields": [
+          {
+            "id": "std_fullName",
+            "key": "fullName",
+            "type": "text",
+            "label": "Full Name",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "Your full name",
+            "helpText": "",
+            "options": [],
+            "maxLength": 80,
+            "showIf": null
+          },
+          {
+            "id": "std_email",
+            "key": "email",
+            "type": "email",
+            "label": "Email Address",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "you@example.com",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_phone",
+            "key": "phone",
+            "type": "phone",
+            "label": "Mobile Number",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "+91 XXXXX XXXXX",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_altPhone",
+            "key": "altPhone",
+            "type": "phone",
+            "label": "Alternate Mobile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "Optional second number",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_city",
+            "key": "city",
+            "type": "text",
+            "label": "Current City",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. Nagaon",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_state",
+            "key": "state",
+            "type": "text",
+            "label": "State",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. Assam",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_country",
+            "key": "country",
+            "type": "text",
+            "label": "Country",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. India",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentCompany",
+            "key": "currentCompany",
+            "type": "text",
+            "label": "Current Company",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Where do you work now?",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentDesignation",
+            "key": "currentDesignation",
+            "type": "text",
+            "label": "Current Designation",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Your current role",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_experienceYears",
+            "key": "experienceYears",
+            "type": "number",
+            "label": "Years of Experience",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. 3",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentSalary",
+            "key": "currentSalary",
+            "type": "text",
+            "label": "Current Salary (Monthly)",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. ₹18,000",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_expectedSalary",
+            "key": "expectedSalary",
+            "type": "text",
+            "label": "Expected Salary (Monthly)",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. ₹22,000",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_noticePeriod",
+            "key": "noticePeriod",
+            "type": "select",
+            "label": "Notice Period",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [
+              "Immediate",
+              "Up to 15 days",
+              "1 month",
+              "2 months",
+              "3+ months"
+            ],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_portfolioUrl",
+            "key": "portfolioUrl",
+            "type": "url",
+            "label": "Portfolio URL",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_linkedinUrl",
+            "key": "linkedinUrl",
+            "type": "url",
+            "label": "LinkedIn Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://linkedin.com/in/…",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_githubUrl",
+            "key": "githubUrl",
+            "type": "url",
+            "label": "GitHub Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://github.com/…",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_coverLetter",
+            "key": "coverLetter",
+            "type": "textarea",
+            "label": "Cover Letter",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Tell us why you're a great fit for this role…",
+            "helpText": "",
+            "options": [],
+            "maxLength": 2000,
+            "showIf": null
+          },
+          {
+            "id": "std_resume",
+            "key": "resume",
+            "type": "file",
+            "label": "Resume / CV",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "",
+            "helpText": "PDF, DOC or DOCX — up to 10 MB",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "cf_6",
+            "key": "tallyVersion",
+            "type": "radio",
+            "label": "Tally version you use daily",
+            "standard": false,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [
+              "Tally Prime",
+              "Tally ERP 9",
+              "Both",
+              "Neither"
+            ],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "cf_7",
+            "key": "gstReturns",
+            "type": "multiselect",
+            "label": "GST returns you have filed yourself",
+            "standard": false,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [
+              "GSTR-1",
+              "GSTR-3B",
+              "GSTR-9",
+              "None — assisted only"
+            ],
+            "maxLength": null,
+            "showIf": null
+          }
+        ]
+      },
+      "sortOrder": 4
+    },
+    {
+      "status": "open",
+      "featured": true,
+      "urgent": false,
+      "showSalary": true,
+      "salaryPeriod": "month",
+      "workMode": "hybrid",
+      "employmentType": "full_time",
+      "location": "Nagaon, Assam",
+      "openings": 1,
+      "scheduledAt": null,
+      "isActive": true,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z",
+      "id": 5,
+      "title": "Digital Marketing Executive",
+      "slug": "digital-marketing-executive",
+      "departmentId": 5,
+      "experienceMin": 1,
+      "experienceMax": 3,
+      "salaryMin": 15000,
+      "salaryMax": 25000,
+      "postedAt": "2026-07-16T00:00:00.000Z",
+      "lastDateToApply": "2026-08-25",
+      "summary": "Grow NEBM's online presence — catalogue content, social media, WhatsApp campaigns and local SEO.",
+      "description": "We built northeastbuildmart.com to bring building-materials buying online for the North East — now we need someone to grow it. You will own our social channels, produce simple product photo/video content on the shop floor, run WhatsApp broadcast campaigns and keep our Google Business profile ranking for local searches.\n\nThis is a hybrid role: content days at the Nagaon store, planning and publishing from anywhere.",
+      "skills": [
+        "Social media management",
+        "Canva / basic design",
+        "Reels & short video",
+        "WhatsApp Business",
+        "Local SEO / Google Business",
+        "Copywriting (Assamese + English)"
+      ],
+      "responsibilities": [
+        "Plan and publish weekly content across Facebook, Instagram and YouTube",
+        "Shoot and edit simple product photos and reels at the store",
+        "Run WhatsApp broadcast campaigns for new stock and offers",
+        "Keep the website catalogue images and descriptions fresh",
+        "Track reach, enquiries and follower growth; report monthly"
+      ],
+      "qualifications": [
+        "Graduate; digital marketing certification a plus",
+        "1–3 years managing social media for a brand or agency",
+        "Portfolio of pages/content you have grown (share links in the form)",
+        "Comfortable on camera direction and basic editing apps"
+      ],
+      "benefits": [
+        "Fixed salary + performance bonus",
+        "Hybrid work",
+        "Camera & tools provided",
+        "Free rein to experiment"
+      ],
+      "applicationForm": {
+        "fields": [
+          {
+            "id": "std_fullName",
+            "key": "fullName",
+            "type": "text",
+            "label": "Full Name",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "Your full name",
+            "helpText": "",
+            "options": [],
+            "maxLength": 80,
+            "showIf": null
+          },
+          {
+            "id": "std_email",
+            "key": "email",
+            "type": "email",
+            "label": "Email Address",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "you@example.com",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_phone",
+            "key": "phone",
+            "type": "phone",
+            "label": "Mobile Number",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "+91 XXXXX XXXXX",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_altPhone",
+            "key": "altPhone",
+            "type": "phone",
+            "label": "Alternate Mobile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "Optional second number",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_city",
+            "key": "city",
+            "type": "text",
+            "label": "Current City",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. Nagaon",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_state",
+            "key": "state",
+            "type": "text",
+            "label": "State",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. Assam",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_country",
+            "key": "country",
+            "type": "text",
+            "label": "Country",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. India",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentCompany",
+            "key": "currentCompany",
+            "type": "text",
+            "label": "Current Company",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Where do you work now?",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentDesignation",
+            "key": "currentDesignation",
+            "type": "text",
+            "label": "Current Designation",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Your current role",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_experienceYears",
+            "key": "experienceYears",
+            "type": "number",
+            "label": "Years of Experience",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. 3",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentSalary",
+            "key": "currentSalary",
+            "type": "text",
+            "label": "Current Salary (Monthly)",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. ₹18,000",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_expectedSalary",
+            "key": "expectedSalary",
+            "type": "text",
+            "label": "Expected Salary (Monthly)",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. ₹22,000",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_noticePeriod",
+            "key": "noticePeriod",
+            "type": "select",
+            "label": "Notice Period",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [
+              "Immediate",
+              "Up to 15 days",
+              "1 month",
+              "2 months",
+              "3+ months"
+            ],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_portfolioUrl",
+            "key": "portfolioUrl",
+            "type": "url",
+            "label": "Portfolio URL",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "https://",
+            "helpText": "Link a page, profile or drive folder showing your work.",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_linkedinUrl",
+            "key": "linkedinUrl",
+            "type": "url",
+            "label": "LinkedIn Profile",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://linkedin.com/in/…",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_githubUrl",
+            "key": "githubUrl",
+            "type": "url",
+            "label": "GitHub Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://github.com/…",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_coverLetter",
+            "key": "coverLetter",
+            "type": "textarea",
+            "label": "Cover Letter",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "Tell us why you're a great fit for this role…",
+            "helpText": "",
+            "options": [],
+            "maxLength": 2000,
+            "showIf": null
+          },
+          {
+            "id": "std_resume",
+            "key": "resume",
+            "type": "file",
+            "label": "Resume / CV",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "",
+            "helpText": "PDF, DOC or DOCX — up to 10 MB",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "cf_8",
+            "key": "toolsUsed",
+            "type": "multiselect",
+            "label": "Tools you use regularly",
+            "standard": false,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [
+              "Canva",
+              "CapCut / VN",
+              "Meta Business Suite",
+              "Google Business Profile",
+              "Mailchimp",
+              "Figma"
+            ],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "cf_9",
+            "key": "sampleReel",
+            "type": "url",
+            "label": "Link to one reel/post you're proud of",
+            "standard": false,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          }
+        ]
+      },
+      "sortOrder": 5
+    },
+    {
+      "status": "closed",
+      "featured": false,
+      "urgent": false,
+      "showSalary": true,
+      "salaryPeriod": "month",
+      "workMode": "onsite",
+      "employmentType": "full_time",
+      "location": "Nagaon, Assam",
+      "openings": 1,
+      "scheduledAt": null,
+      "isActive": true,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z",
+      "id": 6,
+      "title": "Customer Support Associate",
+      "slug": "customer-support-associate",
+      "departmentId": 6,
+      "experienceMin": 0,
+      "experienceMax": 2,
+      "salaryMin": 12000,
+      "salaryMax": 16000,
+      "postedAt": "2026-06-01T00:00:00.000Z",
+      "lastDateToApply": "2026-07-01",
+      "summary": "First voice on the phone for enquiries, order updates and after-sales questions.",
+      "description": "Answer inbound calls and WhatsApp messages, log enquiries into our system, and route site-visit requests to the sales team. A patient phone manner in Assamese and Hindi matters more than experience.",
+      "skills": [
+        "Phone etiquette",
+        "WhatsApp Business",
+        "Data entry",
+        "Patience & empathy"
+      ],
+      "responsibilities": [
+        "Answer inbound calls and WhatsApp enquiries within committed response times",
+        "Log every enquiry with complete details into the admin system",
+        "Share order and delivery status updates with customers",
+        "Escalate complaints to the right owner and follow up to closure"
+      ],
+      "qualifications": [
+        "12th pass or graduate",
+        "Clear spoken Assamese and Hindi",
+        "Basic computer skills"
+      ],
+      "benefits": [
+        "Fixed salary",
+        "On-the-job training",
+        "Festival bonus"
+      ],
+      "applicationForm": {
+        "fields": [
+          {
+            "id": "std_fullName",
+            "key": "fullName",
+            "type": "text",
+            "label": "Full Name",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "Your full name",
+            "helpText": "",
+            "options": [],
+            "maxLength": 80,
+            "showIf": null
+          },
+          {
+            "id": "std_email",
+            "key": "email",
+            "type": "email",
+            "label": "Email Address",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "you@example.com",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_phone",
+            "key": "phone",
+            "type": "phone",
+            "label": "Mobile Number",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "+91 XXXXX XXXXX",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_altPhone",
+            "key": "altPhone",
+            "type": "phone",
+            "label": "Alternate Mobile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "Optional second number",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_city",
+            "key": "city",
+            "type": "text",
+            "label": "Current City",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. Nagaon",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_state",
+            "key": "state",
+            "type": "text",
+            "label": "State",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. Assam",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_country",
+            "key": "country",
+            "type": "text",
+            "label": "Country",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. India",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentCompany",
+            "key": "currentCompany",
+            "type": "text",
+            "label": "Current Company",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Where do you work now?",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentDesignation",
+            "key": "currentDesignation",
+            "type": "text",
+            "label": "Current Designation",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Your current role",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_experienceYears",
+            "key": "experienceYears",
+            "type": "number",
+            "label": "Years of Experience",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. 3",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentSalary",
+            "key": "currentSalary",
+            "type": "text",
+            "label": "Current Salary (Monthly)",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. ₹18,000",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_expectedSalary",
+            "key": "expectedSalary",
+            "type": "text",
+            "label": "Expected Salary (Monthly)",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. ₹22,000",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_noticePeriod",
+            "key": "noticePeriod",
+            "type": "select",
+            "label": "Notice Period",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [
+              "Immediate",
+              "Up to 15 days",
+              "1 month",
+              "2 months",
+              "3+ months"
+            ],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_portfolioUrl",
+            "key": "portfolioUrl",
+            "type": "url",
+            "label": "Portfolio URL",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_linkedinUrl",
+            "key": "linkedinUrl",
+            "type": "url",
+            "label": "LinkedIn Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://linkedin.com/in/…",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_githubUrl",
+            "key": "githubUrl",
+            "type": "url",
+            "label": "GitHub Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://github.com/…",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_coverLetter",
+            "key": "coverLetter",
+            "type": "textarea",
+            "label": "Cover Letter",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "Tell us why you're a great fit for this role…",
+            "helpText": "",
+            "options": [],
+            "maxLength": 2000,
+            "showIf": null
+          },
+          {
+            "id": "std_resume",
+            "key": "resume",
+            "type": "file",
+            "label": "Resume / CV",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "",
+            "helpText": "PDF, DOC or DOCX — up to 10 MB",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          }
+        ]
+      },
+      "sortOrder": 6
+    },
+    {
+      "status": "draft",
+      "featured": false,
+      "urgent": false,
+      "showSalary": true,
+      "salaryPeriod": "month",
+      "workMode": "onsite",
+      "employmentType": "full_time",
+      "location": "Nagaon, Assam",
+      "openings": 1,
+      "scheduledAt": null,
+      "isActive": true,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z",
+      "id": 7,
+      "title": "Purchase & Vendor Executive",
+      "slug": "purchase-vendor-executive",
+      "departmentId": 2,
+      "experienceMin": 2,
+      "experienceMax": 5,
+      "salaryMin": 18000,
+      "salaryMax": 26000,
+      "postedAt": "2026-07-18T21:49:26.263Z",
+      "lastDateToApply": "2026-09-30",
+      "summary": "Source the right material at the right price — manage vendors, POs and inward quality.",
+      "description": "Draft opening — full description being finalised. Will own vendor negotiations, purchase orders and inward quality checks across all product categories.",
+      "skills": [
+        "Vendor negotiation",
+        "Purchase orders",
+        "Price benchmarking",
+        "Excel"
+      ],
+      "responsibilities": [
+        "Negotiate rates with brand distributors and local vendors",
+        "Raise and track purchase orders",
+        "Check inward quality and quantities"
+      ],
+      "qualifications": [
+        "Graduate",
+        "2–5 years purchase experience in trading/retail"
+      ],
+      "benefits": [
+        "Fixed salary",
+        "Yearly bonus"
+      ],
+      "applicationForm": {
+        "fields": [
+          {
+            "id": "std_fullName",
+            "key": "fullName",
+            "type": "text",
+            "label": "Full Name",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "Your full name",
+            "helpText": "",
+            "options": [],
+            "maxLength": 80,
+            "showIf": null
+          },
+          {
+            "id": "std_email",
+            "key": "email",
+            "type": "email",
+            "label": "Email Address",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "you@example.com",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_phone",
+            "key": "phone",
+            "type": "phone",
+            "label": "Mobile Number",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "+91 XXXXX XXXXX",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_altPhone",
+            "key": "altPhone",
+            "type": "phone",
+            "label": "Alternate Mobile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "Optional second number",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_city",
+            "key": "city",
+            "type": "text",
+            "label": "Current City",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. Nagaon",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_state",
+            "key": "state",
+            "type": "text",
+            "label": "State",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. Assam",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_country",
+            "key": "country",
+            "type": "text",
+            "label": "Country",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. India",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentCompany",
+            "key": "currentCompany",
+            "type": "text",
+            "label": "Current Company",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Where do you work now?",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentDesignation",
+            "key": "currentDesignation",
+            "type": "text",
+            "label": "Current Designation",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Your current role",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_experienceYears",
+            "key": "experienceYears",
+            "type": "number",
+            "label": "Years of Experience",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": false,
+            "placeholder": "e.g. 3",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentSalary",
+            "key": "currentSalary",
+            "type": "text",
+            "label": "Current Salary (Monthly)",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. ₹18,000",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_expectedSalary",
+            "key": "expectedSalary",
+            "type": "text",
+            "label": "Expected Salary (Monthly)",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "e.g. ₹22,000",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_noticePeriod",
+            "key": "noticePeriod",
+            "type": "select",
+            "label": "Notice Period",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [
+              "Immediate",
+              "Up to 15 days",
+              "1 month",
+              "2 months",
+              "3+ months"
+            ],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_portfolioUrl",
+            "key": "portfolioUrl",
+            "type": "url",
+            "label": "Portfolio URL",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_linkedinUrl",
+            "key": "linkedinUrl",
+            "type": "url",
+            "label": "LinkedIn Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://linkedin.com/in/…",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_githubUrl",
+            "key": "githubUrl",
+            "type": "url",
+            "label": "GitHub Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "https://github.com/…",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_coverLetter",
+            "key": "coverLetter",
+            "type": "textarea",
+            "label": "Cover Letter",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "Tell us why you're a great fit for this role…",
+            "helpText": "",
+            "options": [],
+            "maxLength": 2000,
+            "showIf": null
+          },
+          {
+            "id": "std_resume",
+            "key": "resume",
+            "type": "file",
+            "label": "Resume / CV",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "",
+            "helpText": "PDF, DOC or DOCX — up to 10 MB",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          }
+        ]
+      },
+      "sortOrder": 7
+    }
+  ],
+  "careerApplications": [
+    {
+      "source": "careers_page",
+      "status": "shortlisted",
+      "rating": 4,
+      "recruiterId": 1,
+      "notes": [
+        {
+          "id": "n1",
+          "text": "Strong local contractor network. Call for F2F this week.",
+          "by": "Bappi Das",
+          "at": "2026-07-15T04:42:00.000Z"
+        }
+      ],
+      "resume": null,
+      "id": 1,
+      "applicationId": "APP-2026-4H7K2M",
+      "jobId": 1,
+      "jobSnapshot": {
+        "title": "Senior Sales Executive — Building Materials",
+        "slug": "senior-sales-executive-building-materials",
+        "department": "Sales & Business Development",
+        "location": "Nagaon, Assam",
+        "employmentType": "full_time",
+        "workMode": "onsite"
+      },
+      "applicantName": "Rahul Bora",
+      "email": "rahul.bora@example.com",
+      "phone": "+91 98640 11223",
+      "fields": [
+        {
+          "key": "fullName",
+          "label": "Full Name",
+          "type": "text",
+          "value": "Rahul Bora"
+        },
+        {
+          "key": "email",
+          "label": "Email Address",
+          "type": "email",
+          "value": "rahul.bora@example.com"
+        },
+        {
+          "key": "phone",
+          "label": "Mobile Number",
+          "type": "phone",
+          "value": "+91 98640 11223"
+        },
+        {
+          "key": "city",
+          "label": "Current City",
+          "type": "text",
+          "value": "Nagaon"
+        },
+        {
+          "key": "state",
+          "label": "State",
+          "type": "text",
+          "value": "Assam"
+        },
+        {
+          "key": "currentCompany",
+          "label": "Current Company",
+          "type": "text",
+          "value": "Sharma Hardware & Paints"
+        },
+        {
+          "key": "currentDesignation",
+          "label": "Current Designation",
+          "type": "text",
+          "value": "Sales Executive"
+        },
+        {
+          "key": "experienceYears",
+          "label": "Years of Experience",
+          "type": "number",
+          "value": "3"
+        },
+        {
+          "key": "expectedSalary",
+          "label": "Expected Salary (Monthly)",
+          "type": "text",
+          "value": "₹24,000"
+        },
+        {
+          "key": "noticePeriod",
+          "label": "Notice Period",
+          "type": "select",
+          "value": "Up to 15 days"
+        },
+        {
+          "key": "coverLetter",
+          "label": "Cover Letter",
+          "type": "textarea",
+          "value": "Three years selling paints and hardware at the counter and on-site. I know the contractor network around Nagaon and can bring accounts with me."
+        },
+        {
+          "key": "languages",
+          "label": "Languages you can sell in",
+          "type": "multiselect",
+          "value": "Assamese, Hindi, Bengali"
+        },
+        {
+          "key": "twoWheeler",
+          "label": "Do you have a two-wheeler for field visits?",
+          "type": "radio",
+          "value": "Yes"
+        }
+      ],
+      "statusHistory": [
+        {
+          "at": "2026-07-14T04:00:00.000Z",
+          "by": "System",
+          "action": "Application received",
+          "note": ""
+        },
+        {
+          "at": "2026-07-15T04:40:00.000Z",
+          "by": "Bappi Das",
+          "action": "Moved to shortlisted",
+          "note": "Good product fit"
+        }
+      ],
+      "createdAt": "2026-07-14T04:00:00.000Z",
+      "updatedAt": "2026-07-15T04:42:00.000Z"
+    },
+    {
+      "source": "careers_page",
+      "status": "new",
+      "rating": 0,
+      "recruiterId": null,
+      "notes": [],
+      "resume": null,
+      "id": 2,
+      "applicationId": "APP-2026-9TQ3ZP",
+      "jobId": 2,
+      "jobSnapshot": {
+        "title": "Store & Inventory Supervisor",
+        "slug": "store-inventory-supervisor",
+        "department": "Store Operations",
+        "location": "Nagaon, Assam",
+        "employmentType": "full_time",
+        "workMode": "onsite"
+      },
+      "applicantName": "Junmoni Saikia",
+      "email": "junmoni.s@example.com",
+      "phone": "+91 87220 55678",
+      "fields": [
+        {
+          "key": "fullName",
+          "label": "Full Name",
+          "type": "text",
+          "value": "Junmoni Saikia"
+        },
+        {
+          "key": "email",
+          "label": "Email Address",
+          "type": "email",
+          "value": "junmoni.s@example.com"
+        },
+        {
+          "key": "phone",
+          "label": "Mobile Number",
+          "type": "phone",
+          "value": "+91 87220 55678"
+        },
+        {
+          "key": "city",
+          "label": "Current City",
+          "type": "text",
+          "value": "Nagaon"
+        },
+        {
+          "key": "state",
+          "label": "State",
+          "type": "text",
+          "value": "Assam"
+        },
+        {
+          "key": "experienceYears",
+          "label": "Years of Experience",
+          "type": "number",
+          "value": "2"
+        },
+        {
+          "key": "expectedSalary",
+          "label": "Expected Salary (Monthly)",
+          "type": "text",
+          "value": "₹18,000"
+        },
+        {
+          "key": "noticePeriod",
+          "label": "Notice Period",
+          "type": "select",
+          "value": "Immediate"
+        },
+        {
+          "key": "softwareUsed",
+          "label": "Inventory software you have used",
+          "type": "text",
+          "value": "Tally + Excel"
+        }
+      ],
+      "statusHistory": [
+        {
+          "at": "2026-07-17T08:35:00.000Z",
+          "by": "System",
+          "action": "Application received",
+          "note": ""
+        }
+      ],
+      "createdAt": "2026-07-17T08:35:00.000Z",
+      "updatedAt": "2026-07-17T08:35:00.000Z"
+    },
+    {
+      "source": "careers_page",
+      "status": "interview",
+      "rating": 5,
+      "recruiterId": 1,
+      "notes": [
+        {
+          "id": "n1",
+          "text": "Portfolio is excellent. Interview scheduled Tue 11am.",
+          "by": "Bappi Das",
+          "at": "2026-07-18T11:10:00.000Z"
+        }
+      ],
+      "resume": null,
+      "id": 3,
+      "applicationId": "APP-2026-K2WD8N",
+      "jobId": 5,
+      "jobSnapshot": {
+        "title": "Digital Marketing Executive",
+        "slug": "digital-marketing-executive",
+        "department": "Marketing",
+        "location": "Nagaon, Assam",
+        "employmentType": "full_time",
+        "workMode": "hybrid"
+      },
+      "applicantName": "Priyam Deka",
+      "email": "priyam.deka@example.com",
+      "phone": "+91 99570 33441",
+      "fields": [
+        {
+          "key": "fullName",
+          "label": "Full Name",
+          "type": "text",
+          "value": "Priyam Deka"
+        },
+        {
+          "key": "email",
+          "label": "Email Address",
+          "type": "email",
+          "value": "priyam.deka@example.com"
+        },
+        {
+          "key": "phone",
+          "label": "Mobile Number",
+          "type": "phone",
+          "value": "+91 99570 33441"
+        },
+        {
+          "key": "city",
+          "label": "Current City",
+          "type": "text",
+          "value": "Guwahati"
+        },
+        {
+          "key": "state",
+          "label": "State",
+          "type": "text",
+          "value": "Assam"
+        },
+        {
+          "key": "experienceYears",
+          "label": "Years of Experience",
+          "type": "number",
+          "value": "2"
+        },
+        {
+          "key": "portfolioUrl",
+          "label": "Portfolio URL",
+          "type": "url",
+          "value": "https://instagram.com/priyam.creates"
+        },
+        {
+          "key": "coverLetter",
+          "label": "Cover Letter",
+          "type": "textarea",
+          "value": "Grew a furniture brand's Instagram from 800 to 12k followers in 14 months with shop-floor reels. Building materials deserve the same treatment."
+        },
+        {
+          "key": "toolsUsed",
+          "label": "Tools you use regularly",
+          "type": "multiselect",
+          "value": "Canva, CapCut / VN, Meta Business Suite"
+        },
+        {
+          "key": "sampleReel",
+          "label": "Link to one reel/post you're proud of",
+          "type": "url",
+          "value": "https://instagram.com/p/example"
+        }
+      ],
+      "statusHistory": [
+        {
+          "at": "2026-07-17T13:52:00.000Z",
+          "by": "System",
+          "action": "Application received",
+          "note": ""
+        },
+        {
+          "at": "2026-07-18T11:05:00.000Z",
+          "by": "Bappi Das",
+          "action": "Moved to shortlisted",
+          "note": ""
+        },
+        {
+          "at": "2026-07-18T11:11:00.000Z",
+          "by": "Bappi Das",
+          "action": "Moved to interview",
+          "note": "Tue 11:00 at store office"
+        }
+      ],
+      "createdAt": "2026-07-17T13:52:00.000Z",
+      "updatedAt": "2026-07-18T11:11:00.000Z"
+    }
+  ],
+  "careerRecruiters": [
+    {
+      "id": 1,
+      "name": "Bappi Das",
+      "email": "mail4bappidas@gmail.com",
+      "isActive": true,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z"
+    },
+    {
+      "id": 2,
+      "name": "Store Manager",
+      "email": "info@northeastbuildmart.com",
+      "isActive": true,
+      "createdAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-18T21:49:26.263Z"
+    }
+  ],
+  "careersPage": {
+    "enabled": true,
+    "seo": {
+      "title": "Careers at North East Build Mart — Build Your Future With Us",
+      "description": "Join North East Build Mart, Nagaon's trusted building-materials supplier. Open roles in sales, operations, logistics, accounts and marketing. Apply online."
+    },
+    "hero": {
+      "eyebrow": "Careers at North East Build Mart",
+      "title": "Build the future of",
+      "highlight": "building materials",
+      "subtitle": "We're a growing team in Nagaon, Assam bringing the building-materials trade online for the entire North East. Do work that a whole region can see rise around it.",
+      "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=80",
+      "primaryCtaLabel": "View Open Positions",
+      "secondaryCtaLabel": "How We Hire",
+      "stats": [
+        {
+          "value": "15+",
+          "label": "Team members"
+        },
+        {
+          "value": "11+",
+          "label": "Product categories"
+        },
+        {
+          "value": "2 days",
+          "label": "Avg. first response"
+        },
+        {
+          "value": "100%",
+          "label": "Local hiring"
+        }
+      ]
+    },
+    "whyJoinUs": {
+      "enabled": true,
+      "title": "Why join us",
+      "subtitle": "Real reasons, not perks-page filler.",
+      "items": [
+        {
+          "icon": "mdi:trending-up",
+          "title": "A business that's genuinely growing",
+          "text": "New categories, new site, new customers every month — growth here isn't a slide in a deck, it's trucks leaving the yard."
+        },
+        {
+          "icon": "mdi:account-voice",
+          "title": "Your ideas reach the owner",
+          "text": "No seven layers of approvals. Good ideas get tried within a week, and you get the credit."
+        },
+        {
+          "icon": "mdi:home-heart",
+          "title": "Work where you live",
+          "text": "Serve the community you belong to — in the North East, for the North East."
+        },
+        {
+          "icon": "mdi:school-outline",
+          "title": "Learn the whole trade",
+          "text": "Sales, stock, logistics, accounts — a small ambitious company teaches you the entire business, fast."
+        }
+      ]
+    },
+    "culture": {
+      "enabled": true,
+      "title": "Company culture",
+      "subtitle": "What working here actually feels like.",
+      "image": "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=80",
+      "values": [
+        {
+          "icon": "mdi:handshake",
+          "title": "Straight talk",
+          "text": "With customers and with each other. Honest quotes, honest feedback, no politics."
+        },
+        {
+          "icon": "mdi:clock-check-outline",
+          "title": "Keep promises",
+          "text": "A delivery date is a promise. A callback is a promise. We keep them."
+        },
+        {
+          "icon": "mdi:human-greeting-variant",
+          "title": "Respect every role",
+          "text": "The helper who loads the truck and the accountant who closes GST both make the promise real."
+        },
+        {
+          "icon": "mdi:lightbulb-on-outline",
+          "title": "Try things",
+          "text": "New display, new reel, new route plan — experiments are cheap, standing still is expensive."
+        }
+      ]
+    },
+    "benefits": {
+      "enabled": true,
+      "title": "Employee benefits",
+      "subtitle": "Straightforward and honoured on time, every time.",
+      "items": [
+        {
+          "icon": "mdi:cash-multiple",
+          "title": "Salary on the 1st",
+          "text": "Paid on time, every month — plus role-based incentives."
+        },
+        {
+          "icon": "mdi:gift-outline",
+          "title": "Festival bonus",
+          "text": "Bihu and Puja bonuses for every team member."
+        },
+        {
+          "icon": "mdi:certificate-outline",
+          "title": "Skill training",
+          "text": "Product, Tally, GST and digital-marketing upskilling paid by us."
+        },
+        {
+          "icon": "mdi:cellphone-check",
+          "title": "Mobile allowance",
+          "text": "For customer-facing and coordination roles."
+        },
+        {
+          "icon": "mdi:shield-check-outline",
+          "title": "ESI / PF",
+          "text": "Statutory benefits as applicable to your role."
+        },
+        {
+          "icon": "mdi:stairs-up",
+          "title": "Clear growth path",
+          "text": "Defined next role and salary band for every position."
+        }
+      ]
+    },
+    "growth": {
+      "enabled": true,
+      "title": "Growth opportunities",
+      "subtitle": "Where a role here can take you.",
+      "items": [
+        {
+          "icon": "mdi:account-arrow-up-outline",
+          "title": "Executive → Manager",
+          "text": "Every manager we have was promoted from within. Prove the craft, then lead it."
+        },
+        {
+          "icon": "mdi:storefront-plus-outline",
+          "title": "New branches, new seats",
+          "text": "Expansion across the North East means new supervisor and manager seats to fill — by people already here."
+        },
+        {
+          "icon": "mdi:laptop",
+          "title": "Offline → online skills",
+          "text": "Work on a real e-commerce operation: catalogue, campaigns, analytics — skills that travel anywhere."
+        }
+      ]
+    },
+    "life": {
+      "enabled": true,
+      "title": "Life at North East Build Mart",
+      "subtitle": "The floor, the yard, the team.",
+      "images": [
+        {
+          "url": "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=900&q=80",
+          "caption": "On the floor"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=900&q=80",
+          "caption": "Material inspection"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?auto=format&fit=crop&w=900&q=80",
+          "caption": "Team huddle"
+        },
+        {
+          "url": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80",
+          "caption": "Planning the week"
+        }
+      ]
+    },
+    "hiringProcess": {
+      "enabled": true,
+      "title": "How we hire",
+      "subtitle": "Simple, fast and human — most roles close within two weeks.",
+      "steps": [
+        {
+          "icon": "mdi:file-document-edit-outline",
+          "title": "Apply online",
+          "text": "Fill the short form for the role — takes about five minutes."
+        },
+        {
+          "icon": "mdi:phone-in-talk-outline",
+          "title": "Phone screen",
+          "text": "A 15-minute call within 2–3 working days to understand your background."
+        },
+        {
+          "icon": "mdi:account-group-outline",
+          "title": "Meet the team",
+          "text": "One in-person round at the store with your future manager — practical, not puzzles."
+        },
+        {
+          "icon": "mdi:file-sign",
+          "title": "Offer & join",
+          "text": "A clear written offer. Most people start within two weeks."
+        }
+      ]
+    },
+    "faqs": {
+      "enabled": true,
+      "title": "Frequently asked questions",
+      "items": [
+        {
+          "id": 1,
+          "question": "How long does the hiring process take?",
+          "answer": "Typically 1–2 weeks from application to offer. Phone screening happens within 2–3 working days of applying."
+        },
+        {
+          "id": 2,
+          "question": "Can I apply for more than one role?",
+          "answer": "Yes — apply separately to each role you're a fit for. Each application is reviewed on its own merit."
+        },
+        {
+          "id": 3,
+          "question": "Do you hire freshers?",
+          "answer": "For several roles, yes. Each posting lists the experience range; \"0\" as the minimum means freshers are welcome."
+        },
+        {
+          "id": 4,
+          "question": "I applied earlier — can I apply again?",
+          "answer": "If it's been more than six months, absolutely. Skills and openings both change."
+        },
+        {
+          "id": 5,
+          "question": "What should my resume include?",
+          "answer": "Keep it to 1–2 pages: your roles, what you actually did, and numbers where possible (sales achieved, stock accuracy, followers grown)."
+        },
+        {
+          "id": 6,
+          "question": "Whom can I contact about my application?",
+          "answer": "Every application gets an Application ID on submission. Call the store or WhatsApp us with that ID for a status update."
+        }
+      ]
+    },
+    "cta": {
+      "enabled": true,
+      "title": "Don't see the right role?",
+      "subtitle": "Tell us what you're great at — we create roles for exceptional people. Send your resume with a note.",
+      "buttonLabel": "Contact Us"
+    },
+    "openings": {
+      "title": "Current openings",
+      "subtitle": "Every role is based in Nagaon, Assam unless stated otherwise."
+    },
+    "thankYou": {
+      "responseTime": "2–3 working days",
+      "message": "Our hiring team reviews every application personally. If your profile matches, we'll call you for a quick phone screen."
+    },
+    "notifications": {
+      "recruiterEmail": "info@northeastbuildmart.com",
+      "sendApplicantEmail": true,
+      "sendAdminEmail": true,
+      "whatsappWebhook": ""
+    },
+    "updatedAt": "2026-07-18T22:12:14.604Z"
   }
 }
