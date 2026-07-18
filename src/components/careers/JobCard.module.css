@@ -1,0 +1,172 @@
+/* JobCard — vacancy card, styled entirely from the --sf-* design tokens so it
+   adapts to light/dark and any client re-skin automatically. */
+
+.card {
+  background: var(--sf-color-surface);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-lg);
+  box-shadow: var(--sf-shadow-xs);
+  overflow: hidden;
+  transition: box-shadow var(--sf-transition), border-color var(--sf-transition);
+}
+
+.card:hover {
+  box-shadow: var(--sf-shadow-md);
+  border-color: var(--sf-color-primary-light);
+}
+
+.card:focus-within {
+  box-shadow: var(--sf-shadow-focus);
+}
+
+.cardButton {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--sf-space-5);
+  font-family: var(--sf-font-family);
+  color: var(--sf-color-text);
+}
+
+.cardButton:focus-visible {
+  outline: none;
+}
+
+.compact .cardButton {
+  padding: var(--sf-space-4);
+}
+
+.topRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--sf-space-3);
+  margin-bottom: var(--sf-space-3);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sf-space-2);
+  align-items: center;
+}
+
+.deptChip {
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-semibold);
+  color: var(--sf-color-primary);
+  background: var(--sf-color-badge-bg);
+  border-radius: var(--sf-radius-pill);
+  padding: 4px 10px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-semibold);
+  border-radius: var(--sf-radius-pill);
+  padding: 4px 10px;
+}
+
+.badgeFeatured {
+  color: var(--sf-color-on-secondary);
+  background: var(--sf-gradient-secondary);
+}
+
+.badgeUrgent {
+  color: var(--sf-color-danger);
+  background: var(--sf-color-danger-bg);
+}
+
+.badgeClosing {
+  color: var(--sf-color-warning);
+  background: var(--sf-color-warning-bg);
+}
+
+.posted {
+  flex-shrink: 0;
+  font-size: var(--sf-text-xs);
+  color: var(--sf-color-text-muted);
+  white-space: nowrap;
+  padding-top: 4px;
+}
+
+.title {
+  margin: 0 0 var(--sf-space-2);
+  font-size: var(--sf-text-lg);
+  font-weight: var(--sf-font-bold);
+  line-height: var(--sf-leading-tight);
+  color: var(--sf-color-text);
+}
+
+.compact .title {
+  font-size: var(--sf-text-md);
+}
+
+.summary {
+  margin: 0 0 var(--sf-space-4);
+  font-size: var(--sf-text-sm);
+  line-height: var(--sf-leading-normal);
+  color: var(--sf-color-text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.metaList {
+  list-style: none;
+  margin: 0 0 var(--sf-space-4);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sf-space-2) var(--sf-space-4);
+}
+
+.metaList li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--sf-text-sm);
+  color: var(--sf-color-text-secondary);
+}
+
+.metaList li svg {
+  font-size: 1.05rem;
+  color: var(--sf-color-text-muted);
+  flex-shrink: 0;
+}
+
+.footerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sf-space-3);
+  border-top: 1px solid var(--sf-color-border);
+  padding-top: var(--sf-space-3);
+}
+
+.openings {
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-medium);
+  color: var(--sf-color-text-muted);
+}
+
+.viewLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--sf-text-sm);
+  font-weight: var(--sf-font-semibold);
+  color: var(--sf-color-primary);
+  transition: gap var(--sf-transition-fast);
+}
+
+.card:hover .viewLink {
+  gap: 10px;
+}

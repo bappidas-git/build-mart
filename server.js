@@ -42,6 +42,8 @@
 // =============================================================================
 
 const path = require("path");
+const fs = require("fs");
+const crypto = require("crypto");
 const jsonServer = require("json-server");
 
 const DB_FILE = process.env.JSON_SERVER_DB
@@ -74,6 +76,96 @@ server.use(middlewares);
 if (db && db._ && typeof db._.mixin === "function") {
   db._.mixin({ getRemovable: () => [] }, { chain: false });
 }
+
+// --- Career module: secure resume upload -------------------------------------
+// POST /careers/uploads accepts a JSON body { fileName, mimeType, size, data }
+// (data = base64) and writes the file to ./public/uploads/resumes under a
+// crypto-random name. json-server's static middleware (jsonServer.defaults())
+// already serves ./public, so the stored file is immediately downloadable at
+// the returned URL. Validation is defense-in-depth and server-side:
+//   * extension allow-list (.pdf/.doc/.docx) — the ONLY extensions written
+//   * decoded size cap (10 MB) enforced on the actual bytes, not the client
+//   * magic-byte sniff: %PDF (pdf), D0 CF 11 E0 (doc), PK\x03\x04 (docx) — a
+//     renamed .exe or script never passes
+//   * stored name is `${uuid}${ext}` — the client-supplied name is used for
+//     display only and never touches the filesystem path (no traversal)
+// The handler reads the request body manually (chunk accumulation with a hard
+// cap) so it needs no body-parser and cannot be affected by parser limits.
+const UPLOAD_DIR = path.join(__dirname, "public", "uploads", "resumes");
+const RESUME_MAX_BYTES = 10 * 1024 * 1024; // 10 MB decoded
+const RESUME_BODY_CAP = 15 * 1024 * 1024; // base64 inflation headroom
+const RESUME_TYPES = {
+  ".pdf": { mimes: ["application/pdf"], magic: (b) => b.slice(0, 4).toString() === "%PDF" },
+  ".doc": {
+    mimes: ["application/msword"],
+    magic: (b) => b.length > 4 && b[0] === 0xd0 && b[1] === 0xcf && b[2] === 0x11 && b[3] === 0xe0,
+  },
+  ".docx": {
+    mimes: ["application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+    magic: (b) => b.length > 4 && b[0] === 0x50 && b[1] === 0x4b && b[2] === 0x03 && b[3] === 0x04,
+  },
+};
+
+server.post("/careers/uploads", (req, res) => {
+  const chunks = [];
+  let received = 0;
+  let aborted = false;
+
+  req.on("data", (chunk) => {
+    if (aborted) return;
+    received += chunk.length;
+    if (received > RESUME_BODY_CAP) {
+      aborted = true;
+      res.status(413).jsonp({ message: "File is too large. Resumes must be 10 MB or smaller." });
+      req.destroy();
+      return;
+    }
+    chunks.push(chunk);
+  });
+
+  req.on("end", () => {
+    if (aborted) return;
+    try {
+      const body = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+      const originalName = String(body.fileName || "resume");
+      const ext = path.extname(originalName).toLowerCase();
+      const spec = RESUME_TYPES[ext];
+      if (!spec) {
+        return res.status(422).jsonp({ message: "Unsupported file type. Upload a PDF, DOC or DOCX resume." });
+      }
+      const buffer = Buffer.from(String(body.data || ""), "base64");
+      if (!buffer.length) {
+        return res.status(422).jsonp({ message: "The uploaded file is empty." });
+      }
+      if (buffer.length > RESUME_MAX_BYTES) {
+        return res.status(413).jsonp({ message: "File is too large. Resumes must be 10 MB or smaller." });
+      }
+      if (!spec.magic(buffer)) {
+        return res.status(422).jsonp({
+          message: "The file's contents don't match its type. Upload a genuine PDF, DOC or DOCX.",
+        });
+      }
+      // Virus-scan hook: plug a scanner (ClamAV etc.) in here before the write
+      // when moving beyond the mock backend. Signature kept synchronous-simple.
+      fs.mkdirSync(UPLOAD_DIR, { recursive: true });
+      const storedName = `${crypto.randomUUID()}${ext}`;
+      fs.writeFileSync(path.join(UPLOAD_DIR, storedName), buffer);
+      return res.status(201).jsonp({
+        url: `/uploads/resumes/${storedName}`,
+        fileName: storedName,
+        originalName,
+        size: buffer.length,
+        type: spec.mimes[0],
+      });
+    } catch (err) {
+      return res.status(400).jsonp({ message: "Upload failed — the request body could not be read." });
+    }
+  });
+
+  req.on("error", () => {
+    aborted = true;
+  });
+});
 
 // --- Safe, non-cascading DELETE /:resource/:id -------------------------------
 // Mirrors json-server's own primitives (db.get(name).removeById(id)) but

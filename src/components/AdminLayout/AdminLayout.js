@@ -79,6 +79,26 @@ const menuItems = [
     path: "/admin/enquiries",
   },
   {
+    title: "Recruitment",
+    icon: null,
+    isSection: true,
+  },
+  {
+    title: "Careers Page",
+    icon: "mdi:web",
+    path: "/admin/career-page",
+  },
+  {
+    title: "Job Openings",
+    icon: "mdi:briefcase-outline",
+    path: "/admin/careers",
+  },
+  {
+    title: "Applications",
+    icon: "mdi:account-tie-outline",
+    path: "/admin/career-applications",
+  },
+  {
     title: "Operations",
     icon: null,
     isSection: true,

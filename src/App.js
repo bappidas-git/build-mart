@@ -44,6 +44,9 @@ import Contact from "./pages/Support/Support";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import SpecialOffers from "./pages/SpecialOffers/SpecialOffers";
 import Wishlist from "./pages/Wishlist/Wishlist";
+import Careers from "./pages/Careers/Careers";
+import CareerDetails from "./pages/Careers/CareerDetails";
+import CareerThankYou from "./pages/Careers/CareerThankYou";
 
 // Admin Pages
 import AdminLogin from "./pages/Admin/AdminLogin";
@@ -55,6 +58,9 @@ import AdminUsers from "./pages/Admin/AdminUsers";
 import AdminReviews from "./pages/Admin/AdminReviews";
 import AdminLeads from "./pages/Admin/AdminLeads";
 import AdminSettings from "./pages/Admin/AdminSettings";
+import AdminCareers from "./pages/Admin/AdminCareers";
+import AdminCareerApplications from "./pages/Admin/AdminCareerApplications";
+import AdminCareerPage from "./pages/Admin/AdminCareerPage";
 
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import "./App.css";
@@ -97,6 +103,9 @@ function App() {
                         <Route path="users" element={<AdminUsers />} />
                         <Route path="reviews" element={<AdminReviews />} />
                         <Route path="leads" element={<AdminLeads />} />
+                        <Route path="careers" element={<AdminCareers />} />
+                        <Route path="career-applications" element={<AdminCareerApplications />} />
+                        <Route path="career-page" element={<AdminCareerPage />} />
                         <Route path="settings" element={<AdminSettings />} />
                       </Route>
                     </Route>
@@ -131,6 +140,9 @@ function App() {
                                 <Route path="/support" element={<Contact />} />
                                 <Route path="/contact" element={<Contact />} />
                                 <Route path="/about" element={<AboutUs />} />
+                                <Route path="/careers" element={<Careers />} />
+                                <Route path="/careers/thank-you/:applicationId" element={<CareerThankYou />} />
+                                <Route path="/careers/:slug" element={<CareerDetails />} />
                                 <Route path="/privacy" element={<PrivacyPolicy />} />
                                 <Route path="/terms" element={<TermsOfService />} />
                                 <Route path="/cookies" element={<CookiePolicy />} />

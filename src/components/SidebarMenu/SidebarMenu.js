@@ -9,6 +9,7 @@ import {
   LocalOfferOutlined,
   RequestQuoteOutlined,
   FavoriteBorder,
+  WorkOutline,
   PersonOutline,
   Logout as LogoutIcon,
   HeadsetMicOutlined,
@@ -561,6 +562,18 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
                     <HeadsetMicOutlined />
                   </span>
                   <span className={styles.rowLabel}>Help &amp; Support</span>
+                  <ChevronRight className={styles.rowArrow} />
+                </motion.button>
+
+                <motion.button
+                  className={styles.row}
+                  onClick={() => handleNavigate("/careers")}
+                  {...nextRow()}
+                >
+                  <span className={`${styles.rowIcon} ${styles.toneNeutral}`}>
+                    <WorkOutline />
+                  </span>
+                  <span className={styles.rowLabel}>Careers</span>
                   <ChevronRight className={styles.rowArrow} />
                 </motion.button>
 
