@@ -224,13 +224,19 @@
 /* ---- Info card grids ------------------------------------------------------ */
 
 .cardGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--sf-space-5);
 }
 
-.cardGrid3 {
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+.cardGrid > * {
+  flex: 0 1 calc((100% - 3 * var(--sf-space-5)) / 4);
+  min-width: 0;
+}
+
+.cardGrid3 > * {
+  flex-basis: calc((100% - 2 * var(--sf-space-5)) / 3);
 }
 
 .infoCard {
@@ -348,12 +354,14 @@
 /* ---- Life gallery --------------------------------------------------------- */
 
 .gallery {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--sf-space-4);
 }
 
 .galleryItem {
+  flex: 0 1 calc((100% - 3 * var(--sf-space-4)) / 4);
   margin: 0;
   border-radius: var(--sf-radius-lg);
   overflow: hidden;
@@ -389,13 +397,15 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--sf-space-5);
   counter-reset: step;
 }
 
 .processStep {
+  flex: 0 1 calc((100% - 3 * var(--sf-space-5)) / 4);
   position: relative;
   background: var(--sf-color-bg);
   border: 1px solid var(--sf-color-border);
@@ -527,9 +537,15 @@
 }
 
 .jobGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--sf-space-5);
+}
+
+.jobGrid > * {
+  flex: 0 1 calc((100% - var(--sf-space-5)) / 2);
+  min-width: 0;
 }
 
 /* ---- FAQ ------------------------------------------------------------------ */
@@ -676,11 +692,15 @@
 /* ---- Responsive ----------------------------------------------------------- */
 
 @media (max-width: 1024px) {
-  .gallery {
-    grid-template-columns: repeat(2, 1fr);
+  .cardGrid > *,
+  .cardGrid3 > * {
+    flex-basis: calc((100% - var(--sf-space-5)) / 2);
   }
-  .processTimeline {
-    grid-template-columns: repeat(2, 1fr);
+  .galleryItem {
+    flex-basis: calc((100% - var(--sf-space-4)) / 2);
+  }
+  .processStep {
+    flex-basis: calc((100% - var(--sf-space-5)) / 2);
   }
   .filterBar {
     grid-template-columns: repeat(3, 1fr);
@@ -700,8 +720,8 @@
   .heroStats {
     grid-template-columns: repeat(2, 1fr);
   }
-  .jobGrid {
-    grid-template-columns: 1fr;
+  .jobGrid > * {
+    flex-basis: 100%;
   }
   .skeletonGrid {
     grid-template-columns: 1fr;
@@ -716,8 +736,12 @@
 }
 
 @media (max-width: 480px) {
-  .processTimeline {
-    grid-template-columns: 1fr;
+  .cardGrid > *,
+  .cardGrid3 > * {
+    flex-basis: 100%;
+  }
+  .processStep {
+    flex-basis: 100%;
   }
   .filterBar {
     grid-template-columns: 1fr;
