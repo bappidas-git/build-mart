@@ -726,6 +726,20 @@
       "menuOrder": 0,
       "createdAt": "2026-01-01T00:00:00.000Z",
       "updatedAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "name": "none",
+      "slug": "none",
+      "description": "nnn",
+      "image": "",
+      "parentId": null,
+      "isActive": true,
+      "sortOrder": 13,
+      "showInMainMenu": true,
+      "menuOrder": 14,
+      "createdAt": "2026-07-19T19:02:00.591Z",
+      "updatedAt": "2026-07-19T19:02:00.593Z",
+      "id": 44
     }
   ],
   "products": [
@@ -5795,6 +5809,21 @@
       "updatedAt": "2026-07-13T22:26:57.539Z",
       "notes": "",
       "id": 2
+    },
+    {
+      "type": "newsletter",
+      "name": null,
+      "email": "shubendu@assamdigital.com",
+      "phone": null,
+      "orderNumber": null,
+      "category": null,
+      "subject": null,
+      "message": null,
+      "status": "subscribed",
+      "createdAt": "2026-07-19T19:00:59.452Z",
+      "updatedAt": "2026-07-19T19:00:59.453Z",
+      "notes": "",
+      "id": 3
     }
   ],
   "settings": {
@@ -5828,7 +5857,12 @@
       "instagram": "",
       "twitter": "",
       "youtube": "",
-      "whatsapp": ""
+      "whatsapp": "",
+      "facebookEnabled": false,
+      "whatsappEnabled": false,
+      "twitterEnabled": false,
+      "instagramEnabled": true,
+      "youtubeEnabled": true
     }
   },
   "walletTransactions": [],
@@ -5846,10 +5880,10 @@
         "type": "brand",
         "enabled": true,
         "eyebrow": "",
-        "eyebrowColor": "",
+        "eyebrowColor": "red",
         "logo": "https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889446/logo_fnscna.png",
-        "title": "North East Build Mart",
-        "subtitle": "Deals in all kinds of building materials for interior and exterior use.",
+        "title": "North East Build Mart others",
+        "subtitle": "Deals in all kinds of building materials for interior and exterior use. others",
         "align": "center",
         "media": {
           "type": "image",
@@ -6111,9 +6145,59 @@
             "image": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=400&q=80"
           }
         ]
+      },
+      {
+        "id": "slide-mrs5zhwr-0",
+        "type": "brand",
+        "enabled": true,
+        "eyebrow": "",
+        "eyebrowColor": "",
+        "logo": "https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889446/logo_fnscna.png",
+        "title": "North East Build ",
+        "subtitle": "Deals in all kinds of building materials for interior and exterior use.",
+        "align": "center",
+        "media": {
+          "type": "image",
+          "url": "https://www.turtlewings.co.in/cdn/shop/files/Naruto-_2_-copyPortrait-01_32a78a7d-b182-46b0-aa1c-f15e42d74a8f.jpg?crop=center&height=800&v=1760511315&width=800",
+          "poster": ""
+        },
+        "primaryCta": {
+          "label": "",
+          "to": ""
+        },
+        "secondaryCta": {
+          "label": "",
+          "to": ""
+        },
+        "gallery": []
+      },
+      {
+        "id": "slide-mrs618wq-1",
+        "type": "showcase",
+        "enabled": true,
+        "eyebrow": "mmm",
+        "eyebrowColor": "",
+        "logo": "",
+        "title": "mmm",
+        "subtitle": "mmm",
+        "align": "left",
+        "media": {
+          "type": "image",
+          "url": "https://www.turtlewings.co.in/cdn/shop/files/Naruto-_2_-copyPortrait-01_32a78a7d-b182-46b0-aa1c-f15e42d74a8f.jpg?crop=center&height=800&v=1760511315&width=800",
+          "poster": ""
+        },
+        "primaryCta": {
+          "label": "",
+          "to": ""
+        },
+        "secondaryCta": {
+          "label": "",
+          "to": ""
+        },
+        "gallery": []
       }
     ],
-    "updatedAt": "2026-07-13T00:00:00.000Z"
+    "updatedAt": "2026-07-19T19:06:17.325Z"
   },
   "careerDepartments": [
     {
@@ -6181,11 +6265,22 @@
       "sortOrder": 6,
       "createdAt": "2026-07-18T21:49:26.263Z",
       "updatedAt": "2026-07-18T21:49:26.263Z"
+    },
+    {
+      "name": "nothing",
+      "slug": "nothing",
+      "icon": "mdi:briefcase-outline",
+      "description": "",
+      "isActive": true,
+      "sortOrder": 7,
+      "createdAt": "2026-07-19T16:36:54.272Z",
+      "updatedAt": "2026-07-19T16:36:54.272Z",
+      "id": 7
     }
   ],
   "careerJobs": [
     {
-      "status": "open",
+      "status": "closed",
       "featured": true,
       "urgent": false,
       "showSalary": true,
@@ -6197,7 +6292,7 @@
       "scheduledAt": null,
       "isActive": true,
       "createdAt": "2026-07-18T21:49:26.263Z",
-      "updatedAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-19T16:35:15.279Z",
       "id": 1,
       "title": "Senior Sales Executive — Building Materials",
       "slug": "senior-sales-executive-building-materials",
@@ -6560,7 +6655,7 @@
       "sortOrder": 1
     },
     {
-      "status": "open",
+      "status": "closed",
       "featured": false,
       "urgent": true,
       "showSalary": true,
@@ -6572,7 +6667,7 @@
       "scheduledAt": null,
       "isActive": true,
       "createdAt": "2026-07-18T21:49:26.263Z",
-      "updatedAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-19T16:35:20.596Z",
       "id": 2,
       "title": "Store & Inventory Supervisor",
       "slug": "store-inventory-supervisor",
@@ -6909,7 +7004,7 @@
       "sortOrder": 2
     },
     {
-      "status": "open",
+      "status": "closed",
       "featured": false,
       "urgent": false,
       "showSalary": true,
@@ -6921,380 +7016,7 @@
       "scheduledAt": null,
       "isActive": true,
       "createdAt": "2026-07-18T21:49:26.263Z",
-      "updatedAt": "2026-07-18T21:49:26.263Z",
-      "id": 3,
-      "title": "Delivery & Dispatch Coordinator",
-      "slug": "delivery-dispatch-coordinator",
-      "departmentId": 3,
-      "experienceMin": 1,
-      "experienceMax": 3,
-      "salaryMin": 14000,
-      "salaryMax": 19000,
-      "postedAt": "2026-07-05T00:00:00.000Z",
-      "lastDateToApply": "2026-08-10",
-      "summary": "Plan daily delivery runs, brief drivers and keep customers informed until the material lands on site.",
-      "description": "Every order at North East Build Mart ends with a truck reaching a site on time. The Delivery & Dispatch Coordinator plans daily routes, assigns vehicles and drivers, prepares challans and keeps customers updated on ETAs.\n\nYou are the link between the store, the driver and the customer — when a site call comes in asking \"where is my cement?\", you have the answer.",
-      "skills": [
-        "Route planning",
-        "Vehicle coordination",
-        "Customer communication",
-        "Challan / delivery documentation",
-        "Problem solving under pressure"
-      ],
-      "responsibilities": [
-        "Plan and sequence daily delivery routes for owned and hired vehicles",
-        "Prepare delivery challans and gate passes; reconcile returns",
-        "Track every delivery and proactively update customers on ETAs",
-        "Handle on-road issues — breakdowns, site access, unloading delays",
-        "Maintain the vehicle log, fuel records and driver duty roster"
-      ],
-      "qualifications": [
-        "12th pass or graduate",
-        "1–3 years in dispatch/logistics coordination",
-        "Knows Nagaon and surrounding district roads well",
-        "Comfortable on phone calls for most of the day"
-      ],
-      "benefits": [
-        "Fixed salary",
-        "Mobile allowance",
-        "Overtime pay",
-        "Festival bonus"
-      ],
-      "applicationForm": {
-        "fields": [
-          {
-            "id": "std_fullName",
-            "key": "fullName",
-            "type": "text",
-            "label": "Full Name",
-            "standard": true,
-            "enabled": true,
-            "required": true,
-            "locked": true,
-            "placeholder": "Your full name",
-            "helpText": "",
-            "options": [],
-            "maxLength": 80,
-            "showIf": null
-          },
-          {
-            "id": "std_email",
-            "key": "email",
-            "type": "email",
-            "label": "Email Address",
-            "standard": true,
-            "enabled": true,
-            "required": true,
-            "locked": true,
-            "placeholder": "you@example.com",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_phone",
-            "key": "phone",
-            "type": "phone",
-            "label": "Mobile Number",
-            "standard": true,
-            "enabled": true,
-            "required": true,
-            "locked": true,
-            "placeholder": "+91 XXXXX XXXXX",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_altPhone",
-            "key": "altPhone",
-            "type": "phone",
-            "label": "Alternate Mobile",
-            "standard": true,
-            "enabled": false,
-            "required": false,
-            "locked": false,
-            "placeholder": "Optional second number",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_city",
-            "key": "city",
-            "type": "text",
-            "label": "Current City",
-            "standard": true,
-            "enabled": true,
-            "required": true,
-            "locked": false,
-            "placeholder": "e.g. Nagaon",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_state",
-            "key": "state",
-            "type": "text",
-            "label": "State",
-            "standard": true,
-            "enabled": true,
-            "required": false,
-            "locked": false,
-            "placeholder": "e.g. Assam",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_country",
-            "key": "country",
-            "type": "text",
-            "label": "Country",
-            "standard": true,
-            "enabled": false,
-            "required": false,
-            "locked": false,
-            "placeholder": "e.g. India",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_currentCompany",
-            "key": "currentCompany",
-            "type": "text",
-            "label": "Current Company",
-            "standard": true,
-            "enabled": true,
-            "required": false,
-            "locked": false,
-            "placeholder": "Where do you work now?",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_currentDesignation",
-            "key": "currentDesignation",
-            "type": "text",
-            "label": "Current Designation",
-            "standard": true,
-            "enabled": true,
-            "required": false,
-            "locked": false,
-            "placeholder": "Your current role",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_experienceYears",
-            "key": "experienceYears",
-            "type": "number",
-            "label": "Years of Experience",
-            "standard": true,
-            "enabled": true,
-            "required": true,
-            "locked": false,
-            "placeholder": "e.g. 3",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_currentSalary",
-            "key": "currentSalary",
-            "type": "text",
-            "label": "Current Salary (Monthly)",
-            "standard": true,
-            "enabled": false,
-            "required": false,
-            "locked": false,
-            "placeholder": "e.g. ₹18,000",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_expectedSalary",
-            "key": "expectedSalary",
-            "type": "text",
-            "label": "Expected Salary (Monthly)",
-            "standard": true,
-            "enabled": true,
-            "required": false,
-            "locked": false,
-            "placeholder": "e.g. ₹22,000",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_noticePeriod",
-            "key": "noticePeriod",
-            "type": "select",
-            "label": "Notice Period",
-            "standard": true,
-            "enabled": true,
-            "required": false,
-            "locked": false,
-            "placeholder": "",
-            "helpText": "",
-            "options": [
-              "Immediate",
-              "Up to 15 days",
-              "1 month",
-              "2 months",
-              "3+ months"
-            ],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_portfolioUrl",
-            "key": "portfolioUrl",
-            "type": "url",
-            "label": "Portfolio URL",
-            "standard": true,
-            "enabled": false,
-            "required": false,
-            "locked": false,
-            "placeholder": "https://",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_linkedinUrl",
-            "key": "linkedinUrl",
-            "type": "url",
-            "label": "LinkedIn Profile",
-            "standard": true,
-            "enabled": false,
-            "required": false,
-            "locked": false,
-            "placeholder": "https://linkedin.com/in/…",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_githubUrl",
-            "key": "githubUrl",
-            "type": "url",
-            "label": "GitHub Profile",
-            "standard": true,
-            "enabled": false,
-            "required": false,
-            "locked": false,
-            "placeholder": "https://github.com/…",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_coverLetter",
-            "key": "coverLetter",
-            "type": "textarea",
-            "label": "Cover Letter",
-            "standard": true,
-            "enabled": false,
-            "required": false,
-            "locked": false,
-            "placeholder": "Tell us why you're a great fit for this role…",
-            "helpText": "",
-            "options": [],
-            "maxLength": 2000,
-            "showIf": null
-          },
-          {
-            "id": "std_resume",
-            "key": "resume",
-            "type": "file",
-            "label": "Resume / CV",
-            "standard": true,
-            "enabled": true,
-            "required": true,
-            "locked": true,
-            "placeholder": "",
-            "helpText": "PDF, DOC or DOCX — up to 10 MB",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "cf_4",
-            "key": "license",
-            "type": "select",
-            "label": "Driving license held",
-            "standard": false,
-            "enabled": true,
-            "required": true,
-            "locked": false,
-            "placeholder": "",
-            "helpText": "",
-            "options": [
-              "None",
-              "Two-wheeler (MCWG)",
-              "LMV",
-              "LMV + Commercial"
-            ],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "cf_5",
-            "key": "knowsArea",
-            "type": "radio",
-            "label": "Familiar with Nagaon district routes?",
-            "standard": false,
-            "enabled": true,
-            "required": true,
-            "locked": false,
-            "placeholder": "",
-            "helpText": "",
-            "options": [
-              "Yes, very familiar",
-              "Somewhat",
-              "No, but willing to learn"
-            ],
-            "maxLength": null,
-            "showIf": null
-          }
-        ]
-      },
-      "sortOrder": 3
-    },
-    {
-      "status": "open",
-      "featured": false,
-      "urgent": false,
-      "showSalary": true,
-      "salaryPeriod": "month",
-      "workMode": "onsite",
-      "employmentType": "full_time",
-      "location": "Nagaon, Assam",
-      "openings": 1,
-      "scheduledAt": null,
-      "isActive": true,
-      "createdAt": "2026-07-18T21:49:26.263Z",
-      "updatedAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-19T16:35:18.374Z",
       "id": 4,
       "title": "Accounts Executive (Tally + GST)",
       "slug": "accounts-executive-tally-gst",
@@ -7659,7 +7381,7 @@
     {
       "status": "open",
       "featured": true,
-      "urgent": false,
+      "urgent": true,
       "showSalary": true,
       "salaryPeriod": "month",
       "workMode": "hybrid",
@@ -7669,7 +7391,7 @@
       "scheduledAt": null,
       "isActive": true,
       "createdAt": "2026-07-18T21:49:26.263Z",
-      "updatedAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-19T16:53:17.489Z",
       "id": 5,
       "title": "Digital Marketing Executive",
       "slug": "digital-marketing-executive",
@@ -8029,9 +7751,9 @@
       "sortOrder": 5
     },
     {
-      "status": "closed",
+      "status": "open",
       "featured": false,
-      "urgent": false,
+      "urgent": true,
       "showSalary": true,
       "salaryPeriod": "month",
       "workMode": "onsite",
@@ -8041,337 +7763,7 @@
       "scheduledAt": null,
       "isActive": true,
       "createdAt": "2026-07-18T21:49:26.263Z",
-      "updatedAt": "2026-07-18T21:49:26.263Z",
-      "id": 6,
-      "title": "Customer Support Associate",
-      "slug": "customer-support-associate",
-      "departmentId": 6,
-      "experienceMin": 0,
-      "experienceMax": 2,
-      "salaryMin": 12000,
-      "salaryMax": 16000,
-      "postedAt": "2026-06-01T00:00:00.000Z",
-      "lastDateToApply": "2026-07-01",
-      "summary": "First voice on the phone for enquiries, order updates and after-sales questions.",
-      "description": "Answer inbound calls and WhatsApp messages, log enquiries into our system, and route site-visit requests to the sales team. A patient phone manner in Assamese and Hindi matters more than experience.",
-      "skills": [
-        "Phone etiquette",
-        "WhatsApp Business",
-        "Data entry",
-        "Patience & empathy"
-      ],
-      "responsibilities": [
-        "Answer inbound calls and WhatsApp enquiries within committed response times",
-        "Log every enquiry with complete details into the admin system",
-        "Share order and delivery status updates with customers",
-        "Escalate complaints to the right owner and follow up to closure"
-      ],
-      "qualifications": [
-        "12th pass or graduate",
-        "Clear spoken Assamese and Hindi",
-        "Basic computer skills"
-      ],
-      "benefits": [
-        "Fixed salary",
-        "On-the-job training",
-        "Festival bonus"
-      ],
-      "applicationForm": {
-        "fields": [
-          {
-            "id": "std_fullName",
-            "key": "fullName",
-            "type": "text",
-            "label": "Full Name",
-            "standard": true,
-            "enabled": true,
-            "required": true,
-            "locked": true,
-            "placeholder": "Your full name",
-            "helpText": "",
-            "options": [],
-            "maxLength": 80,
-            "showIf": null
-          },
-          {
-            "id": "std_email",
-            "key": "email",
-            "type": "email",
-            "label": "Email Address",
-            "standard": true,
-            "enabled": true,
-            "required": true,
-            "locked": true,
-            "placeholder": "you@example.com",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_phone",
-            "key": "phone",
-            "type": "phone",
-            "label": "Mobile Number",
-            "standard": true,
-            "enabled": true,
-            "required": true,
-            "locked": true,
-            "placeholder": "+91 XXXXX XXXXX",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_altPhone",
-            "key": "altPhone",
-            "type": "phone",
-            "label": "Alternate Mobile",
-            "standard": true,
-            "enabled": false,
-            "required": false,
-            "locked": false,
-            "placeholder": "Optional second number",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_city",
-            "key": "city",
-            "type": "text",
-            "label": "Current City",
-            "standard": true,
-            "enabled": true,
-            "required": true,
-            "locked": false,
-            "placeholder": "e.g. Nagaon",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_state",
-            "key": "state",
-            "type": "text",
-            "label": "State",
-            "standard": true,
-            "enabled": true,
-            "required": false,
-            "locked": false,
-            "placeholder": "e.g. Assam",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_country",
-            "key": "country",
-            "type": "text",
-            "label": "Country",
-            "standard": true,
-            "enabled": false,
-            "required": false,
-            "locked": false,
-            "placeholder": "e.g. India",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_currentCompany",
-            "key": "currentCompany",
-            "type": "text",
-            "label": "Current Company",
-            "standard": true,
-            "enabled": true,
-            "required": false,
-            "locked": false,
-            "placeholder": "Where do you work now?",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_currentDesignation",
-            "key": "currentDesignation",
-            "type": "text",
-            "label": "Current Designation",
-            "standard": true,
-            "enabled": true,
-            "required": false,
-            "locked": false,
-            "placeholder": "Your current role",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_experienceYears",
-            "key": "experienceYears",
-            "type": "number",
-            "label": "Years of Experience",
-            "standard": true,
-            "enabled": true,
-            "required": true,
-            "locked": false,
-            "placeholder": "e.g. 3",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_currentSalary",
-            "key": "currentSalary",
-            "type": "text",
-            "label": "Current Salary (Monthly)",
-            "standard": true,
-            "enabled": false,
-            "required": false,
-            "locked": false,
-            "placeholder": "e.g. ₹18,000",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_expectedSalary",
-            "key": "expectedSalary",
-            "type": "text",
-            "label": "Expected Salary (Monthly)",
-            "standard": true,
-            "enabled": true,
-            "required": false,
-            "locked": false,
-            "placeholder": "e.g. ₹22,000",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_noticePeriod",
-            "key": "noticePeriod",
-            "type": "select",
-            "label": "Notice Period",
-            "standard": true,
-            "enabled": true,
-            "required": false,
-            "locked": false,
-            "placeholder": "",
-            "helpText": "",
-            "options": [
-              "Immediate",
-              "Up to 15 days",
-              "1 month",
-              "2 months",
-              "3+ months"
-            ],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_portfolioUrl",
-            "key": "portfolioUrl",
-            "type": "url",
-            "label": "Portfolio URL",
-            "standard": true,
-            "enabled": false,
-            "required": false,
-            "locked": false,
-            "placeholder": "https://",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_linkedinUrl",
-            "key": "linkedinUrl",
-            "type": "url",
-            "label": "LinkedIn Profile",
-            "standard": true,
-            "enabled": false,
-            "required": false,
-            "locked": false,
-            "placeholder": "https://linkedin.com/in/…",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_githubUrl",
-            "key": "githubUrl",
-            "type": "url",
-            "label": "GitHub Profile",
-            "standard": true,
-            "enabled": false,
-            "required": false,
-            "locked": false,
-            "placeholder": "https://github.com/…",
-            "helpText": "",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          },
-          {
-            "id": "std_coverLetter",
-            "key": "coverLetter",
-            "type": "textarea",
-            "label": "Cover Letter",
-            "standard": true,
-            "enabled": false,
-            "required": false,
-            "locked": false,
-            "placeholder": "Tell us why you're a great fit for this role…",
-            "helpText": "",
-            "options": [],
-            "maxLength": 2000,
-            "showIf": null
-          },
-          {
-            "id": "std_resume",
-            "key": "resume",
-            "type": "file",
-            "label": "Resume / CV",
-            "standard": true,
-            "enabled": true,
-            "required": true,
-            "locked": true,
-            "placeholder": "",
-            "helpText": "PDF, DOC or DOCX — up to 10 MB",
-            "options": [],
-            "maxLength": null,
-            "showIf": null
-          }
-        ]
-      },
-      "sortOrder": 6
-    },
-    {
-      "status": "draft",
-      "featured": false,
-      "urgent": false,
-      "showSalary": true,
-      "salaryPeriod": "month",
-      "workMode": "onsite",
-      "employmentType": "full_time",
-      "location": "Nagaon, Assam",
-      "openings": 1,
-      "scheduledAt": null,
-      "isActive": true,
-      "createdAt": "2026-07-18T21:49:26.263Z",
-      "updatedAt": "2026-07-18T21:49:26.263Z",
+      "updatedAt": "2026-07-19T16:53:14.221Z",
       "id": 7,
       "title": "Purchase & Vendor Executive",
       "slug": "purchase-vendor-executive",
@@ -8684,6 +8076,325 @@
         ]
       },
       "sortOrder": 7
+    },
+    {
+      "title": "sleep",
+      "slug": "sleep",
+      "departmentId": 7,
+      "location": "Nagaon, Assam",
+      "workMode": "remote",
+      "employmentType": "internship",
+      "experienceMin": 0,
+      "experienceMax": 0,
+      "salaryMin": 1000000,
+      "salaryMax": 12000000000,
+      "showSalary": false,
+      "salaryPeriod": "month",
+      "openings": 12,
+      "summary": "",
+      "description": "gfghvgngygyghjg",
+      "skills": [
+        "hhjbbjb"
+      ],
+      "responsibilities": [
+        "mmmmmmmmmmmmmmmmmmm"
+      ],
+      "qualifications": [
+        "bbbbbbbbb"
+      ],
+      "benefits": [
+        "bbbbbbbbbbbbb"
+      ],
+      "status": "open",
+      "featured": true,
+      "urgent": true,
+      "postedAt": "2026-07-19T00:00:00.000Z",
+      "lastDateToApply": null,
+      "scheduledAt": null,
+      "isActive": true,
+      "applicationForm": {
+        "fields": [
+          {
+            "id": "std_fullName",
+            "key": "fullName",
+            "type": "text",
+            "label": "Full Name",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "Your full name",
+            "helpText": "",
+            "options": [],
+            "maxLength": 80,
+            "showIf": null
+          },
+          {
+            "id": "std_email",
+            "key": "email",
+            "type": "email",
+            "label": "Email Address",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "you@example.com",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_phone",
+            "key": "phone",
+            "type": "phone",
+            "label": "Mobile Number",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "+91 XXXXX XXXXX",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_altPhone",
+            "key": "altPhone",
+            "type": "phone",
+            "label": "Alternate Mobile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_city",
+            "key": "city",
+            "type": "text",
+            "label": "Current City",
+            "standard": true,
+            "enabled": false,
+            "required": true,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_state",
+            "key": "state",
+            "type": "text",
+            "label": "State",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_country",
+            "key": "country",
+            "type": "text",
+            "label": "Country",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentCompany",
+            "key": "currentCompany",
+            "type": "text",
+            "label": "Current Company",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentDesignation",
+            "key": "currentDesignation",
+            "type": "text",
+            "label": "Current Designation",
+            "standard": true,
+            "enabled": true,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_experienceYears",
+            "key": "experienceYears",
+            "type": "number",
+            "label": "Years of Experience",
+            "standard": true,
+            "enabled": false,
+            "required": true,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_currentSalary",
+            "key": "currentSalary",
+            "type": "text",
+            "label": "Current Salary (Monthly)",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_expectedSalary",
+            "key": "expectedSalary",
+            "type": "text",
+            "label": "Expected Salary (Monthly)",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_noticePeriod",
+            "key": "noticePeriod",
+            "type": "select",
+            "label": "Notice Period",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [
+              "Immediate",
+              "Up to 15 days",
+              "1 month",
+              "2 months",
+              "3+ months"
+            ],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_portfolioUrl",
+            "key": "portfolioUrl",
+            "type": "url",
+            "label": "Portfolio URL",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_linkedinUrl",
+            "key": "linkedinUrl",
+            "type": "url",
+            "label": "LinkedIn Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_githubUrl",
+            "key": "githubUrl",
+            "type": "url",
+            "label": "GitHub Profile",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          },
+          {
+            "id": "std_coverLetter",
+            "key": "coverLetter",
+            "type": "textarea",
+            "label": "Cover Letter",
+            "standard": true,
+            "enabled": false,
+            "required": false,
+            "locked": false,
+            "placeholder": "",
+            "helpText": "",
+            "options": [],
+            "maxLength": 2000,
+            "showIf": null
+          },
+          {
+            "id": "std_resume",
+            "key": "resume",
+            "type": "file",
+            "label": "Resume / CV",
+            "standard": true,
+            "enabled": true,
+            "required": true,
+            "locked": true,
+            "placeholder": "",
+            "helpText": "PDF, DOC or DOCX — up to 10 MB",
+            "options": [],
+            "maxLength": null,
+            "showIf": null
+          }
+        ]
+      },
+      "createdAt": "2026-07-19T16:38:04.805Z",
+      "updatedAt": "2026-07-19T16:56:25.691Z",
+      "id": 8
     }
   ],
   "careerApplications": [
@@ -9012,6 +8723,170 @@
       ],
       "createdAt": "2026-07-17T13:52:00.000Z",
       "updatedAt": "2026-07-18T11:11:00.000Z"
+    },
+    {
+      "applicationId": "APP-2026-BFEJGP",
+      "jobId": 2,
+      "jobSnapshot": {
+        "title": "Store & Inventory Supervisor",
+        "slug": "store-inventory-supervisor",
+        "department": "Store Operations",
+        "location": "Nagaon, Assam",
+        "employmentType": "full_time",
+        "workMode": "onsite"
+      },
+      "source": "careers_page",
+      "applicantName": "Shubendu Das",
+      "email": "shubendu@assamdigital.com",
+      "phone": "6901608721",
+      "fields": [
+        {
+          "key": "fullName",
+          "label": "Full Name",
+          "type": "text",
+          "value": "Shubendu Das"
+        },
+        {
+          "key": "email",
+          "label": "Email Address",
+          "type": "email",
+          "value": "shubendu@assamdigital.com"
+        },
+        {
+          "key": "phone",
+          "label": "Mobile Number",
+          "type": "phone",
+          "value": "6901608721"
+        },
+        {
+          "key": "city",
+          "label": "Current City",
+          "type": "text",
+          "value": "bongaigaon"
+        },
+        {
+          "key": "state",
+          "label": "State",
+          "type": "text",
+          "value": "assam"
+        },
+        {
+          "key": "currentCompany",
+          "label": "Current Company",
+          "type": "text",
+          "value": "none"
+        },
+        {
+          "key": "currentDesignation",
+          "label": "Current Designation",
+          "type": "text",
+          "value": "none"
+        },
+        {
+          "key": "experienceYears",
+          "label": "Years of Experience",
+          "type": "number",
+          "value": "1"
+        },
+        {
+          "key": "expectedSalary",
+          "label": "Expected Salary (Monthly)",
+          "type": "text",
+          "value": "22000"
+        },
+        {
+          "key": "softwareUsed",
+          "label": "Inventory software you have used",
+          "type": "text",
+          "value": "all"
+        }
+      ],
+      "resume": {
+        "url": "/uploads/resumes/f844803d-0ebd-40e5-ab3e-28125c03b3fe.docx",
+        "fileName": "f844803d-0ebd-40e5-ab3e-28125c03b3fe.docx",
+        "originalName": "this interior.docx",
+        "size": 2987931,
+        "type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      },
+      "status": "new",
+      "rating": 0,
+      "recruiterId": null,
+      "notes": [],
+      "statusHistory": [
+        {
+          "at": "2026-07-19T16:32:57.936Z",
+          "by": "System",
+          "action": "Application received",
+          "note": ""
+        }
+      ],
+      "createdAt": "2026-07-19T16:32:57.936Z",
+      "updatedAt": "2026-07-19T16:32:57.936Z",
+      "id": 4
+    },
+    {
+      "applicationId": "APP-2026-YSXB2Z",
+      "jobId": 8,
+      "jobSnapshot": {
+        "title": "sleep",
+        "slug": "sleep",
+        "department": "nothing",
+        "location": "Nagaon, Assam",
+        "employmentType": "internship",
+        "workMode": "remote"
+      },
+      "source": "careers_page",
+      "applicantName": "Shubendu Das",
+      "email": "shubendu@assamdigital.com",
+      "phone": "6901608721",
+      "fields": [
+        {
+          "key": "fullName",
+          "label": "Full Name",
+          "type": "text",
+          "value": "Shubendu Das"
+        },
+        {
+          "key": "email",
+          "label": "Email Address",
+          "type": "email",
+          "value": "shubendu@assamdigital.com"
+        },
+        {
+          "key": "phone",
+          "label": "Mobile Number",
+          "type": "phone",
+          "value": "6901608721"
+        },
+        {
+          "key": "currentDesignation",
+          "label": "Current Designation",
+          "type": "text",
+          "value": "none"
+        }
+      ],
+      "resume": {
+        "url": "/uploads/resumes/aeac0850-c843-433d-ac53-ec0020c703b1.pdf",
+        "fileName": "aeac0850-c843-433d-ac53-ec0020c703b1.pdf",
+        "originalName": "Internship Offer_Shubendu Das.pdf",
+        "size": 433715,
+        "type": "application/pdf"
+      },
+      "status": "new",
+      "rating": 0,
+      "recruiterId": null,
+      "notes": [],
+      "statusHistory": [
+        {
+          "at": "2026-07-19T16:57:29.753Z",
+          "by": "System",
+          "action": "Application received",
+          "note": ""
+        }
+      ],
+      "createdAt": "2026-07-19T16:57:29.753Z",
+      "updatedAt": "2026-07-19T16:57:29.753Z",
+      "id": 5
     }
   ],
   "careerRecruiters": [
@@ -9039,44 +8914,48 @@
       "description": "Join North East Build Mart, Nagaon's trusted building-materials supplier. Open roles in sales, operations, logistics, accounts and marketing. Apply online."
     },
     "hero": {
-      "eyebrow": "Careers at North East Build Mart",
-      "title": "Build the future of",
-      "highlight": "building materials",
-      "subtitle": "We're a growing team in Nagaon, Assam bringing the building-materials trade online for the entire North East. Do work that a whole region can see rise around it.",
+      "eyebrow": "Careers at North East Build Mart whole",
+      "title": "Build the future of whole",
+      "highlight": "building materials whole",
+      "subtitle": "We're a growing team in Nagaon, Assam bringing the building-materials trade online for the entire North East. Do work that a whole region can see rise around it. whole",
       "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=80",
-      "primaryCtaLabel": "View Open Positions",
-      "secondaryCtaLabel": "How We Hire",
+      "primaryCtaLabel": "View Open Positions whole",
+      "secondaryCtaLabel": "How We Hire whole",
       "stats": [
         {
-          "value": "15+",
-          "label": "Team members"
+          "value": "15+1",
+          "label": "Team members1"
         },
         {
-          "value": "11+",
-          "label": "Product categories"
+          "value": "11+1",
+          "label": "Product categories1"
         },
         {
-          "value": "2 days",
-          "label": "Avg. first response"
+          "value": "2 days1",
+          "label": "Avg. first response1"
         },
         {
           "value": "100%",
-          "label": "Local hiring"
+          "label": "Local hiring1"
+        },
+        {
+          "value": "accha",
+          "label": "okh"
         }
       ]
     },
     "whyJoinUs": {
       "enabled": true,
-      "title": "Why join us",
-      "subtitle": "Real reasons, not perks-page filler.",
+      "title": "Why join us whole",
+      "subtitle": "Real reasons, not perks-page filler. whole",
       "items": [
         {
-          "icon": "mdi:trending-up",
-          "title": "A business that's genuinely growing",
-          "text": "New categories, new site, new customers every month — growth here isn't a slide in a deck, it's trucks leaving the yard."
+          "icon": "mdi:trending-up ",
+          "title": "A business that's genuinely growing whole",
+          "text": "New categories, new site, new customers every month —  growth here isn't a slide in a deck, it's trucks leaving the yard.whole"
         },
         {
-          "icon": "mdi:account-voice",
+          "icon": "mdi:account-arrow-down",
           "title": "Your ideas reach the owner",
           "text": "No seven layers of approvals. Good ideas get tried within a week, and you get the credit."
         },
@@ -9089,6 +8968,11 @@
           "icon": "mdi:school-outline",
           "title": "Learn the whole trade",
           "text": "Sales, stock, logistics, accounts — a small ambitious company teaches you the entire business, fast."
+        },
+        {
+          "icon": "mdi:school-outline",
+          "title": "Learn the whole trade",
+          "text": "Sales, stock, logistics, accounts — a small ambitious company teaches you the entire business, fast."
         }
       ]
     },
@@ -9096,7 +8980,7 @@
       "enabled": true,
       "title": "Company culture",
       "subtitle": "What working here actually feels like.",
-      "image": "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=80",
+      "image": "https://i.pinimg.com/736x/94/36/1e/94361e0ddf929122c5438a36235d44b5.jpg",
       "values": [
         {
           "icon": "mdi:handshake",
@@ -9199,6 +9083,14 @@
         {
           "url": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80",
           "caption": "Planning the week"
+        },
+        {
+          "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShFzMvwvPfjVNLgqfKsfRCsfyUj8HjvFBEHNFGgo58zA&s=10",
+          "caption": "none"
+        },
+        {
+          "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShFzMvwvPfjVNLgqfKsfRCsfyUj8HjvFBEHNFGgo58zA&s=10",
+          "caption": ""
         }
       ]
     },
@@ -9268,7 +9160,7 @@
     "cta": {
       "enabled": true,
       "title": "Don't see the right role?",
-      "subtitle": "Tell us what you're great at — we create roles for exceptional people. Send your resume with a note.",
+      "subtitle": "Tell us what you're great at — we create roles for exceptional people. Send your resume with a note. whole",
       "buttonLabel": "Contact Us"
     },
     "openings": {
@@ -9285,25 +9177,29 @@
       "sendAdminEmail": true,
       "whatsappWebhook": ""
     },
-    "updatedAt": "2026-07-18T22:12:14.604Z"
+    "updatedAt": "2026-07-19T19:32:09.245Z"
   },
   "testimonials": [
     {
       "id": 1,
-      "type": "text",
+      "type": "video",
       "status": "published",
       "featured": true,
-      "sortOrder": 1,
+      "sortOrder": 2,
       "customerName": "Ranjit Bora",
-      "designation": "Site Contractor",
-      "company": "Bora Constructions, Guwahati",
-      "avatarUrl": "https://randomuser.me/api/portraits/men/32.jpg",
+      "designation": "",
+      "company": "",
+      "avatarUrl": "",
       "rating": 5,
-      "title": "WPC louvers transformed our client's lobby",
-      "body": "We used the 3D charcoal WPC louver panels across a 40-foot feature wall in a hotel lobby at Six Mile. Finish is consistent panel to panel, installation was quick, and six months in there is zero warping despite the humidity. NEBM delivered the full lot in two days.",
-      "reviewDate": "2026-04-18",
+      "title": "",
+      "body": "",
+      "reviewDate": "2026-07-19",
       "verified": true,
-      "media": null,
+      "media": {
+        "url": "https://youtube.com/shorts/FgDhp7wO2hs?si=OzSZKhACxV6WayBM",
+        "poster": "",
+        "caption": ""
+      },
       "productIds": [
         1,
         2
@@ -9316,26 +9212,22 @@
         "page": true,
         "products": true
       },
-      "tags": [
-        "wpc",
-        "commercial",
-        "guwahati"
-      ],
-      "source": "direct",
+      "tags": [],
+      "source": "youtube",
       "createdAt": "2026-04-18T10:15:00.000Z",
-      "updatedAt": "2026-04-18T10:15:00.000Z"
+      "updatedAt": "2026-07-19T14:49:23.632Z"
     },
     {
       "id": 2,
       "type": "text",
       "status": "published",
       "featured": true,
-      "sortOrder": 2,
+      "sortOrder": 3,
       "customerName": "Priyanka Deka",
       "designation": "Interior Designer",
       "company": "Studio PD, Nagaon",
       "avatarUrl": "https://randomuser.me/api/portraits/women/44.jpg",
-      "rating": 5,
+      "rating": 3,
       "title": "My go-to supplier for every project",
       "body": "I've sourced tiles, louvers and bath fittings from North East Build Mart for over a dozen residential projects. The team understands design intent — they'll suggest the right finish instead of just quoting the cheapest SKU. Bulk pricing is transparent and delivery is dependable.",
       "reviewDate": "2026-03-29",
@@ -9359,14 +9251,14 @@
       ],
       "source": "google",
       "createdAt": "2026-03-29T14:00:00.000Z",
-      "updatedAt": "2026-03-29T14:00:00.000Z"
+      "updatedAt": "2026-07-19T14:49:23.739Z"
     },
     {
       "id": 3,
       "type": "video",
       "status": "published",
-      "featured": true,
-      "sortOrder": 3,
+      "featured": false,
+      "sortOrder": 4,
       "customerName": "Amit Sharma",
       "designation": "Homeowner",
       "company": "Dibrugarh",
@@ -9398,14 +9290,14 @@
       ],
       "source": "youtube",
       "createdAt": "2026-03-12T09:30:00.000Z",
-      "updatedAt": "2026-03-12T09:30:00.000Z"
+      "updatedAt": "2026-07-19T18:22:00.734Z"
     },
     {
       "id": 4,
       "type": "photo",
       "status": "published",
       "featured": false,
-      "sortOrder": 4,
+      "sortOrder": 5,
       "customerName": "Bhaskar Kalita",
       "designation": "Architect",
       "company": "BK Associates, Tezpur",
@@ -9437,14 +9329,14 @@
       ],
       "source": "direct",
       "createdAt": "2026-02-25T11:45:00.000Z",
-      "updatedAt": "2026-02-25T11:45:00.000Z"
+      "updatedAt": "2026-07-19T14:49:23.829Z"
     },
     {
       "id": 5,
       "type": "text",
       "status": "published",
       "featured": false,
-      "sortOrder": 5,
+      "sortOrder": 6,
       "customerName": "Mridula Saikia",
       "designation": "Homeowner",
       "company": "Jorhat",
@@ -9473,14 +9365,14 @@
       ],
       "source": "direct",
       "createdAt": "2026-02-10T16:20:00.000Z",
-      "updatedAt": "2026-07-19T11:57:39.191Z"
+      "updatedAt": "2026-07-19T14:49:23.889Z"
     },
     {
       "id": 6,
       "type": "video",
       "status": "published",
       "featured": false,
-      "sortOrder": 6,
+      "sortOrder": 7,
       "customerName": "Debojit Chetia",
       "designation": "Fabricator",
       "company": "Chetia Roofing Works, Sivasagar",
@@ -9512,14 +9404,14 @@
       ],
       "source": "vimeo",
       "createdAt": "2026-01-30T08:00:00.000Z",
-      "updatedAt": "2026-01-30T08:00:00.000Z"
+      "updatedAt": "2026-07-19T14:49:23.950Z"
     },
     {
       "id": 7,
       "type": "text",
       "status": "published",
       "featured": false,
-      "sortOrder": 7,
+      "sortOrder": 8,
       "customerName": "Nabanita Goswami",
       "designation": "Project Manager",
       "company": "Greenfield Realty, Guwahati",
@@ -9548,14 +9440,14 @@
       ],
       "source": "direct",
       "createdAt": "2026-01-22T12:10:00.000Z",
-      "updatedAt": "2026-01-22T12:10:00.000Z"
+      "updatedAt": "2026-07-19T14:49:23.994Z"
     },
     {
       "id": 8,
       "type": "photo",
       "status": "published",
       "featured": false,
-      "sortOrder": 8,
+      "sortOrder": 9,
       "customerName": "Hiren Das",
       "designation": "Homeowner",
       "company": "Nagaon",
@@ -9587,14 +9479,14 @@
       ],
       "source": "direct",
       "createdAt": "2025-12-15T18:00:00.000Z",
-      "updatedAt": "2025-12-15T18:00:00.000Z"
+      "updatedAt": "2026-07-19T14:49:24.038Z"
     },
     {
       "id": 9,
       "type": "video",
       "status": "published",
       "featured": false,
-      "sortOrder": 9,
+      "sortOrder": 10,
       "customerName": "Pallabi Hazarika",
       "designation": "Cafe Owner",
       "company": "Brew & Bloom, Guwahati",
@@ -9628,14 +9520,14 @@
       ],
       "source": "direct",
       "createdAt": "2025-12-02T10:00:00.000Z",
-      "updatedAt": "2025-12-02T10:00:00.000Z"
+      "updatedAt": "2026-07-19T14:49:24.080Z"
     },
     {
       "id": 10,
       "type": "text",
       "status": "published",
       "featured": false,
-      "sortOrder": 10,
+      "sortOrder": 11,
       "customerName": "Utpal Rajkhowa",
       "designation": "Civil Engineer",
       "company": "URC Infra, Golaghat",
@@ -9662,14 +9554,14 @@
       ],
       "source": "direct",
       "createdAt": "2025-11-20T09:40:00.000Z",
-      "updatedAt": "2025-11-20T09:40:00.000Z"
+      "updatedAt": "2026-07-19T14:49:24.117Z"
     },
     {
       "id": 11,
       "type": "text",
       "status": "draft",
       "featured": false,
-      "sortOrder": 11,
+      "sortOrder": 12,
       "customerName": "Rituparna Bhuyan",
       "designation": "Homeowner",
       "company": "Guwahati",
@@ -9696,14 +9588,14 @@
       ],
       "source": "direct",
       "createdAt": "2026-05-06T13:00:00.000Z",
-      "updatedAt": "2026-05-06T13:00:00.000Z"
+      "updatedAt": "2026-07-19T14:49:24.390Z"
     },
     {
       "id": 12,
       "type": "text",
       "status": "archived",
       "featured": false,
-      "sortOrder": 12,
+      "sortOrder": 13,
       "customerName": "Dipankar Nath",
       "designation": "Shop Owner",
       "company": "Nath Hardware, Morigaon",
@@ -9728,7 +9620,155 @@
       ],
       "source": "direct",
       "createdAt": "2024-08-14T10:00:00.000Z",
-      "updatedAt": "2026-01-05T10:00:00.000Z"
+      "updatedAt": "2026-07-19T14:49:24.441Z"
+    },
+    {
+      "type": "photo",
+      "status": "published",
+      "featured": false,
+      "customerName": "yyyy",
+      "designation": "",
+      "company": "",
+      "avatarUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbGWYbVvDTBjHOX-by-rO1HbQdM19aROs7jaQgfjsko4sA-Tv6f2t15jJB&s=10",
+      "rating": 5,
+      "title": "",
+      "body": "",
+      "reviewDate": "2026-07-19",
+      "verified": true,
+      "media": {
+        "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbGWYbVvDTBjHOX-by-rO1HbQdM19aROs7jaQgfjsko4sA-Tv6f2t15jJB&s=10",
+        "poster": "",
+        "caption": ""
+      },
+      "productIds": [
+        1,
+        4,
+        5
+      ],
+      "categoryIds": [
+        38,
+        1
+      ],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [],
+      "source": "direct",
+      "sortOrder": 14,
+      "createdAt": "2026-07-19T14:11:48.733Z",
+      "updatedAt": "2026-07-19T14:49:24.494Z",
+      "id": 13
+    },
+    {
+      "type": "video",
+      "status": "published",
+      "featured": false,
+      "customerName": "gfhgvgvh",
+      "designation": "",
+      "company": "",
+      "avatarUrl": "",
+      "rating": 5,
+      "title": "",
+      "body": "",
+      "reviewDate": "2026-07-19",
+      "verified": true,
+      "media": {
+        "url": "https://youtube.com/shorts/FgDhp7wO2hs?si=ZqARbIL4RJRXQ1Jl",
+        "poster": "",
+        "caption": ""
+      },
+      "productIds": [
+        5
+      ],
+      "categoryIds": [],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [],
+      "source": "direct",
+      "sortOrder": 1,
+      "createdAt": "2026-07-19T14:17:08.369Z",
+      "updatedAt": "2026-07-19T14:49:23.425Z",
+      "id": 14
+    },
+    {
+      "type": "photo",
+      "status": "published",
+      "featured": false,
+      "customerName": "uuuuuu",
+      "designation": "",
+      "company": "",
+      "avatarUrl": "https://m.media-amazon.com/images/M/MV5BZTNjOWI0ZTAtOGY1OS00ZGU0LWEyOWYtMjhkYjdlYmVjMDk2XkEyXkFqcGc@._V1_QL75_UY281_CR1,0,190,281_.jpg",
+      "rating": 4,
+      "title": "",
+      "body": "",
+      "reviewDate": "2026-07-19",
+      "verified": true,
+      "media": {
+        "url": "https://m.media-amazon.com/images/M/MV5BZTNjOWI0ZTAtOGY1OS00ZGU0LWEyOWYtMjhkYjdlYmVjMDk2XkEyXkFqcGc@._V1_QL75_UY281_CR1,0,190,281_.jpg",
+        "poster": "",
+        "caption": ""
+      },
+      "productIds": [],
+      "categoryIds": [],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [],
+      "source": "other",
+      "sortOrder": 15,
+      "createdAt": "2026-07-19T14:58:32.519Z",
+      "updatedAt": "2026-07-19T14:58:32.519Z",
+      "id": 15
+    },
+    {
+      "type": "photo",
+      "status": "published",
+      "featured": false,
+      "customerName": "gtyvghv",
+      "designation": "",
+      "company": "",
+      "avatarUrl": "",
+      "rating": 5,
+      "title": "",
+      "body": "",
+      "reviewDate": "2026-07-19",
+      "verified": true,
+      "media": {
+        "url": "https://m.media-amazon.com/images/M/MV5BZTNjOWI0ZTAtOGY1OS00ZGU0LWEyOWYtMjhkYjdlYmVjMDk2XkEyXkFqcGc@._V1_QL75_UY281_CR1,0,190,281_.jpg",
+        "poster": "",
+        "caption": ""
+      },
+      "productIds": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "categoryIds": [
+        13,
+        23,
+        33,
+        38,
+        28
+      ],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [],
+      "source": "direct",
+      "sortOrder": -1,
+      "createdAt": "2026-07-19T15:13:01.102Z",
+      "updatedAt": "2026-07-19T15:29:11.037Z",
+      "id": 16
     }
   ],
   "testimonialsPage": {
@@ -9738,21 +9778,21 @@
       "description": "Real stories from contractors, architects and homeowners across the North East who build with materials from North East Build Mart."
     },
     "hero": {
-      "kicker": "Wall of trust",
-      "title": "Built on real projects, told by real customers",
-      "subtitle": "Contractors, architects and homeowners across the North East share how our materials performed on their sites."
+      "kicker": "Wall of trust okh",
+      "title": "Built on real projects, told by real customers okh",
+      "subtitle": "Contractors, architects and homeowners across the North East share how our materials performed on their sites. okh"
     },
     "home": {
       "enabled": true,
-      "kicker": "Testimonials",
-      "title": "What our customers say",
-      "subtitle": "Real feedback from projects across the North East.",
+      "kicker": "Testimonials ok",
+      "title": "What our customers say ok",
+      "subtitle": "Real feedback from projects across the North East. ok",
       "layout": "carousel",
-      "maxItems": 6,
       "sort": "order",
+      "maxItems": 24,
       "featuredOnly": false,
       "autoRotate": true,
-      "autoRotateMs": 6000
+      "autoRotateMs": 2500
     },
     "productPage": {
       "enabled": true,
@@ -9761,8 +9801,8 @@
     },
     "page": {
       "layout": "masonry",
-      "pageSize": 9
+      "pageSize": 3
     },
-    "updatedAt": "2026-05-01T09:00:00.000Z"
+    "updatedAt": "2026-07-19T18:25:28.098Z"
   }
 }
