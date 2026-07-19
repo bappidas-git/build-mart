@@ -47,6 +47,7 @@ import Wishlist from "./pages/Wishlist/Wishlist";
 import Careers from "./pages/Careers/Careers";
 import CareerDetails from "./pages/Careers/CareerDetails";
 import CareerThankYou from "./pages/Careers/CareerThankYou";
+import Testimonials from "./pages/Testimonials/Testimonials";
 
 // Admin Pages
 import AdminLogin from "./pages/Admin/AdminLogin";
@@ -61,6 +62,8 @@ import AdminSettings from "./pages/Admin/AdminSettings";
 import AdminCareers from "./pages/Admin/AdminCareers";
 import AdminCareerApplications from "./pages/Admin/AdminCareerApplications";
 import AdminCareerPage from "./pages/Admin/AdminCareerPage";
+import AdminTestimonials from "./pages/Admin/AdminTestimonials";
+import AdminTestimonialsPage from "./pages/Admin/AdminTestimonialsPage";
 
 import ErrorBoundary from "./components/ErrorBoundary/ErrorBoundary";
 import "./App.css";
@@ -106,6 +109,8 @@ function App() {
                         <Route path="careers" element={<AdminCareers />} />
                         <Route path="career-applications" element={<AdminCareerApplications />} />
                         <Route path="career-page" element={<AdminCareerPage />} />
+                        <Route path="testimonials" element={<AdminTestimonials />} />
+                        <Route path="testimonials-page" element={<AdminTestimonialsPage />} />
                         <Route path="settings" element={<AdminSettings />} />
                       </Route>
                     </Route>
@@ -143,6 +148,7 @@ function App() {
                                 <Route path="/careers" element={<Careers />} />
                                 <Route path="/careers/thank-you/:applicationId" element={<CareerThankYou />} />
                                 <Route path="/careers/:slug" element={<CareerDetails />} />
+                                <Route path="/testimonials" element={<Testimonials />} />
                                 <Route path="/privacy" element={<PrivacyPolicy />} />
                                 <Route path="/terms" element={<TermsOfService />} />
                                 <Route path="/cookies" element={<CookiePolicy />} />

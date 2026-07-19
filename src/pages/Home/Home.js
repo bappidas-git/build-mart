@@ -8,6 +8,7 @@ import apiService from "../../services/api";
 import { categoryParam } from "../../utils/categories";
 import HeroSection from "../../components/HeroSection/HeroSection";
 import CTASection from "../../components/CTASection/CTASection";
+import TestimonialsSection from "../../components/testimonials/TestimonialsSection";
 import ProductCard from "../../components/storefront/ProductCard";
 import {
   APP_NAME,
@@ -365,10 +366,15 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 6. CTA band */}
+      {/* 6. Customer testimonials — fully admin-managed (Testimonial module).
+          The band owns its own rhythm and renders nothing while disabled or
+          empty, so it can never leave a blank section here. */}
+      <TestimonialsSection variant="home" />
+
+      {/* 7. CTA band */}
       <CTASection />
 
-      {/* 7. Contact CTA */}
+      {/* 8. Contact CTA */}
       <section className={styles.section}>
         <div className={styles.container}>
           <div className={styles.contactCta}>
@@ -418,7 +424,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 8. Recently Viewed (optional, localStorage-driven) */}
+      {/* 9. Recently Viewed (optional, localStorage-driven) */}
       {recentlyViewed.length > 0 && (
         <section className={styles.section}>
           <div className={styles.container}>

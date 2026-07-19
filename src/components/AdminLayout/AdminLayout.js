@@ -69,6 +69,16 @@ const menuItems = [
     path: "/admin/reviews",
   },
   {
+    title: "Testimonials",
+    icon: "mdi:comment-quote-outline",
+    path: "/admin/testimonials",
+  },
+  {
+    title: "Testimonial Display",
+    icon: "mdi:monitor-star",
+    path: "/admin/testimonials-page",
+  },
+  {
     title: "Enquiries",
     icon: null,
     isSection: true,

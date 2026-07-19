@@ -55,6 +55,7 @@ const Footer = () => {
     { label: "Home", path: "/" },
     { label: "Products", path: "/products" },
     { label: "About Us", path: "/about" },
+    { label: "Testimonials", path: "/testimonials" },
     { label: "Careers", path: "/careers" },
     { label: "Contact Us", path: "/support" },
     { label: "My Enquiries", path: "/orders" },

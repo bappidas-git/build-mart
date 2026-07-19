@@ -9,6 +9,7 @@ import {
   LocalOfferOutlined,
   RequestQuoteOutlined,
   FavoriteBorder,
+  FormatQuoteRounded,
   WorkOutline,
   PersonOutline,
   Logout as LogoutIcon,
@@ -562,6 +563,18 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
                     <HeadsetMicOutlined />
                   </span>
                   <span className={styles.rowLabel}>Help &amp; Support</span>
+                  <ChevronRight className={styles.rowArrow} />
+                </motion.button>
+
+                <motion.button
+                  className={styles.row}
+                  onClick={() => handleNavigate("/testimonials")}
+                  {...nextRow()}
+                >
+                  <span className={`${styles.rowIcon} ${styles.toneNeutral}`}>
+                    <FormatQuoteRounded />
+                  </span>
+                  <span className={styles.rowLabel}>Testimonials</span>
                   <ChevronRight className={styles.rowArrow} />
                 </motion.button>
 
