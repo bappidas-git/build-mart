@@ -56,6 +56,14 @@ production schema maps 1:1 (normalized design below).
 | `careerRecruiters` | `{ id, name, email, isActive }` |
 | `careersPage` (singleton) | Landing content: enabled, seo, hero (+stats), whyJoinUs, culture, benefits, growth, life, hiringProcess, faqs, cta, openings copy, thankYou (responseTime/message), notifications (recruiterEmail, applicant/admin email toggles, WhatsApp webhook) |
 
+`hero.image` accepts an image **or** a direct video-file link (`.mp4`, `.webm`,
+`.ogg/.ogv`, `.m4v`, `.mov`, or a Cloudinary `/video/upload/` path — detected by
+`isDirectVideoUrl` in `careersApi.js`). A video renders as a muted, looping,
+`playsInline` cover-fit `<video>` background on all viewports (hidden under
+`prefers-reduced-motion`); anything else renders as the background image.
+Streaming-page links (YouTube/Vimeo) are treated as images on purpose — they
+can't autoplay as an ambient background.
+
 **Form field shape** (used by the builder and the renderer):
 ```js
 { id, key, type, label, standard, enabled, required, locked,

@@ -74,6 +74,24 @@ export const RESUME_ACCEPT = ".pdf,.doc,.docx";
 export const RESUME_MAX_BYTES = 10 * 1024 * 1024; // keep in sync with server.js
 const RESUME_EXTENSIONS = ["pdf", "doc", "docx"];
 
+// The hero "Background URL" field accepts either an image or a video link.
+// A direct video-file URL (or a Cloudinary-style /video/upload/ path) renders
+// as a muted looping <video> background; everything else stays an image.
+// Streaming-page links (YouTube/Vimeo watch pages) are NOT videos here — they
+// can't autoplay as an ambient background, so they'd render a broken hero.
+const DIRECT_VIDEO_RE = /\.(mp4|webm|ogg|ogv|m4v|mov)$/i;
+
+export const isDirectVideoUrl = (value) => {
+  if (!value || typeof value !== "string") return false;
+  try {
+    const url = new URL(value.trim());
+    if (url.protocol !== "https:" && url.protocol !== "http:") return false;
+    return DIRECT_VIDEO_RE.test(url.pathname) || url.pathname.includes("/video/upload/");
+  } catch {
+    return false;
+  }
+};
+
 // The standard application fields every new job starts from. The admin form
 // builder toggles/edits/reorders these and appends custom fields per vacancy.
 // `locked` fields are the minimum viable application and can't be disabled.

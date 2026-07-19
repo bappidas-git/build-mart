@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import Swal from "sweetalert2";
-import careersApi from "../../services/careersApi";
+import careersApi, { isDirectVideoUrl } from "../../services/careersApi";
 
 // =============================================================================
 // AdminCareerPage — every block of the storefront Careers landing page is
@@ -99,7 +99,16 @@ const AdminCareerPage = () => {
       <Section title="Hero" icon="mdi:image-text" subtitle="Headline, background image, CTAs and stats">
         <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" }, gap: 2, mb: 2 }}>
           <TextField label="Eyebrow" size="small" value={config.hero?.eyebrow || ""} onChange={(e) => merge("hero", { eyebrow: e.target.value })} />
-          <TextField label="Background Image URL" size="small" value={config.hero?.image || ""} onChange={(e) => merge("hero", { image: e.target.value })} placeholder="https://…" />
+          <TextField
+            label="Background Image / Video URL"
+            size="small"
+            value={config.hero?.image || ""}
+            onChange={(e) => merge("hero", { image: e.target.value })}
+            placeholder="https://…"
+            helperText={isDirectVideoUrl(config.hero?.image)
+              ? "Video detected — plays muted on a loop behind the hero"
+              : "Image link, or a direct video file link (.mp4 / .webm) for an ambient background video"}
+          />
           <TextField label="Title" size="small" value={config.hero?.title || ""} onChange={(e) => merge("hero", { title: e.target.value })} />
           <TextField label="Highlighted words" size="small" value={config.hero?.highlight || ""} onChange={(e) => merge("hero", { highlight: e.target.value })} helperText="Rendered in the gold gradient after the title" />
           <TextField label="Subtitle" size="small" multiline rows={2} value={config.hero?.subtitle || ""} onChange={(e) => merge("hero", { subtitle: e.target.value })} sx={{ gridColumn: "1 / -1" }} />

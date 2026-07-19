@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Icon } from "@iconify/react";
-import careersApi, { WORK_MODES, EMPLOYMENT_TYPES } from "../../services/careersApi";
+import careersApi, { WORK_MODES, EMPLOYMENT_TYPES, isDirectVideoUrl } from "../../services/careersApi";
 import JobCard from "../../components/careers/JobCard";
 import EmptyState from "../../components/EmptyState/EmptyState";
 import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
@@ -227,11 +227,27 @@ const Careers = () => {
       {/* ================= Hero ================= */}
       <section className={styles.hero}>
         {hero.image && (
-          <div
-            className={styles.heroImage}
-            style={{ backgroundImage: `url(${hero.image})` }}
-            aria-hidden="true"
-          />
+          isDirectVideoUrl(hero.image) ? (
+            <video
+              key={hero.image}
+              className={`${styles.heroImage} ${styles.heroVideo}`}
+              src={hero.image}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              disablePictureInPicture
+              tabIndex={-1}
+              aria-hidden="true"
+            />
+          ) : (
+            <div
+              className={styles.heroImage}
+              style={{ backgroundImage: `url(${hero.image})` }}
+              aria-hidden="true"
+            />
+          )
         )}
         <div className={styles.heroScrim} aria-hidden="true" />
         <div className={`${styles.container} ${styles.heroContent}`}>
