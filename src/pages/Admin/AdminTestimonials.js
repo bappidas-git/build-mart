@@ -5,7 +5,7 @@ import {
   TableContainer, TableHead, TableRow, IconButton, Chip, Checkbox,
   Dialog, DialogTitle, DialogContent, DialogActions, TextField,
   FormControlLabel, Switch, Skeleton, Tooltip, InputAdornment, MenuItem,
-  Tabs, Tab, Menu, Avatar, Autocomplete, Rating, Divider, Stack,
+  Tabs, Tab, Menu, Avatar, Autocomplete, Rating, Divider, Stack, Alert,
 } from "@mui/material";
 import { Reorder } from "framer-motion";
 import { Icon } from "@iconify/react";
@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 import testimonialsApi, {
   TESTIMONIAL_TYPES, TESTIMONIAL_STATUSES, TESTIMONIAL_SOURCES,
   typeMeta, statusMeta, detectVideoProvider, validateMediaUrl,
-  sanitizeMediaUrl, sortTestimonials,
+  sanitizeMediaUrl, sortTestimonials, explainHomeVisibility,
 } from "../../services/testimonialsApi";
 import apiService from "../../services/api";
 import TestimonialCard from "../../components/testimonials/TestimonialCard";
@@ -87,6 +87,7 @@ const AdminTestimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [pageSettings, setPageSettings] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState("");
@@ -114,14 +115,18 @@ const AdminTestimonials = () => {
   const loadAll = async () => {
     try {
       setLoading(true);
-      const [data, productData, categoryData] = await Promise.all([
+      const [data, productData, categoryData, pageData] = await Promise.all([
         testimonialsApi.admin.getAll(),
         apiService.products.getAll().catch(() => []),
         apiService.categories.getAll().catch(() => []),
+        // Display settings drive the homepage-visibility indicator; a failed
+        // fetch degrades to defaults rather than blocking the library.
+        testimonialsApi.admin.getPage().catch(() => null),
       ]);
       setTestimonials(sortTestimonials(Array.isArray(data) ? data : [], "order"));
       setProducts(Array.isArray(productData) ? productData : []);
       setCategories(Array.isArray(categoryData) ? categoryData : []);
+      setPageSettings(pageData || null);
       setSelected([]);
     } catch (e) {
       console.error(e);
@@ -259,6 +264,32 @@ const AdminTestimonials = () => {
   const setStatus = async (record, status) => {
     setStatusMenu({ anchor: null, record: null });
     await quickPatch(record, { status }, `Status: ${statusMeta(status).label}`);
+  };
+
+  /**
+   * One-click fix for "toggled Homepage showcase but it never shows": new
+   * records join at the END of the manual order, beyond the showcase's
+   * maxItems window. Moving to the front puts it in the visible slice.
+   */
+  const promoteToHomeFront = async (record) => {
+    const result = await Swal.fire({
+      title: "Show on homepage?",
+      text: `"${record.customerName}" is beyond the homepage showcase limit. Move it to the front of the manual display order so the showcase picks it up first?`,
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Move to front",
+    });
+    if (!result.isConfirmed) return;
+    try {
+      const rest = sortTestimonials(testimonials, "order")
+        .map((t) => t.id)
+        .filter((id) => id !== record.id);
+      await testimonialsApi.admin.reorder([record.id, ...rest]);
+      toast("success", "Moved to front", "It now leads the manual display order.");
+      loadAll();
+    } catch (e) {
+      toast("error", "Couldn't reorder", testimonialsApi.getErrorMessage(e));
+    }
   };
 
   // ---- Bulk actions ---------------------------------------------------------
@@ -445,7 +476,7 @@ const AdminTestimonials = () => {
         )}
 
         <TableContainer sx={{ overflowX: "auto" }}>
-          <Table sx={{ minWidth: 1000 }}>
+          <Table sx={{ minWidth: 1080 }}>
             <TableHead>
               <TableRow>
                 <TableCell padding="checkbox">
@@ -463,6 +494,7 @@ const AdminTestimonials = () => {
                 <TableCell>Rating</TableCell>
                 <TableCell>Products</TableCell>
                 <TableCell>Featured</TableCell>
+                <TableCell>Homepage</TableCell>
                 <TableCell>Status</TableCell>
                 <TableCell align="right">Actions</TableCell>
               </TableRow>
@@ -470,14 +502,15 @@ const AdminTestimonials = () => {
             <TableBody>
               {loading ? (
                 [...Array(5)].map((_, i) => (
-                  <TableRow key={i}><TableCell colSpan={9}><Skeleton height={52} /></TableCell></TableRow>
+                  <TableRow key={i}><TableCell colSpan={10}><Skeleton height={52} /></TableCell></TableRow>
                 ))
               ) : filtered.length === 0 ? (
-                <TableRow><TableCell colSpan={9} align="center" sx={{ py: 6 }}><Typography color="text.secondary">No testimonials found</Typography></TableCell></TableRow>
+                <TableRow><TableCell colSpan={10} align="center" sx={{ py: 6 }}><Typography color="text.secondary">No testimonials found</Typography></TableCell></TableRow>
               ) : (
                 filtered.map((t) => {
                   const meta = statusMeta(t.status);
                   const tMeta = typeMeta(t.type);
+                  const homeVis = explainHomeVisibility(t, testimonials, pageSettings);
                   return (
                     <TableRow key={t.id} hover selected={selected.includes(t.id)}>
                       <TableCell padding="checkbox">
@@ -534,6 +567,23 @@ const AdminTestimonials = () => {
                           onChange={() => quickPatch(t, { featured: !t.featured })}
                           inputProps={{ "aria-label": `Feature testimonial from ${t.customerName}` }}
                         />
+                      </TableCell>
+                      <TableCell>
+                        <Tooltip title={homeVis.visible ? "Live in the homepage showcase" : homeVis.reason}>
+                          <Chip
+                            size="small"
+                            variant="outlined"
+                            color={homeVis.visible ? "success" : "default"}
+                            icon={
+                              <Icon
+                                icon={homeVis.visible ? "mdi:home-outline" : "mdi:home-off-outline"}
+                                style={{ fontSize: 14 }}
+                              />
+                            }
+                            label={homeVis.visible ? "Live" : "Hidden"}
+                            onClick={homeVis.canPromote ? () => promoteToHomeFront(t) : undefined}
+                          />
+                        </Tooltip>
                       </TableCell>
                       <TableCell>
                         <Chip
@@ -675,6 +725,33 @@ const AdminTestimonials = () => {
                   <FormControlLabel control={<Switch checked={form.placements.page !== false} onChange={(e) => setForm((f) => ({ ...f, placements: { ...f.placements, page: e.target.checked } }))} />} label="Testimonials page" />
                   <FormControlLabel control={<Switch checked={form.placements.products !== false} onChange={(e) => setForm((f) => ({ ...f, placements: { ...f.placements, products: e.target.checked } }))} />} label="Assigned product pages" />
                 </Stack>
+                {form.placements.home !== false && (() => {
+                  // Live verdict for THIS record as currently edited: new
+                  // records join at the end of the manual order, which the
+                  // showcase's maxItems window may never reach.
+                  const nextOrder =
+                    testimonials.reduce((m, t) => Math.max(m, Number(t.sortOrder) || 0), 0) + 1;
+                  const draft = {
+                    id: editing?.id ?? "__new__",
+                    ...formToPayload(form),
+                    sortOrder: editing?.sortOrder ?? nextOrder,
+                  };
+                  const among = editing
+                    ? testimonials.map((t) => (t.id === editing.id ? draft : t))
+                    : [...testimonials, draft];
+                  const vis = explainHomeVisibility(draft, among, pageSettings);
+                  return (
+                    <Alert
+                      severity={vis.visible ? "success" : "warning"}
+                      icon={<Icon icon={vis.visible ? "mdi:home-outline" : "mdi:home-alert-outline"} />}
+                      sx={{ mt: 1.5 }}
+                    >
+                      {vis.visible
+                        ? "This testimonial will be live in the homepage showcase."
+                        : vis.reason}
+                    </Alert>
+                  );
+                })()}
               </Box>
               <Divider />
               <Autocomplete

@@ -152,6 +152,15 @@ fallbacks.
 - Row quick actions: featured toggle (optimistic + rollback, saves instantly —
   house convention), status chip menu (Published/Draft/Archived), edit,
   duplicate (creates a draft), delete (Swal confirm).
+- **Homepage column** — every row shows a Live/Hidden chip for the homepage
+  showcase with the exact reason on hover (unpublished, placement off,
+  featured-only mode, or beyond the `home.maxItems` window — new records join
+  at the END of the manual order, so they start outside it). Under manual
+  sort, clicking a Hidden chip offers a one-click "move to front" reorder.
+  The edit dialog's Assignment tab shows the same live verdict, so the
+  "Homepage showcase" switch is never a silent no-op. Selection logic is
+  shared with the storefront (`selectHomeItems` / `explainHomeVisibility` in
+  `testimonialsApi.js`).
 - Bulk actions on selection: publish / draft / archive / feature / unfeature /
   delete.
 - Drag-and-drop **Reorder** dialog (framer-motion `Reorder`) → persists
