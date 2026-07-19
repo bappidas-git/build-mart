@@ -271,7 +271,8 @@ export const selectHomeItems = (published, cfg = {}) =>
  * Powers the admin library's per-row indicator and the edit dialog hint, so
  * the "Homepage showcase" switch is never a silent no-op: a testimonial can
  * carry the flag yet stay invisible (unpublished, featured-only mode, or
- * beyond the maxItems cap — new records join at the END of the manual order).
+ * beyond the maxItems cap — older records drift down the manual order as new
+ * ones join at the FRONT, so the showcase always leads with the last added).
  *
  * Returns { visible, reason, canPromote? } — reason is null when visible;
  * canPromote marks the one case a front-of-manual-order move would fix.
@@ -470,16 +471,16 @@ const adminApi = {
     return IS_MOCK_API ? response.data : extractData(response);
   },
 
-  /** Duplicate as a fresh draft placed at the end of the manual order. */
+  /** Duplicate as a fresh draft joining the front of the manual order. */
   duplicate: async (record, allRecords = []) => {
     const { id, createdAt, updatedAt, ...copy } = record;
-    const maxOrder = allRecords.reduce((m, t) => Math.max(m, Number(t.sortOrder) || 0), 0);
+    const minOrder = allRecords.reduce((m, t) => Math.min(m, Number(t.sortOrder) || 0), 0);
     return adminApi.create({
       ...copy,
       title: copy.title ? `${copy.title} (Copy)` : "(Copy)",
       status: "draft",
       featured: false,
-      sortOrder: maxOrder + 1,
+      sortOrder: minOrder - 1,
     });
   },
 

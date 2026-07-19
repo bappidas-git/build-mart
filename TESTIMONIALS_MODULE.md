@@ -154,9 +154,11 @@ fallbacks.
   duplicate (creates a draft), delete (Swal confirm).
 - **Homepage column** — every row shows a Live/Hidden chip for the homepage
   showcase with the exact reason on hover (unpublished, placement off,
-  featured-only mode, or beyond the `home.maxItems` window — new records join
-  at the END of the manual order, so they start outside it). Under manual
-  sort, clicking a Hidden chip offers a one-click "move to front" reorder.
+  featured-only mode, or beyond the `home.maxItems` window). New records —
+  including duplicates — join at the FRONT of the manual order, so the
+  showcase always leads with the last-added testimonial; older records drift
+  down and can fall outside the window. Under manual sort, clicking a Hidden
+  chip offers a one-click "move to front" reorder.
   The edit dialog's Assignment tab shows the same live verdict, so the
   "Homepage showcase" switch is never a silent no-op. Selection logic is
   shared with the storefront (`selectHomeItems` / `explainHomeVisibility` in
