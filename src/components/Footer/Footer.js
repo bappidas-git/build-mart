@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
 import { useTheme } from "../../context/ThemeContext";
 import { useStoreContact } from "../../context/SettingsContext";
 import apiService from "../../services/api";
@@ -17,6 +18,14 @@ const Footer = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [subscribeStatus, setSubscribeStatus] = useState("idle"); // idle | success | error
   const [errorMsg, setErrorMsg] = useState("");
+  // Mobile-only accordion state for the three link columns. Same breakpoint as
+  // the Header's mobile switch so the whole chrome flips together. One section
+  // open at a time; null = all collapsed (the mobile default).
+  const isMobile = useMediaQuery("(max-width:768px)");
+  const [openSection, setOpenSection] = useState(null);
+
+  const toggleSection = (key) =>
+    setOpenSection((prev) => (prev === key ? null : key));
 
   const handleSubscribe = async (e) => {
     e.preventDefault();
@@ -82,6 +91,69 @@ const Footer = () => {
   ];
 
   const currentYear = new Date().getFullYear();
+
+  // On mobile the three link columns collapse into tap-to-expand accordion
+  // rows so the footer isn't one very long scroll; on desktop/tablet they
+  // render as regular always-open columns with the underlined title.
+  const linkSections = [
+    {
+      key: "quick",
+      title: "Quick Links",
+      body: (
+        <ul className={styles.linkList}>
+          {quickLinks.map((link) => (
+            <li key={link.label}>
+              <Link to={link.path} className={styles.footerLink}>
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+    {
+      key: "categories",
+      title: "Categories",
+      body: (
+        <ul className={styles.categoryList}>
+          {categoryLinks.map((cat) => (
+            <li key={cat.slug}>
+              <Link
+                to={`/products?category=${cat.slug}`}
+                className={styles.footerLink}
+              >
+                {cat.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+    {
+      key: "contact",
+      title: "Contact Us",
+      body: (
+        <ul className={styles.contactList}>
+          <li className={styles.contactItem}>
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" className={styles.contactIcon}>
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z" />
+            </svg>
+            <span>{address}</span>
+          </li>
+          {phones.map((phone) => (
+            <li key={phone} className={styles.contactItem}>
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" className={styles.contactIcon}>
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+              </svg>
+              <a href={telHref(phone)} className={styles.contactLink}>
+                {phone}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+  ];
 
   return (
     <footer
@@ -153,8 +225,8 @@ const Footer = () => {
       <div className={styles.mainFooter}>
         <div className={styles.container}>
           <div className={styles.footerGrid}>
-            {/* Column 1: Brand */}
-            <div className={styles.footerCol}>
+            {/* Column 1: Brand — always visible, centered on mobile. */}
+            <div className={`${styles.footerCol} ${styles.brandCol}`}>
               {/* Main logo — reads on both the light and dark footer surface. */}
               <img
                 src={LOGO_URL}
@@ -170,59 +242,50 @@ const Footer = () => {
               <SocialLinks variant="footer" />
             </div>
 
-            {/* Column 2: Quick Links */}
-            <div className={styles.footerCol}>
-              <h4 className={styles.colTitle}>Quick Links</h4>
-              <ul className={styles.linkList}>
-                {quickLinks.map((link) => (
-                  <li key={link.label}>
-                    <Link to={link.path} className={styles.footerLink}>
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Column 3: Categories */}
-            <div className={styles.footerCol}>
-              <h4 className={styles.colTitle}>Categories</h4>
-              <ul className={styles.categoryList}>
-                {categoryLinks.map((cat) => (
-                  <li key={cat.slug}>
-                    <Link
-                      to={`/products?category=${cat.slug}`}
-                      className={styles.footerLink}
+            {/* Columns 2–4: accordion rows on mobile, open columns otherwise. */}
+            {linkSections.map((section) => {
+              const isOpen = openSection === section.key;
+              return (
+                <div
+                  key={section.key}
+                  className={`${styles.footerCol} ${styles.collapsibleCol}`}
+                >
+                  {isMobile ? (
+                    <button
+                      type="button"
+                      className={styles.colToggle}
+                      onClick={() => toggleSection(section.key)}
+                      aria-expanded={isOpen}
+                      aria-controls={`footer-section-${section.key}`}
                     >
-                      {cat.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Column 4: Contact Us */}
-            <div className={styles.footerCol}>
-              <h4 className={styles.colTitle}>Contact Us</h4>
-              <ul className={styles.contactList}>
-                <li className={styles.contactItem}>
-                  <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" className={styles.contactIcon}>
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z" />
-                  </svg>
-                  <span>{address}</span>
-                </li>
-                {phones.map((phone) => (
-                  <li key={phone} className={styles.contactItem}>
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" className={styles.contactIcon}>
-                      <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
-                    </svg>
-                    <a href={telHref(phone)} className={styles.contactLink}>
-                      {phone}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                      {section.title}
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="20"
+                        height="20"
+                        fill="currentColor"
+                        className={`${styles.chevron} ${
+                          isOpen ? styles.chevronOpen : ""
+                        }`}
+                        aria-hidden="true"
+                      >
+                        <path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" />
+                      </svg>
+                    </button>
+                  ) : (
+                    <h4 className={styles.colTitle}>{section.title}</h4>
+                  )}
+                  <div
+                    id={`footer-section-${section.key}`}
+                    className={`${styles.colBody} ${
+                      isOpen ? styles.colBodyOpen : ""
+                    }`}
+                  >
+                    <div className={styles.colBodyInner}>{section.body}</div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
