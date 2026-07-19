@@ -246,6 +246,77 @@ export const sortTestimonials = (list, sort = "order") => {
 };
 
 // -----------------------------------------------------------------------------
+// Homepage showcase selection — shared by the storefront and the admin
+// -----------------------------------------------------------------------------
+// The showcase honours several controls at once (per-testimonial placement
+// flag, featuredOnly, sort strategy, maxItems). The storefront picker and the
+// admin's visibility indicator both run through these helpers so they can
+// never disagree about what is actually on the homepage.
+
+/** Published testimonials eligible for the homepage, in configured order, uncapped. */
+const eligibleForHome = (published, cfg = {}) => {
+  let items = (published || []).filter((t) => t.placements?.home !== false);
+  if (cfg.featuredOnly) items = items.filter((t) => t.featured === true);
+  return sortTestimonials(items, cfg.sort || "order");
+};
+
+const homeMaxItems = (cfg = {}) => Math.max(1, Number(cfg.maxItems) || 6);
+
+/** The exact homepage selection for a given `home` config block. */
+export const selectHomeItems = (published, cfg = {}) =>
+  eligibleForHome(published, cfg).slice(0, homeMaxItems(cfg));
+
+/**
+ * Why a record is — or isn't — part of the homepage showcase right now.
+ * Powers the admin library's per-row indicator and the edit dialog hint, so
+ * the "Homepage showcase" switch is never a silent no-op: a testimonial can
+ * carry the flag yet stay invisible (unpublished, featured-only mode, or
+ * beyond the maxItems cap — new records join at the END of the manual order).
+ *
+ * Returns { visible, reason, canPromote? } — reason is null when visible;
+ * canPromote marks the one case a front-of-manual-order move would fix.
+ */
+export const explainHomeVisibility = (record, allRecords, page) => {
+  const cfg = page?.home || {};
+  if (cfg.enabled === false) {
+    return { visible: false, reason: "The homepage showcase is turned off in Display Settings." };
+  }
+  if (!isPublished(record)) {
+    return {
+      visible: false,
+      reason: `Only published testimonials reach the storefront — this one is ${statusMeta(record?.status).label.toLowerCase()}.`,
+    };
+  }
+  if (record.placements?.home === false) {
+    return { visible: false, reason: 'The "Homepage showcase" placement is switched off for this testimonial.' };
+  }
+  if (cfg.featuredOnly && record.featured !== true) {
+    return {
+      visible: false,
+      reason: "Display Settings limits the showcase to featured testimonials — feature this one to include it.",
+    };
+  }
+  const eligible = eligibleForHome((allRecords || []).filter(isPublished), cfg);
+  const max = homeMaxItems(cfg);
+  const position = eligible.findIndex((t) => String(t.id) === String(record.id)) + 1;
+  if (position >= 1 && position <= max) {
+    return { visible: true, reason: null };
+  }
+  const sort = cfg.sort || "order";
+  const shown =
+    sort === "newest" ? `${max} newest` : sort === "rating" ? `${max} highest-rated` : `first ${max} in manual order`;
+  const remedy =
+    sort === "order"
+      ? 'Move it up via Reorder, or raise "Max items" in Display Settings.'
+      : 'Raise "Max items" in Display Settings to include more.';
+  return {
+    visible: false,
+    canPromote: sort === "order",
+    reason: `Beyond the showcase limit — the homepage shows the ${shown} of ${eligible.length} eligible testimonials and this one is #${position}. ${remedy}`,
+  };
+};
+
+// -----------------------------------------------------------------------------
 // SEO — schema.org Review structured data for crawlers
 // -----------------------------------------------------------------------------
 
@@ -322,13 +393,10 @@ const publicApi = {
   getForHome: async () => {
     const [page, all] = await Promise.all([publicApi.getPage(), publicApi.getPublished()]);
     const cfg = page?.home || {};
-    let items = all.filter((t) => t.placements?.home !== false);
-    if (cfg.featuredOnly) items = items.filter((t) => t.featured === true);
-    items = sortTestimonials(items, cfg.sort || "order").slice(
-      0,
-      Math.max(1, Number(cfg.maxItems) || 6)
-    );
-    return { config: { ...cfg, pageEnabled: page?.enabled !== false }, items };
+    return {
+      config: { ...cfg, pageEnabled: page?.enabled !== false },
+      items: selectHomeItems(all, cfg),
+    };
   },
 
   /**
