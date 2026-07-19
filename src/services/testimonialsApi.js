@@ -98,7 +98,11 @@ const DIRECT_VIDEO_RE = /\.(mp4|webm|ogg|ogv|m4v|mov)(\?.*)?$/i;
  *     provider   "youtube" | "vimeo" | "facebook" | "instagram" | "file"
  *     label      human name for the "Watch on …" action
  *     kind       "iframe" | "file"   (file → native <video>)
- *     embedUrl   src for the iframe (built from the parsed ID, never raw input)
+ *     embedUrl   src for the iframe (built from the parsed ID, never raw input);
+ *                unmuted — for click activation, where a user gesture allows sound
+ *     mutedEmbedUrl  same embed with the provider's mute flag — the only form of
+ *                autoplay every mobile/desktop browser permits without a gesture,
+ *                used when the player auto-activates on scroll into view
  *     watchUrl   canonical page on the original platform (new-tab action)
  *     thumbnailUrl  best-effort poster (may be "" — caller falls back)
  *   }
@@ -128,7 +132,8 @@ export const detectVideoProvider = (rawUrl) => {
       provider: "youtube",
       label: "YouTube",
       kind: "iframe",
-      embedUrl: `https://www.youtube-nocookie.com/embed/${id}?rel=0&autoplay=1`,
+      embedUrl: `https://www.youtube-nocookie.com/embed/${id}?rel=0&autoplay=1&playsinline=1`,
+      mutedEmbedUrl: `https://www.youtube-nocookie.com/embed/${id}?rel=0&autoplay=1&playsinline=1&mute=1`,
       watchUrl: `https://www.youtube.com/watch?v=${id}`,
       thumbnailUrl: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
     };
@@ -142,7 +147,8 @@ export const detectVideoProvider = (rawUrl) => {
       provider: "vimeo",
       label: "Vimeo",
       kind: "iframe",
-      embedUrl: `https://player.vimeo.com/video/${id}?autoplay=1`,
+      embedUrl: `https://player.vimeo.com/video/${id}?autoplay=1&playsinline=1`,
+      mutedEmbedUrl: `https://player.vimeo.com/video/${id}?autoplay=1&playsinline=1&muted=1`,
       watchUrl: `https://vimeo.com/${id}`,
       // vumbnail proxies Vimeo's thumbnail API without needing an access token.
       thumbnailUrl: `https://vumbnail.com/${id}.jpg`,
@@ -156,7 +162,10 @@ export const detectVideoProvider = (rawUrl) => {
       provider: "facebook",
       label: "Facebook",
       kind: "iframe",
+      // Facebook's player handles the muted-autoplay policy itself, so both
+      // activation paths share one embed URL.
       embedUrl: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(canonical)}&show_text=false&autoplay=true`,
+      mutedEmbedUrl: `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(canonical)}&show_text=false&autoplay=true`,
       watchUrl: canonical,
       thumbnailUrl: "",
     };
@@ -172,7 +181,10 @@ export const detectVideoProvider = (rawUrl) => {
       provider: "instagram",
       label: "Instagram",
       kind: "iframe",
+      // Instagram's basic embed has no autoplay flag — auto-activation just
+      // mounts the embed and the visitor taps play inside it.
       embedUrl: `https://www.instagram.com/p/${code}/embed/`,
+      mutedEmbedUrl: `https://www.instagram.com/p/${code}/embed/`,
       watchUrl: `https://www.instagram.com/p/${code}/`,
       thumbnailUrl: "",
     };
@@ -184,7 +196,9 @@ export const detectVideoProvider = (rawUrl) => {
       provider: "file",
       label: "the original site",
       kind: "file",
+      // Direct files mute via the <video> muted attribute, not the URL.
       embedUrl: url.href,
+      mutedEmbedUrl: url.href,
       watchUrl: url.href,
       thumbnailUrl: "",
     };
