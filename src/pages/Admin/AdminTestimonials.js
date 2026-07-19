@@ -206,8 +206,10 @@ const AdminTestimonials = () => {
       if (editing) {
         await testimonialsApi.admin.update(editing.id, { ...editing, ...payload });
       } else {
-        const maxOrder = testimonials.reduce((m, t) => Math.max(m, Number(t.sortOrder) || 0), 0);
-        await testimonialsApi.admin.create({ ...payload, sortOrder: maxOrder + 1 });
+        // New records join the FRONT of the manual order so the homepage
+        // showcase always leads with the last-added testimonial.
+        const minOrder = testimonials.reduce((m, t) => Math.min(m, Number(t.sortOrder) || 0), 0);
+        await testimonialsApi.admin.create({ ...payload, sortOrder: minOrder - 1 });
       }
       setDialogOpen(false);
       toast("success", editing ? "Testimonial updated" : "Testimonial created");
@@ -267,9 +269,10 @@ const AdminTestimonials = () => {
   };
 
   /**
-   * One-click fix for "toggled Homepage showcase but it never shows": new
-   * records join at the END of the manual order, beyond the showcase's
-   * maxItems window. Moving to the front puts it in the visible slice.
+   * One-click fix for "toggled Homepage showcase but it never shows": a
+   * record can sit beyond the showcase's maxItems window (older records
+   * drift down the manual order as new ones join at the FRONT). Moving it
+   * to the front puts it in the visible slice.
    */
   const promoteToHomeFront = async (record) => {
     const result = await Swal.fire({
@@ -727,10 +730,10 @@ const AdminTestimonials = () => {
                 </Stack>
                 {form.placements.home !== false && (() => {
                   // Live verdict for THIS record as currently edited: new
-                  // records join at the end of the manual order, which the
-                  // showcase's maxItems window may never reach.
+                  // records join at the FRONT of the manual order, exactly
+                  // as handleSave will place them.
                   const nextOrder =
-                    testimonials.reduce((m, t) => Math.max(m, Number(t.sortOrder) || 0), 0) + 1;
+                    testimonials.reduce((m, t) => Math.min(m, Number(t.sortOrder) || 0), 0) - 1;
                   const draft = {
                     id: editing?.id ?? "__new__",
                     ...formToPayload(form),
