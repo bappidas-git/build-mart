@@ -11,6 +11,7 @@ import {
   FavoriteBorder,
   FormatQuoteRounded,
   WorkOutline,
+  InfoOutlined,
   PersonOutline,
   Logout as LogoutIcon,
   HeadsetMicOutlined,
@@ -551,18 +552,18 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
 
               <div className={styles.divider} />
 
-              {/* Preferences */}
+              {/* Company — who we are, not account or app settings */}
               <div className={styles.section}>
-                <div className={styles.sectionLabel}>Settings</div>
+                <div className={styles.sectionLabel}>Company</div>
                 <motion.button
                   className={styles.row}
-                  onClick={() => handleNavigate("/support")}
+                  onClick={() => handleNavigate("/about")}
                   {...nextRow()}
                 >
                   <span className={`${styles.rowIcon} ${styles.toneNeutral}`}>
-                    <HeadsetMicOutlined />
+                    <InfoOutlined />
                   </span>
-                  <span className={styles.rowLabel}>Help &amp; Support</span>
+                  <span className={styles.rowLabel}>About Us</span>
                   <ChevronRight className={styles.rowArrow} />
                 </motion.button>
 
@@ -587,6 +588,24 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
                     <WorkOutline />
                   </span>
                   <span className={styles.rowLabel}>Careers</span>
+                  <ChevronRight className={styles.rowArrow} />
+                </motion.button>
+              </div>
+
+              <div className={styles.divider} />
+
+              {/* Preferences */}
+              <div className={styles.section}>
+                <div className={styles.sectionLabel}>Settings</div>
+                <motion.button
+                  className={styles.row}
+                  onClick={() => handleNavigate("/support")}
+                  {...nextRow()}
+                >
+                  <span className={`${styles.rowIcon} ${styles.toneNeutral}`}>
+                    <HeadsetMicOutlined />
+                  </span>
+                  <span className={styles.rowLabel}>Help &amp; Support</span>
                   <ChevronRight className={styles.rowArrow} />
                 </motion.button>
 
