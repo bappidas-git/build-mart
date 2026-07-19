@@ -8968,6 +8968,11 @@
           "icon": "mdi:school-outline",
           "title": "Learn the whole trade",
           "text": "Sales, stock, logistics, accounts — a small ambitious company teaches you the entire business, fast."
+        },
+        {
+          "icon": "mdi:school-outline",
+          "title": "Learn the whole trade",
+          "text": "Sales, stock, logistics, accounts — a small ambitious company teaches you the entire business, fast."
         }
       ]
     },
@@ -9078,6 +9083,14 @@
         {
           "url": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80",
           "caption": "Planning the week"
+        },
+        {
+          "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShFzMvwvPfjVNLgqfKsfRCsfyUj8HjvFBEHNFGgo58zA&s=10",
+          "caption": "none"
+        },
+        {
+          "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShFzMvwvPfjVNLgqfKsfRCsfyUj8HjvFBEHNFGgo58zA&s=10",
+          "caption": ""
         }
       ]
     },
@@ -9164,7 +9177,7 @@
       "sendAdminEmail": true,
       "whatsappWebhook": ""
     },
-    "updatedAt": "2026-07-19T18:01:42.209Z"
+    "updatedAt": "2026-07-19T19:32:09.245Z"
   },
   "testimonials": [
     {
