@@ -116,16 +116,21 @@ export const useStoreContact = () => {
 };
 
 // Focused hook for the store's social profiles — the links the admin enters on
-// Settings → Social. Returns only the platforms that actually have a link set,
-// each as `{ key, label, href }` ready to render, so the footer and the
-// hamburger menu show the same icons and an unset profile simply doesn't appear.
+// Settings → Social. Returns only the platforms that actually have a link set
+// AND are switched on (each field has a show/hide toggle in admin, stored as
+// `settings.social.<key>Enabled`), each as `{ key, label, href }` ready to
+// render, so the footer and the hamburger menu show the same icons and an unset
+// or hidden profile simply doesn't appear. A missing flag counts as visible so
+// links saved before the toggles existed keep showing.
 export const useSocialLinks = () => {
   const { social } = useContext(SettingsContext);
-  return SOCIAL_LINKS.map(({ key, label }) => ({
-    key,
-    label,
-    href: normalizeSocialHref(key, social[key]),
-  })).filter((item) => item.href);
+  return SOCIAL_LINKS.filter(({ key }) => social[`${key}Enabled`] !== false)
+    .map(({ key, label }) => ({
+      key,
+      label,
+      href: normalizeSocialHref(key, social[key]),
+    }))
+    .filter((item) => item.href);
 };
 
 export const SettingsProvider = ({ children }) => {
