@@ -1,5 +1,6 @@
-/* VideoEmbed — click-to-load facade. Fixed 16:9 box so activating the player
-   never shifts layout; everything themed by --sf-* tokens (light + dark). */
+/* VideoEmbed — autoplay-on-view player behind a thumbnail facade. Fixed 16:9
+   box so activating the player never shifts layout; everything themed by
+   --sf-* tokens (light + dark). */
 
 .wrap {
   display: flex;

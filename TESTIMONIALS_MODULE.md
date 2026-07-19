@@ -116,11 +116,16 @@ the DOM:
   `src`, so a testimonial record can't inject an arbitrary frame.
 - `validateMediaUrl(type, url)` — the admin form's save gate.
 
-`VideoEmbed` is a click-to-load facade: only a thumbnail (`i.ytimg.com` /
+`VideoEmbed` autoplays on view: only a thumbnail (`i.ytimg.com` /
 `vumbnail.com` / custom poster) renders with the page; the player iframe or
-native `<video>` mounts on click. Every embed offers a "Watch on <platform>"
-new-tab action. Photos and avatars are `loading="lazy"` with graceful
-`onError` fallbacks.
+native `<video>` mounts — muted, since browsers only allow gesture-less
+autoplay without sound — once the frame scrolls half into view on any device
+(`playsinline` keeps iOS from going fullscreen). Native `<video>` players
+also pause off screen and resume on return. Visitors with
+`prefers-reduced-motion` or data-saver enabled keep the click-to-play facade
+and get sound on click. Every embed offers a "Watch on <platform>" new-tab
+action. Photos and avatars are `loading="lazy"` with graceful `onError`
+fallbacks.
 
 ## 5. Storefront behaviour
 
