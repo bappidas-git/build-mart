@@ -237,6 +237,38 @@
   background: var(--footer-blue);
 }
 
+/* Mobile accordion header for a link column. Only rendered on mobile (the
+   desktop path renders a plain h4), so base styles here are the mobile look. */
+.colToggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: none;
+  border: none;
+  padding: 16px 0;
+  margin: 0;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: left;
+}
+
+.chevron {
+  flex-shrink: 0;
+  color: #94a3b8;
+  transition: transform 0.25s ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
 /* Link Lists */
 .linkList {
   list-style: none;
@@ -446,12 +478,69 @@
   }
 
   .mainFooter {
-    padding: 40px 0 32px;
+    padding: 32px 0 24px;
   }
 
+  /* Accordion rows carry their own padding, so the grid gap goes away and
+     hairline borders separate the sections instead. */
   .footerGrid {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 0;
+  }
+
+  /* Brand block: centered and self-contained above the accordion rows. */
+  .brandCol {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 24px;
+  }
+
+  .brandLogo {
+    margin: 0 auto 14px;
+  }
+
+  .aboutText {
+    max-width: 40ch;
+  }
+
+  .collapsibleCol {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .collapsibleCol:last-child {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Collapse animation: grid-template-rows 0fr → 1fr keeps the height fully
+     content-driven — no magic max-height. visibility flips with it so links
+     inside a closed section can't take keyboard focus. */
+  .colBody {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+  }
+
+  .colBodyInner {
+    overflow: hidden;
+    min-height: 0;
+    visibility: hidden;
+    transition: visibility 0.3s;
+  }
+
+  /* Breathing room under an open section. Lives on the list (inside the clip)
+     rather than the wrapper, so a collapsed row is truly 0px tall. */
+  .colBodyInner > ul {
+    padding-bottom: 20px;
+  }
+
+  .colBodyOpen {
+    grid-template-rows: 1fr;
+  }
+
+  .colBodyOpen .colBodyInner {
+    visibility: visible;
   }
 
   .legalLinks {
@@ -468,6 +557,15 @@
 
 /* ========== ACCESSIBILITY ========== */
 
+@media (prefers-reduced-motion: reduce) {
+  .colBody,
+  .colBodyInner,
+  .chevron {
+    transition: none;
+  }
+}
+
+.colToggle:focus-visible,
 .footerLink:focus-visible,
 .contactLink:focus-visible,
 .legalLink:focus-visible,
