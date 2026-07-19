@@ -211,6 +211,7 @@
 
 .featuredCell {
   display: flex;
+  min-width: 0;
 }
 
 /* ---- Masonry wall (CSS columns — no JS layout cost) ---- */
