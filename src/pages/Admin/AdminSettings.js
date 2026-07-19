@@ -20,6 +20,7 @@ import {
   Skeleton,
   Chip,
   CircularProgress,
+  Tooltip,
 } from "@mui/material";
 import { Icon } from "@iconify/react";
 import { motion } from "framer-motion";
@@ -68,6 +69,19 @@ const NEBM_STORE_DEFAULTS = {
   currencySymbol: "₹",
 };
 
+// Social platforms editable on the Social tab. `key` matches db.json
+// `settings.social` and the storefront's render order; each platform also
+// stores a `<key>Enabled` flag driven by the show/hide switch next to its
+// field, which controls whether the icon appears in the footer and the
+// hamburger menu.
+const SOCIAL_FIELDS = [
+  { key: "facebook", label: "Facebook", placeholder: "https://facebook.com/…" },
+  { key: "instagram", label: "Instagram", placeholder: "https://instagram.com/…" },
+  { key: "twitter", label: "Twitter / X", placeholder: "https://x.com/…" },
+  { key: "youtube", label: "YouTube", placeholder: "https://youtube.com/@…" },
+  { key: "whatsapp", label: "WhatsApp", placeholder: "+91 86385 43526" },
+];
+
 // Tab indices. The Hero Section and Categories tabs are self-contained (each
 // owns its own save), so the shared "Save Changes" bar is hidden on both.
 const HERO_TAB = 1;
@@ -97,13 +111,17 @@ const AdminSettings = () => {
     googleAnalyticsId: "",
     facebookPixelId: "",
   });
-  const [socialForm, setSocialForm] = useState({
-    facebook: "",
-    instagram: "",
-    twitter: "",
-    youtube: "",
-    whatsapp: "",
-  });
+  // URL per platform plus a `<key>Enabled` visibility flag for each — the flag
+  // is flipped by the switch beside the field and self-saves (see
+  // handleToggleSocial); the URLs still go through the shared Save Changes bar.
+  const [socialForm, setSocialForm] = useState(
+    SOCIAL_FIELDS.reduce(
+      (form, { key }) => ({ ...form, [key]: "", [`${key}Enabled`]: true }),
+      {}
+    )
+  );
+  // Which platform's visibility switch is mid-save (disables just that switch).
+  const [socialToggleSaving, setSocialToggleSaving] = useState(null);
   const [notifForm, setNotifForm] = useState({
     adminNewOrderEmail: true,
     adminEmail: "",
@@ -149,13 +167,18 @@ const AdminSettings = () => {
         googleAnalyticsId: seo.googleAnalyticsId || "",
         facebookPixelId: seo.facebookPixelId || "",
       });
-      setSocialForm({
-        facebook: social.facebook || "",
-        instagram: social.instagram || "",
-        twitter: social.twitter || "",
-        youtube: social.youtube || "",
-        whatsapp: social.whatsapp || "",
-      });
+      // A missing `<key>Enabled` flag counts as visible so links saved before
+      // the show/hide toggles existed keep showing (matches useSocialLinks).
+      setSocialForm(
+        SOCIAL_FIELDS.reduce(
+          (form, { key }) => ({
+            ...form,
+            [key]: social[key] || "",
+            [`${key}Enabled`]: social[`${key}Enabled`] !== false,
+          }),
+          {}
+        )
+      );
       setNotifForm({
         adminNewOrderEmail: notifications.adminNewOrderEmail !== false,
         adminEmail: notifications.adminEmail || "",
@@ -220,13 +243,17 @@ const AdminSettings = () => {
         googleAnalyticsId: seoForm.googleAnalyticsId.trim(),
         facebookPixelId: seoForm.facebookPixelId.trim(),
       });
-      await apiService.admin.updateSettings("social", {
-        facebook: socialForm.facebook.trim(),
-        instagram: socialForm.instagram.trim(),
-        twitter: socialForm.twitter.trim(),
-        youtube: socialForm.youtube.trim(),
-        whatsapp: socialForm.whatsapp.trim(),
-      });
+      await apiService.admin.updateSettings(
+        "social",
+        SOCIAL_FIELDS.reduce(
+          (data, { key }) => ({
+            ...data,
+            [key]: socialForm[key].trim(),
+            [`${key}Enabled`]: socialForm[`${key}Enabled`],
+          }),
+          {}
+        )
+      );
       await apiService.admin.updateSettings("notifications", {
         adminNewOrderEmail: notifForm.adminNewOrderEmail,
         adminEmail: notifForm.adminEmail.trim(),
@@ -245,6 +272,38 @@ const AdminSettings = () => {
       });
     } finally {
       setSaving(false);
+    }
+  };
+
+  // Show/hide one social platform on the storefront (footer + hamburger menu).
+  // Like the other visibility switches, it self-saves (optimistic, with
+  // rollback) so a single click reaches the site — the URL fields still save
+  // through the shared "Save Changes" bar, but visibility never waits for it.
+  const handleToggleSocial = async (key, label, nextEnabled) => {
+    const field = `${key}Enabled`;
+    setSocialToggleSaving(key);
+    setSocialForm((prev) => ({ ...prev, [field]: nextEnabled })); // optimistic
+    try {
+      // updateSettings merges onto the existing social section, so only the
+      // flag changes — unsaved URL edits in the form stay untouched.
+      await apiService.admin.updateSettings("social", { [field]: nextEnabled });
+      setSnackbar({
+        open: true,
+        message: nextEnabled
+          ? `${label} is now shown on the storefront`
+          : `${label} hidden from the storefront`,
+        severity: "success",
+      });
+    } catch (error) {
+      console.error("Error updating social visibility:", error);
+      setSocialForm((prev) => ({ ...prev, [field]: !nextEnabled })); // rollback
+      setSnackbar({
+        open: true,
+        message: `Failed to update ${label} visibility`,
+        severity: "error",
+      });
+    } finally {
+      setSocialToggleSaving(null);
     }
   };
 
@@ -530,21 +589,30 @@ const AdminSettings = () => {
               </Box>
               <Divider sx={{ mb: 3 }} />
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField fullWidth size="small" label="Facebook" value={socialForm.facebook} onChange={(e) => handleSocialChange("facebook", e.target.value)} placeholder="https://facebook.com/…" />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField fullWidth size="small" label="Instagram" value={socialForm.instagram} onChange={(e) => handleSocialChange("instagram", e.target.value)} placeholder="https://instagram.com/…" />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField fullWidth size="small" label="Twitter / X" value={socialForm.twitter} onChange={(e) => handleSocialChange("twitter", e.target.value)} placeholder="https://x.com/…" />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField fullWidth size="small" label="YouTube" value={socialForm.youtube} onChange={(e) => handleSocialChange("youtube", e.target.value)} placeholder="https://youtube.com/@…" />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField fullWidth size="small" label="WhatsApp" value={socialForm.whatsapp} onChange={(e) => handleSocialChange("whatsapp", e.target.value)} placeholder="+91 86385 43526" />
-                </Grid>
+                {SOCIAL_FIELDS.map(({ key, label, placeholder }) => (
+                  <Grid item xs={12} sm={6} key={key}>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                      <TextField fullWidth size="small" label={label} value={socialForm[key]} onChange={(e) => handleSocialChange(key, e.target.value)} placeholder={placeholder} />
+                      <Tooltip
+                        title={
+                          socialForm[`${key}Enabled`]
+                            ? `${label} is shown on the storefront — switch off to hide it`
+                            : `${label} is hidden from the storefront — switch on to show it`
+                        }
+                      >
+                        {/* span keeps the tooltip working while the switch is disabled mid-save */}
+                        <span>
+                          <Switch
+                            checked={socialForm[`${key}Enabled`]}
+                            onChange={(e) => handleToggleSocial(key, label, e.target.checked)}
+                            disabled={socialToggleSaving === key}
+                            inputProps={{ "aria-label": `Show ${label} on the storefront` }}
+                          />
+                        </span>
+                      </Tooltip>
+                    </Box>
+                  </Grid>
+                ))}
               </Grid>
             </CardContent>
           </Card>
