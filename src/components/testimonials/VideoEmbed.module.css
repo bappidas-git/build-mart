@@ -1,0 +1,114 @@
+/* VideoEmbed — click-to-load facade. Fixed 16:9 box so activating the player
+   never shifts layout; everything themed by --sf-* tokens (light + dark). */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sf-space-2);
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--sf-radius-md);
+  overflow: hidden;
+  background: var(--sf-color-surface-2);
+}
+
+.player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  object-fit: cover;
+  background: #000;
+}
+
+/* The pre-activation facade is a single button = one big tap target. */
+.facade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background: var(--sf-color-surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.facade:focus-visible {
+  outline: none;
+  box-shadow: inset var(--sf-shadow-focus);
+}
+
+.thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--sf-transition);
+}
+
+.facade:hover .thumb {
+  transform: scale(1.04);
+}
+
+.thumbFallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: var(--sf-color-text-muted);
+  background: linear-gradient(
+    135deg,
+    var(--sf-color-surface-2) 0%,
+    var(--sf-color-badge-bg) 100%
+  );
+}
+
+.playBadge {
+  position: relative;
+  z-index: 1;
+  width: 60px;
+  height: 60px;
+  border-radius: var(--sf-radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  color: var(--sf-color-primary-contrast);
+  background: var(--sf-gradient-primary);
+  box-shadow: var(--sf-shadow-md);
+  transition: transform var(--sf-transition-fast);
+}
+
+.facade:hover .playBadge {
+  transform: scale(1.08);
+}
+
+.watchLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sf-space-1);
+  align-self: flex-start;
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-medium);
+  color: var(--sf-color-text-muted);
+  text-decoration: none;
+  min-height: 24px;
+  transition: color var(--sf-transition-fast);
+}
+
+.watchLink:hover,
+.watchLink:focus-visible {
+  color: var(--sf-color-primary);
+}

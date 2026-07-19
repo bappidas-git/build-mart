@@ -1,0 +1,175 @@
+/* TestimonialsSection — the reusable homepage / PDP testimonial band.
+   Token-driven throughout; media queries at the canonical breakpoints only. */
+
+.section {
+  width: 100%;
+}
+
+/* The home band owns its own section rhythm + container, so when the section
+   renders null (disabled / empty / error) the homepage shows no gap at all. */
+.homeVariant {
+  padding: var(--sf-section-y) 0;
+  background: var(--sf-color-surface);
+}
+
+.homeVariant .container {
+  max-width: var(--sf-container-max);
+  margin: 0 auto;
+  padding: 0 var(--sf-space-4);
+}
+
+.productVariant {
+  margin-top: var(--sf-space-10);
+  padding-top: var(--sf-space-8);
+  border-top: 1px solid var(--sf-color-border);
+}
+
+/* ---- Header (mirrors the Home SectionHeader rhythm) ---- */
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sf-space-4);
+  margin-bottom: var(--sf-space-6);
+}
+
+.kicker {
+  display: inline-block;
+  font-size: var(--sf-text-xs);
+  font-weight: var(--sf-font-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sf-color-primary);
+  margin-bottom: var(--sf-space-1);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--sf-text-2xl);
+  font-weight: var(--sf-font-bold);
+  color: var(--sf-color-text);
+  line-height: var(--sf-leading-tight);
+}
+
+.productVariant .title {
+  font-size: var(--sf-text-xl);
+}
+
+.subtitle {
+  margin: var(--sf-space-2) 0 0;
+  font-size: var(--sf-text-base);
+  color: var(--sf-color-text-muted);
+}
+
+.viewAll {
+  flex-shrink: 0;
+  font-size: var(--sf-text-sm);
+  font-weight: var(--sf-font-semibold);
+  color: var(--sf-color-primary);
+  text-decoration: none;
+  min-height: var(--sf-tap-target);
+  display: inline-flex;
+  align-items: center;
+}
+
+.viewAll:hover {
+  text-decoration: underline;
+}
+
+/* ---- Carousel (native scroll-snap; touch gestures for free) ---- */
+
+.carousel {
+  position: relative;
+}
+
+.track {
+  display: flex;
+  gap: var(--sf-space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: var(--sf-space-4) var(--sf-space-1) var(--sf-space-2);
+  margin: calc(-1 * var(--sf-space-4)) calc(-1 * var(--sf-space-1)) 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  flex: 0 0 min(380px, 86%);
+  scroll-snap-align: start;
+  display: flex;
+}
+
+.controls {
+  display: flex;
+  gap: var(--sf-space-2);
+  justify-content: flex-end;
+  margin-top: var(--sf-space-3);
+}
+
+.arrow {
+  width: var(--sf-tap-target);
+  height: var(--sf-tap-target);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: var(--sf-color-text);
+  background: var(--sf-color-surface);
+  border: 1px solid var(--sf-color-border);
+  border-radius: var(--sf-radius-pill);
+  cursor: pointer;
+  transition: all var(--sf-transition-fast);
+}
+
+.arrow:hover {
+  color: var(--sf-color-primary-contrast);
+  background: var(--sf-color-primary);
+  border-color: var(--sf-color-primary);
+}
+
+.arrow:focus-visible {
+  outline: none;
+  box-shadow: var(--sf-shadow-focus);
+}
+
+/* ---- Grid layout ---- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sf-space-4);
+  /* breathing room so hovered cards' featured badges never clip */
+  padding-top: var(--sf-space-3);
+}
+
+.cell {
+  display: flex;
+}
+
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sf-space-2);
+  }
+
+  .title {
+    font-size: var(--sf-text-xl);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

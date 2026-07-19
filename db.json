@@ -97,6 +97,19 @@
       "createdAt": "2025-06-01T10:00:00.000Z",
       "updatedAt": "2026-06-14T14:22:33.376Z",
       "storeCredit": 2918
+    },
+    {
+      "firstName": "Shubendu",
+      "lastName": "Das",
+      "email": "shubendu@assamdigital.com",
+      "phone": "+916901608721",
+      "password": "Shuben123456",
+      "avatar": null,
+      "addresses": [],
+      "isActive": true,
+      "createdAt": "2026-07-13T22:09:31.323Z",
+      "updatedAt": "2026-07-13T22:09:31.323Z",
+      "id": 4
     }
   ],
   "admins": [
@@ -422,17 +435,17 @@
     },
     {
       "id": 23,
-      "name": "Door Locks",
+      "name": "Door Locks heaven",
       "slug": "door-locks",
       "description": "Door Locks for interior and exterior use",
       "image": "https://placehold.co/400x300/1885d8/FFFFFF?text=Door+Locks",
       "parentId": 7,
       "isActive": true,
       "sortOrder": 1,
-      "showInMainMenu": false,
-      "menuOrder": 0,
+      "showInMainMenu": true,
+      "menuOrder": 13,
       "createdAt": "2026-01-01T00:00:00.000Z",
-      "updatedAt": "2026-01-01T00:00:00.000Z"
+      "updatedAt": "2026-07-13T22:10:43.970Z"
     },
     {
       "id": 24,
@@ -723,7 +736,7 @@
       "sku": "NEBM-1-001",
       "shortDescription": "Weatherproof 3D WPC louver panel for feature walls and facades.",
       "description": "Weatherproof 3D WPC louver panel for feature walls and facades. Weatherproof, termite-proof and low-maintenance — ideal for interior and exterior wall cladding. Bulk quantity pricing available — enquire for project rates.",
-      "categoryId": 1,
+      "categoryId": 23,
       "brand": "Greenpanel",
       "images": [
         "https://placehold.co/600x400/1a1a2e/FFFFFF?text=WPC+Louver+Panel+3D+Charcoal",
@@ -735,7 +748,7 @@
       "stock": 53,
       "lowStockThreshold": 10,
       "weight": 5,
-      "dimensions": {},
+      "dimensions": null,
       "variants": [],
       "tags": [
         "wpc",
@@ -754,7 +767,7 @@
       "metaTitle": "WPC Louver Panel 3D Charcoal — Greenpanel | North East Build Mart",
       "metaDescription": "Weatherproof 3D WPC louver panel for feature walls and facades. Enquire for the best project rate at North East Build Mart, Nagaon.",
       "createdAt": "2026-01-02T00:00:00.000Z",
-      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "updatedAt": "2026-07-14T07:12:01.596Z",
       "frequentlyBoughtTogetherIds": [],
       "relatedProductIds": [
         2
@@ -779,7 +792,8 @@
       "showExactPrice": false,
       "showTieredPricing": true,
       "cardPriceMode": "from",
-      "special": true
+      "special": true,
+      "specifications": []
     },
     {
       "id": 2,
@@ -800,7 +814,7 @@
       "stock": 66,
       "lowStockThreshold": 10,
       "weight": 5,
-      "dimensions": {},
+      "dimensions": null,
       "variants": [],
       "tags": [
         "wpc",
@@ -820,19 +834,20 @@
       "metaTitle": "WPC Fluted Wall Panel Teak Finish — CenturyPly | North East Build Mart",
       "metaDescription": "Fluted WPC wall panel in a warm teak finish for interior cladding. Enquire for the best project rate at North East Build Mart, Nagaon.",
       "createdAt": "2026-01-03T00:00:00.000Z",
-      "updatedAt": "2026-07-02T00:00:00.000Z",
+      "updatedAt": "2026-07-13T22:34:00.590Z",
       "frequentlyBoughtTogetherIds": [],
       "relatedProductIds": [
         1
       ],
-      "priceType": "exact",
+      "priceType": "onEnquiry",
       "unitType": "piece",
       "minQty": 1,
       "priceTiers": [],
-      "showExactPrice": true,
+      "showExactPrice": false,
       "showTieredPricing": false,
-      "cardPriceMode": "exact",
-      "special": false
+      "cardPriceMode": "onEnquiry",
+      "special": false,
+      "specifications": []
     },
     {
       "id": 3,
@@ -4919,7 +4934,22 @@
       "special": false
     }
   ],
-  "cart": [],
+  "cart": [
+    {
+      "productId": 2,
+      "variantId": null,
+      "variantName": null,
+      "name": "WPC Fluted Wall Panel Teak Finish",
+      "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=WPC+Fluted+Wall+Panel+Teak+Finish",
+      "price": 520,
+      "comparePrice": 650,
+      "currency": "INR",
+      "quantity": 1,
+      "stock": 66,
+      "userId": 4,
+      "id": 1
+    }
+  ],
   "enquiries": [
     {
       "id": 1,
@@ -5351,6 +5381,89 @@
       ],
       "createdAt": "2026-06-14T14:22:33.199Z",
       "updatedAt": "2026-06-20T06:24:29.131Z"
+    },
+    {
+      "type": "enquiry",
+      "items": [
+        {
+          "productId": 19,
+          "variantId": null,
+          "name": "Galvanised Steel Security Door",
+          "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Galvanised+Steel+Security+Door",
+          "sku": "",
+          "quantity": 1,
+          "priceType": "onEnquiry",
+          "unitType": null,
+          "price": null
+        },
+        {
+          "productId": 20,
+          "variantId": null,
+          "name": "Powder-Coated Steel Flush Door",
+          "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Powder-Coated+Steel+Flush+Door",
+          "sku": "",
+          "quantity": 3,
+          "priceType": "onEnquiry",
+          "unitType": null,
+          "price": null
+        }
+      ],
+      "contact": {
+        "name": "Shubendu Das",
+        "phone": "+916901608721",
+        "email": "shubendu@assamdigital.com"
+      },
+      "notes": "testing",
+      "status": "New",
+      "userId": 4,
+      "enquiryNumber": "ENQ-MRJSB2XY-C6F8",
+      "adminNotes": "",
+      "createdAt": "2026-07-13T22:18:56.804Z",
+      "updatedAt": "2026-07-13T22:18:56.804Z",
+      "statusHistory": [
+        {
+          "at": "2026-07-13T22:18:56.809Z",
+          "by": "Shubendu Das",
+          "action": "Enquiry submitted"
+        }
+      ],
+      "id": 12
+    },
+    {
+      "type": "enquiry",
+      "items": [
+        {
+          "productId": 30,
+          "variantId": null,
+          "name": "Digital Smart Door Lock",
+          "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Digital+Smart+Door+Lock",
+          "sku": "",
+          "quantity": 3,
+          "priceType": "onEnquiry",
+          "unitType": null,
+          "price": null
+        }
+      ],
+      "contact": {
+        "name": "Shubendu Das",
+        "phone": "+916901608721",
+        "email": "shubendu@assamdigital.com"
+      },
+      "notes": "vvxcv",
+      "status": "New",
+      "userId": 4,
+      "enquiryNumber": "ENQ-MRJSTPC5-U6M4",
+      "adminNotes": "",
+      "createdAt": "2026-07-13T22:33:25.635Z",
+      "updatedAt": "2026-07-13T22:33:25.635Z",
+      "statusHistory": [
+        {
+          "at": "2026-07-13T22:33:25.637Z",
+          "by": "Shubendu Das",
+          "action": "Enquiry submitted"
+        }
+      ],
+      "id": 13
     }
   ],
   "returns": [],
@@ -5613,68 +5726,75 @@
       "addedAt": "2026-06-14T13:57:59.358Z",
       "userId": 3,
       "id": 3
+    },
+    {
+      "productId": 3,
+      "slug": "multiwall-polycarbonate-sheet-6mm",
+      "name": "Multiwall Polycarbonate Sheet 6mm",
+      "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Multiwall+Polycarbonate+Sheet+6mm",
+      "brand": "Tuflite",
+      "price": 1450,
+      "comparePrice": 1750,
+      "rating": 4.4,
+      "totalReviews": 27,
+      "shortDescription": "Twin-wall 6mm polycarbonate sheet for roofing, canopies and skylights.",
+      "variants": [],
+      "stock": 79,
+      "trending": false,
+      "hot": false,
+      "addedAt": "2026-07-13T22:30:18.649Z",
+      "userId": 4,
+      "id": 4
+    },
+    {
+      "productId": 4,
+      "slug": "solid-polycarbonate-sheet-3mm-clear",
+      "name": "Solid Polycarbonate Sheet 3mm Clear",
+      "image": "https://placehold.co/600x400/1a1a2e/FFFFFF?text=Solid+Polycarbonate+Sheet+3mm+Clear",
+      "brand": "Lexan",
+      "price": 2100,
+      "comparePrice": null,
+      "rating": 4.5,
+      "totalReviews": 34,
+      "shortDescription": "Clear 3mm solid polycarbonate sheet with high impact strength.",
+      "variants": [],
+      "stock": 92,
+      "trending": true,
+      "hot": false,
+      "addedAt": "2026-07-13T22:30:20.471Z",
+      "userId": 4,
+      "id": 5
     }
   ],
   "leads": [
     {
-      "id": 1,
       "type": "contact",
-      "name": "John Doe",
-      "email": "john@example.com",
-      "phone": "+91 9876543210",
-      "orderNumber": "ORD-20250310-0001",
-      "category": "shipping",
-      "subject": "Order delivery update",
-      "message": "Hi, I wanted to check on the delivery status of my order. The tracking shows it's been shipped but I haven't received an estimated delivery date.",
-      "status": "resolved",
-      "createdAt": "2026-01-16T11:00:00.000Z",
-      "updatedAt": "2026-01-16T14:30:00.000Z",
-      "notes": "Provided tracking details to customer"
+      "name": "Shubendu Das",
+      "email": "shubendu@assamdigital.com",
+      "phone": "+91 6901608721",
+      "category": "bulk",
+      "subject": "nnjjnkjn",
+      "message": "kjnkjnjnmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
+      "status": "contacted",
+      "createdAt": "2026-07-13T22:25:47.092Z",
+      "updatedAt": "2026-07-13T22:26:44.559Z",
+      "notes": "",
+      "id": 1
     },
     {
-      "id": 2,
       "type": "newsletter",
       "name": null,
-      "email": "subscriber@example.com",
+      "email": "shubendu@assamdigital.com",
       "phone": null,
       "orderNumber": null,
       "category": null,
       "subject": null,
       "message": null,
       "status": "subscribed",
-      "createdAt": "2026-02-10T09:00:00.000Z",
-      "updatedAt": "2026-02-10T09:00:00.000Z",
-      "notes": ""
-    },
-    {
-      "id": 3,
-      "type": "contact",
-      "name": "Jane Smith",
-      "email": "jane@example.com",
-      "phone": "+91 9123456789",
-      "orderNumber": null,
-      "category": "product",
-      "subject": "Product availability inquiry",
-      "message": "Do you have the FitPulse Smartwatch in size 44mm? The website shows it's available but I wanted to confirm before ordering.",
-      "status": "contacted",
-      "createdAt": "2026-03-18T10:30:00.000Z",
-      "updatedAt": "2026-04-17T14:22:33.071Z",
-      "notes": "fdsadfsafwe"
-    },
-    {
-      "type": "contact",
-      "name": "Bappi Das",
-      "email": "mail4bappidas@gmail.com",
-      "phone": "+919707112233",
-      "orderNumber": "ORD-MQC1HWSZ-CAN8",
-      "category": "returns",
-      "subject": "Want to return this AirStride Running Shoes - UK 7 - Black",
-      "message": "AirStride Running Shoes - UK 7 - Black is does not fit properly",
-      "status": "resolved",
-      "createdAt": "2026-06-13T12:52:25.021Z",
-      "updatedAt": "2026-06-13T15:55:02.925Z",
-      "notes": "Need to Cancel this order. ",
-      "id": 4
+      "createdAt": "2026-07-13T22:26:57.539Z",
+      "updatedAt": "2026-07-13T22:26:57.539Z",
+      "notes": "",
+      "id": 2
     }
   ],
   "settings": {
@@ -5684,7 +5804,7 @@
       "email": "info@northeastbuildmart.com",
       "phone": "+91 86385 43526",
       "phoneSecondary": "+91 88762 89972",
-      "address": "Lawkhuwa Road, Nagaon, Assam – 782002",
+      "address": "bongaigaon mayapuri , assam",
       "currency": "INR",
       "currencySymbol": "₹",
       "timezone": "Asia/Kolkata",
@@ -5713,7 +5833,9 @@
   },
   "walletTransactions": [],
   "dealsConfig": {
-    "enabled": false
+    "enabled": false,
+    "headerCtaEnabled": true,
+    "updatedAt": "2026-07-14T08:11:01.158Z"
   },
   "heroConfig": {
     "enabled": true,
@@ -9164,5 +9286,483 @@
       "whatsappWebhook": ""
     },
     "updatedAt": "2026-07-18T22:12:14.604Z"
+  },
+  "testimonials": [
+    {
+      "id": 1,
+      "type": "text",
+      "status": "published",
+      "featured": true,
+      "sortOrder": 1,
+      "customerName": "Ranjit Bora",
+      "designation": "Site Contractor",
+      "company": "Bora Constructions, Guwahati",
+      "avatarUrl": "https://randomuser.me/api/portraits/men/32.jpg",
+      "rating": 5,
+      "title": "WPC louvers transformed our client's lobby",
+      "body": "We used the 3D charcoal WPC louver panels across a 40-foot feature wall in a hotel lobby at Six Mile. Finish is consistent panel to panel, installation was quick, and six months in there is zero warping despite the humidity. NEBM delivered the full lot in two days.",
+      "reviewDate": "2026-04-18",
+      "verified": true,
+      "media": null,
+      "productIds": [
+        1,
+        2
+      ],
+      "categoryIds": [
+        1
+      ],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [
+        "wpc",
+        "commercial",
+        "guwahati"
+      ],
+      "source": "direct",
+      "createdAt": "2026-04-18T10:15:00.000Z",
+      "updatedAt": "2026-04-18T10:15:00.000Z"
+    },
+    {
+      "id": 2,
+      "type": "text",
+      "status": "published",
+      "featured": true,
+      "sortOrder": 2,
+      "customerName": "Priyanka Deka",
+      "designation": "Interior Designer",
+      "company": "Studio PD, Nagaon",
+      "avatarUrl": "https://randomuser.me/api/portraits/women/44.jpg",
+      "rating": 5,
+      "title": "My go-to supplier for every project",
+      "body": "I've sourced tiles, louvers and bath fittings from North East Build Mart for over a dozen residential projects. The team understands design intent — they'll suggest the right finish instead of just quoting the cheapest SKU. Bulk pricing is transparent and delivery is dependable.",
+      "reviewDate": "2026-03-29",
+      "verified": true,
+      "media": null,
+      "productIds": [
+        9,
+        13
+      ],
+      "categoryIds": [
+        5
+      ],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [
+        "interior",
+        "repeat-customer"
+      ],
+      "source": "google",
+      "createdAt": "2026-03-29T14:00:00.000Z",
+      "updatedAt": "2026-03-29T14:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "type": "video",
+      "status": "published",
+      "featured": true,
+      "sortOrder": 3,
+      "customerName": "Amit Sharma",
+      "designation": "Homeowner",
+      "company": "Dibrugarh",
+      "avatarUrl": "https://randomuser.me/api/portraits/men/75.jpg",
+      "rating": 5,
+      "title": "Our terrace waterproofing, one year later",
+      "body": "A short walkthrough of our terrace one monsoon after using Dr. Fixit URP supplied by NEBM. Not a single leak.",
+      "reviewDate": "2026-03-12",
+      "verified": true,
+      "media": {
+        "url": "https://www.youtube.com/watch?v=ScMzIvxBSi4",
+        "poster": "",
+        "caption": "Terrace walkthrough after one full monsoon"
+      },
+      "productIds": [
+        7
+      ],
+      "categoryIds": [
+        4
+      ],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [
+        "waterproofing",
+        "video"
+      ],
+      "source": "youtube",
+      "createdAt": "2026-03-12T09:30:00.000Z",
+      "updatedAt": "2026-03-12T09:30:00.000Z"
+    },
+    {
+      "id": 4,
+      "type": "photo",
+      "status": "published",
+      "featured": false,
+      "sortOrder": 4,
+      "customerName": "Bhaskar Kalita",
+      "designation": "Architect",
+      "company": "BK Associates, Tezpur",
+      "avatarUrl": "https://randomuser.me/api/portraits/men/52.jpg",
+      "rating": 5,
+      "title": "Fluted panels on a clinic facade",
+      "body": "Teak-finish fluted WPC panels on the street elevation of a dental clinic we designed. The material handled on-site cutting cleanly and the tone matched the render almost exactly.",
+      "reviewDate": "2026-02-25",
+      "verified": true,
+      "media": {
+        "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
+        "poster": "",
+        "caption": "Completed facade, Tezpur clinic project"
+      },
+      "productIds": [
+        2
+      ],
+      "categoryIds": [
+        1
+      ],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [
+        "facade",
+        "photo"
+      ],
+      "source": "direct",
+      "createdAt": "2026-02-25T11:45:00.000Z",
+      "updatedAt": "2026-02-25T11:45:00.000Z"
+    },
+    {
+      "id": 5,
+      "type": "text",
+      "status": "published",
+      "featured": false,
+      "sortOrder": 5,
+      "customerName": "Mridula Saikia",
+      "designation": "Homeowner",
+      "company": "Jorhat",
+      "avatarUrl": "https://randomuser.me/api/portraits/women/68.jpg",
+      "rating": 4,
+      "title": "Great tiles, honest advice",
+      "body": "Bought anti-skid bathroom tiles and glossy wall tiles for our new house. The staff talked us out of a more expensive tile that wouldn't have suited a wet area — that kind of honesty is rare. One carton arrived with two chipped pieces and they replaced it without fuss.",
+      "reviewDate": "2026-02-10",
+      "verified": true,
+      "media": null,
+      "productIds": [
+        15,
+        12
+      ],
+      "categoryIds": [
+        5
+      ],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [
+        "tiles",
+        "residential"
+      ],
+      "source": "direct",
+      "createdAt": "2026-02-10T16:20:00.000Z",
+      "updatedAt": "2026-07-19T11:57:39.191Z"
+    },
+    {
+      "id": 6,
+      "type": "video",
+      "status": "published",
+      "featured": false,
+      "sortOrder": 6,
+      "customerName": "Debojit Chetia",
+      "designation": "Fabricator",
+      "company": "Chetia Roofing Works, Sivasagar",
+      "avatarUrl": "https://randomuser.me/api/portraits/men/41.jpg",
+      "rating": 5,
+      "title": "Polycarbonate roofing install timelapse",
+      "body": "Timelapse of a 900 sq ft polycarbonate canopy we fabricated with NEBM's 6mm multiwall sheets. Sheets arrived edge-taped and undamaged.",
+      "reviewDate": "2026-01-30",
+      "verified": true,
+      "media": {
+        "url": "https://vimeo.com/76979871",
+        "poster": "",
+        "caption": "Canopy installation timelapse"
+      },
+      "productIds": [
+        3
+      ],
+      "categoryIds": [
+        2
+      ],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [
+        "roofing",
+        "video"
+      ],
+      "source": "vimeo",
+      "createdAt": "2026-01-30T08:00:00.000Z",
+      "updatedAt": "2026-01-30T08:00:00.000Z"
+    },
+    {
+      "id": 7,
+      "type": "text",
+      "status": "published",
+      "featured": false,
+      "sortOrder": 7,
+      "customerName": "Nabanita Goswami",
+      "designation": "Project Manager",
+      "company": "Greenfield Realty, Guwahati",
+      "avatarUrl": "https://randomuser.me/api/portraits/women/33.jpg",
+      "rating": 5,
+      "title": "Reliable partner for bulk orders",
+      "body": "We order steel doors and hardware for our apartment projects in bulk. NEBM's quotes are itemised, GST invoices are prompt, and they hold agreed pricing for the full project duration. That predictability matters more than a one-time discount.",
+      "reviewDate": "2026-01-22",
+      "verified": true,
+      "media": null,
+      "productIds": [
+        19,
+        20
+      ],
+      "categoryIds": [
+        6
+      ],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [
+        "bulk",
+        "b2b"
+      ],
+      "source": "direct",
+      "createdAt": "2026-01-22T12:10:00.000Z",
+      "updatedAt": "2026-01-22T12:10:00.000Z"
+    },
+    {
+      "id": 8,
+      "type": "photo",
+      "status": "published",
+      "featured": false,
+      "sortOrder": 8,
+      "customerName": "Hiren Das",
+      "designation": "Homeowner",
+      "company": "Nagaon",
+      "avatarUrl": "https://randomuser.me/api/portraits/men/22.jpg",
+      "rating": 5,
+      "title": "Living room feature wall",
+      "body": "Weekend DIY with NEBM's WPC louvers — the store team even lent us a spare blade guide. Came out better than the Pinterest reference!",
+      "reviewDate": "2025-12-15",
+      "verified": true,
+      "media": {
+        "url": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1200&q=80",
+        "poster": "",
+        "caption": "Finished feature wall"
+      },
+      "productIds": [
+        1
+      ],
+      "categoryIds": [
+        1
+      ],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [
+        "diy",
+        "photo"
+      ],
+      "source": "direct",
+      "createdAt": "2025-12-15T18:00:00.000Z",
+      "updatedAt": "2025-12-15T18:00:00.000Z"
+    },
+    {
+      "id": 9,
+      "type": "video",
+      "status": "published",
+      "featured": false,
+      "sortOrder": 9,
+      "customerName": "Pallabi Hazarika",
+      "designation": "Cafe Owner",
+      "company": "Brew & Bloom, Guwahati",
+      "avatarUrl": "https://randomuser.me/api/portraits/women/56.jpg",
+      "rating": 5,
+      "title": "Our cafe renovation story",
+      "body": "From bare shell to opening day in six weeks — tiles, doors and panels all came from one supplier, which kept the schedule sane.",
+      "reviewDate": "2025-12-02",
+      "verified": true,
+      "media": {
+        "url": "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+        "poster": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1200&q=80",
+        "caption": "Renovation recap reel"
+      },
+      "productIds": [
+        9,
+        19
+      ],
+      "categoryIds": [
+        5,
+        6
+      ],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [
+        "commercial",
+        "video"
+      ],
+      "source": "direct",
+      "createdAt": "2025-12-02T10:00:00.000Z",
+      "updatedAt": "2025-12-02T10:00:00.000Z"
+    },
+    {
+      "id": 10,
+      "type": "text",
+      "status": "published",
+      "featured": false,
+      "sortOrder": 10,
+      "customerName": "Utpal Rajkhowa",
+      "designation": "Civil Engineer",
+      "company": "URC Infra, Golaghat",
+      "avatarUrl": "https://randomuser.me/api/portraits/men/64.jpg",
+      "rating": 4,
+      "title": "Solid waterproofing range",
+      "body": "Used Fosroc Brushbond on two rooftop slabs. Coverage matched the datasheet and NEBM's stock was fresh — check the batch dates elsewhere and you'll see why that's worth mentioning. Docking one star only because weekend delivery slots fill up fast.",
+      "reviewDate": "2025-11-20",
+      "verified": true,
+      "media": null,
+      "productIds": [
+        8
+      ],
+      "categoryIds": [
+        4
+      ],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [
+        "waterproofing"
+      ],
+      "source": "direct",
+      "createdAt": "2025-11-20T09:40:00.000Z",
+      "updatedAt": "2025-11-20T09:40:00.000Z"
+    },
+    {
+      "id": 11,
+      "type": "text",
+      "status": "draft",
+      "featured": false,
+      "sortOrder": 11,
+      "customerName": "Rituparna Bhuyan",
+      "designation": "Homeowner",
+      "company": "Guwahati",
+      "avatarUrl": "https://randomuser.me/api/portraits/women/21.jpg",
+      "rating": 5,
+      "title": "Beautiful vitrified tiles",
+      "body": "The double-charge vitrified tiles look premium and were delivered within 48 hours. Waiting for the full house photos before we share more!",
+      "reviewDate": "2026-05-06",
+      "verified": true,
+      "media": null,
+      "productIds": [
+        13
+      ],
+      "categoryIds": [
+        5
+      ],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [
+        "tiles"
+      ],
+      "source": "direct",
+      "createdAt": "2026-05-06T13:00:00.000Z",
+      "updatedAt": "2026-05-06T13:00:00.000Z"
+    },
+    {
+      "id": 12,
+      "type": "text",
+      "status": "archived",
+      "featured": false,
+      "sortOrder": 12,
+      "customerName": "Dipankar Nath",
+      "designation": "Shop Owner",
+      "company": "Nath Hardware, Morigaon",
+      "avatarUrl": "https://randomuser.me/api/portraits/men/12.jpg",
+      "rating": 5,
+      "title": "Old storefront, great memories",
+      "body": "NEBM supplied everything for our 2024 shop renovation. (Archived after our second renovation testimonial went live.)",
+      "reviewDate": "2024-08-14",
+      "verified": true,
+      "media": null,
+      "productIds": [],
+      "categoryIds": [
+        7
+      ],
+      "placements": {
+        "home": true,
+        "page": true,
+        "products": true
+      },
+      "tags": [
+        "archived-example"
+      ],
+      "source": "direct",
+      "createdAt": "2024-08-14T10:00:00.000Z",
+      "updatedAt": "2026-01-05T10:00:00.000Z"
+    }
+  ],
+  "testimonialsPage": {
+    "enabled": true,
+    "seo": {
+      "title": "Customer Testimonials | North East Build Mart",
+      "description": "Real stories from contractors, architects and homeowners across the North East who build with materials from North East Build Mart."
+    },
+    "hero": {
+      "kicker": "Wall of trust",
+      "title": "Built on real projects, told by real customers",
+      "subtitle": "Contractors, architects and homeowners across the North East share how our materials performed on their sites."
+    },
+    "home": {
+      "enabled": true,
+      "kicker": "Testimonials",
+      "title": "What our customers say",
+      "subtitle": "Real feedback from projects across the North East.",
+      "layout": "carousel",
+      "maxItems": 6,
+      "sort": "order",
+      "featuredOnly": false,
+      "autoRotate": true,
+      "autoRotateMs": 6000
+    },
+    "productPage": {
+      "enabled": true,
+      "title": "Customer stories with this product",
+      "maxItems": 4
+    },
+    "page": {
+      "layout": "masonry",
+      "pageSize": 9
+    },
+    "updatedAt": "2026-05-01T09:00:00.000Z"
   }
 }

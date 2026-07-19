@@ -19,6 +19,7 @@ import {
   ReviewsSection,
   RelatedProducts,
 } from "../../components/storefront";
+import TestimonialsSection from "../../components/testimonials/TestimonialsSection";
 import styles from "./ProductDetails.module.css";
 
 // =============================================================================
@@ -705,6 +706,10 @@ const ProductDetails = () => {
             )}
           </div>
         </div>
+
+        {/* ── Customer testimonials assigned to this product (admin-managed
+               via the Testimonial module; renders nothing when none) ──────── */}
+        <TestimonialsSection variant="product" product={product} />
 
         {/* ── AOV: similar products (data-driven; enquiry-safe) ─────────── */}
         <RelatedProducts
