@@ -22,8 +22,8 @@ const ICONS = {
 
 // Shared social-icon strip. Reads the admin-managed links from SettingsContext
 // (via useSocialLinks) so a change in Settings → Social reaches every surface —
-// today the footer and the hamburger menu. Renders nothing when the admin hasn't
-// set any link, so no empty row is left behind.
+// today the footer and the hamburger menu. Unset platforms fall back to the
+// brand default URLs; renders nothing only when every platform is hidden.
 //
 // `variant` picks the palette: "footer" sits on the always-dark footer surface;
 // "sidebar" inherits the drawer's light/dark theme tokens.

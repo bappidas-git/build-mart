@@ -164,9 +164,9 @@ const Footer = () => {
                 height={48}
               />
               <p className={styles.aboutText}>{BRAND_TAGLINE}</p>
-              {/* Social profiles from admin Settings → Social. Renders nothing
-                  until at least one link is set, so the column never shows an
-                  empty icon row. */}
+              {/* Social profiles from admin Settings → Social (brand defaults
+                  when unset). Platforms hidden via the admin toggles don't
+                  render, and the row disappears if every platform is off. */}
               <SocialLinks variant="footer" />
             </div>
 
