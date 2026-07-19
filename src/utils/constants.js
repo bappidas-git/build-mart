@@ -339,9 +339,11 @@ export const DEFAULT_CURRENCY = CURRENCIES.INR;
 // shared by the Header banner and the CartDrawer progress bar.
 export const FREE_SHIPPING_THRESHOLD = 999;
 
-// Social links (sensible defaults — update per project). The Footer renders an
-// icon only for entries with a non-empty URL, so blanking one here hides it
-// instead of leaving a dead link.
+// Social links (sensible defaults — update per project). Used by
+// useSocialLinks() as the fallback when admin Settings → Social has no URL for
+// a platform, so the footer and hamburger icons still render on a fresh store.
+// An entry with an empty URL has no fallback and stays hidden until the admin
+// saves a link.
 export const SOCIAL_LINKS = {
   FACEBOOK: "https://facebook.com/mystore",
   TWITTER: "https://twitter.com/mystore",

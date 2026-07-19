@@ -13,6 +13,7 @@ import {
   BRAND_PHONE_1,
   BRAND_PHONE_2,
   SUPPORT_EMAIL,
+  SOCIAL_LINKS as BRAND_SOCIAL_URLS,
 } from "../utils/constants";
 
 // =============================================================================
@@ -54,12 +55,16 @@ export const telHref = (phone) =>
 
 // Order the social icons render in, with the human label used for accessibility.
 // Keys mirror the admin Settings → Social fields and db.json `settings.social`.
+// `fallback` is the brand default URL used when the admin hasn't saved a link
+// yet — same pattern as the contact fields above, so a store with blank social
+// settings still shows its icons (WhatsApp has no default: a wa.me link needs a
+// real number, so it stays hidden until one is entered).
 const SOCIAL_LINKS = [
-  { key: "facebook", label: "Facebook" },
-  { key: "instagram", label: "Instagram" },
-  { key: "twitter", label: "Twitter / X" },
-  { key: "youtube", label: "YouTube" },
-  { key: "whatsapp", label: "WhatsApp" },
+  { key: "facebook", label: "Facebook", fallback: BRAND_SOCIAL_URLS.FACEBOOK },
+  { key: "instagram", label: "Instagram", fallback: BRAND_SOCIAL_URLS.INSTAGRAM },
+  { key: "twitter", label: "Twitter / X", fallback: BRAND_SOCIAL_URLS.TWITTER },
+  { key: "youtube", label: "YouTube", fallback: BRAND_SOCIAL_URLS.YOUTUBE },
+  { key: "whatsapp", label: "WhatsApp", fallback: BRAND_SOCIAL_URLS.WHATSAPP },
 ];
 
 // Turn a raw admin value into a safe, absolute href. Most fields are already
@@ -116,19 +121,20 @@ export const useStoreContact = () => {
 };
 
 // Focused hook for the store's social profiles — the links the admin enters on
-// Settings → Social. Returns only the platforms that actually have a link set
-// AND are switched on (each field has a show/hide toggle in admin, stored as
-// `settings.social.<key>Enabled`), each as `{ key, label, href }` ready to
-// render, so the footer and the hamburger menu show the same icons and an unset
-// or hidden profile simply doesn't appear. A missing flag counts as visible so
-// links saved before the toggles existed keep showing.
+// Settings → Social. Returns each platform that is switched on (show/hide
+// toggle in admin, stored as `settings.social.<key>Enabled`; a missing flag
+// counts as visible) as `{ key, label, href }` ready to render, so the footer
+// and the hamburger menu show the same icons. A platform with no admin URL
+// falls back to the brand default from constants — mirroring useStoreContact —
+// so switching a toggle on always shows its icon; only a platform with neither
+// an admin URL nor a brand default (WhatsApp) stays hidden.
 export const useSocialLinks = () => {
   const { social } = useContext(SettingsContext);
   return SOCIAL_LINKS.filter(({ key }) => social[`${key}Enabled`] !== false)
-    .map(({ key, label }) => ({
+    .map(({ key, label, fallback }) => ({
       key,
       label,
-      href: normalizeSocialHref(key, social[key]),
+      href: normalizeSocialHref(key, social[key] || fallback),
     }))
     .filter((item) => item.href);
 };

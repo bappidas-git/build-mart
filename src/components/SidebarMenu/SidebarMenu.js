@@ -614,8 +614,9 @@ const SidebarMenu = ({ open, onClose, onOpenAuth }) => {
                 </motion.button>
               </div>
 
-              {/* Connect with us — social profiles from admin Settings → Social.
-                  Hidden entirely (label, divider and all) when none are set. */}
+              {/* Connect with us — social profiles from admin Settings → Social
+                  (brand defaults when unset). Hidden entirely (label, divider
+                  and all) only when every platform is toggled off. */}
               {socialLinks.length > 0 && (
                 <>
                   <div className={styles.divider} />
