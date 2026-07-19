@@ -19,7 +19,8 @@ import styles from "./TestimonialsSection.module.css";
 //
 //   <TestimonialsSection variant="product" product={product} />
 //     PDP band showing only testimonials assigned to this product (directly
-//     or via its category). Honours productPage.enabled + maxItems.
+//     or via its category). Honours productPage.enabled + maxItems. Always
+//     rendered as the horizontal scroll track, on every device.
 //
 // Renders nothing at all while disabled, loading, errored or empty — the
 // surrounding page never shows a broken or empty band.
@@ -69,7 +70,11 @@ const TestimonialsSection = ({ variant = "home", product = null }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [variant, productId]);
 
-  const isCarousel = variant === "home" && (config?.layout || "carousel") === "carousel";
+  // Product pages always use the horizontal scroll track (same as the home
+  // carousel, on every device); only the home band honours the admin's
+  // carousel|grid layout choice.
+  const isCarousel =
+    variant === "product" || (config?.layout || "carousel") === "carousel";
 
   const scrollByCard = useCallback((direction) => {
     const track = trackRef.current;

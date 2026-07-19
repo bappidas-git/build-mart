@@ -141,7 +141,9 @@ fallbacks.
   broken band.
 - **PDP band** — `<TestimonialsSection variant="product" product={product} />`
   between the tabs and Related Products; shows only testimonials assigned to
-  that product (or its category), capped by `productPage.maxItems`.
+  that product (or its category), capped by `productPage.maxItems`. Always the
+  horizontal scroll-snap track (same as the home carousel) on every device;
+  the admin `layout` choice only affects the homepage band.
 
 ## 6. Admin panel
 
