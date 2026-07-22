@@ -1,0 +1,1218 @@
+{
+  "info": {
+    "name": "Build Mart API Collection",
+    "description": "Laravel backend endpoints for Build Mart. Set the baseUrl variable to your deployment root (usually ending with /api).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://phplaravel-780646-6566008.cloudwaysapps.com/api",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "productId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "categoryId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "appointmentId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "cartItemId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "enquiryId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "enquiryNumber",
+      "value": "ENQ-20260722-0001",
+      "type": "string"
+    },
+    {
+      "key": "wishlistId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "reviewId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "leadId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "productSlug",
+      "value": "wpc-louver-panel-3d-charcoal",
+      "type": "string"
+    },
+    {
+      "key": "categorySlug",
+      "value": "building-materials",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth & Users",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"+91 9876543210\",\n  \"password\": \"Password123!\",\n  \"password_confirmation\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"Password123!\",\n  \"remember\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["login"]
+            }
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"current_password\": \"Password123!\",\n  \"password\": \"Password1234!\",\n  \"password_confirmation\": \"Password1234!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/change-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["change-password"]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["logout"]
+            }
+          }
+        },
+        {
+          "name": "Get Auth User",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/user",
+              "host": ["{{baseUrl}}"],
+              "path": ["user"]
+            }
+          }
+        },
+        {
+          "name": "Update Auth User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phone\": \"+91 9876543210\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/user",
+              "host": ["{{baseUrl}}"],
+              "path": ["user"]
+            }
+          }
+        },
+        {
+          "name": "Get User Payments",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}/payments",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}", "payments"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products & Categories",
+      "item": [
+        {
+          "name": "List Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            }
+          }
+        },
+        {
+          "name": "Search Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products?search=panel",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                { "key": "search", "value": "panel" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Product By ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/{{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "{{productId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Product By Slug",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/slug/{{productSlug}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "slug", "{{productSlug}}"]
+            }
+          }
+        },
+        {
+          "name": "Featured Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/featured?limit=8",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "featured"],
+              "query": [
+                { "key": "limit", "value": "8" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Special Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/special?limit=6",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "special"],
+              "query": [
+                { "key": "limit", "value": "6" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Trending Products",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/trending?limit=6",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "trending"],
+              "query": [
+                { "key": "limit", "value": "6" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Products By Category",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/category/{{categoryId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "category", "{{categoryId}}"]
+            }
+          }
+        },
+        {
+          "name": "Product Reviews",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/products/{{productId}}/reviews",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "{{productId}}", "reviews"]
+            }
+          }
+        },
+        {
+          "name": "List Categories",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories"]
+            }
+          }
+        },
+        {
+          "name": "Get Category By ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/categories/{{categoryId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories", "{{categoryId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Category By Slug",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/categories/slug/{{categorySlug}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["categories", "slug", "{{categorySlug}}"]
+            }
+          }
+        },
+        {
+          "name": "List Banners",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/banners",
+              "host": ["{{baseUrl}}"],
+              "path": ["banners"]
+            }
+          }
+        },
+        {
+          "name": "Get Settings",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/settings",
+              "host": ["{{baseUrl}}"],
+              "path": ["settings"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart, Enquiries, Wishlist, Leads",
+      "item": [
+        {
+          "name": "Get Cart",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cart",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart"]
+            }
+          }
+        },
+        {
+          "name": "Add Cart Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": 1,\n  \"variantId\": null,\n  \"variantName\": null,\n  \"name\": \"WPC Louver Panel 3D Charcoal\",\n  \"image\": \"https://example.com/images/panel.jpg\",\n  \"price\": 1200,\n  \"comparePrice\": 1500,\n  \"priceType\": \"exact\",\n  \"unitType\": \"piece\",\n  \"currency\": \"INR\",\n  \"quantity\": 10,\n  \"stock\": 50,\n  \"userId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cart",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart"]
+            }
+          }
+        },
+        {
+          "name": "Update Cart Item",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 12\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cart/{{cartItemId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart", "{{cartItemId}}"]
+            }
+          }
+        },
+        {
+          "name": "Remove Cart Item",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cart/{{cartItemId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart", "{{cartItemId}}"]
+            }
+          }
+        },
+        {
+          "name": "Clear Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cart",
+              "host": ["{{baseUrl}}"],
+              "path": ["cart"]
+            }
+          }
+        },
+        {
+          "name": "Create Enquiry",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"enquiry\",\n  \"userId\": 1,\n  \"enquiryNumber\": \"ENQ-0001\",\n  \"status\": \"New\",\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"variantId\": null,\n      \"name\": \"WPC Louver Panel 3D Charcoal\",\n      \"image\": \"https://example.com/images/panel.jpg\",\n      \"sku\": \"NEBM-1-001\",\n      \"quantity\": 20,\n      \"priceType\": \"tiered\",\n      \"unitType\": \"piece\",\n      \"price\": null\n    }\n  ],\n  \"contact\": {\n    \"name\": \"John Doe\",\n    \"phone\": \"+91 9876543210\",\n    \"email\": \"john@example.com\"\n  },\n  \"notes\": \"Need project rate for a facade job.\",\n  \"statusHistory\": [\n    {\n      \"at\": \"2026-07-22T10:00:00.000Z\",\n      \"by\": \"John Doe\",\n      \"action\": \"Enquiry submitted\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/enquiries",
+              "host": ["{{baseUrl}}"],
+              "path": ["enquiries"]
+            }
+          }
+        },
+        {
+          "name": "List My Enquiries",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/enquiries",
+              "host": ["{{baseUrl}}"],
+              "path": ["enquiries"]
+            }
+          }
+        },
+        {
+          "name": "Get Enquiry By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/enquiries/{{enquiryId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["enquiries", "{{enquiryId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Enquiry By Number",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/enquiries/number/{{enquiryNumber}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["enquiries", "number", "{{enquiryNumber}}"]
+            }
+          }
+        },
+        {
+          "name": "List My Reviews",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/reviews/mine",
+              "host": ["{{baseUrl}}"],
+              "path": ["reviews", "mine"]
+            }
+          }
+        },
+        {
+          "name": "Submit Product Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 5,\n  \"title\": \"Excellent quality\",\n  \"body\": \"The panel quality is excellent and delivery was prompt.\",\n  \"isVerifiedPurchase\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products/{{productId}}/reviews",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "{{productId}}", "reviews"]
+            }
+          }
+        },
+        {
+          "name": "Get Wishlist",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wishlist",
+              "host": ["{{baseUrl}}"],
+              "path": ["wishlist"]
+            }
+          }
+        },
+        {
+          "name": "Add Wishlist Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": 1,\n  \"userId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/wishlist",
+              "host": ["{{baseUrl}}"],
+              "path": ["wishlist"]
+            }
+          }
+        },
+        {
+          "name": "Remove Wishlist Item",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/wishlist/{{wishlistId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["wishlist", "{{wishlistId}}"]
+            }
+          }
+        },
+        {
+          "name": "Create Contact Lead",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"+91 9876543210\",\n  \"orderNumber\": \"ENQ-20260722-0001\",\n  \"category\": \"Building Materials\",\n  \"subject\": \"Need pricing for facade panels\",\n  \"message\": \"Hello, I would like pricing for WPC louver panels.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/leads/contact",
+              "host": ["{{baseUrl}}"],
+              "path": ["leads", "contact"]
+            }
+          }
+        },
+        {
+          "name": "Create Newsletter Lead",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"newsletter@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/leads/newsletter",
+              "host": ["{{baseUrl}}"],
+              "path": ["leads", "newsletter"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Appointments",
+      "item": [
+        {
+          "name": "List Appointments",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/appointments",
+              "host": ["{{baseUrl}}"],
+              "path": ["appointments"]
+            }
+          }
+        },
+        {
+          "name": "Create Appointment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"+91 9876543210\",\n  \"date\": \"2026-07-30\",\n  \"time\": \"10:00\",\n  \"message\": \"Need consultation for facade specification.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/appointments",
+              "host": ["{{baseUrl}}"],
+              "path": ["appointments"]
+            }
+          }
+        },
+        {
+          "name": "Get Appointment By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/appointments/{{appointmentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["appointments", "{{appointmentId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Appointment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"confirmed\",\n  \"message\": \"Appointment confirmed.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/appointments/{{appointmentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["appointments", "{{appointmentId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Appointment",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/appointments/{{appointmentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["appointments", "{{appointmentId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Appointment By Email",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/appointments/email/john@example.com",
+              "host": ["{{baseUrl}}"],
+              "path": ["appointments", "email", "john@example.com"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Create Payment Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 1200,\n  \"currency\": \"INR\",\n  \"receipt\": \"rcpt-001\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/payments/create-order",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments", "create-order"]
+            }
+          }
+        },
+        {
+          "name": "Verify Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"razorpay_order_id\": \"order_123\",\n  \"razorpay_payment_id\": \"pay_123\",\n  \"razorpay_signature\": \"signature_123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/payments/verify",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments", "verify"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Admin Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "auth", "logout"]
+            }
+          }
+        },
+        {
+          "name": "Admin Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/dashboard/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "dashboard", "stats"]
+            }
+          }
+        },
+        {
+          "name": "Admin List Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "products"]
+            }
+          }
+        },
+        {
+          "name": "Admin Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"WPC Louver Panel 3D Charcoal\",\n  \"slug\": \"wpc-louver-panel-3d-charcoal\",\n  \"sku\": \"NEBM-1-001\",\n  \"shortDescription\": \"Premium facade panel\",\n  \"description\": \"High-quality WPC panel for modern buildings.\",\n  \"categoryId\": 1,\n  \"brand\": \"Build Mart\",\n  \"price\": 1200,\n  \"comparePrice\": 1500,\n  \"costPrice\": 900,\n  \"stock\": 50,\n  \"lowStockThreshold\": 10,\n  \"weight\": 4.2,\n  \"dimensions\": {\n    \"length\": 2600,\n    \"width\": 300,\n    \"height\": 12\n  },\n  \"variants\": [],\n  \"images\": [],\n  \"tags\": [\"wpc\", \"facade\"],\n  \"featured\": true,\n  \"trending\": false,\n  \"hot\": false,\n  \"isActive\": true,\n  \"metaTitle\": \"WPC Louver Panel\",\n  \"metaDescription\": \"Premium WPC facade panel\",\n  \"priceType\": \"exact\",\n  \"unitType\": \"piece\",\n  \"minQty\": 1,\n  \"priceTiers\": [],\n  \"showExactPrice\": true,\n  \"showTieredPricing\": false,\n  \"cardPriceMode\": \"default\",\n  \"special\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "products"]
+            }
+          }
+        },
+        {
+          "name": "Admin Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"WPC Louver Panel 3D Charcoal\",\n  \"slug\": \"wpc-louver-panel-3d-charcoal\",\n  \"sku\": \"NEBM-1-001\",\n  \"price\": 1250,\n  \"stock\": 45,\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/products/{{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "products", "{{productId}}"]
+            }
+          }
+        },
+        {
+          "name": "Admin Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/products/{{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "products", "{{productId}}"]
+            }
+          }
+        },
+        {
+          "name": "Admin List Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "categories"]
+            }
+          }
+        },
+        {
+          "name": "Admin Create Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Building Materials\",\n  \"slug\": \"building-materials\",\n  \"description\": \"Building materials and facade products\",\n  \"image\": \"https://example.com/category.jpg\",\n  \"parentId\": null,\n  \"isActive\": true,\n  \"sortOrder\": 1,\n  \"showInMainMenu\": true,\n  \"menuOrder\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "categories"]
+            }
+          }
+        },
+        {
+          "name": "Admin Update Category",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Building Materials\",\n  \"slug\": \"building-materials\",\n  \"description\": \"Updated building materials category\",\n  \"image\": \"https://example.com/category.jpg\",\n  \"parentId\": null,\n  \"isActive\": true,\n  \"sortOrder\": 1,\n  \"showInMainMenu\": true,\n  \"menuOrder\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/categories/{{categoryId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "categories", "{{categoryId}}"]
+            }
+          }
+        },
+        {
+          "name": "Admin Delete Category",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/categories/{{categoryId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "categories", "{{categoryId}}"]
+            }
+          }
+        },
+        {
+          "name": "Admin List Enquiries",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/enquiries",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "enquiries"]
+            }
+          }
+        },
+        {
+          "name": "Admin Get Enquiry",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/enquiries/{{enquiryId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "enquiries", "{{enquiryId}}"]
+            }
+          }
+        },
+        {
+          "name": "Admin Update Enquiry",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Quotation Sent\",\n  \"adminNotes\": \"Sent project rate for 200 panels; awaiting confirmation.\",\n  \"event\": {\n    \"action\": \"Status → Quotation Sent\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/enquiries/{{enquiryId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "enquiries", "{{enquiryId}}"]
+            }
+          }
+        },
+        {
+          "name": "Admin List Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "users"]
+            }
+          }
+        },
+        {
+          "name": "Admin Get User",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "users", "{{userId}}"]
+            }
+          }
+        },
+        {
+          "name": "Admin Update User",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "users", "{{userId}}"]
+            }
+          }
+        },
+        {
+          "name": "Admin List Reviews",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/reviews",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "reviews"]
+            }
+          }
+        },
+        {
+          "name": "Admin Create Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": 1,\n  \"userName\": \"John Doe\",\n  \"rating\": 5,\n  \"title\": \"Excellent quality\",\n  \"body\": \"The panel quality is excellent.\",\n  \"isVerifiedPurchase\": true,\n  \"status\": \"approved\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/reviews",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "reviews"]
+            }
+          }
+        },
+        {
+          "name": "Admin Update Review",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"approved\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/reviews/{{reviewId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "reviews", "{{reviewId}}"]
+            }
+          }
+        },
+        {
+          "name": "Admin Delete Review",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/reviews/{{reviewId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "reviews", "{{reviewId}}"]
+            }
+          }
+        },
+        {
+          "name": "Admin List Leads",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/leads",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "leads"]
+            }
+          }
+        },
+        {
+          "name": "Admin Get Lead",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/leads/{{leadId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "leads", "{{leadId}}"]
+            }
+          }
+        },
+        {
+          "name": "Admin Update Lead",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"contacted\",\n  \"notes\": \"Follow-up planned for tomorrow.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/leads/{{leadId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "leads", "{{leadId}}"]
+            }
+          }
+        },
+        {
+          "name": "Admin Delete Lead",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/leads/{{leadId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "leads", "{{leadId}}"]
+            }
+          }
+        },
+        {
+          "name": "Admin Get Settings",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/settings",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "settings"]
+            }
+          }
+        },
+        {
+          "name": "Admin Update Settings Section",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"store\": {\n    \"name\": \"Build Mart\",\n    \"phone\": \"+91 9876543210\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admin/settings/store",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "settings", "store"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
