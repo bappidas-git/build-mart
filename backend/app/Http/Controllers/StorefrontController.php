@@ -14,10 +14,8 @@ use App\Models\CareersPage;
 use App\Models\CartItem;
 use App\Models\Category;
 use App\Models\Coupon;
-use App\Models\Deal;
 use App\Models\Enquiry;
 use App\Models\EnquiryItem;
-use App\Models\HeroConfig;
 use App\Models\Lead;
 use App\Models\Payment;
 use App\Models\Product;
@@ -50,8 +48,6 @@ class StorefrontController extends Controller
             'wishlist' => WishlistItem::class,
             'leads' => Lead::class,
             'walletTransactions' => WalletTransaction::class,
-            'dealsConfig' => Deal::class,
-            'heroConfig' => HeroConfig::class,
             'careerDepartments' => CareerDepartment::class,
             'careerJobs' => CareerJob::class,
             'careerApplications' => CareerApplication::class,

@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StorefrontController;
 use App\Http\Controllers\UserAddressController;
+use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\EnquiryItemController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\SettingController;
@@ -37,6 +38,18 @@ Route::patch('/settings/{section}', [SettingController::class, 'updateSection'])
 // Lead capture convenience endpoints (contact form + newsletter signup)
 Route::post('/leads/contact', [LeadController::class, 'storeContact']);
 Route::post('/leads/newsletter', [LeadController::class, 'storeNewsletter']);
+
+// Hero carousel + deals config singletons (mock-style, storefront, and admin paths)
+foreach (['/heroConfig', '/hero/config', '/admin/hero/config'] as $heroPath) {
+    Route::get($heroPath, [ConfigController::class, 'showHero']);
+    Route::put($heroPath, [ConfigController::class, 'updateHero']);
+    Route::patch($heroPath, [ConfigController::class, 'updateHero']);
+}
+foreach (['/dealsConfig', '/deals/config', '/admin/deals/config'] as $dealsPath) {
+    Route::get($dealsPath, [ConfigController::class, 'showDeals']);
+    Route::put($dealsPath, [ConfigController::class, 'updateDeals']);
+    Route::patch($dealsPath, [ConfigController::class, 'updateDeals']);
+}
 
 // Storefront routes backed by real database tables
 Route::get('/{resource}', [StorefrontController::class, 'index'])->where('resource', '[a-zA-Z0-9_\\-]+');

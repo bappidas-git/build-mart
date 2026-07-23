@@ -13,9 +13,7 @@ use App\Models\CareersPage;
 use App\Models\CartItem;
 use App\Models\Category;
 use App\Models\Coupon;
-use App\Models\Deal;
 use App\Models\Enquiry;
-use App\Models\HeroConfig;
 use App\Models\Lead;
 use App\Models\MockApiResource;
 use App\Models\ProductReturn;
@@ -330,8 +328,6 @@ class DatabaseSeeder extends Seeder
         Refund::create([]);
         ProductReturn::create([]);
         WalletTransaction::create([]);
-        Deal::create([]);
-        HeroConfig::create([]);
         CareerDepartment::create([]);
         CareerRecruiter::create([]);
         CareerJob::create([]);
@@ -340,6 +336,7 @@ class DatabaseSeeder extends Seeder
         Testimonial::create([]);
         TestimonialPage::create([]);
 
+        $this->call(ConfigSeeder::class);
         $this->call(MockApiSeeder::class);
     }
 }
