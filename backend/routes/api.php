@@ -11,6 +11,7 @@ use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\EnquiryItemController;
 use App\Http\Controllers\LeadController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
 // Authentication routes
@@ -65,6 +66,18 @@ foreach (['/testimonialsPage', '/testimonials/page', '/admin/testimonials/page']
     Route::get($testimonialsPath, [ConfigController::class, 'showTestimonialsPage']);
     Route::put($testimonialsPath, [ConfigController::class, 'updateTestimonialsPage']);
     Route::patch($testimonialsPath, [ConfigController::class, 'updateTestimonialsPage']);
+}
+
+// Testimonials records (camelCase API shape; bulk/reorder before {id} routes)
+Route::patch('/admin/testimonials/bulk', [TestimonialController::class, 'bulkPatch']);
+Route::put('/admin/testimonials/reorder', [TestimonialController::class, 'reorder']);
+foreach (['/testimonials', '/admin/testimonials'] as $testimonialsBase) {
+    Route::get($testimonialsBase, [TestimonialController::class, 'index']);
+    Route::post($testimonialsBase, [TestimonialController::class, 'store']);
+    Route::get($testimonialsBase.'/{id}', [TestimonialController::class, 'show'])->whereNumber('id');
+    Route::put($testimonialsBase.'/{id}', [TestimonialController::class, 'update'])->whereNumber('id');
+    Route::patch($testimonialsBase.'/{id}', [TestimonialController::class, 'update'])->whereNumber('id');
+    Route::delete($testimonialsBase.'/{id}', [TestimonialController::class, 'destroy'])->whereNumber('id');
 }
 
 // Storefront routes backed by real database tables

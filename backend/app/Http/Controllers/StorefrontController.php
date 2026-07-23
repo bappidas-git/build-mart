@@ -21,7 +21,6 @@ use App\Models\Product;
 use App\Models\ProductReturn;
 use App\Models\Refund;
 use App\Models\ShippingMethod;
-use App\Models\Testimonial;
 use App\Models\User;
 use App\Models\WalletTransaction;
 use App\Models\WishlistItem;
@@ -50,7 +49,6 @@ class StorefrontController extends Controller
             'careerJobs' => CareerJob::class,
             'careerApplications' => CareerApplication::class,
             'careerRecruiters' => CareerRecruiter::class,
-            'testimonials' => Testimonial::class,
             'enquiries' => Enquiry::class,
             'payments' => Payment::class,
             'cart' => CartItem::class,
@@ -439,7 +437,6 @@ class StorefrontController extends Controller
             'careerDepartments' => ['name', 'slug'],
             'careerJobs' => ['title', 'slug', 'location', 'status'],
             'careerRecruiters' => ['name', 'email', 'phone'],
-            'testimonials' => ['name', 'title', 'body'],
             'leads' => ['name', 'email', 'phone', 'subject', 'message', 'status', 'type', 'category'],
             'wishlist' => ['name', 'brand', 'slug'],
             default => ['id'],

@@ -23,7 +23,6 @@ use App\Models\Product;
 use App\Models\Refund;
 use App\Models\Review;
 use App\Models\ShippingMethod;
-use App\Models\Testimonial;
 use App\Models\User;
 use App\Models\WalletTransaction;
 use Illuminate\Database\Seeder;
@@ -330,9 +329,9 @@ class DatabaseSeeder extends Seeder
         CareerRecruiter::create([]);
         CareerJob::create([]);
         CareerApplication::create([]);
-        Testimonial::create([]);
 
         $this->call(ConfigSeeder::class);
+        $this->call(TestimonialSeeder::class);
         $this->call(MockApiSeeder::class);
     }
 }
