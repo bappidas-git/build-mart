@@ -16,7 +16,11 @@ use App\Models\Coupon;
 use App\Models\Deal;
 use App\Models\Enquiry;
 use App\Models\HeroConfig;
+use App\Models\Lead;
 use App\Models\MockApiResource;
+use App\Models\ProductReturn;
+use App\Models\Setting;
+use App\Models\WishlistItem;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Refund;
@@ -250,7 +254,81 @@ class DatabaseSeeder extends Seeder
             'quantity' => 5,
         ]);
 
+        WishlistItem::create([
+            'user_id' => $customer->id,
+            'product_id' => $productA->id,
+            'slug' => $productA->slug,
+            'name' => $productA->name,
+            'image' => $productA->images[0] ?? null,
+            'brand' => $productA->brand,
+            'price' => $productA->price,
+            'compare_price' => $productA->sale_price,
+            'rating' => 4.6,
+            'total_reviews' => 1,
+            'short_description' => 'A premium WPC louver panel with a charcoal finish.',
+            'variants' => [],
+            'stock' => $productA->stock,
+            'trending' => (bool) $productA->trending,
+            'hot' => false,
+            'added_at' => now(),
+        ]);
+
+        Lead::create([
+            'type' => 'contact',
+            'name' => 'Customer User',
+            'email' => 'customer@example.com',
+            'phone' => '+91 9876543211',
+            'category' => 'bulk',
+            'subject' => 'Bulk pricing enquiry',
+            'message' => 'Looking for bulk pricing on WPC panels for a commercial project.',
+            'status' => 'new',
+            'notes' => '',
+        ]);
+
+        Lead::create([
+            'type' => 'newsletter',
+            'email' => 'subscriber@example.com',
+            'status' => 'subscribed',
+            'notes' => '',
+        ]);
+
+        Setting::create([
+            'store' => [
+                'name' => 'North East Build Mart',
+                'tagline' => 'Deals in all kinds of building materials for interior and exterior use.',
+                'email' => 'info@northeastbuildmart.com',
+                'phone' => '+91 86385 43526',
+                'phoneSecondary' => '+91 88762 89972',
+                'address' => 'Lawkhuwa Road, Nagaon, Assam - 782002',
+                'currency' => 'INR',
+                'currencySymbol' => '₹',
+                'timezone' => 'Asia/Kolkata',
+                'logo' => 'https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889446/logo_fnscna.png',
+                'favicon' => 'https://res.cloudinary.com/dn9gyaiik/image/upload/v1782889689/icon_bvsukn.png',
+            ],
+            'notifications' => [
+                'adminNewOrderEmail' => true,
+                'adminEmail' => 'info@northeastbuildmart.com',
+                'lowStockAlert' => true,
+                'lowStockEmail' => 'info@northeastbuildmart.com',
+            ],
+            'seo' => [
+                'metaTitle' => 'North East Build Mart — Building Materials in Nagaon, Assam',
+                'metaDescription' => 'North East Build Mart deals in all kinds of building materials for interior and exterior use — tiles, doors, plumbing, cement, steel and more.',
+                'googleAnalyticsId' => '',
+                'facebookPixelId' => '',
+            ],
+            'social' => [
+                'facebook' => '',
+                'instagram' => '',
+                'twitter' => '',
+                'youtube' => '',
+                'whatsapp' => '',
+            ],
+        ]);
+
         Refund::create([]);
+        ProductReturn::create([]);
         WalletTransaction::create([]);
         Deal::create([]);
         HeroConfig::create([]);

@@ -7,6 +7,8 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StorefrontController;
 use App\Http\Controllers\UserAddressController;
 use App\Http\Controllers\EnquiryItemController;
+use App\Http\Controllers\LeadController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 // Authentication routes
@@ -25,6 +27,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('appointments', AppointmentController::class);
     Route::get('/appointments/email/{email}', [AppointmentController::class, 'getByEmail']);
 });
+
+// Settings singleton (whole-object read, section-level merge updates)
+Route::get('/settings', [SettingController::class, 'show']);
+Route::put('/settings', [SettingController::class, 'update']);
+Route::patch('/settings', [SettingController::class, 'update']);
+Route::patch('/settings/{section}', [SettingController::class, 'updateSection']);
+
+// Lead capture convenience endpoints (contact form + newsletter signup)
+Route::post('/leads/contact', [LeadController::class, 'storeContact']);
+Route::post('/leads/newsletter', [LeadController::class, 'storeNewsletter']);
 
 // Storefront routes backed by real database tables
 Route::get('/{resource}', [StorefrontController::class, 'index'])->where('resource', '[a-zA-Z0-9_\\-]+');
