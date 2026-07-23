@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Build Mart API Collection",
-    "description": "Collection for the current Laravel API routes, including auth, payments, appointments, storefront resources, products, categories, and careers upload endpoints.",
+    "description": "Collection for the Laravel API: auth (customer + admin), payments, appointments, storefront resources, products, categories, careers upload, settings singleton, leads, hero/deals config, careers/testimonials page singletons, testimonials CRUD, and wishlist.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -49,6 +49,22 @@
       "key": "resourceSlug",
       "value": "example-slug",
       "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "testimonialId",
+      "value": "1"
+    },
+    {
+      "key": "settingsSection",
+      "value": "store"
+    },
+    {
+      "key": "leadId",
+      "value": "1"
     }
   ],
   "item": [
@@ -304,6 +320,868 @@
           }
         }
       ]
+    },
+    {
+      "name": "Admin Authentication",
+      "item": [
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/admin/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "auth",
+                "login"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@store.com\",\n  \"password\": \"admin123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Admin Logout",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/admin/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "auth",
+                "logout"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ]
+          }
+        }
+      ],
+      "description": "Admin-scoped Sanctum auth backed by the admins table. Login returns { token, admin }; store the token in the adminToken variable. Logout revokes it."
+    },
+    {
+      "name": "Settings",
+      "item": [
+        {
+          "name": "Get Settings",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/settings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "settings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Settings (all sections)",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/settings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "settings"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"store\": {\n    \"name\": \"North East Build Mart\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Patch Settings Section",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/settings/{{settingsSection}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "settings",
+                "{{settingsSection}}"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"North East Build Mart\",\n  \"phone\": \"+91 86385 43526\"\n}"
+            }
+          }
+        }
+      ],
+      "description": "Singleton with four sections: store, notifications, seo, social. PATCH /settings/{section} shallow-merges into one section and returns the whole object."
+    },
+    {
+      "name": "Leads",
+      "item": [
+        {
+          "name": "Submit Contact Lead",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/leads/contact",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "leads",
+                "contact"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"phone\": \"+91 9876543210\",\n  \"category\": \"bulk\",\n  \"subject\": \"Bulk enquiry\",\n  \"message\": \"Need a quote.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Subscribe Newsletter",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/leads/newsletter",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "leads",
+                "newsletter"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"subscriber@example.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "List Leads",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/leads",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "leads"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Leads By Type",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/leads?type=contact",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "leads"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "contact"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "description": "Contact-form and newsletter capture. /leads/contact sets type=contact,status=new; /leads/newsletter sets type=newsletter,status=subscribed. Generic /leads supports ?type= filter."
+    },
+    {
+      "name": "Hero & Deals Config",
+      "item": [
+        {
+          "name": "Get Hero Config",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/hero/config",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "hero",
+                "config"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Hero Config (admin)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/admin/hero/config",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "hero",
+                "config"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Update Hero Config",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/admin/hero/config",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "hero",
+                "config"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enabled\": true,\n  \"autoplayMs\": 6000,\n  \"slides\": [\n    {\n      \"id\": \"brand\",\n      \"type\": \"brand\",\n      \"enabled\": true,\n      \"title\": \"North East Build Mart\",\n      \"subtitle\": \"Building materials for interior and exterior use.\",\n      \"align\": \"center\",\n      \"media\": {\n        \"type\": \"image\",\n        \"url\": \"https://example.com/hero.jpg\",\n        \"poster\": \"\"\n      },\n      \"primaryCta\": {\n        \"label\": \"Explore Products\",\n        \"to\": \"/products\"\n      },\n      \"secondaryCta\": {\n        \"label\": \"Enquire Now\",\n        \"to\": \"tel:+918638543526\"\n      },\n      \"gallery\": []\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Deals Config",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/deals/config",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "deals",
+                "config"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Deals Config",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/admin/deals/config",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "deals",
+                "config"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enabled\": false,\n  \"headerCtaEnabled\": true\n}"
+            }
+          }
+        }
+      ],
+      "description": "Singletons served as objects on mock-style (/heroConfig, /dealsConfig), storefront (/hero/config, /deals/config) and admin (/admin/hero/config, /admin/deals/config) paths. Hero slides + galleries are also persisted relationally."
+    },
+    {
+      "name": "Content Pages",
+      "item": [
+        {
+          "name": "Get Careers Page",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/careers/page",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "careers",
+                "page"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Careers Page (admin)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/admin/careers/page",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "careers",
+                "page"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Update Careers Page",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/admin/careers/page",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "careers",
+                "page"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enabled\": true,\n  \"cta\": {\n    \"enabled\": true,\n    \"title\": \"Join our team\",\n    \"subtitle\": \"See open roles\",\n    \"buttonLabel\": \"View Openings\"\n  }\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Testimonials Page",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/testimonials/page",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "testimonials",
+                "page"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Testimonials Page (admin)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/admin/testimonials/page",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "testimonials",
+                "page"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Update Testimonials Page",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/admin/testimonials/page",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "testimonials",
+                "page"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"enabled\": true,\n  \"home\": {\n    \"enabled\": true,\n    \"maxItems\": 6,\n    \"featuredOnly\": false\n  }\n}"
+            }
+          }
+        }
+      ],
+      "description": "Landing-page content singletons. Section updates merge without clobbering untouched sections."
+    },
+    {
+      "name": "Testimonials",
+      "item": [
+        {
+          "name": "List Testimonials (public)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/testimonials",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "testimonials"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Testimonials (admin)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/admin/testimonials",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "testimonials"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "List Published",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/testimonials?status=published",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "testimonials"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "published"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Testimonial By ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/testimonials/{{testimonialId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "testimonials",
+                "{{testimonialId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Testimonial",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/admin/testimonials",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "testimonials"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"text\",\n  \"status\": \"published\",\n  \"featured\": true,\n  \"sortOrder\": 1,\n  \"customerName\": \"Ranjit Bora\",\n  \"designation\": \"Site Contractor\",\n  \"company\": \"Bora Constructions\",\n  \"avatarUrl\": \"https://example.com/avatar.jpg\",\n  \"rating\": 5,\n  \"title\": \"Great WPC louvers\",\n  \"body\": \"Consistent finish, quick install.\",\n  \"reviewDate\": \"2026-04-18\",\n  \"verified\": true,\n  \"media\": null,\n  \"productIds\": [\n    1,\n    2\n  ],\n  \"categoryIds\": [\n    1\n  ],\n  \"placements\": {\n    \"home\": true,\n    \"page\": true,\n    \"products\": true\n  },\n  \"tags\": [\n    \"wpc\",\n    \"commercial\"\n  ],\n  \"source\": \"direct\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Testimonial",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/admin/testimonials/{{testimonialId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "testimonials",
+                "{{testimonialId}}"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"text\",\n  \"status\": \"published\",\n  \"featured\": true,\n  \"sortOrder\": 1,\n  \"customerName\": \"Ranjit Bora\",\n  \"designation\": \"Site Contractor\",\n  \"company\": \"Bora Constructions\",\n  \"avatarUrl\": \"https://example.com/avatar.jpg\",\n  \"rating\": 5,\n  \"title\": \"Great WPC louvers\",\n  \"body\": \"Consistent finish, quick install.\",\n  \"reviewDate\": \"2026-04-18\",\n  \"verified\": true,\n  \"media\": null,\n  \"productIds\": [\n    1,\n    2\n  ],\n  \"categoryIds\": [\n    1\n  ],\n  \"placements\": {\n    \"home\": true,\n    \"page\": true,\n    \"products\": true\n  },\n  \"tags\": [\n    \"wpc\",\n    \"commercial\"\n  ],\n  \"source\": \"direct\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Patch Testimonial",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/admin/testimonials/{{testimonialId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "testimonials",
+                "{{testimonialId}}"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"featured\": true,\n  \"status\": \"published\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Testimonial",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/admin/testimonials/{{testimonialId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "testimonials",
+                "{{testimonialId}}"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Bulk Patch Testimonials",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/admin/testimonials/bulk",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "testimonials",
+                "bulk"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [\n    1,\n    2,\n    3\n  ],\n  \"status\": \"archived\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Reorder Testimonials",
+          "request": {
+            "method": "PUT",
+            "url": {
+              "raw": "{{baseUrl}}/admin/testimonials/reorder",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "testimonials",
+                "reorder"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ids\": [\n    3,\n    1,\n    2\n  ]\n}"
+            }
+          }
+        }
+      ],
+      "description": "Full record CRUD in camelCase on /testimonials (public) and /admin/testimonials. Bulk applies one patch to many ids; reorder rewrites sortOrder 1..n from the posted id order."
+    },
+    {
+      "name": "Wishlist",
+      "item": [
+        {
+          "name": "List Wishlist By User",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/wishlist?userId={{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wishlist"
+              ],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "{{userId}}"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Add To Wishlist",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/wishlist",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wishlist"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 3,\n  \"productId\": 1,\n  \"slug\": \"probook-ultra-laptop-15\",\n  \"name\": \"ProBook Ultra Laptop\",\n  \"brand\": \"ProBook\",\n  \"price\": 74999,\n  \"comparePrice\": 89999,\n  \"rating\": 4.6,\n  \"totalReviews\": 128,\n  \"stock\": 45,\n  \"trending\": true,\n  \"hot\": false,\n  \"variants\": [],\n  \"addedAt\": \"2026-06-14T13:57:44.901Z\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Wishlist Item",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/wishlist/{{resourceId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "wishlist",
+                "{{resourceId}}"
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ]
+          }
+        }
+      ],
+      "description": "Per-user wishlist storing a flat product snapshot; reads return the nested product. camelCase keys are normalised to snake_case on write."
     },
     {
       "name": "Payments",
