@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
@@ -17,8 +18,11 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 // Change password route
 Route::post('/change-password', [AuthController::class, 'changePassword']);
+// Admin authentication (admins table, admin-scoped Sanctum token)
+Route::post('/admin/auth/login', [AdminAuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/admin/auth/logout', [AdminAuthController::class, 'logout']);
     Route::apiResource('admins', AdminController::class);
     Route::apiResource('users.addresses', UserAddressController::class)->shallow();
     Route::apiResource('enquiries.items', EnquiryItemController::class)->shallow();
