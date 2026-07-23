@@ -9,7 +9,6 @@ use App\Models\CareerApplication;
 use App\Models\CareerDepartment;
 use App\Models\CareerJob;
 use App\Models\CareerRecruiter;
-use App\Models\CareersPage;
 use App\Models\CartItem;
 use App\Models\Category;
 use App\Models\Coupon;
@@ -25,7 +24,6 @@ use App\Models\Refund;
 use App\Models\Review;
 use App\Models\ShippingMethod;
 use App\Models\Testimonial;
-use App\Models\TestimonialPage;
 use App\Models\User;
 use App\Models\WalletTransaction;
 use Illuminate\Database\Seeder;
@@ -332,9 +330,7 @@ class DatabaseSeeder extends Seeder
         CareerRecruiter::create([]);
         CareerJob::create([]);
         CareerApplication::create([]);
-        CareersPage::create([]);
         Testimonial::create([]);
-        TestimonialPage::create([]);
 
         $this->call(ConfigSeeder::class);
         $this->call(MockApiSeeder::class);

@@ -51,6 +51,18 @@ foreach (['/dealsConfig', '/deals/config', '/admin/deals/config'] as $dealsPath)
     Route::patch($dealsPath, [ConfigController::class, 'updateDeals']);
 }
 
+// Careers + testimonials page singletons (mock-style, storefront, and admin paths)
+foreach (['/careersPage', '/careers/page', '/admin/careers/page'] as $careersPath) {
+    Route::get($careersPath, [ConfigController::class, 'showCareersPage']);
+    Route::put($careersPath, [ConfigController::class, 'updateCareersPage']);
+    Route::patch($careersPath, [ConfigController::class, 'updateCareersPage']);
+}
+foreach (['/testimonialsPage', '/testimonials/page', '/admin/testimonials/page'] as $testimonialsPath) {
+    Route::get($testimonialsPath, [ConfigController::class, 'showTestimonialsPage']);
+    Route::put($testimonialsPath, [ConfigController::class, 'updateTestimonialsPage']);
+    Route::patch($testimonialsPath, [ConfigController::class, 'updateTestimonialsPage']);
+}
+
 // Storefront routes backed by real database tables
 Route::get('/{resource}', [StorefrontController::class, 'index'])->where('resource', '[a-zA-Z0-9_\\-]+');
 Route::post('/{resource}', [StorefrontController::class, 'store'])->where('resource', '[a-zA-Z0-9_\\-]+');

@@ -10,7 +10,6 @@ use App\Models\CareerApplication;
 use App\Models\CareerDepartment;
 use App\Models\CareerJob;
 use App\Models\CareerRecruiter;
-use App\Models\CareersPage;
 use App\Models\CartItem;
 use App\Models\Category;
 use App\Models\Coupon;
@@ -23,7 +22,6 @@ use App\Models\ProductReturn;
 use App\Models\Refund;
 use App\Models\ShippingMethod;
 use App\Models\Testimonial;
-use App\Models\TestimonialPage;
 use App\Models\User;
 use App\Models\WalletTransaction;
 use App\Models\WishlistItem;
@@ -52,9 +50,7 @@ class StorefrontController extends Controller
             'careerJobs' => CareerJob::class,
             'careerApplications' => CareerApplication::class,
             'careerRecruiters' => CareerRecruiter::class,
-            'careersPage' => CareersPage::class,
             'testimonials' => Testimonial::class,
-            'testimonialsPage' => TestimonialPage::class,
             'enquiries' => Enquiry::class,
             'payments' => Payment::class,
             'cart' => CartItem::class,
