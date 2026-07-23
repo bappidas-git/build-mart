@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Appointment;
 use App\Models\Banner;
 use App\Models\CareerApplication;
@@ -54,6 +55,7 @@ class StorefrontController extends Controller
             'payments' => Payment::class,
             'cart' => CartItem::class,
             'users' => User::class,
+            'admins' => Admin::class,
         ];
     }
 

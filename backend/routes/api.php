@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PaymentController;
@@ -13,6 +14,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/change-password', [AuthController::class, 'changePassword']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::apiResource('admins', AdminController::class);
     Route::post('/payments/create-order', [PaymentController::class, 'createOrder']);
     Route::post('/payments/verify', [PaymentController::class, 'verifyPayment']);
     Route::get('/users/{id}/payments', [PaymentController::class, 'userPayments']);

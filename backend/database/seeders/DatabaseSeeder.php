@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin;
 use App\Models\Appointment;
 use App\Models\Banner;
 use App\Models\CareerApplication;
@@ -36,10 +37,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = User::create([
+        $adminUser = User::create([
             'name' => 'Admin User',
             'email' => 'admin@example.com',
             'password' => Hash::make('Password123!'),
+        ]);
+
+        $admin = Admin::create([
+            'first_name' => 'Admin',
+            'last_name' => 'User',
+            'email' => 'admin@store.com',
+            'password' => Hash::make('admin123'),
+            'role' => 'super_admin',
+            'is_active' => true,
         ]);
 
         $customer = User::create([
@@ -141,7 +151,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Payment::create([
-            'user_id' => $admin->id,
+            'user_id' => $adminUser->id,
             'order_id' => 'order_1001',
             'payment_id' => 'pay_1001',
             'signature' => 'signature_1001',
