@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Appointment;
+use App\Models\Address;
 use App\Models\Banner;
 use App\Models\CareerApplication;
 use App\Models\CareerDepartment;
@@ -15,6 +16,7 @@ use App\Models\Category;
 use App\Models\Coupon;
 use App\Models\Deal;
 use App\Models\Enquiry;
+use App\Models\EnquiryItem;
 use App\Models\HeroConfig;
 use App\Models\Payment;
 use App\Models\Product;
@@ -134,6 +136,43 @@ class StorefrontController extends Controller
 
         $item = $modelClass::create($payload);
 
+        // Handle nested items for enquiries
+        if ($resource === 'enquiries' && $request->filled('items') && is_array($request->input('items'))) {
+            foreach ($request->input('items') as $it) {
+                $itData = [
+                    'enquiry_id' => $item->id,
+                    'product_id' => $it['productId'] ?? ($it['product_id'] ?? null),
+                    'name' => $it['name'] ?? null,
+                    'quantity' => isset($it['quantity']) ? (int)$it['quantity'] : 1,
+                    'price' => isset($it['price']) ? (float)$it['price'] : null,
+                    'meta' => $it['meta'] ?? null,
+                ];
+
+                EnquiryItem::create($itData);
+            }
+        }
+        // Handle nested addresses for users
+        if ($resource === 'users' && $request->filled('addresses') && is_array($request->input('addresses'))) {
+            foreach ($request->input('addresses') as $addr) {
+                $addrData = [
+                    'user_id' => $item->id,
+                    'label' => $addr['label'] ?? null,
+                    'first_name' => $addr['firstName'] ?? $addr['first_name'] ?? null,
+                    'last_name' => $addr['lastName'] ?? $addr['last_name'] ?? null,
+                    'phone' => $addr['phone'] ?? null,
+                    'address_line1' => $addr['addressLine1'] ?? $addr['address_line1'] ?? null,
+                    'address_line2' => $addr['addressLine2'] ?? $addr['address_line2'] ?? null,
+                    'city' => $addr['city'] ?? null,
+                    'state' => $addr['state'] ?? null,
+                    'postal_code' => $addr['postalCode'] ?? $addr['postal_code'] ?? null,
+                    'country' => $addr['country'] ?? null,
+                    'is_default' => $addr['isDefault'] ?? ($addr['is_default'] ?? false),
+                ];
+
+                Address::create($addrData);
+            }
+        }
+
         return response()->json([
             'success' => true,
             'data' => $item,
@@ -156,6 +195,51 @@ class StorefrontController extends Controller
         $payload = $this->normalizePayload($payload, $resource, $item);
         $item->fill($payload);
         $item->save();
+
+        // Sync nested addresses for users on update
+        if ($resource === 'users' && $request->has('addresses') && is_array($request->input('addresses'))) {
+            // delete current addresses and recreate to match payload
+            $item->addresses()->delete();
+            foreach ($request->input('addresses') as $addr) {
+                $addrData = [
+                    'user_id' => $item->id,
+                    'label' => $addr['label'] ?? null,
+                    'first_name' => $addr['firstName'] ?? $addr['first_name'] ?? null,
+                    'last_name' => $addr['lastName'] ?? $addr['last_name'] ?? null,
+                    'phone' => $addr['phone'] ?? null,
+                    'address_line1' => $addr['addressLine1'] ?? $addr['address_line1'] ?? null,
+                    'address_line2' => $addr['addressLine2'] ?? $addr['address_line2'] ?? null,
+                    'city' => $addr['city'] ?? null,
+                    'state' => $addr['state'] ?? null,
+                    'postal_code' => $addr['postalCode'] ?? $addr['postal_code'] ?? null,
+                    'country' => $addr['country'] ?? null,
+                    'is_default' => $addr['isDefault'] ?? ($addr['is_default'] ?? false),
+                ];
+
+                Address::create($addrData);
+            }
+        }
+
+        // Sync enquiry items on update
+        if ($resource === 'enquiries' && $request->has('items') && is_array($request->input('items'))) {
+            // remove existing items and recreate
+            if (method_exists($item, 'itemsRelation')) {
+                $item->itemsRelation()->delete();
+            }
+
+            foreach ($request->input('items') as $it) {
+                $itData = [
+                    'enquiry_id' => $item->id,
+                    'product_id' => $it['productId'] ?? ($it['product_id'] ?? null),
+                    'name' => $it['name'] ?? null,
+                    'quantity' => isset($it['quantity']) ? (int)$it['quantity'] : 1,
+                    'price' => isset($it['price']) ? (float)$it['price'] : null,
+                    'meta' => $it['meta'] ?? null,
+                ];
+
+                EnquiryItem::create($itData);
+            }
+        }
 
         return $this->success($item);
     }

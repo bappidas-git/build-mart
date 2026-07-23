@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Address;
 
 class User extends Authenticatable
 {
@@ -21,8 +22,14 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
+        'phone',
+        'avatar',
+        'is_active',
+        'store_credit',
     ];
 
     /**
@@ -45,11 +52,18 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
+            'store_credit' => 'float',
         ];
     }
 
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
     }
 }

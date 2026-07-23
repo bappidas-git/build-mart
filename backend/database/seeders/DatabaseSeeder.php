@@ -58,6 +58,22 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('Password123!'),
         ]);
 
+        // Add a sample address for the customer to match db.json nested addresses
+        \App\Models\Address::create([
+            'user_id' => $customer->id,
+            'label' => 'Home',
+            'first_name' => 'Customer',
+            'last_name' => 'User',
+            'phone' => '+91 9876543211',
+            'address_line1' => '123 Main Street',
+            'address_line2' => 'Apt 4B',
+            'city' => 'Mumbai',
+            'state' => 'Maharashtra',
+            'postal_code' => '400001',
+            'country' => 'India',
+            'is_default' => true,
+        ]);
+
         $category = Category::create([
             'name' => 'Building Materials',
             'slug' => Str::slug('Building Materials'),
@@ -203,6 +219,21 @@ class DatabaseSeeder extends Seeder
                 ],
             ],
         ]);
+
+        // Persist enquiry items relationally as well
+        $lastEnquiry = Enquiry::latest()->first();
+        if ($lastEnquiry && ! empty($lastEnquiry->items)) {
+            foreach ($lastEnquiry->items as $it) {
+                \App\Models\EnquiryItem::create([
+                    'enquiry_id' => $lastEnquiry->id,
+                    'product_id' => $it['productId'] ?? null,
+                    'name' => $it['name'] ?? null,
+                    'quantity' => $it['quantity'] ?? 1,
+                    'price' => $it['price'] ?? null,
+                    'meta' => null,
+                ]);
+            }
+        }
 
         Review::create([
             'product_id' => $productA->id,

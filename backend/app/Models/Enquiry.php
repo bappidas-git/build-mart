@@ -25,4 +25,9 @@ class Enquiry extends Model
         'amount_payable' => 'float',
         'store_credit_used' => 'float',
     ];
+
+    public function itemsRelation()
+    {
+        return $this->hasMany(EnquiryItem::class);
+    }
 }

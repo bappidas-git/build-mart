@@ -1,13 +1,13 @@
 {
   "info": {
     "name": "Build Mart API Collection",
-    "description": "All current backend API routes from backend/routes/api.php. Update baseUrl to your API root.",
+    "description": "Collection for the current Laravel API routes, including auth, payments, appointments, storefront resources, products, categories, and careers upload endpoints.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
     {
       "key": "baseUrl",
-      "value": "http://localhost/api",
+      "value": "https://phplaravel-780646-6566008.cloudwaysapps.com/api",
       "type": "string"
     },
     {
@@ -53,6 +53,135 @@
   ],
   "item": [
     {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "List Admins",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admins",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admins"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"Admin\",\n  \"last_name\": \"User\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"Password123!\",\n  \"role\": \"super_admin\",\n  \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admins",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admins"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Admin By ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admins/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admins",
+                "{{userId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Admin",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"first_name\": \"Updated\",\n  \"last_name\": \"Admin\",\n  \"email\": \"admin@example.com\",\n  \"role\": \"admin\",\n  \"is_active\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/admins/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admins",
+                "{{userId}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Admin",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admins/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admins",
+                "{{userId}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "Auth & Users",
       "item": [
         {
@@ -67,7 +196,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"Password123!\",\n  \"password_confirmation\": \"Password123!\"\n}"
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"Password123!\",\n  \"password_confirmation\": \"Password123!\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/register",
@@ -195,7 +324,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"amount\": 1200,\n  \"currency\": \"INR\",\n  \"receipt\": \"rcpt-001\"\n}"
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"phone\": \"+91 9876543210\",\n  \"amount\": 1200\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/payments/create-order",
@@ -281,7 +410,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"phone\": \"+91 9876543210\",\n  \"date\": \"2026-07-30\",\n  \"time\": \"10:00\",\n  \"message\": \"Need consultation for facade specification.\"\n}"
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"payload\": {\n    \"userDetails\": {\n      \"name\": \"John Doe\",\n      \"email\": \"john@example.com\"\n    },\n    \"groupCoaching\": {\n      \"selectedSlot\": {\n        \"date\": \"2026-07-30\",\n        \"time\": \"10:00\",\n        \"time_local\": \"10:00 AM\"\n      }\n    },\n    \"oneOnOneCoaching\": {\n      \"selectedSlots\": [\n        {\n          \"date\": \"2026-07-31\",\n          \"time\": \"11:00\",\n          \"time_local\": \"11:00 AM\"\n        }\n      ]\n    }\n  },\n  \"is_active\": true,\n  \"send_email\": false\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/appointments",
@@ -332,7 +461,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"status\": \"confirmed\",\n  \"message\": \"Appointment confirmed.\"\n}"
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"payload\": {\n    \"userDetails\": {\n      \"name\": \"John Doe\",\n      \"email\": \"john@example.com\"\n    }\n  },\n  \"is_active\": true\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/appointments/{{appointmentId}}",
@@ -638,7 +767,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Example Resource\"\n}"
+              "raw": "{\n  \"name\": \"Example Resource\",\n  \"slug\": \"example-resource\",\n  \"is_active\": true\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/{{resource}}",
@@ -781,7 +910,7 @@
       ]
     },
     {
-      "name": "Resume Upload",
+      "name": "Careers",
       "item": [
         {
           "name": "Upload Resume",
@@ -799,7 +928,8 @@
                 {
                   "key": "resume",
                   "type": "file",
-                  "src": ""
+                  "src": "",
+                  "description": "Upload a PDF, DOC, or DOCX file"
                 }
               ]
             },
