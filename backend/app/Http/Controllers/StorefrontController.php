@@ -10,22 +10,20 @@ use App\Models\CareerApplication;
 use App\Models\CareerDepartment;
 use App\Models\CareerJob;
 use App\Models\CareerRecruiter;
-use App\Models\CareersPage;
 use App\Models\CartItem;
 use App\Models\Category;
 use App\Models\Coupon;
-use App\Models\Deal;
 use App\Models\Enquiry;
 use App\Models\EnquiryItem;
-use App\Models\HeroConfig;
+use App\Models\Lead;
 use App\Models\Payment;
 use App\Models\Product;
+use App\Models\ProductReturn;
 use App\Models\Refund;
 use App\Models\ShippingMethod;
-use App\Models\Testimonial;
-use App\Models\TestimonialPage;
 use App\Models\User;
 use App\Models\WalletTransaction;
+use App\Models\WishlistItem;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -43,16 +41,14 @@ class StorefrontController extends Controller
             'coupons' => Coupon::class,
             'shipping_methods' => ShippingMethod::class,
             'refunds' => Refund::class,
+            'returns' => ProductReturn::class,
+            'wishlist' => WishlistItem::class,
+            'leads' => Lead::class,
             'walletTransactions' => WalletTransaction::class,
-            'dealsConfig' => Deal::class,
-            'heroConfig' => HeroConfig::class,
             'careerDepartments' => CareerDepartment::class,
             'careerJobs' => CareerJob::class,
             'careerApplications' => CareerApplication::class,
             'careerRecruiters' => CareerRecruiter::class,
-            'careersPage' => CareersPage::class,
-            'testimonials' => Testimonial::class,
-            'testimonialsPage' => TestimonialPage::class,
             'enquiries' => Enquiry::class,
             'payments' => Payment::class,
             'cart' => CartItem::class,
@@ -70,8 +66,12 @@ class StorefrontController extends Controller
 
         $query = $modelClass::query();
 
-        if ($resource === 'cart' && $request->filled('userId')) {
+        if (in_array($resource, ['cart', 'wishlist'], true) && $request->filled('userId')) {
             $query->where('user_id', $request->input('userId'));
+        }
+
+        if ($resource === 'leads' && $request->filled('type')) {
+            $query->where('type', $request->input('type'));
         }
 
         if ($resource === 'products') {
@@ -131,8 +131,8 @@ class StorefrontController extends Controller
             return $this->notFound();
         }
 
-        $payload = $this->filterPayload($request->all(), $modelClass);
-        $payload = $this->normalizePayload($payload, $resource);
+        $payload = $this->normalizePayload($request->all(), $resource);
+        $payload = $this->filterPayload($payload, $modelClass);
 
         $item = $modelClass::create($payload);
 
@@ -191,8 +191,8 @@ class StorefrontController extends Controller
             return $this->notFound();
         }
 
-        $payload = $this->filterPayload($request->all(), $modelClass);
-        $payload = $this->normalizePayload($payload, $resource, $item);
+        $payload = $this->normalizePayload($request->all(), $resource, $item);
+        $payload = $this->filterPayload($payload, $modelClass);
         $item->fill($payload);
         $item->save();
 
@@ -437,7 +437,8 @@ class StorefrontController extends Controller
             'careerDepartments' => ['name', 'slug'],
             'careerJobs' => ['title', 'slug', 'location', 'status'],
             'careerRecruiters' => ['name', 'email', 'phone'],
-            'testimonials' => ['name', 'title', 'body'],
+            'leads' => ['name', 'email', 'phone', 'subject', 'message', 'status', 'type', 'category'],
+            'wishlist' => ['name', 'brand', 'slug'],
             default => ['id'],
         };
     }
@@ -458,13 +459,47 @@ class StorefrontController extends Controller
         );
     }
 
-    private function normalizePayload(array $payload, string $resource, Model $item = null): array
+    private function normalizePayload(array $payload, string $resource, ?Model $item = null): array
     {
+        foreach ($this->camelCaseAliases($resource) as $camel => $snake) {
+            if (array_key_exists($camel, $payload) && ! array_key_exists($snake, $payload)) {
+                $payload[$snake] = $payload[$camel];
+            }
+        }
+
         if (empty($payload['slug']) && ! empty($payload['name']) && in_array($resource, ['categories', 'products', 'careerDepartments', 'careerJobs'], true)) {
             $payload['slug'] = Str::slug($payload['name']);
         }
 
+        if ($resource === 'leads') {
+            $payload['type'] = $payload['type'] ?? 'contact';
+            $payload['status'] = $payload['status'] ?? ($payload['type'] === 'newsletter' ? 'subscribed' : 'new');
+            $payload['notes'] = $payload['notes'] ?? '';
+        }
+
         return $payload;
+    }
+
+    private function camelCaseAliases(string $resource): array
+    {
+        return match ($resource) {
+            'wishlist' => [
+                'userId' => 'user_id',
+                'productId' => 'product_id',
+                'comparePrice' => 'compare_price',
+                'totalReviews' => 'total_reviews',
+                'shortDescription' => 'short_description',
+                'addedAt' => 'added_at',
+            ],
+            'cart' => [
+                'userId' => 'user_id',
+                'productId' => 'product_id',
+            ],
+            'leads' => [
+                'orderNumber' => 'order_number',
+            ],
+            default => [],
+        };
     }
 
     private function success(mixed $data): JsonResponse
